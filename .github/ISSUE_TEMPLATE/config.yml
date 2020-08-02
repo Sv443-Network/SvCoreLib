@@ -1,0 +1,11 @@
+--- 
+blank_issues_enabled: true
+contact_links:
+  -
+    name: "Documentation"
+    about: "Please read the documentation before opening a new issue"
+    url: "https://github.com/Sv443/SvCoreLib/wiki"
+  -
+    name: "Chat"
+    about: "If you have any non-issue-worthy questions, join my Discord server and I'll try to help you"
+    url: "https://sv443.net/discord"

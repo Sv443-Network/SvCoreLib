@@ -1,0 +1,33 @@
+{
+  "name": "svcorelib",
+  "version": "1.10.0",
+  "description": "Core Library used in almost all of my (Sv443's) projects. Feel free to use it if you want to, it contains some very nice features.",
+  "main": "SvCoreLib.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sv443/SvCoreLib.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "node",
+    "node-js",
+    "library",
+    "core-lib",
+    "core-library",
+    "sv443"
+  ],
+  "author": {
+    "name": "Sv443",
+    "email": "contact@sv443.net",
+    "url": "https://github.com/Sv443"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sv443/SvCoreLib/issues"
+  },
+  "homepage": "https://github.com/Sv443/SvCoreLib#readme"
+}
