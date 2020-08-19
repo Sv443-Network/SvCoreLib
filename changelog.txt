@@ -1,0 +1,15 @@
+-----------------
+    SvCoreLib
+     v1.10.0
+-----------------
+
+
+
+[CURRENT: 1.10.0] - The initial release
+    - added all features from JSLib-npm v1.9.4
+    - added functions
+        - reserialize() to copy a JSON-compatible object by value and lose the reference
+        - byteLength() to return the length of a string in bytes
+        - http.pipeString() to stream a string into an http request
+        - http.pipeFile() to stream a file into an http request
+        - http.getClientEncoding() to get the encoding method a client requested

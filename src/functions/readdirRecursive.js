@@ -10,7 +10,7 @@
 function readdirRecursive(folder, callback) // refactored version of https://stackoverflow.com/a/5827895/8602926
 {
     return new Promise((resolve, reject) => {
-        let fs = require("fs");
+        let fs = require("fs-extra");
         let path = require("path");
         let walk = (dir, done) => {
             let results = [];

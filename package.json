@@ -29,11 +29,14 @@
     {
       "name": "ThatCopy",
       "url": "https://github.com/ThatCopy"
-      }
-    ],
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Sv443/SvCoreLib/issues"
   },
-  "homepage": "https://github.com/Sv443/SvCoreLib#readme"
+  "homepage": "https://github.com/Sv443/SvCoreLib#readme",
+  "dependencies": {
+    "fs-extra": "^9.0.1"
+  }
 }

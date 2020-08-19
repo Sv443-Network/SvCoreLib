@@ -6,7 +6,7 @@ Although it is intended for my own projects, feel free to use this library (make
 
 ## Most notable features:
 - interactive CLI tools like a menu and a progress bar
-- networking tools like downloading files and pinging URLs
+- networking tools like downloading files and pinging URLs or efficiently serving data to a connecting client
 - file system tools like reading a directory recursively
 - randomization tools like generating UUIDs or a seeded RNG
 - misc tools like complex mathematics and array manipulation

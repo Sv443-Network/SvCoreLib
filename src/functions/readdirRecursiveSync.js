@@ -6,7 +6,7 @@
  * @version 1.8.0 Now the paths are being resolved as absolute, not relative + fixed JSDoc return type
  */
 function readdirRecursiveSync(folder) { // from https://stackoverflow.com/a/16684530/8602926
-    let fs = require("fs");
+    let fs = require("fs-extra");
     let path = require("path");
 
     let walk = function(dir) {

@@ -9,7 +9,7 @@
  * @since 1.5.0
  */
 function logger(path, content, options) {
-    let fs = require("fs");
+    let fs = require("fs-extra");
 
     if(typeof path != "string" || typeof content != "string")
         throw new Error("path and/or content are empty or of the wrong type");

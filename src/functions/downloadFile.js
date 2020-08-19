@@ -36,7 +36,7 @@
  */
 const downloadFile = (url, destPath = "./", options) => {
     let isEmpty = require("./isEmpty");
-    let fs = require("fs");
+    let fs = require("fs-extra");
     let https = require("https");
 
     if(isEmpty(options))
