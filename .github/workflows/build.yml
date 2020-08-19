@@ -36,11 +36,11 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: '✅ **SvCoreLib (npm) CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) was successful (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)' 
+        args: '✅ **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) was successful (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)' 
     - name: Discord failure notification # sends a Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: '🚫 **SvCoreLib (npm) CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) has failed (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)'
+        args: '🚫 **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) has failed (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)'
       if: failure()
