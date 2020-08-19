@@ -25,6 +25,14 @@
     "email": "contact@sv443.net",
     "url": "https://github.com/Sv443"
   },
+  {
+  "contributors": [
+    {
+      "name": "ThatCopy",
+      "url": "https://github.com/ThatCopy"
+      }
+    ]
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Sv443/SvCoreLib/issues"
