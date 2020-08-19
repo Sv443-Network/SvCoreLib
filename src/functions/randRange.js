@@ -1,7 +1,7 @@
 /**
  * 🔹 Highly random number generator with upper and lower boundary.
  * `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random. 🔹
- * ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a merge request :) ⚠️
+ * ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ⚠️
  * @param {number} min Lower boundary of the RNG
  * @param {number} max Upper boundary of the RNG
  * @since 1.5.0
@@ -20,10 +20,11 @@ const randRange = (min, max) => {
     max++;
 
     let d = new Date().getTime();
-    if (typeof performance !== "undefined" && typeof performance.now === "function")
+    if(typeof performance != "undefined" && typeof performance.now == "function")
         d += performance.now();
     
     let r = (d + Math.random() * (max - min)) % (max - min) | 0;
     return r += min;
 }
+
 module.exports = randRange;
