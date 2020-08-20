@@ -1,5 +1,12 @@
+const http = require("http");
+const { Readable } = require("stream");
+const byteLength = require("../byteLength");
+const unused = require("../unused");
+
+unused(http);
+
 /**
- * 🔹 Pipes a string into a HTTP response. This is faster and more efficient than loading the string into RAM first. 🔹
+ * 🔹 Pipes a string into a HTTP response. This is a tiny bit faster and much more efficient than loading the string into RAM first. 🔹
  * @param {http.ServerResponse} res The HTTP res object
  * @param {String} text The response body
  * @param {String} mimeType The MIME type to respond with
@@ -8,10 +15,6 @@
  */
 function pipeString(res, text, mimeType, statusCode = 200)
 {
-    let { Readable } = require("stream");
-    let byteLength = require("../byteLength");
-    let unused = require("../unused");
-
     try
     {
         statusCode = parseInt(statusCode);

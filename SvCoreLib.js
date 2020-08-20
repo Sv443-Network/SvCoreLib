@@ -49,12 +49,7 @@ module.exports = {
     ProgressBar: require("./src/classes/ProgressBar"),
     MenuPrompt: require("./src/classes/MenuPrompt"),
 
-
     //#MARKER objects
     info: require("./src/objects/info"),
-    colors: require("./src/objects/colors"),
-
-    //#MARKER deprecated
-    version: require("./src/deprecated").version,
-    consoleColor: require("./src/deprecated").consoleColor,
+    colors: require("./src/objects/colors")
 };

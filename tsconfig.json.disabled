@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonJS",
         "typeRoots": [
-            "./svcorelib.d.ts"
+            "SvCoreLib.d.ts"
         ]
     }
 }

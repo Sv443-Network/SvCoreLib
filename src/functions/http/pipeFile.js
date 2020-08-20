@@ -1,5 +1,10 @@
+const fs = require("fs-extra");
+const http = require("http");
+const { resolve } = require("path");
+require("../unused")(http);
+
 /**
- * 🔹 Pipes a file into a HTTP response. This is faster and more efficient than loading the file into RAM first. 🔹
+ * 🔹 Pipes a file into a HTTP response. This is a tiny bit faster and much more efficient than loading the file into RAM first. 🔹
  * @param {http.ServerResponse} res The HTTP res object
  * @param {String} filePath Path to the file to respond with - relative to the project root directory
  * @param {String} mimeType The MIME type to respond with
@@ -8,7 +13,6 @@
  */
 function pipeFile(res, filePath, mimeType, statusCode = 200)
 {
-    let fs = require("fs-extra");
     try
     {
         statusCode = parseInt(statusCode);
@@ -19,6 +23,8 @@ function pipeFile(res, filePath, mimeType, statusCode = 200)
     {
         return "Encountered internal server error while piping file: wrong type for status code.";
     }
+
+    filePath = resolve(filePath);
 
     if(!fs.existsSync(filePath))
         return `File at "${filePath}" not found.`;
