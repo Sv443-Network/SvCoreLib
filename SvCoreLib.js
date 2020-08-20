@@ -40,8 +40,10 @@ module.exports = {
     ping: require("./src/functions/ping"),
     downloadFile: require("./src/functions/downloadFile"),
     logger: require("./src/functions/logger"),
-    readdirRecursive: require("./src/functions/readdirRecursive"),
-    readdirRecursiveSync: require("./src/functions/readdirRecursiveSync"),
+    files: {
+        readdirRecursive: require("./src/functions/files/readdirRecursive"),
+        readdirRecursiveSync: require("./src/functions/files/readdirRecursiveSync"),
+    },
     pause: require("./src/functions/pause"),
     inDebugger: require("./src/functions/inDebugger"),
 
