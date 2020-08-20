@@ -10,3 +10,9 @@ Although it is intended for my own projects, feel free to use this library (make
 - file system tools like reading a directory recursively
 - randomization tools like generating UUIDs or a seeded RNG
 - misc tools like complex mathematics and array manipulation
+
+
+## Contributors:
+Thank you very, very much to these contributors for improving SvCoreLib ❤️
+- [canarado](https://github.com/canarado) (TypeScript type declarations, fixed grammar)
+- [ThatCopy](https://github.com/ThatCopy) (Fixed documentation)
