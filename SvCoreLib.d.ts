@@ -680,8 +680,8 @@ export namespace info {
     let desc: string;
     /** The author of SvCoreLib - format: "name <email> (website)" */
     let author: string;
-    /** People that contributed to SvCoreLib - format: "name <email> (website)" */
-    let contributors: string[];
+    /** People that contributed to SvCoreLib - this is the raw object from package.json */
+    let contributors: object;
     /** The license of SvCoreLib */
     let license: string;
     /** The URL to SvCoreLib's documentation */
