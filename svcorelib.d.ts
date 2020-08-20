@@ -1,4 +1,4 @@
-import * as http from 'http';
+import * as _http from 'http';
 
 export function isEmpty(input: any): boolean;
 export function isArrayEmpty(array: any[]): boolean | number;
@@ -17,24 +17,30 @@ export function randRange(min: number, max: number): number;
 export function randomizeArray(array: any[]): any[];
 export function randomItem(array: any[]): any;
 export function removeDuplicates(array: any[]): any[];
-export interface SeededRandomNumbers {
-    numbers: number[];
-    stringified: string;
-    integer: number;
-    seed: number;
+declare namespace seededRNG {
+    export interface SeededRandomNumbers {
+        numbers: number[];
+        stringified: string;
+        integer: number;
+        seed: number;
+    }
+    export function generateSeededNumbers(count: number, seed: number): SeededRandomNumbers;
+    export function generateRandomSeed(digitCount: number): number;
+    export function validateSeed(seed: number | string): boolean;
 }
-export function generateSeededNumbers(count: number, seed: number): SeededRandomNumbers;
-export function generateRandomSeed(digitCount: number): number;
-export function validateSeed(seed: number | string): boolean;
-export function hexadecimal(uuidFormat: string, upperCase: boolean): string;
-export function decimal(uuidFormat: string): string;
-export function alphanumerical(uuidFormat: string, upperCase: boolean): string;
-export function binary(uuidFormat: string, asBooleanArray: boolean): string | boolean[];
-export function custom(uuidFormat: string, possibleValues: string): string;
-export function pipeFile(res: http.ServerResponse, filePath: string, mimeType: string, statusCode: number): null | string;
-export function pipeString(res: http.ServerResponse, text: string, mimeType: string, statusCode: number): null | string;
-export type EncodingName = "br" | "gzip" | "deflate" | "compress" | "identity";
-export function getClientEncoding(req: http.IncomingMessage): EncodingName;
+declare namespace generateUUID {
+    export function hexadecimal(uuidFormat: string, upperCase: boolean): string;
+    export function decimal(uuidFormat: string): string;
+    export function alphanumerical(uuidFormat: string, upperCase: boolean): string;
+    export function binary(uuidFormat: string, asBooleanArray: boolean): string | boolean[];
+    export function custom(uuidFormat: string, possibleValues: string): string;
+}
+declare namespace http {
+    export function pipeFile(res: _http.ServerResponse, filePath: string, mimeType: string, statusCode: number): null | string;
+    export function pipeString(res: _http.ServerResponse, text: string, mimeType: string, statusCode: number): null | string;
+    export type EncodingName = "br" | "gzip" | "deflate" | "compress" | "identity";
+    export function getClientEncoding(req: _http.IncomingMessage): EncodingName;
+}
 export interface pingReturnValues {
     statusCode: number;
     statusMessage: string;
