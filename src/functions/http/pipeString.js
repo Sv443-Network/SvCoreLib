@@ -5,14 +5,14 @@ const unused = require("../unused");
 
 unused(http);
 
-/**
- * 🔹 Pipes a string into a HTTP response. This is a tiny bit faster and much more efficient than loading the string into RAM first. 🔹
- * @param {http.ServerResponse} res The HTTP res object
- * @param {String} text The response body
- * @param {String} mimeType The MIME type to respond with
- * @param {Number} [statusCode=200] The status code to respond with - defaults to 200
- * @returns {null|String} Returns `null` if there was no error or a string containing the error message
- */
+class InvalidMimeTypeError extends Error {
+    constructor(message)
+    {
+        super(message);
+        this.name = "Invalid MIME Type";
+    }
+}
+
 function pipeString(res, text, mimeType, statusCode = 200)
 {
     try
@@ -26,6 +26,15 @@ function pipeString(res, text, mimeType, statusCode = 200)
         unused(err);
         statusCode = 200;
     }
+
+    if(!mimeType)
+        mimeType = "text/plain";
+    
+    if(typeof mimeType != "string")
+        return "Parameter \"mimeType\" was provided but is not of type string";
+
+    if(!mimeType.match(/\w+\/[-+.\w]+/g))
+        throw new InvalidMimeTypeError(`The specified parameter "mimeType" doesn't contain a valid MIME type`);
 
     let s = new Readable();
     s._read = () => {};

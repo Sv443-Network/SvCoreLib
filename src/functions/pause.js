@@ -1,10 +1,3 @@
-/**
- * 🔹 Waits for the user to press a key and then resolves a Promise 🔹
- * @param {String} text The text to display - if left empty this defaults to "Press any key to continue..."
- * @returns {Promise<String>} Passes the pressed key in the resolution or the error message in the rejection
- * @since 1.9.0
- * @version 1.9.3 Events are now being correctly unregistered
- */
 function pause(text)
 {
     if(!text || typeof text !== "string")

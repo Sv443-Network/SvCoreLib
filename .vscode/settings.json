@@ -1,0 +1,43 @@
+{
+    // requires extension "coenraads.bracket-pair-colorizer-2"
+    "bracket-pair-colorizer-2.colors": [
+        "#4B8AE3",
+        "#659061",
+        "#41BCA3",
+        "#EDD553",
+        "#E09563",
+        "#B85442"
+    ],
+
+    // requires extension "fabiospampinato.vscode-highlight"
+    "highlight.regexes": {
+        "((jsl\\.|scl\\.)?unused\\([a-zA-Z_,\\[\\]\\s\"'$]+\\);*)": [ // jsl.unused([some_var, some_other_var]); or scl.unused("foo"); or just unused(variable)
+            {
+                "backgroundColor": "rgba(0, 0, 0, 0.2)",
+                "color": "#f88"
+            }
+        ],
+        "(#MARKER)": [ // #MARKER test
+            {
+                "backgroundColor": "#f41",
+                "color": "#fff",
+                "isWholeLine": true,
+                "overviewRulerColor": "#f41"
+            }
+        ],
+        "(#SECTION ([^\\S\\r\\n]*\\w+)*[:]*)": [ // #SECTION test
+            {
+                "backgroundColor": "#44f",
+                "color": "white",
+                "overviewRulerColor": "#44f"
+            }
+        ],
+        "(#DEBUG#?)": [ // #DEBUG# or just #DEBUG
+            {
+                "backgroundColor": "#ff0",
+                "color": "blue",
+                "overviewRulerColor": "#ff0"
+            }
+        ]
+    },
+}

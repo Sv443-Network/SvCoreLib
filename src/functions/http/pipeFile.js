@@ -3,15 +3,15 @@ const http = require("http");
 const { resolve } = require("path");
 require("../unused")(http);
 
-/**
- * 🔹 Pipes a file into a HTTP response. This is a tiny bit faster and much more efficient than loading the file into RAM first. 🔹
- * @param {http.ServerResponse} res The HTTP res object
- * @param {String} filePath Path to the file to respond with - relative to the project root directory
- * @param {String} mimeType The MIME type to respond with
- * @param {Number} [statusCode=200] The status code to respond with - defaults to 200
- * @returns {null|String} Returns `null` if there was no error or a string containing the error message
- */
-function pipeFile(res, filePath, mimeType, statusCode = 200)
+class InvalidMimeTypeError extends Error {
+    constructor(message)
+    {
+        super(message);
+        this.name = "Invalid MIME Type";
+    }
+}
+
+function pipeFile(res, filePath, mimeType = "text/plain", statusCode = 200)
 {
     try
     {
@@ -23,6 +23,15 @@ function pipeFile(res, filePath, mimeType, statusCode = 200)
     {
         return "Encountered internal server error while piping file: wrong type for status code.";
     }
+
+    if(!mimeType)
+        mimeType = "text/plain";
+    
+    if(typeof mimeType != "string")
+        return "Parameter \"mimeType\" was provided but is not of type string";
+
+    if(!mimeType.match(/\w+\/[-+.\w]+/g))
+        throw new InvalidMimeTypeError(`The specified parameter "mimeType" doesn't contain a valid MIME type`);
 
     filePath = resolve(filePath);
 

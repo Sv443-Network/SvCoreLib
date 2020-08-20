@@ -1,60 +1,5 @@
-//#MARKER typedefs
-/**
- * @typedef {Object} MenuPromptMenuOption
- * @prop {String} key The key(s) that need(s) to be pressed to select this option
- * @prop {String} description The description of this option
- */
-
-/**
- * @typedef {Object} MenuPromptMenu
- * @prop {String} title The title of this menu
- * @prop {Array<MenuPromptMenuOption>} options An array of options for this menu
- */
-
-/**
- * @typedef {Object} MenuPromptOptions The options of the menu prompt
- * @prop {String} [exitKey="x"] The key or keys that need to be entered to exit the prompt
- * @prop {String} [optionSeparator=")"] The separator character(s) between the option key and the option description
- * @prop {String} [cursorPrefix="─►"] Character(s) that should be prefixed to the cursor. Will default to this arrow: "─►"
- * @prop {Boolean} [retryOnInvalid=true] Whether the menu should be retried if the user entered a wrong option - if false, continues to next menu
- * @prop {MenuPromptOnFinishedCallback} [onFinished] A function that gets called when the user is done with all of the menus of the prompt or entered the exit key(s). The only passed parameter is an array containing all selected option keys
- * @prop {Boolean} [autoSubmit] If set to true, the MenuPrompt will only accept a single character of input and will then automatically submit the value. If set to false, the user will have to explicitly press the Enter key to submit a value
- */
-
-/**
- * @callback MenuPromptOnFinishedCallback A callback that gets executed once the MenuPrompt has finished
- * @param {Array<MenuPromptResult>} results The results of the MenuPrompt (an array containing objects) - will be an empty array if there aren't any results
- */
-
-/**
- * @typedef {Object} MenuPromptResult The results of the menu prompt
- * @prop {String} key The key of the selected option
- * @prop {String} description The description of the selected option
- * @prop {String} menuTitle The title of the menu
- * @prop {Number} optionIndex The zero-based index of the selected option
- * @prop {Number} menuIndex The zero-based index of the menu
- */
-
- /**
-  * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.
-  * To translate the messages, you can use the `MenuPrompt.localization` object, which is where all localization variables are stored. 🔹
-  * ⚠️ Warning: Make sure to use the `new` keyword to create an object of this class - example: `let mp = new svc.MenuPrompt()` ⚠️
-  * @class
-  * @since 1.8.0
-  */
-//#MARKER constructor
-const MenuPrompt = class {
-    /**
-     * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.
-     * To translate the messages, you can use the `MenuPrompt.localization` object, which is where all localization variables are stored. 🔹
-     * ⚠️ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed
-     * @param {MenuPromptOptions} options The options for the prompt
-     * @returns {(Boolean|String)} Returns true, if the MenuPrompt was successfully created, a string containing the error message, if not
-     * @constructor
-     * @since 1.8.0
-     * @version 1.8.2 Removed second parameter - use `MenuPrompt.addMenu()` instead
-     * @version 1.9.0 The construction of a MenuPrompt object will now set the process.stdin raw mode to true + There is now a `localization` property you can use to translate some messages
-     */
+class MenuPrompt
+{
     constructor(options)
     {
         let isEmpty = require("../functions/isEmpty");
@@ -109,12 +54,6 @@ const MenuPrompt = class {
     }
 
     //#MARKER open
-    /**
-     * 🔹 Opens the menu 🔹
-     * ⚠️ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable
-     * @returns {(Boolean|String)} Returns true, if the menu could be opened or a string containing an error message, if not
-     * @since 1.8.0
-     */
     open()
     {
         let isEmpty = require("../functions/isEmpty");
@@ -257,11 +196,6 @@ ${this._options.cursorPrefix} \
     }
 
     //#MARKER close
-    /**
-     * 🔹 Closes the menu and returns the selected options up to this point 🔹
-     * @returns {Array<MenuPromptResult>} Returns the results of the menu prompt
-     * @since 1.8.0
-     */
     close()
     {
         this._active = false;
@@ -274,13 +208,6 @@ ${this._options.cursorPrefix} \
     }
 
     //#MARKER addMenu
-    /**
-     * 🔹 Adds a new menu to the menu prompt.
-     * You can even add new menus while the MenuPrompt is already open. 🔹
-     * @param {MenuPromptMenu} menu
-     * @returns {(Boolean|String)} Returns true, if the menu could be added or a string containing an error message, if not
-     * @since 1.8.0
-     */
     addMenu(menu)
     {
         if(this._closed)
@@ -303,23 +230,12 @@ ${this._options.cursorPrefix} \
     }
 
     //#MARKER currentMenu
-    /**
-     * 🔹 Returns the (zero-based) index of the current menu 🔹
-     * @returns {Number} The zero-based index of the current menu or `-1` if the menu hasn't been opened yet
-     * @since 1.8.0
-     */
     currentMenu()
     {
         return this._currentMenu;
     }
 
     //#MARKER result
-    /**
-     * 🔹 Returns the current results of the menu prompt 🔹
-     * Does NOT close the menu prompt.
-     * @returns {MenuPromptResult} Returns the results of the menu prompt or null, if there aren't any results yet
-     * @since 1.8.0
-     */
     result()
     {
         let isEmpty = require("../functions/isEmpty");
@@ -330,12 +246,6 @@ ${this._options.cursorPrefix} \
     }
 
     //#MARKER validateMenu
-    /**
-     * 🔹 Checks a menu for valid syntax 🔹
-     * @param {MenuPromptMenu} menu The menu that should be validated
-     * @returns {(Boolean|Array<String>)} Returns true if the menu is valid, a string array containing the error messages if not
-     * @throws Throws an error if a falsy parameter or no parameter at all was passed
-     */
     validateMenu(menu)
     {
         let isEmpty = require("../functions/isEmpty");

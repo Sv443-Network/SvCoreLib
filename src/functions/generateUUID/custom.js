@@ -1,10 +1,3 @@
-/**
- * 🔹 Creates a custom UUID with a given format from a list of characters specified by the possibleValues parameter. This uses a RNG that is even more random than the standard Math.random() 🔹
- * @param {String} uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
- * @param {String} possibleValues A string containing all characters that should be injected into the final UUID - (delimited by nothing) - Example: "ABCDEF01234$%&#"
- * @returns {String}
- * @since 1.8.0
- */
 const custom = (uuidFormat, possibleValues) => {
     let isEmpty = require("../isEmpty");
     let replaceAt = require("../replaceAt");

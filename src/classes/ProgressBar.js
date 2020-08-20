@@ -1,16 +1,7 @@
-/**
- * 🔹 Creates a dynamic progress bar with a percentage and custom message display 🔹
- * @param {Number} timesToUpdate How many times you will call ProgressBar.next() in total - example: 4 means you will need to call ProgressBar.next() exactly four times to reach 100% progress 
- * @param {String} [initialMessage=""] Initial message that appears at 0% progress
- * @since 1.7.0
- */
-const ProgressBar = class {
-    /**
-     * 🔹 Creates a dynamic progress bar with a percentage and custom message display 🔹
-     * @param {Number} timesToUpdate How many times you will call ProgressBar.next() in total - example: 4 means you will need to call ProgressBar.next() exactly four times to reach 100% progress 
-     * @param {String} [initialMessage=""] Initial message that appears at 0% progress
-     * @since 1.7.0
-     */
+const isEmpty = require("../functions/isEmpty");
+
+class ProgressBar
+{
     constructor(timesToUpdate, initialMessage) {
         if(!initialMessage)
             initialMessage = "";
@@ -27,11 +18,6 @@ const ProgressBar = class {
         this._update(initialMessage);
     }
 
-    /**
-     * 🔹 Increment the progress bar. The amount of these functions should be known at the point of initially creating the ProgressBar object. 🔹
-     * @param {String} [message] Message that should be displayed
-     * @since 1.7.0
-     */
     next(message) { // increments the progress bar
         //NOTE: isEmpty check will be executed on _update(), so no need to do it here
 
@@ -46,11 +32,10 @@ const ProgressBar = class {
     }
 
     /**
-     * ❌ Private method - please don't use ❌
+     * ❌ Private method - don't use ❌
      * @private
      */
     _update(message) { // private method to update the console message
-        let isEmpty = require("../functions/isEmpty");
         let escapeRegexChars = s => s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 
         if(this.iteration <= this.timesToUpdate) {
@@ -67,34 +52,19 @@ const ProgressBar = class {
         }
     }
 
-    /**
-     * 🔹 Executes a function once the progress reaches 100% 🔹
-     * @param {Function} callback Function
-     * @since 1.7.0
-     */
     onFinish(callback) {
-        let isEmpty = require("../functions/isEmpty");
-        if(typeof callback != "function" || isEmpty(callback))
+        if(typeof callback != "function")
             throw new Error("Wrong arguments provided for ProgressBar.onFinish() - (expected: \"Function\", got: \"" + typeof callback + "\")");
         this.finishFunction = callback;
     }
 
-    /**
-     * 🔹 Get the current progress as a float value 🔹
-     * @returns {Number}
-     * @since 1.7.0
-     */
     getProgress() {
         return this.progress;
     }
 
-    /**
-     * 🔹 Get the amount of increments that are still needed to reach 100% progress 🔹
-     * @returns {Number}
-     * @since 1.7.0
-     */
     getRemainingIncrements() {
         return (this.timesToUpdate - this.iteration >= 0 ? this.timesToUpdate - this.iteration : 0);
     }
 }
+
 module.exports = ProgressBar;

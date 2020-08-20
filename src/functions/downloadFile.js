@@ -1,40 +1,5 @@
-/**
- * @typedef {Object} DownloadProgress
- * @prop {Number} currentB The current download progress in bytes
- * @prop {Number} currentKB The current download progress in kilobytes
- * @prop {Number} currentMB The current download progress in megabytes
- * @prop {Number} totalB The total file size in bytes
- * @prop {Number} totalKB The total file size in kilobytes
- * @prop {Number} totalMB The total file size in megabytes
- */
-
-/**
- * @typedef {Function} ProgressCallback
- * @param {DownloadProgress} DownloadProgress
- */
-
- /**
- * @typedef {Function} FinishedCallback
- * @param {(String|undefined)} error This parameter is null if no error was encountered, or contains a string if an error was encountered
- */
-
-/**
- * @typedef {Object} DownloadOptions
- * @prop {String} fileName The name that the downloaded file should be saved as, including the file extension - for example: "image.png" or "archive.zip" - defaults to "download.txt"
- * @prop {ProgressCallback} progressCallback A callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
- * @prop {FinishedCallback} finishedCallback A callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
- */
-
-/**
- * Downloads a file from the specified URL, to the specified destination path, according to the specified options
- * @param {String} url The URL to the file you want to download
- * @param {String} [destPath] The path where the file should be saved to - can be absolute or relative - If left empty, it will default to the root directory of the project - **⚠️ Do not include the file name here - set it in the `options` parameter ⚠️**
- * @param {DownloadOptions} [options]
- * @returns {Promise} Promise that resolves to a void value and rejects to an error string
- * @since 1.8.0
- * @version 1.9.2 Added the option of using the Promise API instead of a callback
- */
-const downloadFile = (url, destPath = "./", options) => {
+function downloadFile(url, destPath = "./", options)
+{
     let isEmpty = require("./isEmpty");
     let fs = require("fs-extra");
     let https = require("https");

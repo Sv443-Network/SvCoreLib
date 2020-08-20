@@ -6,13 +6,6 @@
  * @prop {Number} seed The seed that was used to create the random numbers
  */
 
-/**
- * 🔹 Generates random numbers from the numerical range [0-9] based on a seed 🔹
- * @param {Number} [count=16] How many random numbers should be generated - will default to 16 if left empty
- * @param {Number} [seed] The seed to generate numbers from. Leave empty to use a random default seed. The used seed will be included in the returned object
- * @returns {SeededRandomNumbers} An object containing the seed and the random number in three different formats
- * @since 1.8.0
- */
 const generateSeededNumbers = (count = 16, seed) => { // thanks to olsn for this code snippet: http://indiegamr.com/generate-repeatable-random-numbers-in-js/
     let isEmpty = require("../isEmpty");
     let generateRandomSeed = require("./generateRandomSeed");

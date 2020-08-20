@@ -1,16 +1,7 @@
-/**
- * 🔹 Highly random number generator with upper and lower boundary.
- * `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random. 🔹
- * ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ⚠️
- * @param {number} min Lower boundary of the RNG
- * @param {number} max Upper boundary of the RNG
- * @returns {number} 
- * @throws Throws an error if the arguments are not of type 'Number'
- * @since 1.5.0
- */
-const randRange = (min, max) => {
-    let { performance } = require("perf_hooks");
+const { performance } = require("perf_hooks");
 
+function randRange(min, max)
+{
     if(typeof min != "number" || typeof max != "number")
         throw new Error(`Wrong parameter provided for "min" and/or "max" in svc.randRange() - (expected: "number" and "number", got: "${typeof min}" and "${typeof max}")`);
 

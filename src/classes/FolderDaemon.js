@@ -36,18 +36,6 @@ class PatternInvalidError extends Error
 
 class FolderDaemon
 {
-    /**
-     * 🔹 FolderDaemon supervises a folder and listens for changes in the files and then it calls a callback function. 🔹
-     * @param {String} folderPath The path to the folder you want the daemon to supervise
-     * @param {Array<String>} [filesBlacklist] An optional array of [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)) strings. Example: `['*.js']` will block all .js files from being scanned by the daemon.
-     * @param {Number} [updateInterval=500] The interval (in milliseconds) at which to scan for changed files. Defaults to `500` ms. Set to `0` to disable the interval. Then call `intervalCall()` to manually scan the folder.
-     * 
-     * @throws {InvalidPathError} Throws an `InvalidPathError` if the path to the folder is invalid
-     * @throws {NotAFolderError} Throws a `NotAFolderError` if the path leads to a file instead of a folder
-     * @throws {PatternInvalidError} Throws a `PatternInvalidError` if the provided glob blacklist pattern is invalid
-     * 
-     * @since 1.10.0
-     */
     constructor(folderPath, filesBlacklist, updateInterval = 500)
     {
         updateInterval = parseInt(updateInterval);
@@ -85,11 +73,6 @@ class FolderDaemon
         this._interval = setInterval(() => this._intervalCall(), updateInterval);
     }
 
-    /**
-     * 🔹 Registers a callback function to be called when the FolderDaemon detects one or more changed files 🔹
-     * @param {Function<String|null, DaemonResult>} [callback_fn] Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an object of type `DaemonResult`
-     * @returns {Promise<DaemonResult, String>} Returns a promise that resolves to an array of type `DaemonResult` or rejects to an error message.
-     */
     onChanged(callback_fn)
     {
         if(typeof callback_fn == "function")
@@ -101,18 +84,11 @@ class FolderDaemon
         });
     }
 
-    /**
-     * 🔹 Removes the previously registered callback function(s) 🔹
-     * @returns {void}
-     */
     removeCallbacks()
     {
-
+        // TODO:
     }
 
-    /**
-     * 🔹 This is called on interval to check the folder but feel free to manually call it if you set the interval to `0` or if you want to check the folder at a precise time 🔹
-     */
     intervalCall()
     {
         fs.readdir(resolve(this._dirPath), (err, files) => {
@@ -132,6 +108,8 @@ class FolderDaemon
                             return;
 
                         let fileStream = fs.createReadStream(filePath);
+
+                        // TODO:
                     });
                 }
             }

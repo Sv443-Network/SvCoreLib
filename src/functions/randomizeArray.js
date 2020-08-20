@@ -1,10 +1,3 @@
-/**
- * 🔹 Randomizes all items in an array 🔹
- * @param {Array<any>} array The array that should be randomized
- * @returns {Array<any>} Returns the randomized array
- * @throws Throws an error if the parameter is not an array
- * @since 1.8.0
- */
 const randomizeArray = array => {
     let retArray = new Array(...array); // has to be done so array and retArray don't point to the same memory address
 

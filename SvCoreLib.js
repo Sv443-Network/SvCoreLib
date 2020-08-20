@@ -39,10 +39,10 @@ module.exports = {
     },
     ping: require("./src/functions/ping"),
     downloadFile: require("./src/functions/downloadFile"),
-    logger: require("./src/functions/logger"),
-    files: {
-        readdirRecursive: require("./src/functions/files/readdirRecursive"),
-        readdirRecursiveSync: require("./src/functions/files/readdirRecursiveSync"),
+    filesystem: {
+        readdirRecursive: require("./src/functions/filesystem/readdirRecursive"),
+        readdirRecursiveSync: require("./src/functions/filesystem/readdirRecursiveSync"),
+        logger: require("./src/functions/filesystem/logger"),
     },
     pause: require("./src/functions/pause"),
     inDebugger: require("./src/functions/inDebugger"),

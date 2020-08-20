@@ -1,10 +1,3 @@
-/**
- * 🔹 Creates an alphanumerical [0-9,A-Z] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
- * @param {String} uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
- * @param {Boolean} [upperCase] Set to true to have all letters in upper case, false for lower case
- * @returns {String}
- * @since 1.8.0
- */
 const alphanumerical = (uuidFormat, upperCase) => {
     let isEmpty = require("../isEmpty");
     let replaceAt = require("../replaceAt");

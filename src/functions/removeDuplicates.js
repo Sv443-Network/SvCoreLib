@@ -1,10 +1,8 @@
-/**
- * 🔹 Removes duplicate items in an array 🔹
- * @param {Array<*>} array An array with any values
- * @returns {Array<*>}
- * @since 1.9.0
- */
-function removeDuplicates(array) {
+function removeDuplicates(array, loose)
+{
+    if(loose === true)
+        return array.filter((a, b) => array.indexOf(a) == b);
+
     return array.filter((a, b) => array.indexOf(a) === b);
 }
 
