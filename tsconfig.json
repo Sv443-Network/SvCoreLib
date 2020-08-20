@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "module": "commonJS",
+        "typeRoots": [
+            "./svcorelib.d.ts"
+        ]
+    }
+}

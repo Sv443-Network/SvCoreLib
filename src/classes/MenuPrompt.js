@@ -6,7 +6,7 @@
  */
 
 /**
- * @typedef {Object} MenuPropmtMenu
+ * @typedef {Object} MenuPromptMenu
  * @prop {String} title The title of this menu
  * @prop {Array<MenuPromptMenuOption>} options An array of options for this menu
  */
@@ -277,7 +277,7 @@ ${this._options.cursorPrefix} \
     /**
      * 🔹 Adds a new menu to the menu prompt.
      * You can even add new menus while the MenuPrompt is already open. 🔹
-     * @param {MenuPropmtMenu} menu
+     * @param {MenuPromptMenu} menu
      * @returns {(Boolean|String)} Returns true, if the menu could be added or a string containing an error message, if not
      * @since 1.8.0
      */
@@ -332,7 +332,7 @@ ${this._options.cursorPrefix} \
     //#MARKER validateMenu
     /**
      * 🔹 Checks a menu for valid syntax 🔹
-     * @param {MenuPropmtMenu} menu The menu that should be validated
+     * @param {MenuPromptMenu} menu The menu that should be validated
      * @returns {(Boolean|Array<String>)} Returns true if the menu is valid, a string array containing the error messages if not
      * @throws Throws an error if a falsy parameter or no parameter at all was passed
      */

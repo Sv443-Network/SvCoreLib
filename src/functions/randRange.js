@@ -4,6 +4,8 @@
  * ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ⚠️
  * @param {number} min Lower boundary of the RNG
  * @param {number} max Upper boundary of the RNG
+ * @returns {number} 
+ * @throws Throws an error if the arguments are not of type 'Number'
  * @since 1.5.0
  */
 const randRange = (min, max) => {
