@@ -2,6 +2,10 @@
     "compilerOptions": {
         "module": "commonJS",
         "typeRoots": [
+            "./SvCoreLib.d.ts"
+        ],
+        "types": [
+            "node"
             "SvCoreLib.d.ts"
         ]
     }
