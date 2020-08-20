@@ -40,8 +40,10 @@ module.exports = {
     ping: require("./src/functions/ping"),
     downloadFile: require("./src/functions/downloadFile"),
     logger: require("./src/functions/logger"),
-    readdirRecursive: require("./src/functions/readdirRecursive"),
-    readdirRecursiveSync: require("./src/functions/readdirRecursiveSync"),
+    files: {
+        readdirRecursive: require("./src/functions/files/readdirRecursive"),
+        readdirRecursiveSync: require("./src/functions/files/readdirRecursiveSync"),
+    },
     pause: require("./src/functions/pause"),
     inDebugger: require("./src/functions/inDebugger"),
 
@@ -49,12 +51,7 @@ module.exports = {
     ProgressBar: require("./src/classes/ProgressBar"),
     MenuPrompt: require("./src/classes/MenuPrompt"),
 
-
     //#MARKER objects
     info: require("./src/objects/info"),
-    colors: require("./src/objects/colors"),
-
-    //#MARKER deprecated
-    version: require("./src/deprecated").version,
-    consoleColor: require("./src/deprecated").consoleColor,
+    colors: require("./src/objects/colors")
 };

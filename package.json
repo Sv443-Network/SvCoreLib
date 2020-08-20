@@ -29,6 +29,10 @@
     {
       "name": "ThatCopy",
       "url": "https://github.com/ThatCopy"
+    },
+    {
+      "name": "canarado",
+      "url": "https://github.com/canarado/"
     }
   ],
   "license": "MIT",
@@ -37,7 +41,8 @@
   },
   "homepage": "https://github.com/Sv443/SvCoreLib#readme",
   "dependencies": {
-    "fs-extra": "^9.0.1"
+    "fs-extra": "^9.0.1",
+    "minimatch": "^3.0.4"
   },
   "devDependencies": {
     "@types/node": "^14.6.0"
