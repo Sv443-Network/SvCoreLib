@@ -4,4 +4,5 @@ const allEqual = array => {
 
     return array.every(v => v === array[0]);
 }
+
 module.exports = allEqual;

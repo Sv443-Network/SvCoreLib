@@ -631,9 +631,10 @@ export class PatternInvalidError extends Error {
 export class FolderDaemon {
     /**
      * 🔹 Constructs a new object of class FolderDaemon.  
-     * The FolderDaemon supervises a folder and listens for changes in the files and then it executes a callback function. 🔹
+     * The FolderDaemon supervises a folder and listens for changes in the files and then it executes a callback function that is registered with the method `onChanged()`. 🔹
      * @param folderPath The path to the folder you want the daemon to supervise
      * @param filesBlacklist An optional array of [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)) strings. Example: `['*.js']` will block all .js files from being scanned by the daemon.
+     * @param recursive Set to `true` to scan for files recursively (in subdirectories). Defaults to `false`
      * @param updateInterval The interval (in milliseconds) at which to scan for changed files. Defaults to `500` ms. Set to `0` to disable the interval, then call `intervalCall()` to manually scan the folder.
      * 
      * @throws Throws an `InvalidPathError` if the path to the folder is invalid
@@ -642,24 +643,25 @@ export class FolderDaemon {
      * 
      * @since 1.10.0
      */
-    constructor(folderPath: string, filesBlacklist?: string[], updateInterval?: number)
+    constructor(folderPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number);
 
     /**
-     * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹
-     * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an object of type `DaemonResult`
-     * @returns Returns a promise that resolves to an array of type `DaemonResult` or rejects to an error message.
+     * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹  
+     * ⚠️ Warning: If you use the Promise API, due to how it works fundamentally, you will only receive a single callback. If you want to receive more than one callback, either call this function again once the Promise has resolved for the first time or use the callback_fn parameter
+     * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an array of strings, which are the absolute paths of the changed files
+     * @returns Returns a promise that resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
      */
     onChanged(callback_fn: (error: null | string, daemonResult: string[]) => {}): Promise<string[]>;
 
     /**
      * 🔹 Removes the previously registered callback function(s) 🔹
      */
-    removeCallbacks();
+    removeCallbacks(): void;
 
     /**
      * 🔹 This is called on interval to check the folder but feel free to manually call it if you set the interval to `0` or if you want to check the folder at a precise time 🔹
      */
-    intervalCall()
+    intervalCall(): void;
 }
 
 //#MARKER objects

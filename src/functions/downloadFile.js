@@ -120,4 +120,5 @@ function downloadFile(url, destPath = "./", options)
         req2.end();
     });
 }
+
 module.exports = downloadFile;

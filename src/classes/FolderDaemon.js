@@ -1,10 +1,11 @@
-// const minimatch = require("minimatch");
+const minimatch = require("minimatch");
 const fs = require("fs-extra");
-const { resolve } = require("path");
+const { resolve, join } = require("path");
+const crypto = require("crypto");
+const reserialize = require("../functions/reserialize");
+const { diff } = require("deep-diff");
+const readdirRecursive = require("../functions/filesystem/readdirRecursive");
 
-/**
- * @typedef {Array<String>} DaemonResult An array of strings containing file paths
- */
 
 class InvalidPathError extends Error
 {
@@ -36,11 +37,11 @@ class PatternInvalidError extends Error
 
 class FolderDaemon
 {
-    constructor(folderPath, filesBlacklist, updateInterval = 500)
+    constructor(folderPath, filesBlacklist, recursive = false, updateInterval = 500)
     {
         updateInterval = parseInt(updateInterval);
 
-        if(!updateInterval || isNaN(updateInterval))
+        if((!updateInterval && updateInterval !== 0) || isNaN(updateInterval))
             updateInterval = 500;
 
         try
@@ -63,14 +64,25 @@ class FolderDaemon
         if(filesBlacklist != undefined && !Array.isArray(filesBlacklist))
             throw new PatternInvalidError(`Blacklist glob pattern parameter was provided but is not an array containing strings`);
 
+        if(typeof recursive != "boolean")
+            recursive = false;
+        
+        this._recursive = recursive;
+
         this._callbackAttached = false;
         this._callbackFn = () => {};
         this._blacklistPattern = filesBlacklist || [];
 
-        this._lastHash = null;
-        this._currentHash = null;
+        this._lastHashes = {};
+        this._currentHashes = {};
 
-        this._interval = setInterval(() => this._intervalCall(), updateInterval);
+        if(updateInterval > 0)
+        {
+            this._interval = setInterval(() => this.intervalCall(), updateInterval);
+            this.intervalCall();
+        }
+
+        return this;
     }
 
     onChanged(callback_fn)
@@ -86,32 +98,109 @@ class FolderDaemon
 
     removeCallbacks()
     {
-        // TODO:
+        this._callbackFn = () => {};
+        this._promiseResolve = () => {};
+        this._promiseReject = () => {};
     }
 
     intervalCall()
     {
-        fs.readdir(resolve(this._dirPath), (err, files) => {
-            if(err)
+        this.scanDir().then(files => {
+            if(Array.isArray(files))
             {
-                this._callbackFn(err);
-                this._promiseReject(err);
+                let promises = [];
+
+                let hashFile = (filePath) => {
+                    return new Promise((hashResolve) => {
+                        if(!fs.statSync(filePath).isFile())
+                            return hashResolve(null);
+
+                        let fileStream = fs.createReadStream(filePath);
+                        let hash = crypto.createHash("sha1");
+                        
+                        hash.setEncoding("hex");
+
+                        fileStream.on("end", () => {
+                            hash.end();
+
+                            return hashResolve({
+                                path: filePath,
+                                hash: hash.read()
+                            });
+                        });
+
+                        fileStream.pipe(hash);
+                    });
+                }
+
+                files.forEach(file => {
+                    this._blacklistPattern.forEach(pattern => {
+                        if(minimatch(file, pattern))
+                            return;
+                        
+                        let filePath = !this._recursive ? join(this._dirPath, file) : file;
+
+                        promises.push(hashFile(filePath));
+                    });
+                });
+
+                Promise.all(promises).then(results => {
+                    this._currentHashes = {};
+
+                    results.forEach(result => {
+                        if(typeof result == "object" && result != null)
+                            this._currentHashes[result.path] = result.hash;
+                    });
+
+                    if(Object.keys(this._lastHashes).length == 0)
+                        this._lastHashes = reserialize(this._currentHashes);
+
+                    let deepDiff = diff(this._lastHashes, this._currentHashes);
+
+                    if(Array.isArray(deepDiff) && deepDiff.length > 0)
+                    {
+                        // files have changed
+                        let changedFiles = deepDiff.map(match => match.path[0]);
+
+                        this._callbackFn(null, changedFiles);
+                        this._promiseResolve(changedFiles);
+                    }
+
+                    this._lastHashes = reserialize(this._currentHashes);
+                }).catch(err => {
+                    return this._promiseReject(`Error while scanning through folder: ${err}`);
+                });
+            }
+        }).catch(err => {
+            this._callbackFn(err);
+            this._promiseReject(err);
+        });
+    }
+
+    /**
+     * ❌ Private method - don't use ❌
+     * @private
+     * @returns {Promise<Array<String>>}
+     */
+    scanDir()
+    {
+        return new Promise((res, rej) => {
+            if(!this._recursive)
+            {
+                fs.readdir(resolve(this._dirPath), (err, files) => {
+                    if(!err)
+                        return res(files);
+                    else
+                        return rej(err);
+                });
             }
             else
             {
-                if(Array.isArray(files))
-                {
-                    files.forEach(file => {
-                        let filePath = resolve(file);
-
-                        if(!fs.statSync(filePath).isFile())
-                            return;
-
-                        // let fileStream = fs.createReadStream(filePath);
-
-                        // TODO:
-                    });
-                }
+                readdirRecursive(resolve(this._dirPath)).then(results => {
+                    return res(results);
+                }).catch(err => {
+                    return rej(err);
+                })
             }
         });
     }

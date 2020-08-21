@@ -50,6 +50,7 @@ module.exports = {
     //#MARKER classes
     ProgressBar: require("./src/classes/ProgressBar"),
     MenuPrompt: require("./src/classes/MenuPrompt"),
+    FolderDaemon: require("./src/classes/FolderDaemon"),
 
     //#MARKER objects
     info: require("./src/objects/info"),

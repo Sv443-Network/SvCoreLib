@@ -1,11 +1,3 @@
-/**
- * @typedef {Object} SeededRandomNumbers
- * @prop {Array<Number>} numbers An array of the random numbers
- * @prop {String} stringified The random numbers, but as a string
- * @prop {Number} integer The random numbers, but as an integer
- * @prop {Number} seed The seed that was used to create the random numbers
- */
-
 const generateSeededNumbers = (count = 16, seed) => { // thanks to olsn for this code snippet: http://indiegamr.com/generate-repeatable-random-numbers-in-js/
     let isEmpty = require("../isEmpty");
     let generateRandomSeed = require("./generateRandomSeed");
@@ -43,4 +35,5 @@ const generateSeededNumbers = (count = 16, seed) => { // thanks to olsn for this
         seed: initialSeed,
     }
 }
+
 module.exports = generateSeededNumbers;

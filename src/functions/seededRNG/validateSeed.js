@@ -19,4 +19,5 @@ const validateSeed = (seed) => {
 
     return true;
 }
+
 module.exports = validateSeed;

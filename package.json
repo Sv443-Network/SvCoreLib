@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/Sv443/SvCoreLib#readme",
   "dependencies": {
+    "deep-diff": "^1.0.2",
     "fs-extra": "^9.0.1",
     "minimatch": "^3.0.4"
   },

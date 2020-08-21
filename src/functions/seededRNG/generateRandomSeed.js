@@ -16,4 +16,5 @@ const generateRandomSeed = (digitCount = 10) => {
 
     return parseInt(seed);
 }
+
 module.exports = generateRandomSeed;
