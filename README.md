@@ -2,6 +2,18 @@
 ### This is a core dependency of all of my Node.js projects and a continuation of [JSLib-npm](https://github.com/Sv443/JSLib-npm)
 Although it is intended for my own projects, feel free to use this library (make sure to follow [the license terms](https://sv443.net/LICENSE) though)
 
+<br>
+
+## [Click here to go to the documentation](./docs.md)
+
+<br><br>
+
+## Install:
+Use this command in a terminal window inside your Node.js project:
+```
+npm i svcorelib
+```
+
 <br><br>
 
 ## Most notable features:

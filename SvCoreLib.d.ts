@@ -426,7 +426,7 @@ declare namespace filesystem {
      * @since 1.7.0
      * @version 1.9.2 Now this function also supports the Promise API
      */
-    export function readdirRecursive(folder: string, callback?: (any) => any): Promise<any>;
+    export function readdirRecursive(folder: string, callback?: (result: string[]) => void): Promise<string[]>;
 
     /**
      * 🔹 Reads a folder synchronously and recursively and returns all absolute file paths (starting at the drive letter (eg. "C:/Users/...")) in the callback 🔹  
