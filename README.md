@@ -7,12 +7,23 @@ Although it is intended for my own projects, feel free to use this library (make
 ## Most notable features:
 - interactive CLI tools like a menu and a progress bar
 - networking tools like downloading files and pinging URLs or efficiently serving data to a connecting client
-- file system tools like reading a directory recursively
+- file system tools like reading a directory recursively or supervising a directory for changes
 - randomization tools like generating UUIDs or a seeded RNG
 - misc tools like complex mathematics and array manipulation
 
+<br><br>
 
 ## Contributors:
 Thank you very, very much to these contributors for improving SvCoreLib ❤️
-- [canarado](https://github.com/canarado) (TypeScript type declarations, fixed grammar)
-- [ThatCopy](https://github.com/ThatCopy) (Fixed documentation)
+| Contributor | Their Contribution(s) |
+| --- | --- |
+| [canarado](https://github.com/canarado) | TypeScript type declarations, fixed grammar |
+| [ThatCopy](https://github.com/ThatCopy) | Fixed documentation |
+
+<br><br>
+
+## Dependencies:
+I coded SvCoreLib so it needs as few dependencies as possible, but in order to ensure quality and stability, these dependencies are needed:
+- [deep-diff](https://npmjs.com/package/deep-diff)
+- [fs-extra](https://npmjs.com/package/fs-extra)
+- [minimatch](https://npmjs.com/package/minimatch)

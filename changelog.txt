@@ -7,6 +7,8 @@
 
 [CURRENT: 1.10.0] - The initial release
     - added all features from JSLib-npm v1.9.4
+    - added a TypeScript type declaration file so the in-IDE documentation and type safety is even better than before
+    - added the class `FolderDaemon` to supervise a directory for changed files
     - added functions
         - `reserialize()` to copy a JSON-compatible object by value and lose the reference
         - `byteLength()` to return the length of a string in bytes
