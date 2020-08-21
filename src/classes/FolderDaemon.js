@@ -1,4 +1,4 @@
-const minimatch = require("minimatch");
+// const minimatch = require("minimatch");
 const fs = require("fs-extra");
 const { resolve } = require("path");
 
@@ -107,7 +107,7 @@ class FolderDaemon
                         if(!fs.statSync(filePath).isFile())
                             return;
 
-                        let fileStream = fs.createReadStream(filePath);
+                        // let fileStream = fs.createReadStream(filePath);
 
                         // TODO:
                     });
