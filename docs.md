@@ -61,8 +61,6 @@ This is the documentation of SvCoreLib (also referred to as SCL)
 
 <!-- #MARKER Installation -->
 # Installation
-[(click to link to this header)](#installation)  
-  
 To install SCL, use the following command in a terminal inside your Node.js project:  
 ```
 npm i svcorelib
@@ -73,8 +71,6 @@ Troubleshooting: Make sure your workspace conains a `package.json` file. If not,
 
 <!-- #MARKER Usage -->
 # Usage
-[(click to link to this header)](#usage)  
-  
 This explains how you can use SCL in your project.  
   
 If your project runs on "normal" Node.js (or CommonJS), use the following at the top of the file you want to include SCL in:
@@ -94,9 +90,6 @@ The variable `scl` now contains all of SCL's functions, classes and objects.
 
 <!-- #MARKER In-IDE Documentation -->
 # In-IDE Documentation
-[(click to link to this header)](#in-ide-documentation)  
-  
-
 SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide documentation directly in your IDE.  
 Here is an example of how it looks in [Visual Studio Code](https://code.visualstudio.com/):  
 <div align="center" style="text-align: center">
@@ -119,8 +112,6 @@ Here is an example of how it looks in [Visual Studio Code](https://code.visualst
 
 <!-- #MARKER Functions -->
 # Functions
-[(click to link to this header)](#functions)  
-  
 This section tells you all about the static functions SCL offers.  
 You can call these without the `new` keyword.  
 
@@ -128,9 +119,6 @@ You can call these without the `new` keyword.
 
 <!-- #SECTION File System -->
 ## File System
-[(click to link to this header)](#file-system)  
-  
-
 This object, accessed with `scl.filesystem`, contains a few file-related functions.
 
 <br><br>
@@ -143,11 +131,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > scl.filesystem.logger(path: string[, content: string, options: LoggerOptions]): void
 > ```
 > 
-> <br><details><summary>
-> 
-> ### Example Code - click to show
-> 
-> </summary>
+> <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
 > let opts = {
@@ -168,10 +152,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > }
 > ```
 
-<br>
-
-[▲ back to the top ▲](#table-of-contents)
-
 
 <br><br><br>
 
@@ -189,11 +169,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > scl.filesystem.readdirRecursive(folder: string[, callback: function]): Promise<string[]>
 > ```
 > 
-> <br><details><summary>
-> 
-> ### Example Code - click to show
-> 
-> </summary>
+> <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
 > scl.filesystem.readdirRecursive("./").then(result => {
@@ -207,10 +183,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 >     */
 > }).catch(err => console.error(err));
 > ```
-
-<br>
-
-[▲ back to the top ▲](#table-of-contents)
 
 
 <br><br><br>
@@ -226,11 +198,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > scl.filesystem.readdirRecursive(folder: string[, callback: function]): Promise<string[]>
 > ```
 > 
-> <br><details><summary>
-> 
-> ### Example Code - click to show
-> 
-> </summary>
+> <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
 > let paths = scl.filesystem.readdirRecursive("./");
@@ -244,10 +212,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 >     ]
 > */
 > ```
-
-<br>
-
-[▲ back to the top ▲](#table-of-contents)
 
 
 <br><br><br>
