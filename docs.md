@@ -185,7 +185,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 
 
 > ### filesystem.readdirRecursiveSync()
-> Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursives), but this function blocks code execution, thus making it synchronous.  
+> Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution, thus making it synchronous.  
 >   
 > ⚠️ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
