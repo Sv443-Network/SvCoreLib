@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const { resolve, join, basename } = require("path");
 const crypto = require("crypto");
 const reserialize = require("../functions/reserialize");
-const { diff } = require("deep-diff");
+const diff = require("deep-diff");
 const readdirRecursive = require("../functions/filesystem/readdirRecursive");
 
 
@@ -114,22 +114,37 @@ class FolderDaemon
                     return new Promise((hashResolve) => {
                         if(!fs.statSync(filePath).isFile())
                             return hashResolve(null);
-
-                        let fileStream = fs.createReadStream(filePath);
-                        let hash = crypto.createHash("sha1");
                         
-                        hash.setEncoding("hex");
+                        fs.stat(filePath, (err, stats) => {
+                            if(err)
+                                return hashResolve(null);
 
-                        fileStream.on("end", () => {
-                            hash.end();
+                            if(stats.size == 0)
+                            {
+                                return hashResolve({
+                                    path: filePath,
+                                    hash: "FILE_EMPTY"
+                                });
+                            }
 
-                            return hashResolve({
-                                path: filePath,
-                                hash: hash.read()
+                            let fileStream = fs.createReadStream(filePath);
+                            let hash = crypto.createHash("sha1");
+                            
+                            hash.setEncoding("hex");
+
+                            fileStream.on("end", () => {
+                                hash.end();
+
+                                let hash = hash.read();
+
+                                return hashResolve({
+                                    path: filePath,
+                                    hash
+                                });
                             });
-                        });
 
-                        fileStream.pipe(hash);
+                            fileStream.pipe(hash);
+                        });
                     });
                 }
 
@@ -138,7 +153,7 @@ class FolderDaemon
                         let match = minimatch(basename(file), pattern);
                         if(match)
                             return;
-                        
+
                         let filePath = !this._recursive ? join(this._dirPath, file) : file;
 
                         promises.push(hashFile(filePath));
