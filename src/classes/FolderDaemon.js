@@ -1,6 +1,6 @@
 const minimatch = require("minimatch");
 const fs = require("fs-extra");
-const { resolve, join } = require("path");
+const { resolve, join, basename } = require("path");
 const crypto = require("crypto");
 const reserialize = require("../functions/reserialize");
 const { diff } = require("deep-diff");
@@ -37,7 +37,7 @@ class PatternInvalidError extends Error
 
 class FolderDaemon
 {
-    constructor(folderPath, filesBlacklist, recursive = false, updateInterval = 500)
+    constructor(dirPath, filesBlacklist, recursive = false, updateInterval = 500)
     {
         updateInterval = parseInt(updateInterval);
 
@@ -46,19 +46,19 @@ class FolderDaemon
 
         try
         {
-            let dirPath = resolve(folderPath);
+            let dPath = resolve(dirPath);
 
             if(!fs.pathExistsSync)
-                throw new InvalidPathError(`Path "${dirPath}" is invalid or couldn't be resolved`);
+                throw new InvalidPathError(`Path "${dPath}" is invalid or couldn't be resolved`);
 
-            if(!fs.statSync(dirPath).isDirectory())
-                throw new NotAFolderError(`Path "${dirPath}" is not a folder`);
+            if(!fs.statSync(dPath).isDirectory())
+                throw new NotAFolderError(`Path "${dPath}" is not a directory`);
 
-            this._dirPath = dirPath;
+            this._dirPath = dPath;
         }
         catch(err)
         {
-            throw new InvalidPathError(`Path "${folderPath}" is invalid or couldn't be resolved`);
+            throw new InvalidPathError(`Path "${dirPath}" is invalid or couldn't be resolved`);
         }
 
         if(filesBlacklist != undefined && !Array.isArray(filesBlacklist))
@@ -135,7 +135,8 @@ class FolderDaemon
 
                 files.forEach(file => {
                     this._blacklistPattern.forEach(pattern => {
-                        if(minimatch(file, pattern))
+                        let match = minimatch(basename(file), pattern);
+                        if(match)
                             return;
                         
                         let filePath = !this._recursive ? join(this._dirPath, file) : file;
@@ -168,7 +169,7 @@ class FolderDaemon
 
                     this._lastHashes = reserialize(this._currentHashes);
                 }).catch(err => {
-                    return this._promiseReject(`Error while scanning through folder: ${err}`);
+                    return this._promiseReject(`Error while scanning through directory: ${err}`);
                 });
             }
         }).catch(err => {

@@ -444,6 +444,9 @@ declare namespace filesystem {
 /**
  * Creates a dynamic progress bar in the CLI  
  *   
+ * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**  
+ *   
+ * Example:  
  * ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png)
  */
 export class ProgressBar {
@@ -549,6 +552,14 @@ export interface MenuPromptLocalization {
     exitOptionText: string;
 }
 
+/**
+ * Creates an interactive prompt in the CLI with one or more menus  
+ *   
+ * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**  
+ *   
+ * Example:  
+ * ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
+ */
 export class MenuPrompt {
     /**
      * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.  
@@ -613,37 +624,27 @@ export class MenuPrompt {
     validateMenu(menu: MenuPromptMenu): boolean | string[];
 }
 
-/** An error that gets thrown when a path is invalid */
-export class InvalidPathError extends Error {
-    name: "Invalid Path Error";
-}
-
-/** An error that gets thrown when a path leads to a file instead of a folder */
-export class NotAFolderError extends Error {
-    name: "Not A Folder Error";
-}
-
-/** Throws an error if a glob pattern is invalid */
-export class PatternInvalidError extends Error {
-    name: "Pattern Invalid Error";
-}
-
+/**
+ * Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
+ *   
+ * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
+ */
 export class FolderDaemon {
     /**
      * 🔹 Constructs a new object of class FolderDaemon.  
-     * The FolderDaemon supervises a folder and listens for changes in the files and then it executes a callback function that is registered with the method `onChanged()`. 🔹
-     * @param folderPath The path to the folder you want the daemon to supervise
+     * The FolderDaemon supervises a directory and listens for changes in the files and then it executes a callback function that is registered with the method `onChanged()`. 🔹
+     * @param dirPath The path to the directory you want the daemon to supervise
      * @param filesBlacklist An optional array of [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)) strings. Example: `['*.js']` will block all .js files from being scanned by the daemon.
      * @param recursive Set to `true` to scan for files recursively (in subdirectories). Defaults to `false`
-     * @param updateInterval The interval (in milliseconds) at which to scan for changed files. Defaults to `500` ms. Set to `0` to disable the interval, then call `intervalCall()` to manually scan the folder.
+     * @param updateInterval The interval (in milliseconds) at which to scan for changed files. Defaults to `500` ms. Set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.
      * 
-     * @throws Throws an `InvalidPathError` if the path to the folder is invalid
-     * @throws Throws a `NotAFolderError` if the path leads to a file instead of a folder
+     * @throws Throws an `InvalidPathError` if the path to the directory is invalid
+     * @throws Throws a `NotAFolderError` if the path leads to a file instead of a directory
      * @throws Throws a `PatternInvalidError` if the provided glob blacklist pattern is invalid
      * 
      * @since 1.10.0
      */
-    constructor(folderPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number);
+    constructor(dirPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number);
 
     /**
      * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹  
