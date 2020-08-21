@@ -124,8 +124,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 <br><br>
 
 > ### filesystem.logger()
-> [(click to link to this header)](#filesystemlogger)  
->   
 > This function logs a message to a file
 > ```ts
 > scl.filesystem.logger(path: string[, content: string, options: LoggerOptions]): void
@@ -157,8 +155,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 
 
 > ### filesystem.readdirRecursive()
-> [(click to link to this header)](#filesystemreaddirrecursive)  
->   
 > Used to recursively search through a directory, returning an array of all files and folders contained within.  
 > The returned paths are always absolute, meaning they start on `C:\` (Windows) or `/` (Unix).  
 > If you want relative paths instead, use the function [`relative()`](https://nodejs.org/api/path.html#path_path_relative_from_to) of Node's builtin `path` module.  
@@ -189,8 +185,6 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 
 
 > ### filesystem.readdirRecursiveSync()
-> [(click to link to this header)](#filesystemreaddirrecursivesync)  
->   
 > Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursives), but this function blocks code execution, thus making it synchronous.  
 >   
 > ⚠️ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
