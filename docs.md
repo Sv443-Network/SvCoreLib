@@ -84,7 +84,7 @@ import * as scl from "svcorelib";
 
 <br>
 
-The variable `scl` now contains all of SCL's functions, classes, and objects.
+The variable `scl` now contains all of SCL's functions, classes and objects.
 
 <br><br><br><br><br>
 
