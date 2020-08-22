@@ -66,7 +66,7 @@ To install SCL, use the following command in a terminal inside your Node.js proj
 ```
 npm i svcorelib
 ```
-Troubleshooting: Make sure your workspace conains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.  
+Troubleshooting: Make sure your workspace contains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.  
 
 <br><br><br><br><br>
 
