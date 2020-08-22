@@ -40,12 +40,13 @@ export function error(cause: string, log_file_path?: string, shutdown?: boolean,
 /**
  * 🔹 Tests an array and returns true if all values are equal. 🔹
  * @param array The array you want to test
+ * @param loose Set to `true` to use loose equality comparison instead of strict equality comparison. Defaults to `false`
  * @returns true if all values are equal, false if not
  * @throws Throws an error if the parameter is not an array
  * @since 1.5.0
  * @version 1.8.0 Throwing error now instead of returning string
  */
-export function allEqual(array: any[]): boolean;
+export function allEqual(array: any[], loose?: boolean): boolean;
 
 /**
  * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
@@ -215,7 +216,7 @@ declare namespace seededRNG {
      * @returns An object containing the seed and the random number in three different formats
      * @since 1.8.0
      */
-    export function generateSeededNumbers(count?: number, seed?: number): SeededRandomNumbers;
+    export function generateSeededNumbers(count?: number, seed?: number | string): SeededRandomNumbers;
     
     /**
      * 🔹 Creates a random seed 🔹

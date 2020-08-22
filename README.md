@@ -19,9 +19,9 @@ npm i svcorelib
 ## Most notable features:
 - interactive CLI tools like a menu and a progress bar
 - networking tools like downloading files and pinging URLs or efficiently serving data to a connecting client
-- file system tools like reading a directory recursively or supervising a directory for changes
+- file system tools like reading a directory recursively, downloading a file or supervising a directory for changes
 - randomization tools like generating UUIDs or a seeded RNG
-- misc tools like complex mathematics and array manipulation
+- misc tools like relatively complex mathematics and array manipulation
 
 <br><br>
 
@@ -30,7 +30,7 @@ Thank you very, very much to these contributors for improving SvCoreLib ❤️
 | Contributor | Their Contribution(s) |
 | --- | --- |
 | [canarado](https://github.com/canarado) | TypeScript type declarations, fixed grammar |
-| [ThatCopy](https://github.com/ThatCopy) | Fixed documentation |
+| [ThatCopy](https://github.com/ThatCopy) | Fixed documentation, tested the code |
 
 <br><br>
 

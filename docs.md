@@ -27,27 +27,28 @@ This is the documentation of SvCoreLib (also referred to as SCL)
         - [seededRNG.generateRandomSeed()](#seededrnggeneraterandomseed)
         - [seededRNG.generateSeededNumbers()](#seededrnggenerateseedednumbers)
         - [seededRNG.validateSeed()](#seededrngvalidateseed)
-    - [allEqual()](#allequal)
-    - [byteLength()](#bytelength)
-    - [downloadFile()](#downloadfile)
-    - [error()](#error)
-    - [inDebugger()](#indebugger)
-    - [isArrayEmpty()](#isarrayempty)
-    - [isEmpty()](#isempty)
-    - [mapRange()](#maprange)
-    - [noShutdown()](#noshutdown)
-    - [pause()](#pause)
-    - [ping()](#ping)
-    - [randomItem()](#randomitem)
-    - [randomizeArray()](#randomizearray)
-    - [randRange()](#randrange)
-    - [readableArray()](#readablearray)
-    - [removeDuplicates()](#removeduplicates)
-    - [replaceAt()](#replaceat)
-    - [reserialize()](#reserialize)
-    - [softShutdown()](#softshutdown)
-    - [unused()](#unused)
-    - [yesShutdown()](#yesshutdown)
+    - [Other](#other)
+        - [allEqual()](#allequal)
+        - [byteLength()](#bytelength)
+        - [downloadFile()](#downloadfile)
+        - [error()](#error)
+        - [inDebugger()](#indebugger)
+        - [isArrayEmpty()](#isarrayempty)
+        - [isEmpty()](#isempty)
+        - [mapRange()](#maprange)
+        - [noShutdown()](#noshutdown)
+        - [pause()](#pause)
+        - [ping()](#ping)
+        - [randomItem()](#randomitem)
+        - [randomizeArray()](#randomizearray)
+        - [randRange()](#randrange)
+        - [readableArray()](#readablearray)
+        - [removeDuplicates()](#removeduplicates)
+        - [replaceAt()](#replaceat)
+        - [reserialize()](#reserialize)
+        - [softShutdown()](#softshutdown)
+        - [unused()](#unused)
+        - [yesShutdown()](#yesshutdown)
 - [Classes](#classes)
     - [FolderDaemon](#folderdaemon)
     - [MenuPrompt](#menuprompt)
@@ -126,7 +127,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > ### filesystem.logger()
 > This function logs a message to a file
 > ```ts
-> scl.filesystem.logger(path: string[, content: string, options: LoggerOptions]): void
+> scl.filesystem.logger(path: string, content?: string, options?: LoggerOptions): void
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -162,7 +163,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > This is an asynchronous function. You can either pass a callback function as the second parameter or use the Promise API (`.then()`).  
 > This function is less resource-heavy than the synchronous [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync) and it doesn't block the execution of the rest of your code so it is recommended that you try to use this function over the synchronous one.
 > ```ts
-> scl.filesystem.readdirRecursive(folder: string[, callback: function]): Promise<string[]>
+> scl.filesystem.readdirRecursive(folder: string, callback?: function): Promise<string[]>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -189,7 +190,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 >   
 > ⚠️ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
-> scl.filesystem.readdirRecursive(folder: string[, callback: function]): Promise<string[]>
+> scl.filesystem.readdirRecursive(folder: string, callback?: function): Promise<string[]>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -220,14 +221,16 @@ This parameter is a string that should contain the characters `x` and `y`. These
 Prefixing an `x` or `y` with a caret (`^`) will prevent it from being replaced with a random letter or number.  
 Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 
+
 <br><br>
+
 
 > ### generateUUID.alphanumerical()
 > This function generates an alphanumerical (`A-Z0-9` or `a-z0-9`) UUID.  
 > The parameter `uuidFormat` is explained [here.](#generate-uuid)  
 > If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
 > ```ts
-> scl.generateUUID.alphanumerical(uuidFormat: string[, upperCase: boolean]): string
+> scl.generateUUID.alphanumerical(uuidFormat: string, upperCase?: boolean): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -249,7 +252,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > The parameter `uuidFormat` is explained [here.](#generate-uuid)  
 > If the parameter `asBooleanArray` is set to `true`, the resulting UUID will be an array of booleans. Any characters that aren't `x` or `y` will then be ignored.
 > ```ts
-> scl.generateUUID.binary(uuidFormat: string[, asBooleanArray: boolean]): string | boolean[]
+> scl.generateUUID.binary(uuidFormat: string, asBooleanArray?: boolean): string | boolean[]
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -324,7 +327,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > The parameter `uuidFormat` is explained [here.](#generate-uuid)  
 > If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
 > ```ts
-> scl.generateUUID.hexadecimal(uuidFormat: string[, upperCase: boolean]): string
+> scl.generateUUID.hexadecimal(uuidFormat: string, upperCase?: boolean): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -401,7 +404,7 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 >   
 > The function will return `null` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeFile(res: http.ServerResponse, filePath: string[, mimeType: string, statusCode: number]): null | string
+> scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -443,7 +446,7 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 >   
 > The function will return `null` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeString(res: http.ServerResponse, text: string[, mimeType: string, statusCode: number]): null | string
+> scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -468,9 +471,225 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 > </details>
 
 
+<br><br><br><br>
+
+
+<!-- #SECTION Seeded RNG -->
+## Seeded RNG
+This object, accessed with `scl.seededRNG`, offers a few functions to generate numbers based on a seed.  
+This means that using the same seed, you will be able to generate the same numbers over and over again, just like Minecraft's world seeds for example.  
+Seeds in SCL need to be of a certain format. Some other functions in this section will help you accomplish just that.
+
+
+<br><br>
+
+
+> ### seededRNG.generateRandomSeed()
+> This function generates a random seed to be used in [generateSeededNumbers()](#seededrnggenerateseedednumbers)  
+> Since seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`), I recommend you use this function to randomize the seeds.  
+>   
+> The parameter `digitCount` specifies how many digits the resulting seed should have.
+> ```ts
+> scl.seededRNG.generateRandomSeed(digitCount: number): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let seed = scl.seededRNG.generateRandomSeed(5);
+> 
+> console.log(seed); // 35091
+> ```
+> 
+> </details>
+
+
 <br><br><br>
 
 
+> ### seededRNG.generateSeededNumbers()
+> This function generates the actual pseudo-random numbers based on a seed.  
+>   
+> Seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`).  
+> That's why I recommend generating them with [generateRandomSeed()](#seededrnggeneraterandomseed) or validating them with [validateSeed()](#seededrngvalidateseed).
+>   
+> With the parameter `count` you can specify how many pseudo-random numbers you want to receive. Defaults to 16 if left undefined.  
+> The `seed` parameter is where you should provide your seed. If no seed is provided, a random seed will be generated. You will be able to access this seed in the returned object.
+> ```ts
+> scl.seededRNG.generateSeededNumbers(count?: number, seed?: number | string): SeededRandomNumbers
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let seed = scl.seededRNG.generateRandomSeed(5); // 58157
+> 
+> let foo = scl.seededRNG.generateSeededNumbers(8, seed);
+> let bar = scl.seededRNG.generateSeededNumbers(8, seed);
+> 
+> console.log(foo.integer === bar.integer); // true - the numbers are identical since the seed is identical
+> 
+> console.log(foo); // { ... } - (see below for how this object is structured)
+> ```
+> 
+> </details><br>
+> 
+> ### SeededRandomNumbers object
+> ```ts
+> {
+>     numbers: number[],   // an array of numbers
+>     stringified: string, // a string containing the numbers
+>     integer: number,     // the generated numbers as an integer / number
+>     seed: number         // the seed that was used to generate the numbers
+> }
+> ```
+
+
+<br><br><br>
+
+
+> ### seededRNG.validateSeed()
+> This function validates a seed to be used in [generateSeededNumbers()](#seededrnggenerateseedednumbers)  
+> It is especially useful to validate user-entered seeds.  
+>   
+> Seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`).  
+> This function does exactly those checks to ensure the seed is valid.  
+>   
+> The `seed` parameter is where you should provide your seed. It can be a string or a number.
+> ```ts
+> scl.seededRNG.validateSeed(seed: number | string): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = jsl.seededRNG.validateSeed(35091);
+> let bar = jsl.seededRNG.validateSeed("35091");
+> let baz = jsl.seededRNG.validateSeed("hello I am a string");
+> 
+> console.log(foo); // true
+> console.log(bar); // true
+> console.log(baz); // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION Other -->
+## Other
+This object, accessed with just `scl`, offers many miscellaneous functions.  
+
+
+<br><br>
+
+
+> ### allEqual()
+> This function checks whether or not all items of an array are equal or not.  
+> It returns `true` if all items are equal or `false` if not.
+> ```ts
+> scl.allEqual(array: any[], loose?: boolean): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.allEqual([ 1, 1, 1, 1 ]);
+> let bar = scl.allEqual([ 1, 1, 2, 1 ]);
+> let baz = scl.allEqual([ 1, true, "1" ], true);
+> 
+> console.log(foo); // true
+> console.log(bar); // false
+> console.log(baz); // true
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### byteLength()
+> This function returns the length / size of a string in bytes.  
+> If the param `str` is not of type string, the function will return `0`.
+> ```ts
+> scl.byteLength(str: string): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let str1 = "hello 👋";
+> let str2 = "𒈘"; // this character is U+12218
+> 
+> let foo = scl.byteLength(str1);
+> let bar = scl.byteLength(str2);
+> 
+> console.log(str1.length); // 8
+> console.log(foo);         // 10
+> 
+> console.log(str2.length); // 2
+> console.log(bar);         // 4
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### downloadFile()
+> Downloads a file from the specified `url` and puts it in the folder at the specified `destPath`.  
+> The parameter `options` needs to be an object of type DownloadOptions (scroll down for definition).  
+> The function will return a Promise that resolves to a void value or rejects to an error message string.  
+> ```ts
+> scl.downloadFile(url: string, destPath?: string, options?: DownloadOptions) -> Promise<string | void>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let opts = {
+>     fileName: "page.html",
+>     progressCallback: progress => {
+>         console.log(`Download progress: ${progress.currentB} / ${progress.totalB} bytes`);
+>     },
+>     finishedCallback: err => {
+>         if(err)
+>             console.error(`Error while downloading: ${err}`);
+>         else
+>             console.log(`File was downloaded successfully`);
+>     }
+> };
+> 
+> scl.downloadFile("https://example.org/", "./", opts);
+> ```
+> 
+> </details><br>
+> 
+> ### DownloadOptions object
+> ```ts
+> {
+>     fileName: string;           // the name that the downloaded file should be saved as, including the file extension. Defaults to "download.txt" if left undefined.
+>     progressCallback: function; // a callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress (scroll down for more info) - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
+>     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
+> }
+> ```
+>
+> ### DownloadProgress object
+> ```ts
+>     currentB: number;  // current progress in bytes
+>     currentKB: number; // current progress in kilobytes
+>     currentMB: number; // current progress in megabytes
+>     totalB: number;    // total file size in bytes
+>     totalKB: number;   // total file size in kilobytes
+>     totalMB: number;   // total file size in megabytes
+> ```
+
+
+<br><br><br>
 
 
 
