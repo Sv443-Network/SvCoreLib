@@ -416,7 +416,7 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 >     {
 >         // requires a file "index.html" to exist at the project's root dir (where package.json sits)
 >         // using resolve() of Node's builtin "path" module will ensure that the path is valid and can be understood by SCL
->         scl.http.pipeFile(req, path.resolve("./index.html"), "text/html", 200);
+>         scl.http.pipeFile(res, path.resolve("./index.html"), "text/html", 200);
 >     }
 > }).listen(80, null, err => {
 >     if(err)
@@ -455,7 +455,7 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 > http.createServer((req, res) => {
 >     if(req.method == "GET")
 >     {
->         scl.http.pipeString(req, `Hello, World!\nThis is my website running on Node.js ${process.version}`, "text/plain", 200);
+>         scl.http.pipeString(res, `Hello, World!\nThis is my website running on Node.js ${process.version}`, "text/plain", 200);
 >     }
 > }).listen(80, null, err => {
 >     if(err)
