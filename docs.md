@@ -208,6 +208,137 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 > ```
 
 
+<br><br><br><br>
+
+
+<!-- #SECTION Generate UUID -->
+## Generate UUID
+This object, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
+  
+One thing these functions all have in common is the `uuidFormat` parameter.  
+This parameter is a string that should contain the characters `x` and `y`. These letters will be replaced by random letters or numbers, while any other characters are left untouched.  
+Prefixing an `x` or `y` with a caret (`^`) will prevent it from being replaced with a random letter or number.  
+Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
+
+<br><br>
+
+> ### generateUUID.alphanumerical()
+> This function generates an alphanumerical (`A-Z0-9` or `a-z0-9`) UUID.  
+> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
+> ```ts
+> scl.generateUUID.alphanumerical(uuidFormat: string[, upperCase: boolean]): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let uuid = scl.generateUUID.alphanumerical("xxxx-yyyy", true);
+> 
+> console.log(uuid); // "U45A-AS6X"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### generateUUID.binary()
+> This function generates a binary (`0-1` or `true-false`) UUID.  
+> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> If the parameter `asBooleanArray` is set to `true`, the resulting UUID will be an array of booleans. Any characters that aren't `x` or `y` will then be ignored.
+> ```ts
+> scl.generateUUID.binary(uuidFormat: string[, asBooleanArray: boolean]): string | boolean[]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.generateUUID.binary("xxxx-yyyy");
+> let bar = scl.generateUUID.binary("xxxx", true);
+> 
+> console.log(foo); // "1110-1010"
+> console.log(bar); // [ true, true, false, true ]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### generateUUID.custom()
+> This function generates a custom UUID.  
+>   
+> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+>   
+> The parameter `possibleValues` needs to be a string of characters that should be used to generate the UUID.  
+> These characters need no separator.  
+> Example: `"abc!?"` could produce something similar to this: `"ba!a-c?a!"`.
+> ```ts
+> scl.generateUUID.custom(uuidFormat: string, possibleValues: string): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.generateUUID.custom("xxxx-yyyy", "abcd#+_!");
+> let bar = scl.generateUUID.custom("xxxx-yyyy", "12"); // binary system using 1s and 2s maybe? 👀
+> 
+> console.log(foo); // "b+_c-d#ad"
+> console.log(bar); // "2212-1211"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### generateUUID.decimal()
+> This function generates a decimal (`0-9`) UUID.  
+>   
+> The parameter `uuidFormat` is explained [here.](#generate-uuid)
+> ```ts
+> scl.generateUUID.decimal(uuidFormat: string): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let uuid = scl.generateUUID.decimal("xxxx-yyyy");
+> 
+> console.log(uuid); // "5563-0291"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### generateUUID.hexadecimal()
+> This function generates a hexadecimal (`a-f0-9` or `A-F0-9`) UUID.  
+>   
+> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
+> ```ts
+> scl.generateUUID.hexadecimal(uuidFormat: string[, upperCase: boolean]): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let uuid = scl.generateUUID.hexadecimal("xxxx-yyyy", true);
+> 
+> console.log(uuid); // "F6B6-EFA3"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
 
 
 
