@@ -133,14 +133,19 @@ class FolderDaemon
                             hash.setEncoding("hex");
 
                             fileStream.on("end", () => {
-                                hash.end();
+                                if(hash)
+                                {
+                                    hash.end();
 
-                                let hash = hash.read();
+                                    let hashStr = hash.read();
 
-                                return hashResolve({
-                                    path: filePath,
-                                    hash
-                                });
+                                    return hashResolve({
+                                        path: filePath,
+                                        hash: hashStr
+                                    });
+                                }
+                                else
+                                    return hashResolve(null);
                             });
 
                             fileStream.pipe(hash);
