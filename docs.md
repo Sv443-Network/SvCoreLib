@@ -5,10 +5,10 @@ This is the documentation of SvCoreLib (also referred to as SCL)
 
 <!-- #MARKER ToC -->
 ## Table of Contents:
-- [Installation](#installation)
-- [Usage](#usage)
-- [In-IDE Documentation](#in-ide-documentation)
-- [Functions](#functions)
+- **[Installation](#installation)**
+- **[Usage](#usage)**
+- **[In-IDE Documentation](#in-ide-documentation)**
+- **[Functions](#functions)**
     - [File System](#file-system)
         - [filesystem.logger()](#filesystemlogger)
         - [filesystem.readdirRecursive()](#filesystemreaddirrecursive)
@@ -49,14 +49,14 @@ This is the documentation of SvCoreLib (also referred to as SCL)
         - [softShutdown()](#softshutdown)
         - [unused()](#unused)
         - [yesShutdown()](#yesshutdown)
-- [Classes](#classes)
+- **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon)
     - [MenuPrompt](#menuprompt)
     - [ProgressBar](#progressbar)
-- [Objects](#objects)
+- **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
-- [Legal Information](#legal-information)
+- **[Legal Information](#legal-information)**
 
 <br><br><br><br><br>
 
