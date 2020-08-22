@@ -338,6 +338,136 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > </details>
 
 
+<br><br><br><br>
+
+
+<!-- #SECTION HTTP -->
+## HTTP
+This object, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules easier to use.  
+
+
+<br><br>
+
+
+> ### http.getClientEncoding()
+> This function parses the `Accept-Encoding` header of a clien't request and returns the most efficient and modern encoding methods the client supports. 
+> Currently supported encoding methods (sorted by priority, highest priority first) are:  
+> - `br` ([Brotli](https://en.wikipedia.org/wiki/Brotli))  
+> - `gzip` ([Gzip / Lempel-Ziv / LZ77](https://en.wikipedia.org/wiki/Gzip))  
+> - `deflate` ([Deflate](https://en.wikipedia.org/wiki/DEFLATE))  
+> - `compress` ([Lempel-Ziv-Welch / LZW](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch))  
+> - `identity` (No Encoding / Raw Data)  
+>   
+> If no header was provided or the client doesn't support any encodings, `"identity"` is returned, meaning the client wants the original, non-encoded data.  
+> ```ts
+> scl.http.getClientEncoding(req: http.IncomingMessage | https.IncomingMessage): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const http = require("http");
+> const scl = require("svcorelib");
+> 
+> http.createServer((req, res) => {
+>     if(req.method == "GET")
+>     {
+>         let clientEncoding = scl.http.getClientEncoding(req);
+> 
+>         console.log(clientEncoding); // "gzip"
+>     }
+> }).listen(80, null, err => {
+>     if(err)
+>         console.error(`Error while setting up HTTP server: ${err}`);
+>     else
+>         console.log(`HTTP server listening at 127.0.0.1:80`);
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### http.pipeFile()
+> This function responds to a client's request by efficiently sending them the contents of a file.  
+> Because it streams / pipes the file to the client directly from your drive and it doesn't need to be loaded entirely into RAM first, it is less resource-heavy.  
+>   
+> The parameter `res` contains the server's response to the client's request.  
+> Put the path to the file you want to send to the client in the parameter `filePath`.  
+> The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
+> The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
+>   
+> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
+> ```ts
+> scl.http.pipeFile(res: http.ServerResponse, filePath: string[, mimeType: string, statusCode: number]): null | string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const http = require("http");
+> const scl = require("svcorelib");
+> const path = require("path");
+> 
+> http.createServer((req, res) => {
+>     if(req.method == "GET")
+>     {
+>         // requires a file "index.html" to exist at the project's root dir (where package.json sits)
+>         // using resolve() of Node's builtin "path" module will ensure that the path is valid and can be understood by SCL
+>         scl.http.pipeFile(req, path.resolve("./index.html"), "text/html", 200);
+>     }
+> }).listen(80, null, err => {
+>     if(err)
+>         console.error(`Error while setting up HTTP server: ${err}`);
+>     else
+>         console.log(`HTTP server listening at 127.0.0.1:80`);
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### http.pipeString()
+> This function responds to a client's request by efficiently sending them a string.  
+> Because it streams / pipes the string to the client and it doesn't need to be stored in a variable, there's not that big of a toll on your RAM.  
+>   
+> The parameter `res` contains the server's response to the client's request.  
+> Put the string you want to send to the client in the parameter `text`.  
+> The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
+> The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
+>   
+> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
+> ```ts
+> scl.http.pipeString(res: http.ServerResponse, text: string[, mimeType: string, statusCode: number]): null | string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const http = require("http");
+> const scl = require("svcorelib");
+> 
+> http.createServer((req, res) => {
+>     if(req.method == "GET")
+>     {
+>         scl.http.pipeString(req, `Hello, World!\nThis is my website running on Node.js ${process.version}`, "text/plain", 200);
+>     }
+> }).listen(80, null, err => {
+>     if(err)
+>         console.error(`Error while setting up HTTP server: ${err}`);
+>     else
+>         console.log(`HTTP server listening at 127.0.0.1:80`);
+> });
+> ```
+> 
+> </details>
+
+
 <br><br><br>
 
 
