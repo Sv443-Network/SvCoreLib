@@ -24,6 +24,9 @@ function pipeFile(res, filePath, mimeType = "text/plain", statusCode = 200)
         return "Encountered internal server error while piping file: wrong type for status code.";
     }
 
+    if(!res || !(res instanceof http.ServerResponse))
+        return "Error: parameter \"res\" is empty or not of type http.ServerResponse - make sure you have used \"res\", not \"req\"!";
+
     if(!mimeType)
         mimeType = "text/plain";
     

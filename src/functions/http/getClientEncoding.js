@@ -3,6 +3,9 @@ const http = require("http");
 require("../unused")(http);
 
 const getClientEncoding = req => {
+    if(!req || !(req instanceof http.IncomingMessage))
+        return "Error: parameter \"req\" is empty or not of type http.IncomingMessage - make sure you have used \"req\", not \"res\"!";
+
     let selectedEncoding = null;
 
     let encodingPriority = [ "br", "gzip", "deflate", "compress", "identity" ];

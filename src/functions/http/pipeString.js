@@ -27,6 +27,9 @@ function pipeString(res, text, mimeType, statusCode = 200)
         statusCode = 200;
     }
 
+    if(!res || !(res instanceof http.ServerResponse))
+        return "Error: parameter \"res\" is empty or not of type http.ServerResponse - make sure you have used \"res\", not \"req\"!";
+
     if(!mimeType)
         mimeType = "text/plain";
     
