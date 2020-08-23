@@ -1,7 +1,9 @@
 import * as _http from 'http';
 
+
 //#MARKER functions
-//#SECTION miscellaneous
+
+//#SECTION Miscellaneous
 
 /**
  * 🔹 Returns true, if the input is undefined, null, an empty string, an empty array or an object with length = 0.  
