@@ -1,19 +1,20 @@
-const softShutdown = (funct, code) => {
+function softShutdown(funct, code)
+{
     code = parseInt(code);
 
     if(isNaN(code) || code < 0)
         code = 0;
 
-    let onbeforeshutdown = exitCode => {
+    let onbeforeshutdown = () => {
         if(typeof funct == "function")
             funct();
         if(!process.svc.noShutdown)
-            process.exit(exitCode);
+            process.exit(code);
         return;
-    }
+    };
     
-    process.on("SIGINT", ()=>onbeforeshutdown(code));
-    process.on("SIGTERM", ()=>onbeforeshutdown(code));
+    process.on("SIGINT", onbeforeshutdown);
+    process.on("SIGTERM", onbeforeshutdown);
 }
 
 module.exports = softShutdown;

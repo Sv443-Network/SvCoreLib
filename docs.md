@@ -680,12 +680,481 @@ This object, accessed with just `scl`, offers many miscellaneous functions.
 >
 > ### DownloadProgress object
 > ```ts
+> {
 >     currentB: number;  // current progress in bytes
 >     currentKB: number; // current progress in kilobytes
 >     currentMB: number; // current progress in megabytes
 >     totalB: number;    // total file size in bytes
 >     totalKB: number;   // total file size in kilobytes
 >     totalMB: number;   // total file size in megabytes
+> }
+> ```
+
+
+<br><br><br>
+
+
+> ### error()
+> Sends a red console message and optionally exits the process with a certain status code.  
+>   
+> The param `cause` specifies the actual error message.  
+> If you want the error to be logged to a log file, specify the path to it with the `log_file_path` parameter. Make sure the path up to the file exists!  
+> If `shutdown` is set to `true`, SCL will exit the process.  
+> Set an exit code with the param `status`. Leaving it empty will default to `1`  
+> If you don't want to log the error to the console, set `consoleMsg` to `false`
+> ```ts
+> scl.error(cause: string, log_file_path?: string, shutdown?: boolean, status?: number, consoleMsg?: boolean): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { resolve } = require("path");
+> 
+> scl.error("Couldn't establish a connection to the API", resolve("./errors/fatal.log"), true, 1);
+> // Logs a red message to the console, puts it in the log file at "./errors/fatal.log", then exits the process with code 1
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### inDebugger()
+> Checks if the process is currently running in the debugger environment.  
+> This can be useful because some features like child processes and reading from stdin do not work in most debuggers.  
+> Should support all major Node.js debuggers.  
+> Returns `true` if the current process runs in a debugger environment - else returns `false`
+> ```ts
+> scl.inDebugger(): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> if(!scl.inDebugger())
+> {
+>     // SCLs MenuPrompt doesn't work in debuggers since it needs to read from process.stdin
+>     let mp = new scl.MenuPrompt();
+>     // ...
+> }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### isArrayEmpty()
+> Checks how many values of an array are empty (does the same check as [`svc.isEmpty()`](#isempty), but on each array item).  
+> Returns `true` if all items are empty, `false` if none are empty, or returns a number of how many items are empty.
+> ```ts
+> scl.isArrayEmpty(array: any[]): boolean | number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", null, 5 ]);
+> let bar = scl.isArrayEmpty([ "", null, undefined ]);
+> let baz = scl.isArrayEmpty([ 1, 2, 3, 4, 5, NaN ]);
+> 
+> console.log(foo); // 2
+> console.log(bar); // true
+> console.log(baz); // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### isEmpty()
+> Returns true, if the input is undefined, null, an empty string, an empty array or an object with length = 0.  
+> Otherwise returns false. The number 0 and NaN will return false though, so check them independently if needed!
+> ```ts
+> scl.isArrayEmpty(array: any[]): boolean | number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> console.log(scl.isEmpty(""));        // true
+> console.log(scl.isEmpty([]));        // true
+> console.log(scl.isEmpty({}));        // true
+> console.log(scl.isEmpty({ a: 1 }));  // false
+> console.log(scl.isEmpty(0));         // false
+> console.log(scl.isEmpty(1));         // false
+> console.log(scl.isEmpty(null));      // true
+> console.log(scl.isEmpty(undefined)); // true
+> console.log(scl.isEmpty(NaN));       // false
+> console.log(scl.isEmpty("foo"));     // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### mapRange()
+> Transforms the `value` parameter from the numerical range `range_1_min`-`range_1_max` to the numerical range `range_2_min`-`range_2_max`.  
+> For example, you can map the value 2 in the range of 0-5 to the range of 0-10 and you'd get a 4 as a result.  
+> It can be especially useful when using SCLs [`ProgressBar`](#progressbar) class.
+> ```ts
+> scl.mapRange(value: number, range_1_min: number, range_1_max: number, range_2_min: number, range_2_max: number): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.mapRange(10, 0, 100, 0, 10);
+> let bar = scl.mapRange(3, 0, 10, 0, 50);
+> 
+> console.log(foo); // 1
+> console.log(bar); // 15
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### noShutdown()
+> Prevents the process from being shut down.  
+> This can prevent people from exiting the process using CTRL+C.  
+> Using `process.exit()` in your script will still exit the process though!  
+> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#yesshutdown).
+>   
+> Note: this only listens for the signals "SIGINT" and "SIGTERM".  
+> Due to many OSes not supporting it, using "SIGKILL" will still kill the process.
+> ```ts
+> scl.noShutdown(): void
+> ```
+
+
+<br><br><br>
+
+
+> ### pause()
+> Asks the user for a key press and then resolves a promise.  
+>   
+> Specify the text to display with the param `text` - if left empty this defaults to "Press any key to continue..."  
+> The promise gets passed the key that the user has pressed.
+> ```ts
+> scl.pause(text?: string): Promise<string>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> console.log("Hello, World!");
+> 
+> scl.pause("Press any key to exit").then(key => {
+>     console.log(`Pressed key: ${key}\nGoodbye, World!`);
+>     process.exit();
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### ping()
+> Pings the specified URL and returns its status code, status message, response time and `Content-Type` header.  
+>   
+> The param `url` needs to be passed a valid URL.  
+> Use `timeout` to specify a maximum timeout in milliseconds after which the ping should be cancelled. Defaults to 5000.  
+> The function returns a promise that resolves with an object containing all the values you need (scroll down for more info) or a string containing an error message.
+> ```ts
+> scl.ping(url: string, timeout?: number): Promise<PingReturnValues>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> scl.ping("https://example.org/", 5000)
+> .then(res => {
+>     console.log(`Status ${res.statusCode} (${res.statusMessage}) - Ping: ${res.responseTime}ms`); // Status 200 (OK) - Ping: 526ms
+> })
+> .catch(err => console.error(`Error while pinging URL: ${err}`));
+> ```
+> 
+> </details><br>
+> 
+> ### PingReturnValues object
+> ```ts
+> {
+>     statusCode: number;    // The ping's returned status code (eg. 200 or 404)
+>     statusMessage: string; // The status message of the ping - Could be something like "OK" for status 200 or "Not Found" for status 404
+>     responseTime: number;  // The response time in milliseconds as an integer
+>     contentType: string;   // The `Content-Type` header - this will contain the MIME type and the content encoding, for example: "text/html; charset=UTF-8"
+> }
+> ```
+
+
+<br><br><br>
+
+
+> ### randomItem()
+> Returns a random item of an array.
+> ```ts
+> scl.randomItem(array: any[]): any
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let array = [ 0, 1, null, 2, NaN, 3, { foo: "bar" }, 4, 5, 6 ];
+> 
+> let foo = scl.randomItem(array);
+> let bar = scl.randomItem(array);
+> let baz = scl.randomItem(array);
+> 
+> console.log(foo); // { "foo": "bar" }
+> console.log(bar); // 3
+> console.log(baz); // null
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### randomizeArray()
+> Randomizes of an array and returns it.
+> ```ts
+> scl.randomizeArray(array: any[]): any[]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let array = [ 0, 1, 2, 3, 4, 5, 6 ];
+> 
+> let foo = scl.randomizeArray(array);
+> let bar = scl.randomizeArray(array);
+> 
+> console.log(foo); // [ 1, 0, 2, 3, 5, 4, 6 ]
+> console.log(bar); // [ 6, 1, 5, 2, 3, 4, 0 ]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### randRange()
+> Highly random number generator where you can specify an upper and lower boundary.  
+> `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random.  
+>   
+> Specify the upper and lower boundary with the parameters `min` and `max`  
+>   
+> ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
+> ```ts
+> scl.randRange(min: number, max: number): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let foo = scl.randRange(0, 100);
+> let bar = scl.randRange(0, 100);
+> 
+> console.log(foo); // 62
+> console.log(bar); // 14
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### readableArray()
+> Converts an array to a better readable string.  
+>   
+> You can specify separators with the param `separators` - this will default to `, `  
+> The last separator can be set with the param `lastSeparator` - this will default to ` and `
+> ```ts
+> scl.readableArray(array: any[], separators?: string, lastSeparator?: string): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> console.log(scl.readableArray([ 1, 2, 3, 4 ])); // "1, 2, 3 and 4"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### removeDuplicates()
+> Removes duplicate items of an array.
+> ```ts
+> scl.removeDuplicates(array: any[]): any[]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let array = scl.removeDuplicates([ 1, 2, 4, 3, 3, 1, 3 ]);
+> 
+> console.log(array); // [ 1, 2, 4, 3 ]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### replaceAt()
+> Replaces a character from the specified `string` at the specified `index` with the value of `replacement`
+> ```ts
+> scl.replaceAt(input: string, index: number, replacement: string): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let text = scl.replaceAt("Hello, World!", 5, ", beautiful");
+> 
+> console.log(text); // Hello, beautiful World!
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### reserialize()
+> Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
+> Using an object that contains special JavaScript classes or a circular structure will result in unexpected behavior.  
+>   
+> Set `immutable` to `true` to freeze the returned object, making it non-modifiable.  
+> If `obj` is not of type `object`, this function will just return the unmodified original value.
+> ```ts
+> scl.reserialize(obj: object, immutable?: boolean): object
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> // without reserialize:
+> {
+>     let x = { foo: "bar" };
+>     let y = x;
+> 
+>     y.foo = "test"; // sets "foo" to "test" on both x and y
+> 
+>     console.log(x.foo); // test
+>     console.log(y.foo); // test
+> }
+> 
+> 
+> // with reserialize:
+> {
+>     let x = { foo: "bar" };
+>     let y = scl.reserialize(x);
+> 
+>     y.foo = "test"; // sets "foo" to "test" only on y and not on x
+> 
+>     console.log(x.foo); // bar
+>     console.log(y.foo); // test
+> }
+> 
+> 
+> // example with setting it to immutable:
+> {
+>     let x = { foo: "bar" };
+>     let y = scl.reserialize(x, true);
+> 
+>     y.foo = "test"; // doesn't work, y.foo is still set to "bar"
+> 
+>     console.log(x.foo); // bar
+>     console.log(y.foo); // bar
+> }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### softShutdown()
+> Executes a synchronous function before the process is exited.
+> ```ts
+> scl.softShutdown(funct: function, code?: number): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> console.log("foo");
+> 
+> scl.softShutdown(() => {
+>     console.log("Bye!");
+>     // async functions can't be used in here
+> });
+> 
+> setTimeout(() => process.exit(), 500);
+> 
+> console.log("bar");
+> ```
+>   
+> Output:
+> ```
+> foo
+> bar
+> Bye!
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### unused()
+> Use this if you are using a linter that complains about unused vars.  
+> As this function basically does nothing, you can even leave it in once the variable is used again and nothing will break.  
+> The function accepts a virtually infinite amount of parameters of any type.
+> ```ts
+> scl.unused(...any: any): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let my_unused_var = "Hello, World!"; // linter doesn't warn you about this line when using unused()
+> 
+> scl.unused(my_unused_var);
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### yesShutdown()
+> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#noshutdown).
+> ```ts
+> scl.yesShutdown(): void
 > ```
 
 

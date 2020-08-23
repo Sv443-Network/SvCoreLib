@@ -116,7 +116,7 @@ export function mapRange(value: number, range_1_min: number, range_1_max: number
  * @since 1.8.0
  * @version 1.9.0 Function now accepts an infinite number of parameters
  */
-export function unused(any: any[]): void;
+export function unused(...any: any): void;
 
 /**
  * 🔹 Replaces a character from the specified `string` at the specified `index` with the value of `replacement` 🔹
@@ -186,11 +186,9 @@ export function randomItem(array: any[]): any;
 /**
  * 🔹 Removes duplicate items in an array 🔹
  * @param array An array with any values
- * @param loose Set this to true to switch to loose equality comparison (`==`), the default is strict equality comparison ()`===`)
  * @since 1.9.0
- * @version 1.10.0 Added parameter `loose` to enable switching to loose equality comparison
  */
-export function removeDuplicates(array: any[], loose?: boolean): any[];
+export function removeDuplicates(array: any[]): any[];
 
 /**
  * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -325,7 +323,7 @@ declare namespace http {
 /**
  * This object contains the return values of a ping
  */
-export interface pingReturnValues {
+export interface PingReturnValues {
     /** The ping's returned status code (eg. 200 or 404) */
     statusCode: number;
     /** The status message of the ping - Could be something like "Ok" for status 200 or "Not Found" for status 404 */
@@ -348,7 +346,7 @@ export interface pingReturnValues {
  * @version 1.6.6 updated documentation for the resulting object
  * @version 1.8.0 changed time measurement method to be a much more accurate one
  */
-export function ping(url: string, timeout?: number): Promise<pingReturnValues>;
+export function ping(url: string, timeout?: number): Promise<PingReturnValues>;
 
 export interface DownloadProgress {
     /** The current download progress in bytes */
