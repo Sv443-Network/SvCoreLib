@@ -1158,11 +1158,77 @@ This object, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 
 
+<br><br><br><br><br>
+
+<!-- #MARKER Functions -->
+# Classes
+This section contains all of SCLs classes.  
+If you don't know about Object Oriented Programming in JavaScript, you can learn it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
+These need to be created with the `new` keyword and constructing multiple objects of these classes will not make them interfere with each other.
+
+<br>
+
+> ### FolderDaemon
+> The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
+> `changed` means if a file's content has changed, a file has been removed or a file has been added.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `FolderDaemon`
+> >   
+> > Specify the path to the directory you want to supervise with the param `dirPath`.  
+> > The param `filesBlacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
+> > If you set `recursive` to `true`, the FolderDaemon will recursively look through all subdirectories of the specified directory.  
+> > The `updateInterval` parameter can be used to set an interval at which the daemon should check all files. Defaults to `500` ms - set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.
+> > ```ts
+> > new FolderDaemon(dirPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number)
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### onChanged()
+> > This method sets a callback function to be executed when files have changed.  
+> > It can both call a function passed in the param `callback_fn` and it also returns a Promise.  
+> >   
+> > The promise will only be resolved once though. This is a limitation of the Promise API.  
+> > If you need to use the promise API and want multiple callbacks, you can just re-call this method after the promise has resolved every single time.  
+> > If the promise is resolved, you will get a single parameter, which is an array of strings, which contain the absolute file paths of all changed files.  
+> >   
+> > The callback function gets passed two parameters:  
+> > - `error` which can be either `null` or a string containing an error message  
+> > - `daemonResult` which is an array of strings containing absolute file paths to the changed files  
+> > ```ts
+> > FolderDaemon.onChanged(callback_fn: (error: null | string, daemonResult: string[]) => {}): Promise<string[]>
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### removeCallbacks()
+> > This method removes the callback function(s) which have been registered with [`FolderDaemon.onChanged()`](#onchanged)
+> > ```ts
+> > FolderDaemon.removeCallbacks(): void
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### intervalCall()
+> > This method causes the FolderDaemon to re-scan the directory.  
+> > It is mandatory if you set the `updateInterval` to 0.
+> > ```ts
+> > FolderDaemon.intervalCall(): void
+> > ```
+
+
 <br><br><br>
-
-
-
-
 
 
 
