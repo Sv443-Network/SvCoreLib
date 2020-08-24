@@ -569,13 +569,12 @@ export class MenuPrompt {
      *   
      * ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
      * @param options The options for the prompt
-     * @returns Returns true, if the MenuPrompt was successfully created, a string containing the error message, if not
      * @constructor
      * @since 1.8.0
      * @version 1.8.2 Removed second parameter - use `MenuPrompt.addMenu()` instead
      * @version 1.9.0 The construction of a MenuPrompt object will now set the process.stdin raw mode to true + There is now a `localization` property you can use to translate some messages
      */
-    constructor(options: MenuPromptOptions);
+    constructor(options?: MenuPromptOptions);
 
     /**
      * 🔹 Opens the menu 🔹
@@ -614,7 +613,7 @@ export class MenuPrompt {
      * @returns Returns the results of the menu prompt or null, if there aren't any results yet
      * @since 1.8.0
      */
-    result(): MenuPromptResult;
+    result(): MenuPromptResult[] | null;
     
     /**
      * 🔹 Checks a menu for valid syntax 🔹

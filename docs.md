@@ -1177,7 +1177,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > 
 > 
 > > ### Constructor
-> > Constructs a new object of the class `FolderDaemon`
+> > Constructs a new object of the class `FolderDaemon`.  
 > >   
 > > Specify the path to the directory you want to supervise with the param `dirPath`.  
 > > The param `filesBlacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
@@ -1226,6 +1226,211 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```ts
 > > FolderDaemon.intervalCall(): void
 > > ```
+
+
+<br><br><br>
+
+
+> ### MenuPrompt
+> The class `MenuPrompt` creates an interactive prompt with one or many menus - add them using [`MenuPrompt.addMenu()`](#addmenu)  
+> To translate the messages, you can use the [`MenuPromptLocalization`](#menupromptlocalization-object) object, which is where all text variables are stored.  
+>   
+> ⚠️ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed.  
+> ⚠️ 2nd Warning: Don't log anything to the console or write anything to `process.stdin` while the MenuPrompt is opened as it would completely mess it up.  
+>   
+> This is how a MenuPrompt might look like:  
+>   
+> ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `MenuPrompt`.  
+> >   
+> > The only parameter `options` can be passed an object of type [`MenuPromptOptions`](#menupromptoptions-object).  
+> > Leaving this param empty will make the MenuPrompt use default values.
+> > ```ts
+> > new MenuPrompt(options?: MenuPromptOptions)
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### addMenu()
+> > Adds a new menu to the menu prompt.  
+> > A single menu prompt can hold a virtually infinite amount of menus.  
+> > You can even dynamically add new menus while the MenuPrompt is still open.  
+> >   
+> > The param `menu` needs to be an object of type [`MenuPromptMenu`](#menupromptmenu-object)  
+> >   
+> > This method either returns `true` if it was successful or it returns a string containing an error message.
+> > ```ts
+> > MenuPrompt.addMenu(menu: MenuPromptMenu): boolean | string
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### open()
+> > Opens the MenuPrompt.  
+> > ⚠️ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable.
+> >   
+> > This method either returns `true` if it was successful or it returns a string containing an error message.
+> > ```ts
+> > MenuPrompt.open(): boolean | string
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### close()
+> > Closes the MenuPrompt and returns the results of all menus that have been completed up to this point.  
+> >   
+> > This method returns the results of the MenuPrompt as an array of objects of type [`MenuPromptResult`](#menupromptresult-object)
+> > ```ts
+> > MenuPrompt.close()
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### currentMenu()
+> > Returns the (zero-based) index of the currently open menu of the MenuPrompt.  
+> > If the MenuPrompt hasn't been opened yet, this will return `-1`
+> > ```ts
+> > MenuPrompt.currentMenu(): number
+> > ```
+> 
+> 
+> <br><br>
+> Returns the current results of the MenuPrompt as an array of objects of type [`MenuPromptResult`](#menupromptresult-object)  
+> This does **not** close the menu prompt, unlike `close()`  
+>   
+> If there aren't any completed menus yet, this method will return `null`
+> > ### result()
+> > 
+> > ```ts
+> > MenuPrompt.result(): MenuPromptResult | null
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### validateMenu()
+> > Checks a menu object for valid syntax.  
+> >   
+> > The param `menu` needs to be a single object of type [`MenuPromptMenu`](#menupromptmenu-object)  
+> >   
+> > The method either returns `true` if the menu is valid or an array of strings containing error messages.
+> > ```ts
+> > MenuPrompt.validateMenu(menu: MenuPromptMenu): boolean | string[]
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### MenuPromptMenu object
+> > This specifies a single menu of a MenuPrompt.
+> > ```ts
+> > {
+> >     title: "Example Menu", // the title of the menu
+> >     options: [             // an array of options the user can select
+> >         {
+> >             "key": "1",          // the key the user needs to press to select this option
+> >             "description": "Foo" // the name / description of this option
+> >         },
+> >         {
+> >             "key": "2",
+> >             "description": "Bar"
+> >         },
+> >         // ...
+> >     ]
+> > }
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### MenuPromptOptions object
+> > This object is used in the constructor of a MenuPrompt.  
+> > Here you can specify a few settings that affect all menus of a MenuPrompt.
+> > ```ts
+> > {
+> >     exitKey: string;         // The key or keys that need to be entered to exit the prompt - if left empty, the menu can't be exited with a key
+> >     optionSeparator: string; // The separator character(s) between the option key and the option description
+> >     cursorPrefix: string;    // Character(s) that should be prefixed to the cursor. Will default to this arrow: "─►"
+> >     retryOnInvalid: boolean; // Whether the menu should be retried if the user entered a wrong option - defaults to true - if set to false, continues to next menu when an invalid option was selected
+> >     onFinished: function;    // A function that gets called when the user is done with all of the menus of the prompt or entered the exit key(s). The only passed parameter is an array containing all selected option keys
+> >     autoSubmit: boolean;     // If set to true, the MenuPrompt will only accept a single character of input and will then automatically submit the current menu - make sure the option keys are only a single character in length! If set to false, the user will have to explicitly press the Enter key to submit a value.
+> > }
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### MenuPromptResult object
+> > This object contains information about what option a user selected in a single menu.  
+> > You will only encounter these objects inside of arrays.
+> > ```ts
+> > {
+> >     key: string;         // The key of the selected option
+> >     description: string; // The description of the selected option
+> >     menuTitle: string;   // The title of the menu
+> >     optionIndex: number; // The zero-based index of the selected option
+> >     menuIndex: number;   // The zero-based index of the menu
+> > }
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### MenuPromptLocalization object
+> > You can access this object directly on the MenuPrompt with the property `localization` (example is below).
+> > ```ts
+> > {
+> >     wrongOption: string;           // The text that's displayed when a wrong key was pressed
+> >     invalidOptionSelected: string; // A different text that's displayed when a wrong key was pressed
+> >     exitOptionText: string;        // The name of the exit option
+> > }
+> > ```
+> > 
+> > <br><details><summary><b>Example Localization - click to show</b></summary>
+> > ```js
+> > let mp = new scl.MenuPrompt();
+> > 
+> > mp.addMenu({
+> >     title: "Example Menu",
+> >     options: [
+> >         {
+> >             key: "1",
+> >             description: "Foo"
+> >         },
+> >         {
+> >             key: "2",
+> >             description: "Bar"
+> >         }
+> >     ]
+> > });
+> > 
+> > mp.localization.wrongOption = "You idiot need to type one of the green options";
+> > mp.localization.invalidOptionSelected = "You idiot selected a wrong option, smh";
+> > mp.localization.exitOptionText = "I don't wanna deal with your shit anymore";
+> > 
+> > mp.open();
+> > ```
+> > 
+> > </details>
 
 
 <br><br><br>

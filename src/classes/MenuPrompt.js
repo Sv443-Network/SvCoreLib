@@ -49,8 +49,7 @@ class MenuPrompt
             exitOptionText: "Exit"
         };
 
-
-        return true;
+        return this;
     }
 
     //#MARKER open
