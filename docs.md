@@ -52,7 +52,7 @@ This is the documentation of SvCoreLib (also referred to as SCL)
 - **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon)
     - [MenuPrompt](#menuprompt)
-    - [ProgressBar](#progressbar)
+    - [ProgressBar](#progressbar) <!-- TODO: -->
 - **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
@@ -120,7 +120,7 @@ You have to call these without the `new` keyword.
 
 <!-- #SECTION File System -->
 ## File System
-This object, accessed with `scl.filesystem`, contains a few file-related functions.
+This subsection, accessed with `scl.filesystem`, contains a few file-related functions.
 
 <br><br>
 
@@ -268,7 +268,7 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 
 <!-- #SECTION Generate UUID -->
 ## Generate UUID
-This object, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
+This subsection, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
   
 One thing these functions all have in common is the `uuidFormat` parameter.  
 This parameter is a string that should contain the characters `x` and `y`. These letters will be replaced by random letters or numbers, while any other characters are left untouched.  
@@ -400,7 +400,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 
 <!-- #SECTION HTTP -->
 ## HTTP
-This object, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules easier to use.  
+This subsection, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules easier to use.  
 
 
 <br><br>
@@ -530,7 +530,7 @@ This object, accessed with `scl.http`, offers functions that make using Node's b
 
 <!-- #SECTION Seeded RNG -->
 ## Seeded RNG
-This object, accessed with `scl.seededRNG`, offers a few functions to generate numbers based on a seed.  
+This subsection, accessed with `scl.seededRNG`, offers a few functions to generate numbers based on a seed.  
 This means that using the same seed, you will be able to generate the same numbers over and over again, just like Minecraft's world seeds for example.  
 Seeds in SCL need to be of a certain format. Some other functions in this section will help you accomplish just that.
 
@@ -634,7 +634,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 
 <!-- #SECTION Other -->
 ## Other
-This object, accessed with just `scl`, offers many miscellaneous functions.  
+This subsection, accessed with just `scl`, offers many miscellaneous functions.  
 
 
 <br><br>
@@ -1163,11 +1163,14 @@ This object, accessed with just `scl`, offers many miscellaneous functions.
 <!-- #MARKER Functions -->
 # Classes
 This section contains all of SCLs classes.  
-If you don't know about Object Oriented Programming in JavaScript, you can learn it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
+If you don't know about Object Oriented Programming in JavaScript, you can learn about it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
 These need to be created with the `new` keyword and constructing multiple objects of these classes will not make them interfere with each other.
+
 
 <br>
 
+
+<!-- #SECTION FolderDaemon -->
 > ### FolderDaemon
 > The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
 > `changed` means if a file's content has changed, a file has been removed or a file has been added.
@@ -1231,6 +1234,7 @@ These need to be created with the `new` keyword and constructing multiple object
 <br><br><br>
 
 
+<!-- #SECTION MenuPrompt -->
 > ### MenuPrompt
 > The class `MenuPrompt` creates an interactive prompt with one or many menus - add them using [`MenuPrompt.addMenu()`](#addmenu)  
 > To translate the messages, you can use the [`MenuPromptLocalization`](#menupromptlocalization-object) object, which is where all text variables are stored.  
