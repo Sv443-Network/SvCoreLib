@@ -23,11 +23,11 @@ jobs:
       run: npm ci
       env:
         CI: "true"
-    - name: Install DevDependencies # runs the npm i -D command to install all devdependencies
-      run: npm i -D
+    - name: Install ESLint # installs ESLint
+      run: npm i -g eslint
       env:
         CI: "true"
-    - name: Lint # Runs ESLint on the project
+    - name: Run ESLint # Runs ESLint on the project
       run: npm run lint
       env:
         CI: "true"
