@@ -97,7 +97,7 @@ Here is an example of how it looks in [Visual Studio Code](https://code.visualst
   
 ![(Image)](https://sv443.net/cdn/jsl/doc/jsdoc_ide.png)
   
-</div><!-- TODO: re-take image -->
+</div><!-- TODO: change to this: https://discordapp.com/channels/565933531214118942/565944571255848960/747400187303165983 -->
   
 ---
   
