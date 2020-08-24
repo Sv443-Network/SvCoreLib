@@ -1,11 +1,15 @@
 -----------------
     SvCoreLib
-     v1.10.0
+     v1.11.0
 -----------------
 
 
+[CURRENT: 1.11.0] - The SelectionMenu update
+    - added the class `SelectionMenu` class to create a menu with a scrollable list of options a user can select
+    - added the function `allOfType()` to see if all items of an array are of a specified type
 
-[CURRENT: 1.10.0] - The initial release
+
+[1.10.0] - The initial release
     - added all features from JSLib-npm v1.9.4
     - added a TypeScript type declaration file so the in-IDE documentation and type safety is even better than before (thanks to @canarado)
     - added the class `FolderDaemon` to supervise a directory for changed files
