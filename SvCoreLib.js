@@ -38,11 +38,11 @@ module.exports = {
         getClientEncoding: require("./src/functions/http/getClientEncoding"),
     },
     ping: require("./src/functions/ping"),
-    downloadFile: require("./src/functions/downloadFile"),
     filesystem: {
         readdirRecursive: require("./src/functions/filesystem/readdirRecursive"),
         readdirRecursiveSync: require("./src/functions/filesystem/readdirRecursiveSync"),
         logger: require("./src/functions/filesystem/logger"),
+        downloadFile: require("./src/functions/filesystem/downloadFile"),
     },
     pause: require("./src/functions/pause"),
     inDebugger: require("./src/functions/inDebugger"),

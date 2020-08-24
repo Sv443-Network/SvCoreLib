@@ -13,6 +13,7 @@ This is the documentation of SvCoreLib (also referred to as SCL)
         - [filesystem.logger()](#filesystemlogger)
         - [filesystem.readdirRecursive()](#filesystemreaddirrecursive)
         - [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync)
+        - [downloadFile()](#downloadfile)
     - [Generate UUID](#generate-uuid)
         - [generateUUID.alphanumerical()](#generateuuidalphanumerical)
         - [generateUUID.binary()](#generateuuidbinary)
@@ -30,7 +31,6 @@ This is the documentation of SvCoreLib (also referred to as SCL)
     - [Other](#other)
         - [allEqual()](#allequal)
         - [byteLength()](#bytelength)
-        - [downloadFile()](#downloadfile)
         - [error()](#error)
         - [inDebugger()](#indebugger)
         - [isArrayEmpty()](#isarrayempty)
@@ -114,7 +114,7 @@ Here is an example of how it looks in [Visual Studio Code](https://code.visualst
 <!-- #MARKER Functions -->
 # Functions
 This section tells you all about the static functions SCL offers.  
-You can call these without the `new` keyword.  
+You have to call these without the `new` keyword.  
 
 <br>
 
@@ -206,6 +206,60 @@ This object, accessed with `scl.filesystem`, contains a few file-related functio
 >         "C:/Users/Foo/Desktop/SCL/bar/test.txt"
 >     ]
 > */
+> ```
+
+
+<br><br><br>
+
+
+> ### filesystem.downloadFile()
+> Downloads a file from the specified `url` and puts it in the folder at the specified `destPath`.  
+> The parameter `options` needs to be an object of type DownloadOptions (scroll down for definition).  
+> The function will return a Promise that resolves to a void value or rejects to an error message string.  
+> ```ts
+> scl.filesystem.downloadFile(url: string, destPath?: string, options?: DownloadOptions) -> Promise<string | void>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> let opts = {
+>     fileName: "page.html",
+>     progressCallback: progress => {
+>         console.log(`Download progress: ${progress.currentB} / ${progress.totalB} bytes`);
+>     },
+>     finishedCallback: err => {
+>         if(err)
+>             console.error(`Error while downloading: ${err}`);
+>         else
+>             console.log(`File was downloaded successfully`);
+>     }
+> };
+> 
+> scl.filesystem.downloadFile("https://example.org/", "./", opts);
+> ```
+> 
+> </details><br>
+> 
+> ### DownloadOptions object
+> ```ts
+> {
+>     fileName: string;           // the name that the downloaded file should be saved as, including the file extension. Defaults to "download.txt" if left undefined.
+>     progressCallback: function; // a callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress (scroll down for more info) - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
+>     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
+> }
+> ```
+>
+> ### DownloadProgress object
+> ```ts
+> {
+>     currentB: number;  // current progress in bytes
+>     currentKB: number; // current progress in kilobytes
+>     currentMB: number; // current progress in megabytes
+>     totalB: number;    // total file size in bytes
+>     totalKB: number;   // total file size in kilobytes
+>     totalMB: number;   // total file size in megabytes
+> }
 > ```
 
 
@@ -635,60 +689,6 @@ This object, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 > 
 > </details>
-
-
-<br><br><br>
-
-
-> ### downloadFile()
-> Downloads a file from the specified `url` and puts it in the folder at the specified `destPath`.  
-> The parameter `options` needs to be an object of type DownloadOptions (scroll down for definition).  
-> The function will return a Promise that resolves to a void value or rejects to an error message string.  
-> ```ts
-> scl.downloadFile(url: string, destPath?: string, options?: DownloadOptions) -> Promise<string | void>
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> let opts = {
->     fileName: "page.html",
->     progressCallback: progress => {
->         console.log(`Download progress: ${progress.currentB} / ${progress.totalB} bytes`);
->     },
->     finishedCallback: err => {
->         if(err)
->             console.error(`Error while downloading: ${err}`);
->         else
->             console.log(`File was downloaded successfully`);
->     }
-> };
-> 
-> scl.downloadFile("https://example.org/", "./", opts);
-> ```
-> 
-> </details><br>
-> 
-> ### DownloadOptions object
-> ```ts
-> {
->     fileName: string;           // the name that the downloaded file should be saved as, including the file extension. Defaults to "download.txt" if left undefined.
->     progressCallback: function; // a callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress (scroll down for more info) - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
->     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
-> }
-> ```
->
-> ### DownloadProgress object
-> ```ts
-> {
->     currentB: number;  // current progress in bytes
->     currentKB: number; // current progress in kilobytes
->     currentMB: number; // current progress in megabytes
->     totalB: number;    // total file size in bytes
->     totalKB: number;   // total file size in kilobytes
->     totalMB: number;   // total file size in megabytes
-> }
-> ```
 
 
 <br><br><br>
