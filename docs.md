@@ -756,7 +756,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### isArrayEmpty()
-> Checks how many values of an array are empty (does the same check as [`svc.isEmpty()`](#isempty), but on each array item).  
+> Checks how many values of an array are empty (does the same check as [`scl.isEmpty()`](#isempty), but on each array item).  
 > Returns `true` if all items are empty, `false` if none are empty, or returns a number of how many items are empty.
 > ```ts
 > scl.isArrayEmpty(array: any[]): boolean | number
