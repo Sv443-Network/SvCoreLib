@@ -1,10 +1,11 @@
 .stickler.yml
 CODE_OF_CONDUCT.md
 SECURITY.md
-docs/
 .github/
 .eslintrc.json
-tools/
 .editorconfig
 package-npm.json
 .vscode/
+.editorconfig
+test.js
+test.ts
