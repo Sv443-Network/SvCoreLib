@@ -1163,7 +1163,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 
 <br><br><br><br><br>
 
-<!-- #MARKER Functions -->
+<!-- #MARKER Classes -->
 # Classes
 This section contains all of SCLs classes.  
 If you don't know about Object Oriented Programming in JavaScript, you can learn about it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
@@ -1598,7 +1598,91 @@ These need to be created with the `new` keyword and constructing multiple object
 > > </details>
 
 
+<br><br><br><br><br>
+
+<!-- #MARKER Objects -->
+# Objects
+This section contains all of SCLs objects.  
+These are read-only, static and passive properties and will not invoke or change anything.  
+
+
+<br>
+
+
+<!-- #SECTION colors -->
+> ### colors
+> This object can be used to color text in the Command Line Interface (CLI).  
+> Since typing `scl.colors.xy.color_name` can be quite long, I recommend declaring one or multiple variables like shown in the example code below.
+> ```ts
+> scl.colors
+> ```
+> 
+> **Supported colors are:**
+> | Color | SCL |
+> | --- | --- |
+> | Reset (Usually White or Black) | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
+> | Fat Font | `scl.colors.fat` |
+> | Blinking | `scl.colors.blink` |
+> | Black Text | `scl.colors.fg.black` |
+> | Black Background | `scl.colors.bg.black` |
+> | Red Text | `scl.colors.fg.red` |
+> | Red Background | `scl.colors.bg.red` |
+> | Green Text | `scl.colors.fg.green` |
+> | Green Background | `scl.colors.bg.green` |
+> | Yellow Text | `scl.colors.fg.yellow` |
+> | Yellow Background | `scl.colors.bg.yellow` |
+> | Blue Text | `scl.colors.fg.blue` |
+> | Blue Background | `scl.colors.bg.blue` |
+> | Magenta Text | `scl.colors.fg.magenta` |
+> | Magenta Background | `scl.colors.bg.magenta` |
+> | Cyan Text | `scl.colors.fg.cyan` |
+> | Cyan Background | `scl.colors.bg.cyan` |
+> | White Text | `scl.colors.fg.white` |
+> | White Background | `scl.colors.bg.white` |
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const fgc = scl.colors.fg;
+> const bgc = scl.colors.bg;
+> 
+> console.log(`${scl.colors.fat}Foreground Colors:  ${fgc.green}Green${fgc.rst} ${fgc.magenta}Magenta${fgc.rst} ${fgc.blue}Blue${fgc.rst} ${fgc.cyan}Cyan${fgc.rst}`);
+> console.log(`${scl.colors.fat}Background Colors:  ${bgc.green}Green${fgc.rst} ${bgc.magenta}Magenta${fgc.rst} ${bgc.blue}Blue${fgc.rst} ${bgc.cyan}Cyan${bgc.rst}`);
+> ```
+> 
+> </details>
+
+
 <br><br><br>
+
+
+> ### info
+> This object offers a few read-only bits of information about SCL, like the version number or license.  
+> ```ts
+> scl.info
+> ```
+> 
+> **Properties:**
+> | Property | Type | Description |
+> | --- | --- | --- |
+> | `scl.info.version` | `string` | SCLs current version, as a semver-compatible string |
+> | `scl.info.intVersion` | `number[]` | SCLs version, as an array of numbers, for easier reading |
+> | `scl.info.name` | `string` | The name of SCL (who knows, maybe it'll change eventually) |
+> | `scl.info.desc` | `string` | A short description of what SCL is and does |
+> | `scl.info.author` | `string` | The name of the author of SCL (currently `Sv443`) |
+> | `scl.info.authorLong` | `string` | The authors name, email address and homepage in this format: `Name <Email> (URL)` |
+> | `scl.info.contributors` | `object[]` | The `contributors` property of SCLs `package.json` file |
+> | `scl.info.license` | `string` | The license and URL to the license text of SCL in the format `License (URL)` |
+> | `scl.info.documentation` | `string` | A URL to SCLs documentation |
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> if(scl.info.intVersion[0] < 1 && scl.info.intVersion[1] < 10)
+>     console.error(`This code needs ${scl.info.name} v1.10.x or higher to run!\nHow to install the latest version: ${scl.info.documentation}#installation`);
+> ```
+> 
+> </details>
 
 
 
