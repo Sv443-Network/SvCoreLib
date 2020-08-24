@@ -52,7 +52,7 @@ This is the documentation of SvCoreLib (also referred to as SCL)
 - **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon)
     - [MenuPrompt](#menuprompt)
-    - [ProgressBar](#progressbar) <!-- TODO: -->
+    - [ProgressBar](#progressbar)
 - **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
