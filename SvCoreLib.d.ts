@@ -50,6 +50,18 @@ export function error(cause: string, log_file_path?: string, shutdown?: boolean,
  */
 export function allEqual(array: any[], loose?: boolean): boolean;
 
+export type JSPrimitiveDataTypeName = "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
+
+/**
+ * 🔹 Tests if all items of an array are of the specified type. 🔹
+ * @param array The array you want to test
+ * @param type The type you want to test the array's items on
+ * @returns true if all items are of the specified type, false if not
+ * @throws Throws a TypeError if the first parameter is not an array or if the second parameter is not a valid primitive data type name
+ * @since 1.11.0
+ */
+export function allOfType(array: any[], type: JSPrimitiveDataTypeName): boolean;
+
 /**
  * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
  * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
@@ -663,6 +675,66 @@ export class FolderDaemon {
      * 🔹 This is called on interval to check the folder but feel free to manually call it if you set the interval to `0` or if you want to check the folder at a precise time 🔹
      */
     intervalCall(): void;
+}
+
+//#MARKER SelectionMenu
+
+/**
+ * An object of settings to be used in the constructor of the `SelectionMenu` class
+ */
+interface SelectionMenuSettings {
+    /** if the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
+    overflow: boolean;
+    /** if the options exceed the height of the terminal, should SelectionMenu add multiple pages of options? */
+    paging: boolean;
+}
+
+/**
+ * 🔹 Creates a menu in the Command Line Interface (CLI) with a list of options that can be scrolled through and selected. 🔹  
+ *   
+ * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
+ */
+export class SelectionMenu {
+    /**
+     * 🔹 Constructs a new object of class SelectionMenu.  
+     * The SelectionMenu is an interactive menu in the Command Line Interface with a list of options that can be scrolled through and selected. 🔹
+     * @param title The title of the menu. Leave undefined to not have a title.
+     * @param settings The settings of the menu. Leave undefined for the default settings to be applied.
+     * 
+     * @since 1.11.0
+     */
+    constructor(title?: string, settings?: SelectionMenuSettings);
+
+    /**
+     * 🔹 Registers a function to be called when the user selected an option. 🔹
+     * @param callback_fn 
+     * @returns Returns a Promise that is resolved with the zero-based index number of the selected option
+     * @since 1.11.0
+     */
+    onSubmit(callback_fn: (any) => any): Promise<any>; // TODO: correct typedefs
+
+    /**
+     * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
+     * @param options An array of strings which are the options a user can scroll through and select
+     * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+     * @since 1.11.0
+     */
+    setOptions(options: string[]): string | boolean;
+
+    /**
+     * 🔹 Opens the SelectionMenu. Make sure not to write anything to the console / stdout / stderr while the menu is open! 🔹
+     * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+     * @since 1.11.0
+     */
+    open(): string | boolean;
+
+    /**
+     * 🔹 Closes the SelectionMenu. 🔹  
+     * ❗ Using this method does **not** call the callback registered with `onSubmit()`
+     * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+     * @since 1.11.0
+     */
+    close(): string | boolean;
 }
 
 //#MARKER objects

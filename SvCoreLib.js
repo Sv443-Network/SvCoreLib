@@ -7,6 +7,7 @@ module.exports = {
     isArrayEmpty: require("./src/functions/isArrayEmpty"),
     error: require("./src/functions/error"),
     allEqual: require("./src/functions/allEqual"),
+    allOfType: require("./src/functions/allOfType"),
     softShutdown: require("./src/functions/softShutdown"),
     noShutdown: require("./src/functions/noShutdown"),
     yesShutdown: require("./src/functions/yesShutdown"),
@@ -51,6 +52,7 @@ module.exports = {
     ProgressBar: require("./src/classes/ProgressBar"),
     MenuPrompt: require("./src/classes/MenuPrompt"),
     FolderDaemon: require("./src/classes/FolderDaemon"),
+    SelectionMenu: require("./src/classes/SelectionMenu"),
 
     //#MARKER objects
     info: require("./src/objects/info"),
