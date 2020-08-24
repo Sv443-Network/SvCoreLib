@@ -102,8 +102,9 @@ Here is an example of how it looks in [Visual Studio Code](https://code.visualst
 ---
   
 - Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
-- Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ⚠️
-- Deprecated features should be unlisted but if not, they are indicated with a `@deprecated` tag.
+- If you are looking at a subsection, for example [`scl.filesystem`](#filesystem), its description will be marked with this emoji: 🔸
+- Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
+- Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌. Their descriptions should also tell you if there are alternatives.
 - You will always encounter a `@since` tag, which indicates with which version the feature was introduced.
 - The `@version` tag will tell you that something changed in a certain version.
 - If a function / method can throw an error, the `@throws` tag will tell you when this might happen and of which class the Error might be.
@@ -188,7 +189,7 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > ### filesystem.readdirRecursiveSync()
 > Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution, thus making it synchronous.  
 >   
-> ⚠️ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
+> ❗ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
 > scl.filesystem.readdirRecursive(folder: string, callback?: function): Promise<string[]>
 > ```
@@ -958,7 +959,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 >   
 > Specify the upper and lower boundary with the parameters `min` and `max`  
 >   
-> ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
+> ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
 > ```ts
 > scl.randRange(min: number, max: number): number
 > ```
@@ -1239,8 +1240,8 @@ These need to be created with the `new` keyword and constructing multiple object
 > The class `MenuPrompt` creates an interactive prompt with one or many menus - add them using [`MenuPrompt.addMenu()`](#addmenu)  
 > To translate the messages, you can use the [`MenuPromptLocalization`](#menupromptlocalization-object) object, which is where all text variables are stored.  
 >   
-> ⚠️ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed.  
-> ⚠️ 2nd Warning: Don't log anything to the console or write anything to `process.stdin` while the MenuPrompt is opened as it would completely mess it up.  
+> ❗ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed.  
+> ❗ 2nd Warning: Don't log anything to the console or write anything to `process.stdin` while the MenuPrompt is opened as it would completely mess it up.  
 >   
 > This is how a MenuPrompt might look like:  
 >   
@@ -1281,7 +1282,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > 
 > > ### open()
 > > Opens the MenuPrompt.  
-> > ⚠️ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable.
+> > ❗ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable.
 > >   
 > > This method either returns `true` if it was successful or it returns a string containing an error message.
 > > ```ts

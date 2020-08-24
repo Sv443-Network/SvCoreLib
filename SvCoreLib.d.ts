@@ -53,8 +53,8 @@ export function allEqual(array: any[], loose?: boolean): boolean;
 /**
  * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
  * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
- * - ⚠️ Asynchronous function execution is not supported (yet)  
- * - ⚠️ If `svc.noShutdown()` was used, the passed function will be executed, but the process will not exit
+ * - ❗ Asynchronous function execution is not supported (yet)  
+ * - ❗ If `svc.noShutdown()` was used, the passed function will be executed, but the process will not exit
  * @param funct This function will get executed before process shutdown
  * @param code The exit code with which the process should be closed. Defaults to 0
  * @since 1.5.0
@@ -160,7 +160,7 @@ export function byteLength(str: string): number;
 /**
  * 🔹 Highly random number generator with upper and lower boundary.  
  * `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random. 🔹  
- * ⚠️ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ⚠️
+ * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ❗
  * @param min Lower boundary of the RNG
  * @param max Upper boundary of the RNG
  * @throws Throws an error if the arguments are not of type 'Number'
@@ -385,9 +385,9 @@ export interface DownloadOptions {
 }
 
 /**
- * Downloads a file from the specified URL, to the specified destination path, according to the specified options
+ * 🔹 Downloads a file from the specified URL, to the specified destination path, according to the specified options 🔹
  * @param url The URL to the file you want to download
- * @param destPath The path where the file should be saved to - can be absolute or relative - If left empty, it will default to the root directory of the project - **⚠️ Do not include the file name here - set it in the `options` parameter ⚠️**
+ * @param destPath The path where the file should be saved to - can be absolute or relative - If left empty, it will default to the root directory of the project - **❗ Do not include the file name here - set it in the `options` parameter ❗**
  * @param options
  * @returns Promise that resolves to a void value and rejects to an error string
  * @since 1.8.0
@@ -431,7 +431,7 @@ declare namespace filesystem {
 
     /**
      * 🔹 Reads a folder synchronously and recursively and returns all absolute file paths (starting at the drive letter (eg. "C:/Users/...")) in the callback 🔹  
-     * ⚠️ Warning! Large amounts of files (like letting it run on a directory like "C:/Windows") can freeze the process completely or exceed the maximum possible index of a JS array - instead use `readdirRecursive()` if possible
+     * ❗ Warning! Large amounts of files (like letting it run on a directory like "C:/Windows") can freeze the process completely or exceed the maximum possible index of a JS array - instead use `readdirRecursive()` if possible
      * @param folder The folder that should be recursively read
      * @returns an array of strings containing absolute paths to all found files
      * @since 1.7.0
@@ -443,7 +443,7 @@ declare namespace filesystem {
 //#MARKER classes
 
 /**
- * Creates a dynamic progress bar in the CLI  
+ * 🔹 Creates a dynamic progress bar in the CLI 🔹  
  *   
  * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**  
  *   
@@ -554,7 +554,7 @@ export interface MenuPromptLocalization {
 }
 
 /**
- * Creates an interactive prompt in the CLI with one or more menus  
+ * 🔹 Creates an interactive prompt in the CLI with one or more menus. 🔹  
  *   
  * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**  
  *   
@@ -565,7 +565,7 @@ export class MenuPrompt {
     /**
      * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.  
      * To translate the messages, you can use the `MenuPrompt.localization` object, which is where all localization variables are stored. 🔹  
-     * ⚠️ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed  
+     * ❗ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed  
      *   
      * ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
      * @param options The options for the prompt
@@ -578,7 +578,7 @@ export class MenuPrompt {
 
     /**
      * 🔹 Opens the menu 🔹
-     * ⚠️ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable
+     * ❗ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable
      * @returns Returns true, if the menu could be opened or a string containing an error message, if not
      * @since 1.8.0
      */
@@ -625,7 +625,7 @@ export class MenuPrompt {
 }
 
 /**
- * Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
+ * 🔹 Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed. 🔹  
  *   
  * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
  */
@@ -648,7 +648,7 @@ export class FolderDaemon {
 
     /**
      * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹  
-     * ⚠️ Warning: If you use the Promise API, due to how it works fundamentally, you will only receive a single callback. If you want to receive more than one callback, either call this function again once the Promise has resolved for the first time or use the callback_fn parameter
+     * ❗ Warning: If you use the Promise API, due to how it works fundamentally, you will only receive a single callback. If you want to receive more than one callback, either call this function again once the Promise has resolved for the first time or use the callback_fn parameter
      * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an array of strings, which are the absolute paths of the changed files
      * @returns Returns a promise that resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
      */
