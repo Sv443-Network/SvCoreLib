@@ -57,6 +57,11 @@ This is the documentation of SvCoreLib (also referred to as SCL)
     - [colors](#colors)
     - [info](#info)
 - **[Legal Information](#legal-information)**
+    - [License](#license)
+    - [Disclaimer](#disclaimer)
+    - [Privacy Policy](#privacy-policy)
+    - [Security Policy](#security-policy)
+    - [Site Notice / Impressum](#site-notice)
 
 <br><br><br><br><br>
 
@@ -1685,5 +1690,63 @@ These are read-only, static and passive properties and will not invoke or change
 > </details>
 
 
+<br><br><br><br><br>
+
+
+# Legal Information
+This is where you can find all legal information about SCL and the Sv443 Network.
+
+<br>
+
+## License
+SvCoreLib is licensed under the MIT license. You can view the full license text by [clicking here.](https://sv443.net/LICENSE)  
+  
+Below is a short summary of the license (it is not legal advice though):  
+### ✅ You can:
+- use this library anywhere
+- copy the source code of the library
+- modify the source code of the library
+- merge the source code with other code
+- publish and distribute the code (even under a different license)
+- monetize or sell the code or projects that contain the code
+### ❌ You cannot:
+- remove the `LICENSE.txt` file from the finished product. It has to be contained in every distribution of your product and accessible by the end user
+- publish the code without modifying it and claim it as your own
+- modify the code, publish it and then claim it as your own (and no-one else's)
+- claim any warranty. This software is provided "as is"
+- demand any liability from the author(s) and contributors
+
+<br>
+
+## Disclaimer
+I will hereby not claim any legal responsibility or liability for SvCoreLib. Whether it is used maliciously or breaks something, I can't be held accountable.  
+I am doing my best to ensure security and stability but there's only so much a single developer can do.  
+Security patches are created as soon as possible but I don't have any binding responsibility to make these patches.  
+Please create a backup before using this library if you want to be extra secure and report any issue that may arise to the [GitHub issue tracker](https://github.com/Sv443/SvCoreLib/issues/new/choose) and I will try my best to fix it as soon as possible.
+
+<br>
+
+## Privacy Policy
+[Click here to view the privacy policy.](https://sv443.net/privacypolicy/en)
+
+<br>
+
+## Security Policy
+[Click here to view the security policy.](./.github/SECURITY.md)
+
+<br>
+
+## Site Notice
+[Click here to view the site notice / Impressum.](https://sv443.net/imprint/en)
+
+
+<br><br><br><br>
+
+<div align="center" style="text-align: center">
+
+Made with ❤️ by [Sv443](https://github.com/Sv443)  
+You can support me on [GitHub Sponsors](https://github.com/sponsors/Sv443), [Patreon](https://patreon.com/Sv443_), [Ko-fi](https://ko-fi.com/Sv443_) or [PayPal](https://paypal.me/SvenFehler)
+
+</div>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
