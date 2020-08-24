@@ -100,7 +100,9 @@ Here is an example of how it looks in [Visual Studio Code](https://code.visualst
 </div><!-- TODO: change to this: https://discordapp.com/channels/565933531214118942/565944571255848960/747400187303165983 -->
   
 ---
-  
+
+<br>
+
 - Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
 - If you are looking at a subsection, for example [`scl.filesystem`](#filesystem), its description will be marked with this emoji: 🔸
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
@@ -1230,6 +1232,30 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```ts
 > > FolderDaemon.intervalCall(): void
 > > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > let dirPath = "./";          // supervises your entire project workspace
+> > let blacklist = [ "*.txt" ]; // ignores all files with the extension .txt
+> > let recursive = true;        // scans through all subdirectories too
+> > let updateInterval = 1000;   // the interval in milliseconds of when to scan all files
+> > 
+> > let fd = new scl.FolderDaemon(dirPath, blacklist, recursive, updateInterval);
+> > 
+> > fd.onChanged((err, result) => {
+> >     if(err)
+> >         console.error(`Error: ${err}`);
+> >     else
+> >         console.log(`Files have changed:\n- ${result.join("\n- ")}`);
+> > });
+> > ```
+> > 
+> > </details>
 
 
 <br><br><br>
@@ -1433,6 +1459,140 @@ These need to be created with the `new` keyword and constructing multiple object
 > > mp.localization.exitOptionText = "I don't wanna deal with your shit anymore";
 > > 
 > > mp.open();
+> > ```
+> > 
+> > </details>
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > let opts = {
+> >     exitKey: "x",
+> >     autoSubmit: true,
+> >     onFinished: (res) => {
+> >         console.log(`Finished. Selected option: ${res[0].key}`);
+> >     }
+> > };
+> > 
+> > let mp = new scl.MenuPrompt(opts);
+> > 
+> > let menu = {
+> >     title: "Example Menu",
+> >     options: [
+> >         {
+> >             key: "1",
+> >             description: "Foo"
+> >         },
+> >         {
+> >             key: "2",
+> >             description: "Bar"
+> >         }
+> >     ]
+> > };
+> > 
+> > let menuValid = mp.validateMenu(menu);
+> > if(menuValid) // make sure menu is valid
+> >     mp.addMenu();
+> > else
+> >     console.log(`Error: Menu is invalid.\n${menuValid.join(", ")}`);
+> > 
+> > mp.open();
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION ProgressBar -->
+> ### ProgressBar
+> The ProgressBar simply displays a progress bar in the Command Line Interface (CLI).  
+> It displays an automatically calculated percentage value and am optional message.  
+>   
+> This is how it might look like:  
+> ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png) <!-- TODO: use GIF instead of PNG -->
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `ProgressBar`.  
+> >   
+> > The param `timesToUpdate` needs to be passed the number of times you are going to call the method [`next()`](#next).  
+> > The optional parameter `initialMessage` can contain a string that is displayed at 0% progress. If left undefined, no message will appear.
+> > ```ts
+> > new ProgressBar(timesToUpdate: number, initialMessage?: string)
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### next()
+> > Increments the progress bar once.  
+> > How many times you are going to call this method needs to be known when creating a ProgressBar object as it is needed in the constructor.  
+> > This is a fundamental thing about progress bars and I can't change it.  
+> >   
+> > The optional parameter `message` can be used to display a message next to the progress bar.
+> > ```ts
+> > ProgressBar.next(message?: string): void
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### onFinish()
+> > Registers a function to be called when the progress bar reaches 100%.
+> > ```ts
+> > ProgressBar.onFinish(callback: function): void;
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### getProgress()
+> > Returns the current progress as a floating-point number between `0.0` and `1.0`
+> > ```ts
+> > ProgressBar.getProgress(): number;
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### getRemainingIncrements()
+> > Returns the amount of increments needed to reach 100% progress - aka the amount of times the method [`next()`](#next) needs to be called.
+> > ```ts
+> > ProgressBar.getRemainingIncrements(): number;
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > let pb = new scl.ProgressBar(5, "Hello, World!");
+> > let iter = 0;
+> > 
+> > pb.onFinish(() => {
+> >     console.log("Finished!");
+> >     process.exit();
+> > });
+> > 
+> > setInterval(() => {
+> >     iter++;
+> >     pb.next(`Iteration number ${iter}`);
+> > }, 2000);
 > > ```
 > > 
 > > </details>
