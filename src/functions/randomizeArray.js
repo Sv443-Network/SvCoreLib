@@ -1,7 +1,8 @@
-const randomizeArray = array => {
-    let retArray = new Array(...array); // has to be done so array and retArray don't point to the same memory address
+const randRange = require("./randRange");
 
-    let randRange = require("./randRange");
+function randomizeArray(array)
+{
+    let retArray = new Array(...array); // has to be done so array and retArray don't point to the same memory address
 
     if(isNaN(parseInt(array.length)))
         throw new Error(`Parameter in "svc.randomizeArray()" needs to be an array that has to contain at least one item.`);
@@ -15,4 +16,5 @@ const randomizeArray = array => {
 
     return retArray;
 }
+
 module.exports = randomizeArray;

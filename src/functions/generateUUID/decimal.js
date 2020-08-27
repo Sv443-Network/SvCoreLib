@@ -1,8 +1,9 @@
-const decimal = (uuidFormat) => {
-    let isEmpty = require("../isEmpty");
-    let replaceAt = require("../replaceAt");
-    let randRange = require("../randRange");
+const isEmpty = require("../isEmpty");
+const replaceAt = require("../replaceAt");
+const randRange = require("../randRange");
 
+function decimal(uuidFormat)
+{
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
@@ -26,4 +27,5 @@ const decimal = (uuidFormat) => {
     result = result.replace(/[\uABA7]/gmu, "y");
     return result;
 }
+
 module.exports = decimal;

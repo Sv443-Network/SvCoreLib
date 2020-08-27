@@ -1,7 +1,8 @@
-const binary = (uuidFormat, asBooleanArray) => {
-    let replaceAt = require("../replaceAt");
-    let randRange = require("../randRange");
-    
+const replaceAt = require("../replaceAt");
+const randRange = require("../randRange");
+
+function binary(uuidFormat, asBooleanArray)
+{    
     if(typeof uuidFormat != "string")
         throw new Error(`Wrong parameter provided for "uuidFormat" in svc.generateUUID.binary() - (expected: "String", got: "${typeof uuidFormat}")`);
 
@@ -39,4 +40,5 @@ const binary = (uuidFormat, asBooleanArray) => {
 
     return result;
 }
+
 module.exports = binary;

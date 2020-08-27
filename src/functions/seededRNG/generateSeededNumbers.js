@@ -1,7 +1,10 @@
-const generateSeededNumbers = (count = 16, seed) => { // thanks to olsn for this code snippet: http://indiegamr.com/generate-repeatable-random-numbers-in-js/
-    let isEmpty = require("../isEmpty");
-    let generateRandomSeed = require("./generateRandomSeed");
-    let validateSeed = require("./validateSeed");
+const isEmpty = require("../isEmpty");
+const generateRandomSeed = require("./generateRandomSeed");
+const validateSeed = require("./validateSeed");
+
+// thanks to olsn for this code snippet: http://indiegamr.com/generate-repeatable-random-numbers-in-js/
+function generateSeededNumbers(count = 16, seed)
+{
     let result = [];
 
     if(isEmpty(seed))

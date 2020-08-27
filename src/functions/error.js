@@ -1,8 +1,8 @@
+const isEmpty = require("./isEmpty");
+const logger = require("./filesystem/logger");
+
 function error(cause, log_file_path, shutdown, status, consoleMsg)
 {
-    let isEmpty = require("./isEmpty");
-    let logger = require("./filesystem/logger");
-
     if(typeof cause != "string")
         throw new Error(`Wrong arguments provided in "cause" for svc.error() - (expected: "String", got: "${typeof cause}")`);
 

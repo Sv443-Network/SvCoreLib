@@ -1,9 +1,9 @@
+const isEmpty = require("../isEmpty");
+const fs = require("fs-extra");
+const https = require("https");
+
 function downloadFile(url, destPath = "./", options)
 {
-    let isEmpty = require("../isEmpty");
-    let fs = require("fs-extra");
-    let https = require("https");
-
     if(isEmpty(options))
         options = {
             fileName: "download.txt",

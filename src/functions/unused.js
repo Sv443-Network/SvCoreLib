@@ -1,5 +1,7 @@
-const unused = (...any) => {
+function unused(...any)
+{
     void(any);
     return;
-};
+}
+
 module.exports = unused;

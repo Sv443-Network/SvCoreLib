@@ -1,7 +1,8 @@
+const isEmpty = require("./isEmpty");
+
 function ping(url, timeout)
 {
     let pingTimestamp = new Date().getTime();
-    let isEmpty = require("./isEmpty");
 
     if(typeof url != "string" || isEmpty(url))
         throw new Error("Wrong or empty argument provided for ping() - (expected: \"string\", got: \"" + typeof url + "\")");

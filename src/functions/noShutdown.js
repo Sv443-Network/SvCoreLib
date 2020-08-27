@@ -1,4 +1,5 @@
-const noShutdown = () => {
+function noShutdown()
+{
     if(process.svc != undefined && process.svc.noShutdown)
         return;
 
@@ -9,4 +10,5 @@ const noShutdown = () => {
     process.on("SIGINT", ()=>{});
     process.on("SIGTERM", ()=>{});
 }
+
 module.exports = noShutdown;

@@ -1,4 +1,5 @@
-const mapRange = (value, range_1_min, range_1_max, range_2_min, range_2_max) => {
+function mapRange(value, range_1_min, range_1_max, range_2_min, range_2_max)
+{
     [value, range_1_min, range_1_max, range_2_min, range_2_max].forEach(arg => {
         if(isNaN(parseInt(arg)) || typeof arg != "number")
             throw new Error("Wrong argument(s) provided for mapRange() - (expected: \"Number\", got: \"" + typeof arg + "\")");
@@ -12,4 +13,5 @@ const mapRange = (value, range_1_min, range_1_max, range_2_min, range_2_max) => 
 
     return ((value - range_1_min) * ((range_2_max - range_2_min) / (range_1_max - range_1_min)) + range_2_min);
 }
+
 module.exports = mapRange;

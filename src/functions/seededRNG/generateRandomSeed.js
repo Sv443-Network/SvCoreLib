@@ -1,5 +1,7 @@
-const generateRandomSeed = (digitCount = 10) => {
-    let randRange = require("../randRange");
+const randRange = require("../randRange");
+
+function generateRandomSeed(digitCount = 10)
+{
     let seed = "";
 
     for(let i = 0; i < digitCount; i++)

@@ -1,5 +1,7 @@
-const validateSeed = (seed) => {
-    let isEmpty = require("../isEmpty");
+const isEmpty = require("../isEmpty");
+
+function validateSeed(seed)
+{
     let digitCount = null;
     
     if(typeof seed == "string")

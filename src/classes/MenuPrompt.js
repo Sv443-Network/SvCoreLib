@@ -1,9 +1,12 @@
+const isEmpty = require("../functions/isEmpty");
+const readline = require("readline");
+const col = require("../objects/colors");
+const isArrayEmpty = require("../functions/isArrayEmpty");
+
 class MenuPrompt
 {
     constructor(options)
     {
-        let isEmpty = require("../functions/isEmpty");
-        let readline = require("readline");
         this._rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
@@ -55,9 +58,6 @@ class MenuPrompt
     //#MARKER open
     open()
     {
-        let isEmpty = require("../functions/isEmpty");
-        let col = require("../objects/colors");
-
         if(this._active)
             return "This MenuPrompt object was already opened - not opening again";
 
@@ -237,8 +237,6 @@ ${this._options.cursorPrefix} \
     //#MARKER result
     result()
     {
-        let isEmpty = require("../functions/isEmpty");
-
         if(!isEmpty(this._result))
             return this._result;
         else return null;
@@ -247,9 +245,6 @@ ${this._options.cursorPrefix} \
     //#MARKER validateMenu
     validateMenu(menu)
     {
-        let isEmpty = require("../functions/isEmpty");
-        let isArrayEmpty = require("../functions/isArrayEmpty");
-
         let errors = [];
 
         if(isEmpty(menu))

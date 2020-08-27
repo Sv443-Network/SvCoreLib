@@ -1,8 +1,9 @@
-const hexadecimal = (uuidFormat, upperCase = false) => {
-    let isEmpty = require("../isEmpty");
-    let replaceAt = require("../replaceAt");
-    let randRange = require("../randRange");
+const isEmpty = require("../isEmpty");
+const replaceAt = require("../replaceAt");
+const randRange = require("../randRange");
 
+function hexadecimal(uuidFormat, upperCase = false)
+{
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
@@ -27,4 +28,5 @@ const hexadecimal = (uuidFormat, upperCase = false) => {
     if(upperCase) return result;
     else return result.toLowerCase();
 }
+
 module.exports = hexadecimal;

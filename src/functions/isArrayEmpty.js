@@ -1,6 +1,7 @@
-const isArrayEmpty = array => {
-    let isEmpty = require("./isEmpty");
+const isEmpty = require("./isEmpty");
 
+function isArrayEmpty(array)
+{
     if((array === "" || array == null) || typeof array != "object")
         throw new Error(`Wrong or empty arguments provided for svc.isArrayEmpty() - (expected: "object", got: "${typeof array}")`);
 
@@ -16,4 +17,5 @@ const isArrayEmpty = array => {
         return false;
     else return emptiness;
 }
+
 module.exports = isArrayEmpty;

@@ -1,8 +1,9 @@
-const custom = (uuidFormat, possibleValues) => {
-    let isEmpty = require("../isEmpty");
-    let replaceAt = require("../replaceAt");
-    let randRange = require("../randRange");
+const isEmpty = require("../isEmpty");
+const replaceAt = require("../replaceAt");
+const randRange = require("../randRange");
 
+function custom(uuidFormat, possibleValues)
+{
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
@@ -26,4 +27,5 @@ const custom = (uuidFormat, possibleValues) => {
     result = result.replace(/[\uABA7]/gmu, "y");
     return result;
 }
+
 module.exports = custom;

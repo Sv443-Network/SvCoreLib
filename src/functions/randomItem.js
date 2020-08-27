@@ -1,3 +1,5 @@
+const randRange = require("./randRange");
+
 function randomItem(array)
 {
     if(!Array.isArray(array))
@@ -5,8 +7,6 @@ function randomItem(array)
     
     if(array.length <= 0)
         throw new Error("Array doesn't contain any items");
-
-    let randRange = require("./randRange");
 
     return array[randRange(0, array.length - 1)];
 }
