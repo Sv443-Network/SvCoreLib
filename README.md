@@ -38,4 +38,5 @@ Thank you very, very much to these contributors for improving SvCoreLib ❤️
 I coded SvCoreLib so it needs as few dependencies as possible, but in order to ensure quality and stability, these dependencies are needed:
 - [deep-diff](https://npmjs.com/package/deep-diff)
 - [fs-extra](https://npmjs.com/package/fs-extra)
+- [keypress](https://npmjs.com/package/keypress)
 - [minimatch](https://npmjs.com/package/minimatch)

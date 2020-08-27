@@ -683,10 +683,10 @@ export class FolderDaemon {
  * An object of settings to be used in the constructor of the `SelectionMenu` class
  */
 interface SelectionMenuSettings {
-    /** if the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
+    /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
     overflow: boolean;
-    /** if the options exceed the height of the terminal, should SelectionMenu add multiple pages of options? */
-    paging: boolean;
+    /** Whether or not the user can cancel the prompt with the Esc key */
+    cancelable: boolean;
 }
 
 /**
@@ -711,7 +711,7 @@ export class SelectionMenu {
      * @returns Returns a Promise that is resolved with the zero-based index number of the selected option
      * @since 1.11.0
      */
-    onSubmit(callback_fn: (any) => any): Promise<any>; // TODO: correct typedefs
+    onSubmit(callback_fn: (index: number) => any): Promise<number>;
 
     /**
      * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
@@ -720,6 +720,14 @@ export class SelectionMenu {
      * @since 1.11.0
      */
     setOptions(options: string[]): string | boolean;
+
+    /**
+     * 🔹 Adds an option. 🔹
+     * @param option
+     * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+     * @since 1.11.0
+     */
+    addOption(option: string): string | boolean;
 
     /**
      * 🔹 Opens the SelectionMenu. Make sure not to write anything to the console / stdout / stderr while the menu is open! 🔹
