@@ -672,7 +672,7 @@ export class FolderDaemon {
     removeCallbacks(): void;
 
     /**
-     * 🔹 This is called on interval to check the folder but feel free to manually call it if you set the interval to `0` or if you want to check the folder at a precise time 🔹
+     * 🔹 This is called on interval to check the folder but feel free to call it if you set the interval to `0` or if you want to manually check the folder at a precise time 🔹
      */
     intervalCall(): void;
 }
@@ -683,10 +683,10 @@ export class FolderDaemon {
  * An object of settings to be used in the constructor of the `SelectionMenu` class
  */
 interface SelectionMenuSettings {
-    /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
-    overflow: boolean;
     /** Whether or not the user can cancel the prompt with the Esc key */
-    cancelable: boolean;
+    cancelable?: boolean;
+    /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
+    overflow?: boolean;
 }
 
 /**
@@ -700,7 +700,6 @@ export class SelectionMenu {
      * The SelectionMenu is an interactive menu in the Command Line Interface with a list of options that can be scrolled through and selected. 🔹
      * @param title The title of the menu. Leave undefined to not have a title.
      * @param settings The settings of the menu. Leave undefined for the default settings to be applied.
-     * 
      * @since 1.11.0
      */
     constructor(title?: string, settings?: SelectionMenuSettings);
