@@ -101,7 +101,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 Here is an example of how it looks in [Visual Studio Code](https://code.visualstudio.com/):  
 <div align="center" style="text-align: center">
   
-![(Image)](https://sv443.net/cdn/jsl/doc/jsdoc_ide.png)
+![(Image)](https://sv443.net/cdn/svc/docs/jsdoc_ide.png)
   
 </div><!-- TODO: change to this: https://discordapp.com/channels/565933531214118942/565944571255848960/747400187303165983 -->
   
@@ -1521,7 +1521,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > It displays an automatically calculated percentage value and am optional message.  
 >   
 > This is how it might look like:  
-> ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png) <!-- TODO: use GIF instead of PNG -->
+> ![ProgressBar example image](https://sv443.net/cdn/svc/docs/progress_bar_small.gif) <!-- TODO: use GIF instead of PNG -->
 > 
 > 
 > <br><br>
@@ -1609,10 +1609,10 @@ These need to be created with the `new` keyword and constructing multiple object
 
 <!-- #SECTION SelectionMenu -->
 > ### SelectionMenu
-> The SelectionMenu xyz...
+> The SelectionMenu allows a user to scroll through a list of options and select one of them.  
 >   
 > This is how it might look like:  
-> ![SelectionMenu example image](https://sv443.net/cdn/jsl/doc/SelectionMenu_small.png) <!-- TODO: use GIF instead of PNG -->
+> ![SelectionMenu example image](https://sv443.net/cdn/svc/docs/SelectionMenu_small.gif) <!-- TODO: use GIF instead of PNG -->
 > 
 > 
 > <br><br>

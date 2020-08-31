@@ -1,10 +1,14 @@
 -----------------
     SvCoreLib
-     v1.11.0
+     v1.11.1
 -----------------
 
 
-[CURRENT: 1.11.0] - The SelectionMenu update
+[CURRENT: 1.11.1]
+    - My dumbass left some debug text in
+
+
+[1.11.0] - The SelectionMenu update
     - Added the class `SelectionMenu` to create a menu with a scrollable list of options a user can select
     - Added the function `allOfType()` to see if all items of an array are of a specified type
 
