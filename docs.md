@@ -53,6 +53,7 @@ This is the documentation of SvCoreLib (also referred to as SCL)
     - [FolderDaemon](#folderdaemon)
     - [MenuPrompt](#menuprompt)
     - [ProgressBar](#progressbar)
+    - [SelectionMenu](#SelectionMenu)
 - **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
@@ -1598,6 +1599,188 @@ These need to be created with the `new` keyword and constructing multiple object
 > >     iter++;
 > >     pb.next(`Iteration number ${iter}`);
 > > }, 2000);
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION SelectionMenu -->
+> ### SelectionMenu
+> The SelectionMenu xyz...
+>   
+> This is how it might look like:  
+> ![SelectionMenu example image](https://sv443.net/cdn/jsl/doc/SelectionMenu_small.png) <!-- TODO: use GIF instead of PNG -->
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `SelectionMenu`.  
+> > If you want to translate the default texts, use the object [`locale`](#selectionmenulocale-object).  
+> >   
+> > The optional param `title` specifies a title shown on a line above the options of the SelectionMenu.  
+> > With the optional parameter `settings` you can configure the SelectionMenu to your liking. It is explained [here.](#selectionmenusettings-object)  
+> >   
+> > Throws a `NoStdinError` if the terminal in which the process runs doesn't have a stdin stream or isn't a compatible TTY terminal.
+> > ```ts
+> > new SelectionMenu(title?: string, settings?: SelectionMenuSettings)
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### setOptions()
+> > Sets or overwrites the options of the SelectionMenu.  
+> >   
+> > The parameter `options` needs to be an array of strings containing the text of the options.  
+> >   
+> > Returns a string containing an error message or `true` if it was successful.
+> > ```ts
+> > SelectionMenu.setOptions(options: string[]): string | boolean
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### addOption()
+> > Adds a single option to the SelectionMenu.  
+> >   
+> > The parameter `options` needs to be an array of strings containing the text of the options.  
+> >   
+> > Returns a string containing an error message or `true` if it was successful.
+> > ```ts
+> > SelectionMenu.addOption(option: string): string | boolean
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### onSubmit()
+> > Registers a function to be called SelectionMenu.  
+> >   
+> > The parameter `callback_fn` can be passed a function to be called when the SelectionMenu is submitted or canceled.  
+> > This function gets passed a single parameter of type [SelectionMenuResult.](#SelectionMenuresult-object)  
+> >   
+> > Returns a promise that resolves with an object of type [SelectionMenuResult](#SelectionMenuresult-object) or rejects with a string containing an error message.
+> > ```ts
+> > SelectionMenu.onSubmit(callback_fn?: function(SelectionMenuResult){}): Promise<SelectionMenuResult>
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### open()
+> > Opens the SelectionMenu.  
+> > Make sure to add options with `setOptions()` or `addOption()` before calling this method.  
+> >   
+> > Returns a string containing an error message or `true` if it was successful.
+> > ```ts
+> > SelectionMenu.open(): string | boolean
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### close()
+> > Prematurely closes the SelectionMenu.  
+> > This will not cause the callback functions that have been registered with `onSubmit()` to be executed.  
+> >   
+> > Returns a boolean of whether or not the SelectionMenu could be closed.
+> > ```ts
+> > SelectionMenu.close(): boolean
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > ### SelectionMenuSettings object
+> > This object is used in the construction of a SelectionMenu object.
+> > ```ts
+> > {
+> >     cancelable: boolean, // Set to false to prevent users from canceling the SelectionMenu - defaults to true
+> >     overflow: boolean    // If set to true, if the user scrolls past the end or beginning, this makes the cursor of the menu overflow to the other side - defaults to true
+> > }
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### SelectionMenuLocale object
+> > You can access this object directly on the SelectionMenu with the property `locale` (example is below).
+> > ```ts
+> > {
+> >     escKey: string;    // Shorthand name of the escape key - defaults to "Esc"
+> >     cancel: string;    // Cancel text - defaults to "Cancel"
+> >     scroll: string;    // Scroll text - defaults to "Scroll"
+> >     returnKey: string; // Shorthand name of the return key - defaults to "Return"
+> >     select: string;    // Select text - defaults to "Select"
+> > }
+> > ```
+> > 
+> > <br><details><summary><b>Example Localization - click to show</b></summary>
+> > ```js
+> > let sm = new scl.SelectionMenu();
+> > 
+> > sm.addOption("Example Option");
+> > 
+> > sm.locale.cancel = "Exit";
+> > sm.locale.returnKey = "↵";
+> > 
+> > sm.open();
+> > ```
+> > 
+> > </details>
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > let sm = new scl.SelectionMenu("Example Menu", {
+> >     cancelable: true,
+> >     overflow: true
+> > });
+> > 
+> > 
+> > let setOptionsRes = sm.setOptions([ "Foo", "Bar" ]);
+> > 
+> > if(typeof setOptionsRes == "string")
+> >     console.error(`Error while setting options: ${setOptionsRes}`);
+> > 
+> > 
+> > let addOptionRes = sm.addOption("Baz");
+> > 
+> > if(typeof addOptionRes == "string")
+> >     console.error(`Error while adding option: ${addOptionRes}`);
+> > 
+> > 
+> > sm.onSubmit().then(res => {
+> >     if(res.canceled)
+> >         console.log(`User canceled the SelectionMenu`);
+> >     else
+> >         console.log(`User selected option "${res.option.description}" (index ${res.option.index})`);
+> > }).catch(err => {
+> >     console.error(`Error while submitting SelectionMenu: ${err}`);
+> > });
+> > 
+> > 
+> > let openRes = sm.open();
+> > 
+> > if(typeof openRes == "string")
+> >     console.error(`Error while opening SelectionMenu: ${openRes}`);
 > > ```
 > > 
 > > </details>

@@ -689,6 +689,32 @@ interface SelectionMenuSettings {
     overflow?: boolean;
 }
 
+interface SelectionMenuResult {
+    /** If this is `true`, the user has canceled the SelectionMenu by pressing the Escape key */
+    canceled: boolean;
+
+    /** An object containing the index and text of the selected option */
+    option: {
+        /** The zero-based index of the option the user has selected */
+        index: number;
+        /** The description / text of the option the user has selected */
+        description: string;
+    }
+}
+
+interface SelectionMenuLocale {
+    /** Shorthand name of the escape key - defaults to "Esc" */
+    escKey?: string;
+    /** Cancel text - defaults to "Cancel" */
+    cancel?: string;
+    /** Scroll text - defaults to "Scroll" */
+    scroll?: string;
+    /** Shorthand name of the return key - defaults to "Return" */
+    returnKey?: string;
+    /** Select text - defaults to "Select" */
+    select?: string;
+}
+
 /**
  * 🔹 Creates a menu in the Command Line Interface (CLI) with a list of options that can be scrolled through and selected. 🔹  
  *   
@@ -700,6 +726,7 @@ export class SelectionMenu {
      * The SelectionMenu is an interactive menu in the Command Line Interface with a list of options that can be scrolled through and selected. 🔹
      * @param title The title of the menu. Leave undefined to not have a title.
      * @param settings The settings of the menu. Leave undefined for the default settings to be applied.
+     * @throws Throws a NoStdinError when the currently used terminal doesn't have a stdin stream or isn't a compatible TTY terminal.
      * @since 1.11.0
      */
     constructor(title?: string, settings?: SelectionMenuSettings);
@@ -710,7 +737,7 @@ export class SelectionMenu {
      * @returns Returns a Promise that is resolved with the zero-based index number of the selected option
      * @since 1.11.0
      */
-    onSubmit(callback_fn: (index: number) => any): Promise<number>;
+    onSubmit(callback_fn: (result: SelectionMenuResult) => any): Promise<SelectionMenuResult>;
 
     /**
      * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
@@ -742,6 +769,11 @@ export class SelectionMenu {
      * @since 1.11.0
      */
     close(): string | boolean;
+
+    /**
+     * Used to translate the SelectionMenu
+     */
+    locale: SelectionMenuLocale;
 }
 
 //#MARKER objects
