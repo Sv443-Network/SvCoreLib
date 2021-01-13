@@ -1,23 +1,27 @@
 -----------------
     SvCoreLib
-     v1.11.0
+     v1.11.1
 -----------------
 
 
-[CURRENT: 1.11.0] - The SelectionMenu update
-    - added the class `SelectionMenu` class to create a menu with a scrollable list of options a user can select
-    - added the function `allOfType()` to see if all items of an array are of a specified type
+[CURRENT: 1.11.1]
+    - My dumbass left some debug text in
+
+
+[1.11.0] - The SelectionMenu update
+    - Added the class `SelectionMenu` to create a menu with a scrollable list of options a user can select
+    - Added the function `allOfType()` to see if all items of an array are of a specified type
 
 
 [1.10.0] - The initial release
-    - added all features from JSLib-npm v1.9.4
-    - added a TypeScript type declaration file so the in-IDE documentation and type safety is even better than before (thanks to @canarado)
-    - added the class `FolderDaemon` to supervise a directory for changed files
-    - added functions
+    - Added all features from JSLib-npm v1.9.4
+    - Added a TypeScript type declaration file so the in-IDE documentation and type safety is even better than before (thanks to @canarado)
+    - Added the class `FolderDaemon` to supervise a directory for changed files
+    - Added functions
         - `reserialize()` to copy a JSON-compatible object by value and lose the reference
         - `byteLength()` to return the length of a string in bytes
         - `http.pipeString()` to stream a string into an http request
         - `http.pipeFile()` to stream a file into an http request
         - `http.getClientEncoding()` to get the encoding method a client requested
-    - added the `rst` property to `colors.fg` and `colors.bg`
-    - remade the documentation to be a bit more clear and better structured (thanks to @ThatCopy for helping)
+    - Added the `rst` property to `colors.fg` and `colors.bg`
+    - Remade the documentation to be a bit more clear and better structured (thanks to @ThatCopy for helping)

@@ -1,13 +1,28 @@
 const allOfType = require("../functions/allOfType");
 const unused = require("../functions/unused");
 
-const inputCooldown = 50;
+const col = require("../objects/colors").fg;
 
+const inputCooldown = 35;
+
+
+class NoStdinError extends Error
+{
+    constructor(message)
+    {
+        super(message);
+        this.name = "Error: Terminal can't be read from";
+    }
+}
 
 class SelectionMenu
 {
     constructor(title, settings)
     {
+        if(!process.stdin || !process.stdin.isTTY || typeof process.stdin.setRawMode != "function")
+            throw new NoStdinError(`The current terminal doesn't have a stdin stream or is not a compatible TTY terminal.`);
+
+
         require("keypress")(process.stdin);
 
         if(settings == undefined || typeof settings != "object")
@@ -33,6 +48,14 @@ class SelectionMenu
         this.settings = settings;
         this.options = [];
         this.optIndex = 0;
+        
+        this.locale = {
+            escKey: "Esc",
+            cancel: "Cancel",
+            scroll: "Scroll",
+            returnKey: "Return",
+            select: "Select"
+        };
     }
 
     setOptions(options)
@@ -67,10 +90,12 @@ class SelectionMenu
 
     open()
     {
-        if(!this.options.length == 0)
+        if(this.options.length == 0)
             return "No options were set in the FolderPrompt. Use the methods \"setOptions()\" or \"addOption()\" to add some before opening the FolderPrompt.";
         
         this.addListeners();
+
+        this.update();
     }
 
     /**
@@ -80,10 +105,16 @@ class SelectionMenu
     {
         this.clearConsole();
 
-        let logTxt = [
-            `${this.title}\n`,
-            ...this.options
-        ];
+        let logTxt = [];
+
+        if(typeof this.title == "string")
+            logTxt.push(`${col.blue}${this.title}${col.rst}\n`);
+
+        this.options.forEach((opt, i) => {
+            logTxt.push(`${i == this.optIndex ? `${col.yellow}> ${opt}` : `  ${opt}`}${col.rst}`);
+        });
+
+        logTxt.push(`\n\n${this.settings.cancelable ? `[${this.locale.escKey}] ${this.locale.cancel} - ` : ""}[▲ ▼] ${this.locale.scroll} - [${this.locale.returnKey}] ${this.locale.select} `);
 
         process.stdout.write(logTxt.join("\n"));
     }
@@ -101,35 +132,54 @@ class SelectionMenu
             if(this.onCooldown || !key)
                 return;
     
-                this.onCooldown = true;
+            this.onCooldown = true;
+
             setTimeout(() => {
                 this.onCooldown = false;
             }, inputCooldown);
-    
+
+
             switch(key.name)
             {
+                case "c": // exit process if CTRL+C is pressed
+                    if(key.ctrl === true)
+                        process.exit(0);
+                break;
                 case "space":
                 case "return":
                     // submit currently selected option
                     this.removeListeners();
+
+                    this.execCallbacks();
                 break;
                 case "s":
                 case "down":
-                    // optionIndex++;
+                    this.optIndex++;
+
+                    if(this.settings.overflow && this.optIndex > (this.options.length - 1))
+                        this.optIndex = 0;
+                    else if(this.optIndex > (this.options.length - 1))
+                        this.optIndex = (this.options.length - 1);
+
+                    this.update();
                 break;
                 case "a":
                 case "up":
-                    // optionIndex--;
-                    if(this.optIndex == 0 && this.settings.overflow)
+                    if(this.settings.overflow && this.optIndex == 0)
                         this.optIndex = (this.options.length - 1);
+                    else if(this.optIndex == 0)
+                        this.optIndex = 0;
                     else
                         this.optIndex--;
+                    
+                    this.update();
                 break;
                 case "escape":
                     if(this.settings.cancelable)
                     {
-                        // cancel
                         this.removeListeners();
+
+                        this.execCallbacks(true);
                     }
                 break;
             }
@@ -140,9 +190,35 @@ class SelectionMenu
     /**
      * @private
      */
+    execCallbacks(canceled)
+    {
+        if(typeof canceled != "boolean")
+            canceled = false;
+        
+        let retObj = {
+            canceled: canceled,
+            option: {
+                index: this.optIndex,
+                description: this.options[this.optIndex]
+            }
+        };
+
+        this.clearConsole();
+
+        this.callbackFn(retObj);
+        this.promiseRes(retObj);
+    }
+
+    /**
+     * @private
+     */
     removeListeners()
     {
         process.stdin.removeAllListeners(["keypress"]);
+
+        if(!process.stdin.isPaused())
+            process.stdin.pause();
+
         return true;
     }
 
@@ -150,6 +226,8 @@ class SelectionMenu
     {
         let rmRes = this.removeListeners();
         let upRes = this.update();
+
+        this.clearConsole();
 
         return (rmRes && upRes);
     }
