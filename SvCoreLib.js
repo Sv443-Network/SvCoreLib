@@ -37,6 +37,7 @@ module.exports = {
         pipeFile:           require("./src/functions/http/pipeFile"),
         pipeString:         require("./src/functions/http/pipeString"),
         getClientEncoding:  require("./src/functions/http/getClientEncoding"),
+        ping:               require("./src/functions/ping"),
     },
     filesystem: {
         readdirRecursive:      require("./src/functions/filesystem/readdirRecursive"),
@@ -44,7 +45,6 @@ module.exports = {
         logger:                require("./src/functions/filesystem/logger"),
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
     },
-    ping:        require("./src/functions/ping"),
     pause:       require("./src/functions/pause"),
     inDebugger:  require("./src/functions/inDebugger"),
 

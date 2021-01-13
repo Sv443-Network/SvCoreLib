@@ -98,12 +98,11 @@ The variable `scl` now contains all of SCL's functions, classes and objects.
 <!-- #MARKER In-IDE Documentation -->
 # In-IDE Documentation
 SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide documentation directly in your IDE.  
-Here is an example of how it looks in [Visual Studio Code](https://code.visualstudio.com/):  
-<div align="center" style="text-align: center">
+<details><summary><b>Click here to see an example of how it looks like in Visual Studio Code</b></summary>
   
-![(Image)](https://sv443.net/cdn/scl/jsdoc_ide.png)
-  
-</div><!-- TODO: change to this: https://discordapp.com/channels/565933531214118942/565944571255848960/747400187303165983 -->
+![(Image)](https://cdn.sv443.net/scl/docs/jsdoc_ide.gif)
+
+</details>
   
 ---
 
@@ -199,7 +198,7 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 >   
 > ❗ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
-> scl.filesystem.readdirRecursive(folder: string, callback?: function): Promise<string[]>
+> scl.filesystem.readdirRecursiveSync(folder: string): string[]
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -226,7 +225,7 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > The parameter `options` needs to be an object of type DownloadOptions (scroll down for definition).  
 > The function will return a Promise that resolves to a void value or rejects to an error message string.  
 > ```ts
-> scl.filesystem.downloadFile(url: string, destPath?: string, options?: DownloadOptions) -> Promise<string | void>
+> scl.filesystem.downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<string | void>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -313,7 +312,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ### generateUUID.binary()
 > This function generates a binary (`0-1` or `true-false`) UUID.  
 > The parameter `uuidFormat` is explained [here.](#generate-uuid)  
-> If the parameter `asBooleanArray` is set to `true`, the resulting UUID will be an array of booleans. Any characters that aren't `x` or `y` will then be ignored.
+> If the parameter `asBooleanArray` is set to `true`, the resulting UUID will be an array of booleans. Any characters of the `uuidFormat` that aren't `x` or `y` will then be ignored.
 > ```ts
 > scl.generateUUID.binary(uuidFormat: string, asBooleanArray?: boolean): string | boolean[]
 > ```
@@ -409,7 +408,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 
 <!-- #SECTION HTTP -->
 ## HTTP
-This subsection, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules easier to use.  
+This subsection, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules and third-party packages based on them easier to use.  
 
 
 <br><br>
@@ -426,7 +425,7 @@ This subsection, accessed with `scl.http`, offers functions that make using Node
 >   
 > If no header was provided or the client doesn't support any encodings, `"identity"` is returned, meaning the client wants the original, non-encoded data.  
 > ```ts
-> scl.http.getClientEncoding(req: http.IncomingMessage | https.IncomingMessage): string
+> scl.http.getClientEncoding(req: http.IncomingMessage): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -532,6 +531,42 @@ This subsection, accessed with `scl.http`, offers functions that make using Node
 > ```
 > 
 > </details>
+
+
+<br><br><br>
+
+
+> ### http.ping()
+> Pings the specified URL and returns its status code, status message, response time and `Content-Type` header.  
+>   
+> The param `url` needs to be passed a valid URL.  
+> Use `timeout` to specify a maximum timeout in milliseconds after which the ping should be cancelled. Defaults to 5000.  
+> The function returns a promise that resolves with an object containing all the values you need (scroll down for more info) or a string containing an error message.
+> ```ts
+> scl.http.ping(url: string, timeout?: number): Promise<PingReturnValues>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> scl.http.ping("https://example.org/", 5000)
+> .then(res => {
+>     console.log(`Status ${res.statusCode} (${res.statusMessage}) - Ping: ${res.responseTime}ms`); // Status 200 (OK) - Ping: 526ms
+> })
+> .catch(err => console.error(`Error while pinging URL: ${err}`));
+> ```
+> 
+> </details><br>
+> 
+> ### PingReturnValues object
+> ```ts
+> {
+>     statusCode: number;    // The ping's returned status code (eg. 200 or 404)
+>     statusMessage: string; // The status message of the ping - Could be something like "OK" for status 200 or "Not Found" for status 404
+>     responseTime: number;  // The response time in milliseconds as an integer
+>     contentType: string;   // The `Content-Type` header - this will contain the MIME type and the content encoding, for example: "text/html; charset=UTF-8"
+> }
+> ```
 
 
 <br><br><br><br>
@@ -651,7 +686,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 
 > ### allEqual()
 > This function checks whether or not all items of an array are equal or not.  
-> It returns `true` if all items are equal or `false` if not.
+> Set `loose` to true to switch to loose equality comparison (`==`) instead of the default strict equality comparison (`===`).  
+> It returns `true` if all items are equal or `false` if not.  
 > ```ts
 > scl.allEqual(array: any[], loose?: boolean): boolean
 > ```
@@ -661,11 +697,15 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > ```js
 > let foo = scl.allEqual([ 1, 1, 1, 1 ]);
 > let bar = scl.allEqual([ 1, 1, 2, 1 ]);
-> let baz = scl.allEqual([ 1, true, "1" ], true);
 > 
-> console.log(foo); // true
-> console.log(bar); // false
-> console.log(baz); // true
+> let bazLoose = scl.allEqual([ 1, true, "1" ], true);
+> let bazStrict = scl.allEqual([ 1, true, "1" ]);
+> 
+> 
+> console.log(foo);       // true
+> console.log(bar);       // false
+> console.log(bazLoose);  // true
+> console.log(bazStrict); // false
 > ```
 > 
 > </details>
@@ -676,7 +716,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 
 > ### byteLength()
 > This function returns the length / size of a string in bytes.  
-> If the param `str` is not of type string, the function will return `0`.
+> If the param `str` is not of type string, the function will return `-1`.
 > ```ts
 > scl.byteLength(str: string): number
 > ```
@@ -744,7 +784,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > ```js
 > if(!scl.inDebugger())
 > {
->     // SCLs MenuPrompt doesn't work in debuggers since it needs to read from process.stdin
+>     // SCLs MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
 >     let mp = new scl.MenuPrompt();
 >     // ...
 > }
@@ -812,7 +852,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > ### mapRange()
 > Transforms the `value` parameter from the numerical range `range_1_min`-`range_1_max` to the numerical range `range_2_min`-`range_2_max`.  
 > For example, you can map the value 2 in the range of 0-5 to the range of 0-10 and you'd get a 4 as a result.  
-> It can be especially useful when using SCLs [`ProgressBar`](#progressbar) class.
+> It can be especially useful when using SCLs [`ProgressBar`](#progressbar) class.  
+> This function is the same as the [map() function in Arduino.](https://www.arduino.cc/reference/en/language/functions/math/map/)
 > ```ts
 > scl.mapRange(value: number, range_1_min: number, range_1_max: number, range_2_min: number, range_2_max: number): number
 > ```
@@ -870,42 +911,6 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 > 
 > </details>
-
-
-<br><br><br>
-
-
-> ### ping()
-> Pings the specified URL and returns its status code, status message, response time and `Content-Type` header.  
->   
-> The param `url` needs to be passed a valid URL.  
-> Use `timeout` to specify a maximum timeout in milliseconds after which the ping should be cancelled. Defaults to 5000.  
-> The function returns a promise that resolves with an object containing all the values you need (scroll down for more info) or a string containing an error message.
-> ```ts
-> scl.ping(url: string, timeout?: number): Promise<PingReturnValues>
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> scl.ping("https://example.org/", 5000)
-> .then(res => {
->     console.log(`Status ${res.statusCode} (${res.statusMessage}) - Ping: ${res.responseTime}ms`); // Status 200 (OK) - Ping: 526ms
-> })
-> .catch(err => console.error(`Error while pinging URL: ${err}`));
-> ```
-> 
-> </details><br>
-> 
-> ### PingReturnValues object
-> ```ts
-> {
->     statusCode: number;    // The ping's returned status code (eg. 200 or 404)
->     statusMessage: string; // The status message of the ping - Could be something like "OK" for status 200 or "Not Found" for status 404
->     responseTime: number;  // The response time in milliseconds as an integer
->     contentType: string;   // The `Content-Type` header - this will contain the MIME type and the content encoding, for example: "text/html; charset=UTF-8"
-> }
-> ```
 
 
 <br><br><br>
@@ -1277,7 +1282,7 @@ These need to be created with the `new` keyword and constructing multiple object
 >   
 > This is how a MenuPrompt might look like:  
 >   
-> ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
+> ![MenuPrompt example image](https://cdn.sv443.net/jsl/doc/menu_prompt_small.png)
 > 
 > 
 > <br><br>
@@ -1314,6 +1319,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > 
 > > ### open()
 > > Opens the MenuPrompt.  
+> > Make sure to add menus to the MenuPrompt using [`MenuPrompt.addMenu()`](#addmenu) before calling this method!  
 > > ❗ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable.
 > >   
 > > This method either returns `true` if it was successful or it returns a string containing an error message.
@@ -1330,7 +1336,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > >   
 > > This method returns the results of the MenuPrompt as an array of objects of type [`MenuPromptResult`](#menupromptresult-object)
 > > ```ts
-> > MenuPrompt.close()
+> > MenuPrompt.close(): MenuPromptResult[]
 > > ```
 > 
 > 
@@ -1346,12 +1352,11 @@ These need to be created with the `new` keyword and constructing multiple object
 > 
 > 
 > <br><br>
-> Returns the current results of the MenuPrompt as an array of objects of type [`MenuPromptResult`](#menupromptresult-object)  
-> This does **not** close the menu prompt, unlike `close()`  
->   
-> If there aren't any completed menus yet, this method will return `null`
 > > ### result()
-> > 
+> > Returns the current results of the MenuPrompt as an array of objects of type [`MenuPromptResult`](#menupromptresult-object)  
+> > This does **not** close the menu prompt, unlike `close()`  
+> >   
+> > If there aren't any completed menus yet, this method will return `null`
 > > ```ts
 > > MenuPrompt.result(): MenuPromptResult | null
 > > ```
@@ -1518,10 +1523,10 @@ These need to be created with the `new` keyword and constructing multiple object
 <!-- #SECTION ProgressBar -->
 > ### ProgressBar
 > The ProgressBar simply displays a progress bar in the Command Line Interface (CLI).  
-> It displays an automatically calculated percentage value and am optional message.  
+> It displays an automatically calculated percentage value and an optional message.  
 >   
 > This is how it might look like:  
-> ![ProgressBar example image](https://sv443.net/cdn/svc/docs/progress_bar_small.gif) <!-- TODO: use GIF instead of PNG -->
+> ![ProgressBar example image](https://cdn.sv443.net/scl/docs/progress_bar_small.gif) <!-- TODO: use GIF instead of PNG -->
 > 
 > 
 > <br><br>
@@ -1612,7 +1617,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > The SelectionMenu allows a user to scroll through a list of options and select one of them.  
 >   
 > This is how it might look like:  
-> ![SelectionMenu example image](https://sv443.net/cdn/svc/docs/SelectionMenu_small.gif) <!-- TODO: use GIF instead of PNG -->
+> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/SelectionMenu_small.gif) <!-- TODO: use GIF instead of PNG -->
 > 
 > 
 > <br><br>
@@ -1808,7 +1813,7 @@ These are read-only, static and passive properties and will not invoke or change
 > **Supported colors are:**
 > | Color | SCL |
 > | --- | --- |
-> | Reset (Usually White or Black) | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
+> | Reset (Usually white text on black BG) | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
 > | Fat Font | `scl.colors.fat` |
 > | Blinking | `scl.colors.blink` |
 > | Black Text | `scl.colors.fg.black` |
@@ -1928,7 +1933,7 @@ Please create a backup before using this library if you want to be extra secure 
 <div align="center" style="text-align: center">
 
 Made with ❤️ by [Sv443](https://github.com/Sv443)  
-You can support me on [GitHub Sponsors](https://github.com/sponsors/Sv443), [Patreon](https://patreon.com/Sv443_), [Ko-fi](https://ko-fi.com/Sv443_) or [PayPal](https://paypal.me/SvenFehler)
+Please consider [supporting me](https://github.com/sponsors/Sv443)
 
 </div>
 

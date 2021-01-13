@@ -1,7 +1,7 @@
 function byteLength(str)
 {
     if(!str || typeof str != "string")
-        return 0;
+        return -1;
 
     return Buffer.byteLength(str, "utf8");
 }

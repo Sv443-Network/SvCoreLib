@@ -21,6 +21,7 @@
 - Fixed bugs
     - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
     - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))
+- Fixed a lot of mistakes in the documentation
 
 <br>
 

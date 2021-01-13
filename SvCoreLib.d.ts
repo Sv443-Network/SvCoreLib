@@ -161,7 +161,7 @@ export function inDebugger(): boolean;
 
 /**
  * 🔹 Returns the length of a string in bytes.  
- * Passing anything other than a string will return `0` 🔹
+ * Passing anything other than a string will return `-1` 🔹
  * @param str
  * @since 1.10.0
  */
@@ -172,7 +172,7 @@ export function byteLength(str: string): number;
 /**
  * 🔹 Highly random number generator with upper and lower boundary.  
  * `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random. 🔹  
- * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! If you know how to implement that, feel free to submit a pull request :) ❗
+ * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
  * @param min Lower boundary of the RNG
  * @param max Upper boundary of the RNG
  * @throws Throws an error if the arguments are not of type 'Number'
@@ -330,37 +330,37 @@ declare namespace http {
      * @since 1.10.0
      */
     export function getClientEncoding(req: _http.IncomingMessage): EncodingName;
+
+    /**
+     * This object contains the return values of a ping
+     */
+    export interface PingReturnValues {
+        /** The ping's returned status code (eg. 200 or 404) */
+        statusCode: number;
+        /** The status message of the ping - Could be something like "Ok" for status 200 or "Not Found" for status 404 */
+        statusMessage: string;
+        /** The response time in milliseconds as an integer */
+        responseTime: number;
+        /** The `content-type` header - this will contain the MIME type and the content encoding */
+        contentType: string;
+    }
+
+    /**
+     * 🔹 Pings the specified URL and returns the status code 🔹
+     * @param url The URL that should be pinged
+     * @param timeout time in milliseconds after which the ping will time out and return a 404 error - defaults to 5000 ms
+     * @returns Promise gets passed the HTTP status code (for example 200 or 404), the status message and the response duration in ms; if errored returns a string with the error message
+     * @throws Throws an error if the `url` parameter is not present or malformatted
+     * @since 1.6.0
+     * @version 1.6.1 changed attributes
+     * @version 1.6.5 changed time measurement dependency due to deprecation
+     * @version 1.6.6 updated documentation for the resulting object
+     * @version 1.8.0 changed time measurement method to be a much more accurate one
+     */
+    export function ping(url: string, timeout?: number): Promise<PingReturnValues>;
 }
 
 //#SECTION networking
-
-/**
- * This object contains the return values of a ping
- */
-export interface PingReturnValues {
-    /** The ping's returned status code (eg. 200 or 404) */
-    statusCode: number;
-    /** The status message of the ping - Could be something like "Ok" for status 200 or "Not Found" for status 404 */
-    statusMessage: string;
-    /** The response time in milliseconds as an integer */
-    responseTime: number;
-    /** The `content-type` header - this will contain the MIME type and the content encoding */
-    contentType: string;
-}
-
-/**
- * 🔹 Pings the specified URL and returns the status code 🔹
- * @param url The URL that should be pinged
- * @param timeout time in milliseconds after which the ping will time out and return a 404 error - defaults to 5000 ms
- * @returns Promise gets passed the HTTP status code (for example 200 or 404), the status message and the response duration in ms; if errored returns a string with the error message
- * @throws Throws an error if the `url` parameter is not present or malformatted
- * @since 1.6.0
- * @version 1.6.1 changed attributes
- * @version 1.6.5 changed time measurement dependency due to deprecation
- * @version 1.6.6 updated documentation for the resulting object
- * @version 1.8.0 changed time measurement method to be a much more accurate one
- */
-export function ping(url: string, timeout?: number): Promise<PingReturnValues>;
 
 export interface DownloadProgress {
     /** The current download progress in bytes */
