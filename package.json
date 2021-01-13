@@ -1,6 +1,6 @@
 {
   "name": "svcorelib",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "Core Library used in almost all of my (Sv443's) projects. Feel free to use it if you want to, it contains some very nice features.",
   "main": "SvCoreLib.js",
   "scripts": {

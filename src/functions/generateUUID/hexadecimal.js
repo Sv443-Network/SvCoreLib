@@ -11,7 +11,7 @@ function hexadecimal(uuidFormat, upperCase = false)
     possible = possible.split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in svc.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     let regex = /[xy]/gm;
     let match;

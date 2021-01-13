@@ -11,13 +11,13 @@ import * as _http from 'http';
  * @param input Variable that should be checked - this can be of any type but the basic types will work best
  * @returns true or false
  * @since 1.4.0
- * @version 1.6.5 lowercase alias svc.isempty was removed
+ * @version 1.6.5 lowercase alias scl.isempty was removed
  * @version 1.8.0 Added check for objects with length = 0
  */
 export function isEmpty(input: any): boolean;
 
 /**
- * 🔹 Checks how many values of the array are empty (does the same check as `svc.isEmpty()`, but on each array item) 🔹
+ * 🔹 Checks how many values of the array are empty (does the same check as `scl.isEmpty()`, but on each array item) 🔹
  * @param array Array that should be checked
  * @returns true if all are empty, false if none are empty and number if only some are empty
  * @throws Throws an error if the parameter isn't an array
@@ -66,12 +66,12 @@ export function allOfType(array: any[], type: JSPrimitiveDataTypeName): boolean;
  * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
  * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
  * - ❗ Asynchronous function execution is not supported (yet)  
- * - ❗ If `svc.noShutdown()` was used, the passed function will be executed, but the process will not exit
+ * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
  * @param funct This function will get executed before process shutdown
  * @param code The exit code with which the process should be closed. Defaults to 0
  * @since 1.5.0
  * @version 1.8.0 Added "code" parameter to specify an exit code
- * @version 1.9.0 Function will now still be called when `svc.noShutdown()` was used
+ * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
  * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
  */
 export function softShutdown(funct: (any) => any, code?: number): void;

@@ -1,5 +1,5 @@
 # SvCoreLib - Documentation
-This is the documentation of SvCoreLib (also referred to as SCL)
+This is the documentation of SvCoreLib (referred to as SCL)
 
 <br>
 
@@ -68,7 +68,7 @@ This is the documentation of SvCoreLib (also referred to as SCL)
 
 <!-- #MARKER Installation -->
 # Installation
-To install SCL, use the following command in a terminal inside your Node.js project:  
+To install SvCoreLib (SCL), use the following command in a terminal inside your Node.js project:  
 ```
 npm i svcorelib
 ```
@@ -80,7 +80,7 @@ Troubleshooting: Make sure your workspace contains a `package.json` file. If not
 # Usage
 This explains how you can use SCL in your project.  
   
-If your project runs on "normal" Node.js (or CommonJS), use the following at the top of the file you want to include SCL in:
+If your project runs on "normal" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
 ```js
 const scl = require("svcorelib");
 ```
@@ -101,7 +101,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 Here is an example of how it looks in [Visual Studio Code](https://code.visualstudio.com/):  
 <div align="center" style="text-align: center">
   
-![(Image)](https://sv443.net/cdn/svc/docs/jsdoc_ide.png)
+![(Image)](https://sv443.net/cdn/scl/jsdoc_ide.png)
   
 </div><!-- TODO: change to this: https://discordapp.com/channels/565933531214118942/565944571255848960/747400187303165983 -->
   

@@ -8,7 +8,7 @@ function softShutdown(funct, code)
     let onbeforeshutdown = () => {
         if(typeof funct == "function")
             funct();
-        if(!process.svc.noShutdown)
+        if(!process.scl.noShutdown)
             process.exit(code);
         return;
     };

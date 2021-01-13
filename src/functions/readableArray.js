@@ -4,7 +4,7 @@ const isEmpty = require("./isEmpty");
 function readableArray(array, separators, lastSeparator)
 {
     if(isEmpty(array) || typeof array != "object" || (!isEmpty(separators) && typeof separators != "string" && typeof separators != "boolean") || (!isEmpty(lastSeparator) && typeof lastSeparator != "string" && typeof lastSeparator != "boolean"))
-        throw new Error(`Wrong or missing parameters in "svc.readableArray()"`);
+        throw new Error(`Wrong or missing parameters in "scl.readableArray()"`);
     if(isEmptyWithoutString(lastSeparator) || lastSeparator === false)
         lastSeparator = " and ";
     if(isEmptyWithoutString(separators))
