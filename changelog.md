@@ -1,10 +1,10 @@
 ## SvCoreLib
-### Version [1.11.2](#1112)
+### Version [1.12.0](#1120)
 
 <br><br>
 
 ## Version History:
-- [1.11.2](#1112)
+- [1.12.0](#1120)
 - [1.11.1](#1111)
 - [1.11.0](#1110)
 - [1.10.0](#1100)
@@ -16,11 +16,12 @@
 <br>
 
 
-## 1.11.2
+## 1.12.0
 ### FolderDaemon Fix
 - Fixed bugs
     - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
     - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))
+- Added SCL's custom error classes to new namespace `scl.Errors`
 - Fixed a lot of mistakes in the documentation
 
 <br>
