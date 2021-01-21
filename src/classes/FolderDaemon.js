@@ -6,33 +6,7 @@ const reserialize = require("../functions/reserialize");
 const diff = require("deep-diff");
 const readdirRecursive = require("../functions/filesystem/readdirRecursive");
 
-
-class InvalidPathError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Invalid Path Error";
-    }
-}
-
-class NotAFolderError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Not A Folder Error";
-    }
-}
-
-class PatternInvalidError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Pattern Invalid Error";
-    }
-}
+const { InvalidPathError, NotAFolderError, PatternInvalidError } = require("./Errors");
 
 
 class FolderDaemon

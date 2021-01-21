@@ -45,6 +45,7 @@ module.exports = {
         logger:                require("./src/functions/filesystem/logger"),
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
     },
+    Errors:      require("./src/classes/Errors"),
     pause:       require("./src/functions/pause"),
     inDebugger:  require("./src/functions/inDebugger"),
 

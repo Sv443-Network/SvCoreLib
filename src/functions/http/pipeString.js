@@ -3,15 +3,10 @@ const { Readable } = require("stream");
 const byteLength = require("../byteLength");
 const unused = require("../unused");
 
+const { InvalidMimeTypeError } = require("../../classes/Errors");
+
 unused(http);
 
-class InvalidMimeTypeError extends Error {
-    constructor(message)
-    {
-        super(message);
-        this.name = "Invalid MIME Type";
-    }
-}
 
 function pipeString(res, text, mimeType, statusCode = 200)
 {

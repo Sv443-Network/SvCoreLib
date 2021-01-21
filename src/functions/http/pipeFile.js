@@ -3,13 +3,8 @@ const http = require("http");
 const { resolve } = require("path");
 require("../unused")(http);
 
-class InvalidMimeTypeError extends Error {
-    constructor(message)
-    {
-        super(message);
-        this.name = "Invalid MIME Type";
-    }
-}
+const { InvalidMimeTypeError } = require("../../classes/Errors");
+
 
 function pipeFile(res, filePath, mimeType = "text/plain", statusCode = 200)
 {

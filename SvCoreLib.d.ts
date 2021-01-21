@@ -483,11 +483,13 @@ export class ProgressBar {
     
     /**
      * 🔹 Executes a function once the progress reaches 100% 🔹
-     * @param callback Function
+     * @param {function} [callback] Function to be called when the progress bar reaches 100%
+     * @returns {Promise} Promise that gets resolved when the progress bar reaches 100%
      * @throws Throws an error if the "callback" argument is not a function
      * @since 1.7.0
+     * @version 1.12.0 Method now also returns a Promise
      */
-    onFinish(callback: () => void): void;
+    onFinish(callback: () => void): Promise<void>;
     
     /**
      * 🔹 Get the current progress as a float value 🔹
@@ -519,9 +521,9 @@ export interface MenuPromptMenu {
     options: MenuPromptMenuOption[];
 }
 
-/** The result of a single menu of a menu prompt */
+/** The result of a single menu of a menu prompt. This object is usually present inside an array. */
 export interface MenuPromptResult {
-    /** The key of the selected option */
+    /** The key that had to be pressed to select this option */
     key: string;
     /** The description of the selected option */
     description: string;
@@ -774,6 +776,42 @@ export class SelectionMenu {
      * Used to translate the SelectionMenu
      */
     locale: SelectionMenuLocale;
+}
+
+/**
+ * 🔸 Contains all of SCL's custom error classes 🔸
+ * @since 1.12.0
+ */
+declare namespace Errors {
+    /**
+     * 🔹 This error gets thrown if an invalid path was provided 🔹
+     * @since 1.12.0
+     */
+    class InvalidPathError extends Error {}
+
+    /**
+     * 🔹 This error gets thrown if the provided path is not a folder 🔹
+     * @since 1.12.0
+     */
+    class NotAFolderError extends Error {}
+
+    /**
+     * 🔹 This error gets thrown if an invalid glob pattern was provided 🔹
+     * @since 1.12.0
+     */
+    class PatternInvalidError extends Error {}
+
+    /**
+     * 🔹 This error gets thrown when the terminal that the process runs in doesn't provide an stdin channel 🔹
+     * @since 1.12.0
+     */
+    class NoStdinError extends Error {}
+
+    /**
+     * 🔹 This error gets thrown when an invalid [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) was provided. 🔹
+     * @since 1.12.0
+     */
+    class InvalidMimeTypeError extends Error {}
 }
 
 //#MARKER objects

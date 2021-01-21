@@ -13,7 +13,7 @@ This is the documentation of SvCoreLib (referred to as SCL)
         - [filesystem.logger()](#filesystemlogger)
         - [filesystem.readdirRecursive()](#filesystemreaddirrecursive)
         - [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync)
-        - [downloadFile()](#downloadfile)
+        - [filesystem.downloadFile()](#filesystemdownloadfile)
     - [Generate UUID](#generate-uuid)
         - [generateUUID.alphanumerical()](#generateuuidalphanumerical)
         - [generateUUID.binary()](#generateuuidbinary)
@@ -54,6 +54,12 @@ This is the documentation of SvCoreLib (referred to as SCL)
     - [MenuPrompt](#menuprompt)
     - [ProgressBar](#progressbar)
     - [SelectionMenu](#SelectionMenu)
+    - [Errors](#errors)
+        - [InvalidPathError](#errorsinvalidpatherror)
+        - [NotAFolderError](#errorsnotafoldererror)
+        - [PatternInvalidError](#errorspatterninvaliderror)
+        - [NoStdinError](#errorsnostdinerror)
+        - [InvalidMimeTypeError](#errorsinvalidmimetypeerror)
 - **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
@@ -1280,9 +1286,11 @@ These need to be created with the `new` keyword and constructing multiple object
 > ❗ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed.  
 > ❗ 2nd Warning: Don't log anything to the console or write anything to `process.stdin` while the MenuPrompt is opened as it would completely mess it up.  
 >   
-> This is how a MenuPrompt might look like:  
+> <details><summary><b>Click here to see an example of how this might look like</b></summary>
 >   
-> ![MenuPrompt example image](https://cdn.sv443.net/jsl/doc/menu_prompt_small.png)
+> ![MenuPrompt example image](https://cdn.sv443.net/scl/docs/menuprompt_tty.gif)
+> 
+> </details>
 > 
 > 
 > <br><br>
@@ -1449,43 +1457,20 @@ These need to be created with the `new` keyword and constructing multiple object
 > > 
 > > <br><details><summary><b>Example Localization - click to show</b></summary>
 > > ```js
-> > let mp = new scl.MenuPrompt();
+> > const scl = require("svcorelib");
 > > 
-> > mp.addMenu({
-> >     title: "Example Menu",
-> >     options: [
-> >         {
-> >             key: "1",
-> >             description: "Foo"
-> >         },
-> >         {
-> >             key: "2",
-> >             description: "Bar"
-> >         }
-> >     ]
-> > });
 > > 
-> > mp.localization.wrongOption = "You idiot need to type one of the green options";
-> > mp.localization.invalidOptionSelected = "You idiot selected a wrong option, smh";
-> > mp.localization.exitOptionText = "I don't wanna deal with your shit anymore";
-> > 
-> > mp.open();
-> > ```
-> > 
-> > </details>
-> 
-> 
-> <br><br><br>
-> 
-> 
-> > **<details><summary>Example Code - Click to view</summary>**
-> > 
-> > ```js
+> > /** @type {scl.MenuPromptOptions} */
 > > let opts = {
 > >     exitKey: "x",
 > >     autoSubmit: true,
+> >     /** @param {scl.MenuPromptResult[]} res */
 > >     onFinished: (res) => {
-> >         console.log(`Finished. Selected option: ${res[0].key}`);
+> >         // if the user selected an option
+> >         if(res.length > 0)
+> >             console.log(`Finished. Selected option: ${res[0].key} (${res[0].description})`);
+> >         else
+> >             console.log(`User selected "Exit"`);
 > >     }
 > > };
 > > 
@@ -1505,13 +1490,18 @@ These need to be created with the `new` keyword and constructing multiple object
 > >     ]
 > > };
 > > 
+> > // Make sure menu is valid
 > > let menuValid = mp.validateMenu(menu);
-> > if(menuValid) // make sure menu is valid
-> >     mp.addMenu();
+> > if(menuValid)
+> > {
+> >     // Now that the menu is confirmed to be valid, add it
+> >     mp.addMenu(menu);
+> > 
+> >     // Open the menu
+> >     mp.open();
+> > }
 > > else
 > >     console.log(`Error: Menu is invalid.\n${menuValid.join(", ")}`);
-> > 
-> > mp.open();
 > > ```
 > > 
 > > </details>
@@ -1525,8 +1515,11 @@ These need to be created with the `new` keyword and constructing multiple object
 > The ProgressBar simply displays a progress bar in the Command Line Interface (CLI).  
 > It displays an automatically calculated percentage value and an optional message.  
 >   
-> This is how it might look like:  
-> ![ProgressBar example image](https://cdn.sv443.net/scl/docs/progress_bar_small.gif) <!-- TODO: use GIF instead of PNG -->
+> <details><summary><b>Click here to see an example of how this might look like</b></summary>
+>   
+> ![ProgressBar example image](https://cdn.sv443.net/scl/docs/progressbar_tty.gif)
+> 
+> </details>
 > 
 > 
 > <br><br>
@@ -1536,6 +1529,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > > Constructs a new object of the class `ProgressBar`.  
 > >   
 > > The param `timesToUpdate` needs to be passed the number of times you are going to call the method [`next()`](#next).  
+> > This parameter is also directly correlated to the length of the progress bar.  
 > > The optional parameter `initialMessage` can contain a string that is displayed at 0% progress. If left undefined, no message will appear.
 > > ```ts
 > > new ProgressBar(timesToUpdate: number, initialMessage?: string)
@@ -1592,18 +1586,31 @@ These need to be created with the `new` keyword and constructing multiple object
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > let pb = new scl.ProgressBar(5, "Hello, World!");
-> > let iter = 0;
+> > const scl = require("svcorelib");
 > > 
-> > pb.onFinish(() => {
-> >     console.log("Finished!");
-> >     process.exit();
+> > 
+> > let pb = new scl.ProgressBar(15, "Doing some stuff (Iteration #0)");
+> > 
+> > // Register Promise callback to be executed when the progress bar reaches 100%
+> > pb.onFinish().then(() => {
+> >     console.log("Finished.\n\n");
 > > });
 > > 
-> > setInterval(() => {
-> >     iter++;
-> >     pb.next(`Iteration number ${iter}`);
-> > }, 2000);
+> > // Increment progress bar after a random timeout
+> > function iterate(iterations)
+> > {
+> >     if(iterations < 15)
+> >     {
+> >         setTimeout(() => {
+> >             iterations++;
+> >             pb.next(`Doing some stuff (Iteration #${iterations})`);
+> > 
+> >             iterate(iterations);
+> >         }, scl.randRange(200, 400));
+> >     }
+> > }
+> > 
+> > iterate(0);
 > > ```
 > > 
 > > </details>
@@ -1616,8 +1623,12 @@ These need to be created with the `new` keyword and constructing multiple object
 > ### SelectionMenu
 > The SelectionMenu allows a user to scroll through a list of options and select one of them.  
 >   
-> This is how it might look like:  
-> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/SelectionMenu_small.gif) <!-- TODO: use GIF instead of PNG -->
+> <details><summary><b>Click here to see an example of how this might look like</b></summary>
+> 
+> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/selectionmenu_tty.gif)
+> 
+> </details>
+> 
 > 
 > 
 > <br><br>
@@ -1754,24 +1765,30 @@ These need to be created with the `new` keyword and constructing multiple object
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > let sm = new scl.SelectionMenu("Example Menu", {
+> > const scl = require("svcorelib");
+> > 
+> > 
+> > let sm = new scl.SelectionMenu("Example SelectionMenu:", {
 > >     cancelable: true,
 > >     overflow: true
 > > });
 > > 
 > > 
-> > let setOptionsRes = sm.setOptions([ "Foo", "Bar" ]);
+> > // Set first 5 options
+> > let setOptionsRes = sm.setOptions([ "Foo", "Bar", "Apple", "Pear", "Banana" ]);
 > > 
 > > if(typeof setOptionsRes == "string")
 > >     console.error(`Error while setting options: ${setOptionsRes}`);
 > > 
 > > 
+> > // Add another option
 > > let addOptionRes = sm.addOption("Baz");
 > > 
 > > if(typeof addOptionRes == "string")
 > >     console.error(`Error while adding option: ${addOptionRes}`);
 > > 
 > > 
+> > // Add handler that gets called when the menu is submitted
 > > sm.onSubmit().then(res => {
 > >     if(res.canceled)
 > >         console.log(`User canceled the SelectionMenu`);
@@ -1782,6 +1799,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > > });
 > > 
 > > 
+> > // Open the menu
 > > let openRes = sm.open();
 > > 
 > > if(typeof openRes == "string")
@@ -1789,6 +1807,176 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```
 > > 
 > > </details>
+
+
+<br><br><br><br><br>
+
+
+<!-- #SECTION File System -->
+## Errors
+This subsection, accessed with `scl.Errors`, contains all of SCL's custom error classes.  
+They are used by SCL but feel free to also use these.  
+The classes have to be constructed with the `new` keyword.  
+Also, all of these classes inherit from [JavaScript's `Error` class.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+
+<br><br>
+
+<!-- #SECTION InvalidPathError -->
+> ### Errors.InvalidPathError
+> This error gets thrown when a provided path is invalid or doesn't exist on the current device.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `InvalidPathError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.  
+> > SCL usually puts the invalid path in this parameter.
+> > ```ts
+> > new Errors.InvalidPathError(message?: string)
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > const scl = require("svcorelib");
+> > const fs = require("fs");
+> > const { resolve } = require("path");
+> > 
+> > 
+> > /** @throws InvalidPathError if the provided path doesn't exist */
+> > function pathExists(path)
+> > {
+> >     path = resolve(path);
+> > 
+> >     if(!fs.existsSync(path))
+> >         throw new scl.Errors.InvalidPathError(`Path "${path}" doesn't exist.`);
+> > 
+> >     return;
+> > }
+> > 
+> > pathExists("./src/");                   // no error is thrown
+> > pathExists("./path/that/doesnt/exist"); // error is thrown here
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION NotAFolderError -->
+> ### Errors.NotAFolderError
+> This error gets thrown when a provided path is valid but doesn't point to a folder / directory.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `NotAFolderError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.  
+> > SCL usually puts the invalid path in this parameter.
+> > ```ts
+> > new Errors.NotAFolderError(message?: string)
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > const scl = require("svcorelib");
+> > const fs = require("fs");
+> > const { resolve } = require("path");
+> > 
+> > 
+> > /** @throws NotAFolderError if the provided path doesn't point to a folder */
+> > function pathIsFolder(path)
+> > {
+> >     path = resolve(path);
+> > 
+> >     if(!fs.statSync(path).isDirectory())
+> >         throw new scl.Errors.InvalidPathError(`Path "${path}" doesn't point to a folder.`);
+> > 
+> >     return;
+> > }
+> > 
+> > pathIsFolder("./src");          // no error is thrown
+> > pathIsFolder("./SvCoreLib.js"); // error is thrown here
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION PatternInvalidError -->
+> ### Errors.PatternInvalidError
+> This error gets thrown when a provided glob pattern is invalid.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `PatternInvalidError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.  
+> > SCL usually puts the invalid pattern in this parameter.
+> > ```ts
+> > new Errors.PatternInvalidError(message?: string)
+> > ```
+
+
+<br><br><br>
+
+
+<!-- #SECTION NoStdinError -->
+> ### Errors.NoStdinError
+> This error gets thrown when the terminal that the process runs in doesn't provide an stdin channel.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `NoStdinError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.
+> > ```ts
+> > new Errors.NoStdinError(message?: string)
+> > ```
+
+
+<br><br><br>
+
+
+<!-- #SECTION InvalidMimeTypeError -->
+> ### Errors.InvalidMimeTypeError
+> This error gets thrown when an invalid [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) was provided.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `InvalidMimeTypeError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.
+> > ```ts
+> > new Errors.InvalidMimeTypeError(message?: string)
+> > ```
 
 
 <br><br><br><br><br>

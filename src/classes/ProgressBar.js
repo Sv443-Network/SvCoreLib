@@ -11,7 +11,9 @@ class ProgressBar
         this.progressDisplay = "";
         this.filledChar = "■";
         this.blankChar = "─";
-        this.finishFunction = undefined;
+
+        this.finishFunction = () => {};
+        this.finishPromise = () => {};
 
         for(let i = 0; i < this.timesToUpdate; i++) this.progressDisplay += this.blankChar;
 
@@ -47,15 +49,22 @@ class ProgressBar
             process.stdout.clearLine();
             process.stdout.write(`${(this.progress != 1.0 ? "\x1b[33m" : "\x1b[32m")}\x1b[1m${Math.round(this.progress * 100)}%\x1b[0m ${(Math.round(this.progress * 100) < 10 ? "  " : (Math.round(this.progress * 100) < 100 ? " " : ""))}[${this.progressDisplay.replace(new RegExp(escapeRegexChars(this.filledChar), "gm"), "\x1b[32m\x1b[1m" + this.filledChar + "\x1b[0m")}] ${message}${(this.progress != 1.0 ? "" : "\n")}`);
 
-            if(this.progress == 1.0 && this.finishFunction)
+            if(this.progress == 1.0)
+            {
                 this.finishFunction();
+                this.finishPromise();
+            }
         }
     }
 
-    onFinish(callback) {
-        if(typeof callback != "function")
-            throw new Error("Wrong arguments provided for ProgressBar.onFinish() - (expected: \"Function\", got: \"" + typeof callback + "\")");
-        this.finishFunction = callback;
+    onFinish(callback)
+    {
+        return new Promise((pRes) => {
+            if(typeof callback == "function")
+                this.finishFunction = callback;
+
+            this.finishPromise = pRes;
+        });
     }
 
     getProgress() {
