@@ -828,10 +828,10 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### isEmpty()
-> Returns true, if the input is undefined, null, an empty string, an empty array or an object with length = 0.  
+> Returns true, if the `input` is undefined, null, an empty string, an empty array or an object with length = 0.  
 > Otherwise returns false. The number 0 and NaN will return false though, so check them independently if needed!
 > ```ts
-> scl.isArrayEmpty(array: any[]): boolean | number
+> scl.isEmpty(input: any): boolean
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
