@@ -1667,7 +1667,7 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ### addOption()
 > > Adds a single option to the SelectionMenu.  
 > >   
-> > The parameter `options` needs to be an array of strings containing the text of the options.  
+> > The parameter `option` needs to be a string.  
 > >   
 > > Returns a string containing an error message or `true` if it was successful.
 > > ```ts
