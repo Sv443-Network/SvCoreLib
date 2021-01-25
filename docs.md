@@ -28,11 +28,14 @@ This is the documentation of SvCoreLib (referred to as SCL)
         - [seededRNG.generateRandomSeed()](#seededrnggeneraterandomseed)
         - [seededRNG.generateSeededNumbers()](#seededrnggenerateseedednumbers)
         - [seededRNG.validateSeed()](#seededrngvalidateseed)
+    - [SQL](#sql)
+        - [sql.sendQuery()](#sqlsendquery)
     - [Other](#other)
         - [allEqual()](#allequal)
         - [byteLength()](#bytelength)
         - [error()](#error)
         - [inDebugger()](#indebugger)
+        - [insertValues](#insertvalues)
         - [isArrayEmpty()](#isarrayempty)
         - [isEmpty()](#isempty)
         - [mapRange()](#maprange)
@@ -46,6 +49,7 @@ This is the documentation of SvCoreLib (referred to as SCL)
         - [removeDuplicates()](#removeduplicates)
         - [replaceAt()](#replaceat)
         - [reserialize()](#reserialize)
+        - [setWindowTitle()](#setwindowtitle)
         - [softShutdown()](#softshutdown)
         - [unused()](#unused)
         - [yesShutdown()](#yesshutdown)
@@ -682,6 +686,62 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 <br><br><br>
 
 
+<!-- #SECTION SQL -->
+## SQL
+This subsection, accessed with `scl.sql`, offers functions to interface with SQL databases.  
+These functions depend on the native module [`mysql`](https://www.npmjs.com/package/mysql).  
+
+
+<br><br>
+
+
+> ### sql.sendQuery()
+> Sends a formatted (SQLI-protected) query.  
+>   
+> The param `connection` needs to be passed an SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)  
+> The param `query` needs to be passed the SQL query with question marks where the inserted values should be.  
+> The param `options` needs to be passed an object of options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options.  
+> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `null` for an empty value.  
+>   
+> The returned promise resolves to an object containing the response from the database or rejects to an error string.
+> ```ts
+> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: null | string | number): Promise<object>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> const mysql = require("mysql");
+> 
+> let sqlConnection = mysql.createConnection({
+>     host: "127.0.0.1",
+>     user: process.env["DB_USERNAME"],     // requires setting an environment variable
+>     password: process.env["DB_PASSWORD"], // ^
+>     database: "db_name",
+>     port: 3306
+> });
+> 
+> let options = {
+>     timeout: 2000
+> };
+> 
+> let id = 5;
+> 
+> 
+> scl.sql.sendQuery(sqlConnection, "SELECT * FROM foo WHERE ID = ?", options, id).then(res => {
+>     console.log(JSON.stringify(res, null, 4));
+> }).catch(err => {
+>     console.error(`Error: ${err}`);
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 <!-- #SECTION Other -->
 ## Other
 This subsection, accessed with just `scl`, offers many miscellaneous functions.  
@@ -1040,6 +1100,44 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
+> ### insertValues()
+> Inserts values into a preformatted string containing so called insertion marks.  
+> If there are no insertion marks, this function returns the unmodified input string.  
+>   
+> The parameter `str` is a string containing numbered insertion marks in the format `%1`, `%2`, `%10`, `%100`, ...  
+> The `values` param is a rest parameter containing any values that can be converted to a string.  
+>   
+> This function throws a `TypeError` if the parameter `str` is not a string or if one of the values could not be converted to a string.
+> ```ts
+> insertValues(str: string, ...values: any[]): string;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> class Person {
+>     constructor(name, age)
+>     {
+>         this.name = name;
+>         this.age = age;
+>     }
+> 
+>     text()
+>     {
+>         return scl.insertValues("%1 is %2 years old", this.name, this.age);
+>     }
+> }
+> 
+> let sven = new Person("Sven", 18);
+> console.log(sven.text()); // "Sven is 18 years old"
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 > ### replaceAt()
 > Replaces a character from the specified `string` at the specified `index` with the value of `replacement`
 > ```ts
@@ -1107,6 +1205,28 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 >     console.log(x.foo); // bar
 >     console.log(y.foo); // bar
 > }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### setWindowTitle()
+> Sets the window title of the CLI / terminal.  
+> This function supports both Windows and *nix.
+> ```ts
+> scl.setWindowTitle(title: string): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> const packageJson = require("./package.json"); // adjust this path if you're not in the project root dir
+> 
+> scl.setWindowTitle(`${packageJson.name} v${packageJson.version}`);
 > ```
 > 
 > </details>

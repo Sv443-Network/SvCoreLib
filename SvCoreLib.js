@@ -21,6 +21,8 @@ module.exports = {
     randomizeArray:    require("./src/functions/randomizeArray"),
     randomItem:        require("./src/functions/randomItem"),
     removeDuplicates:  require("./src/functions/removeDuplicates"),
+    insertValues:      require("./src/functions/insertValues"),
+    setWindowTitle:    require("./src/functions/setWindowTitle"),
     seededRNG: {
         generateSeededNumbers:  require("./src/functions/seededRNG/generateSeededNumbers"),
         generateRandomSeed:     require("./src/functions/seededRNG/generateRandomSeed"),
@@ -44,6 +46,9 @@ module.exports = {
         readdirRecursiveSync:  require("./src/functions/filesystem/readdirRecursiveSync"),
         logger:                require("./src/functions/filesystem/logger"),
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
+    },
+    sql: {
+        sendQuery:  require("./src/functions/sql/sendQuery"),
     },
     Errors:      require("./src/classes/Errors"),
     pause:       require("./src/functions/pause"),

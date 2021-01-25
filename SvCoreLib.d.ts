@@ -1,4 +1,5 @@
 import * as _http from 'http';
+import * as _mysql from 'mysql';
 
 
 //#MARKER functions
@@ -203,6 +204,24 @@ export function randomItem(array: any[]): any;
  * @since 1.9.0
  */
 export function removeDuplicates(array: any[]): any[];
+
+/**
+ * 🔹 Inserts values into a percent-formatted string.  
+ * If there are no insertion marks, this function returns the unmodified input string. 🔹
+ * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
+ * @param values [Rest parameter] The values to insert into the string - All values that are not of type `string` will be converted using their method `.toString()`
+ * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
+ * @since 1.12.0
+ */
+export function insertValues(str: string, ...values: any[]): string;
+
+/**
+ * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
+ * @param title The string to set the window title to
+ * @throws Throws a "TypeError" if the parameter `title` is not a string and couldn't be converted to one
+ * @since 1.12.0
+ */
+export function setWindowTitle(title: string): void;
 
 /**
  * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -450,6 +469,23 @@ declare namespace filesystem {
      * @version 1.8.0 Now the paths are being resolved as absolute, not relative + fixed JSDoc return type
      */
     export function readdirRecursiveSync(folder: string): string[];
+}
+
+//#SECTION SQL
+
+/**
+ * 🔸 Offers a few functions to interface with a SQL database 🔸
+ */
+declare namespace sql {
+    /**
+     * 🔹 Sends a formatted (SQLI-protected) query 🔹
+     * @param connection An SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)
+     * @param query The SQL query with question marks where the inserted values should be
+     * @param options The options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options
+     * @param insertValues [Rest parameter] The values to be inserted into the question marks - use the primitive type `null` for an empty value
+     * @since 1.12.0
+     */
+    export function sendQuery(connection: _mysql.Connection, query: string, options: _mysql.QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
 }
 
 //#MARKER classes
@@ -812,6 +848,12 @@ declare namespace Errors {
      * @since 1.12.0
      */
     class InvalidMimeTypeError extends Error {}
+
+    /**
+     * 🔹 This error gets thrown when a provided SQL connection was not established or errored out 🔹
+     * @since 1.12.0
+     */
+    class SqlConnectionNotEstablishedError extends Error {}
 }
 
 //#MARKER objects

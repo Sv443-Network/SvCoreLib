@@ -17,7 +17,10 @@
 
 
 ## 1.12.0
-### FolderDaemon Fix
+- Added functions
+	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443/SvCoreLib/issues/10))
+	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443/SvCoreLib/issues/11))
+	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443/SvCoreLib/issues/12))
 - Fixed bugs
     - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
     - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))

@@ -64,11 +64,24 @@ class InvalidMimeTypeError extends Error {
     }
 }
 
+class SqlConnectionNotEstablishedError extends Error {
+    constructor(message)
+    {
+        super(message);
+        this.name = "SQL connection was not established";
+        this.date = new Date();
+
+        if(Error.captureStackTrace)
+            Error.captureStackTrace(this, SqlConnectionNotEstablishedError);
+    }
+}
+
 
 module.exports = {
     InvalidPathError,
     NotAFolderError,
     PatternInvalidError,
     NoStdinError,
-    InvalidMimeTypeError
+    InvalidMimeTypeError,
+    SqlConnectionNotEstablishedError
 };
