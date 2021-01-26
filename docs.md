@@ -4,7 +4,7 @@
 <br>
 
 This is the documentation of SvCoreLib (also referred to as SCL).  
-SCL, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
+SvCoreLib, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
   
 This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
   
