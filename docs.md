@@ -2276,36 +2276,35 @@ These are read-only, static and passive properties and will not invoke or change
 > **Supported colors are:**
 > | Color | SCL |
 > | --- | --- |
-> | Reset (Usually white text on black BG) | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
-> | Fat Font | `scl.colors.fat` |
-> | Blinking | `scl.colors.blink` |
-> | Black Text | `scl.colors.fg.black` |
-> | Black Background | `scl.colors.bg.black` |
-> | Red Text | `scl.colors.fg.red` |
-> | Red Background | `scl.colors.bg.red` |
-> | Green Text | `scl.colors.fg.green` |
-> | Green Background | `scl.colors.bg.green` |
-> | Yellow Text | `scl.colors.fg.yellow` |
-> | Yellow Background | `scl.colors.bg.yellow` |
-> | Blue Text | `scl.colors.fg.blue` |
-> | Blue Background | `scl.colors.bg.blue` |
-> | Magenta Text | `scl.colors.fg.magenta` |
-> | Magenta Background | `scl.colors.bg.magenta` |
-> | Cyan Text | `scl.colors.fg.cyan` |
-> | Cyan Background | `scl.colors.bg.cyan` |
-> | White Text | `scl.colors.fg.white` |
-> | White Background | `scl.colors.bg.white` |
+> | ❌ Reset to default | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
+> | 🍩 Fat Font | `scl.colors.fat` |
+> | 💡 Blinking | `scl.colors.blink` |
+> | ⚫️ Black Text | `scl.colors.fg.black` |
+> | ⚫️ Black Background | `scl.colors.bg.black` |
+> | 🟥 Red Text | `scl.colors.fg.red` |
+> | 🟥 Red Background | `scl.colors.bg.red` |
+> | 🟩 Green Text | `scl.colors.fg.green` |
+> | 🟩 Green Background | `scl.colors.bg.green` |
+> | 🟨 Yellow Text | `scl.colors.fg.yellow` |
+> | 🟨 Yellow Background | `scl.colors.bg.yellow` |
+> | 🟦 Blue Text | `scl.colors.fg.blue` |
+> | 🟦 Blue Background | `scl.colors.bg.blue` |
+> | 🟪 Magenta Text | `scl.colors.fg.magenta` |
+> | 🟪 Magenta Background | `scl.colors.bg.magenta` |
+> | 🔷 Cyan Text | `scl.colors.fg.cyan` |
+> | 🔷 Cyan Background | `scl.colors.bg.cyan` |
+> | ⚪️ White Text | `scl.colors.fg.white` |
+> | ⚪️ White Background | `scl.colors.bg.white` |
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
 > const scl = require("svcorelib");
 > 
-> const fgc = scl.colors.fg;
-> const bgc = scl.colors.bg;
+> const { fg, bg } = scl.colors;
 > 
-> console.log(`${scl.colors.fat}Foreground Colors:  ${fgc.green}Green${fgc.rst} ${fgc.magenta}Magenta${fgc.rst} ${fgc.blue}Blue${fgc.rst} ${fgc.cyan}Cyan${fgc.rst}`);
-> console.log(`${scl.colors.fat}Background Colors:  ${bgc.green}Green${fgc.rst} ${bgc.magenta}Magenta${fgc.rst} ${bgc.blue}Blue${fgc.rst} ${bgc.cyan}Cyan${bgc.rst}`);
+> console.log(`${scl.colors.fat}Foreground Colors:  ${fg.green}Green${fg.rst} ${fg.magenta}Magenta${fg.rst} ${fg.blue}Blue${fg.rst} ${fg.cyan}Cyan${fg.rst}`);
+> console.log(`${scl.colors.fat}Background Colors:  ${bg.green}Green${fg.rst} ${bg.magenta}Magenta${fg.rst} ${bg.blue}Blue${fg.rst} ${bg.cyan}Cyan${bg.rst}`);
 > ```
 > 
 > </details>
@@ -2338,8 +2337,8 @@ These are read-only, static and passive properties and will not invoke or change
 > ```js
 > const scl = require("svcorelib");
 > 
-> if(scl.info.intVersion[0] < 1 && scl.info.intVersion[1] < 10)
->     console.error(`This code needs ${scl.info.name} v1.10.x or higher to run!\nHow to install the latest version: ${scl.info.documentation}#installation`);
+> if(scl.info.intVersion[0] < 1 && scl.info.intVersion[1] < 12)
+>     console.error(`This code needs ${scl.info.name} v1.12.x or higher to run!\nHow to install the latest version: ${scl.info.documentation}#installation`);
 > ```
 > 
 > </details>
