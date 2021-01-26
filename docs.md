@@ -32,7 +32,7 @@ Otherwise, see the table of contents just below.
     - [File System](#file-system)
         - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
         - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
-        - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `filesystem.readdirRecursive()`
+        - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
         - [downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
     - [Generate UUID](#generate-uuid)
         - [alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
