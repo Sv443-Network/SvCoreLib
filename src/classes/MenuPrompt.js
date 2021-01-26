@@ -210,10 +210,10 @@ ${this._options.cursorPrefix} \
     addMenu(menu)
     {
         if(this._closed)
-            return `MenuPrompt was already closed, can't add a new menu with "svc.MenuPrompt.addMenu()"`;
+            return `MenuPrompt was already closed, can't add a new menu with "scl.MenuPrompt.addMenu()"`;
 
         if(!this.validateMenu(menu))
-            return `Invalid menu provided in "svc.MenuPrompt.addMenu()"`;
+            return `Invalid menu provided in "scl.MenuPrompt.addMenu()"`;
 
         try
         {

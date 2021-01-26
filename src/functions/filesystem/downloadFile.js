@@ -23,7 +23,7 @@ function downloadFile(url, destPath = "./", options)
         let dest = `${destPath}${destPath.endsWith("/") ? "" : "/"}${options.fileName}`;
         if(!fs.existsSync(destPath))
         {
-            let err = `Error in svc.downloadFile() - The directory at the path "${destPath}" doesn't exist. Please make sure the directory exists and try again.`;
+            let err = `Error in scl.downloadFile() - The directory at the path "${destPath}" doesn't exist. Please make sure the directory exists and try again.`;
             reject(err);
             throw new Error(err);
         }

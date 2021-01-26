@@ -3,7 +3,7 @@ const isEmpty = require("./isEmpty");
 function isArrayEmpty(array)
 {
     if((array === "" || array == null) || typeof array != "object")
-        throw new Error(`Wrong or empty arguments provided for svc.isArrayEmpty() - (expected: "object", got: "${typeof array}")`);
+        throw new Error(`Wrong or empty arguments provided for scl.isArrayEmpty() - (expected: "object", got: "${typeof array}")`);
 
     let emptiness = 0;
     array.forEach(item => {

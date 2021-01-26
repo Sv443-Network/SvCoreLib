@@ -1,10 +1,14 @@
 # SvCoreLib
+[![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443/svcorelib)](https://github.com/Sv443/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
+
+<br>
+
 ### This is a core dependency of all of my Node.js projects and a continuation of [JSLib-npm](https://github.com/Sv443/JSLib-npm)
 Although it is intended for my own projects, feel free to use this library (make sure to follow [the license terms](https://sv443.net/LICENSE) though)
 
 <br>
 
-## [Click here to go to the documentation](./docs.md)
+## [Click here to go to the documentation](./docs.md#readme)
 
 <br><br>
 

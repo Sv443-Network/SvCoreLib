@@ -1,19 +1,12 @@
 const allOfType = require("../functions/allOfType");
 const unused = require("../functions/unused");
 
+const { NoStdinError } = require("./Errors");
+
 const col = require("../objects/colors").fg;
 
 const inputCooldown = 35;
 
-
-class NoStdinError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Error: Terminal can't be read from";
-    }
-}
 
 class SelectionMenu
 {

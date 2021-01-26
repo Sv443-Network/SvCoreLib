@@ -21,6 +21,8 @@ module.exports = {
     randomizeArray:    require("./src/functions/randomizeArray"),
     randomItem:        require("./src/functions/randomItem"),
     removeDuplicates:  require("./src/functions/removeDuplicates"),
+    insertValues:      require("./src/functions/insertValues"),
+    setWindowTitle:    require("./src/functions/setWindowTitle"),
     seededRNG: {
         generateSeededNumbers:  require("./src/functions/seededRNG/generateSeededNumbers"),
         generateRandomSeed:     require("./src/functions/seededRNG/generateRandomSeed"),
@@ -37,6 +39,7 @@ module.exports = {
         pipeFile:           require("./src/functions/http/pipeFile"),
         pipeString:         require("./src/functions/http/pipeString"),
         getClientEncoding:  require("./src/functions/http/getClientEncoding"),
+        ping:               require("./src/functions/ping"),
     },
     filesystem: {
         readdirRecursive:      require("./src/functions/filesystem/readdirRecursive"),
@@ -44,7 +47,10 @@ module.exports = {
         logger:                require("./src/functions/filesystem/logger"),
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
     },
-    ping:        require("./src/functions/ping"),
+    sql: {
+        sendQuery:  require("./src/functions/sql/sendQuery"),
+    },
+    Errors:      require("./src/classes/Errors"),
     pause:       require("./src/functions/pause"),
     inDebugger:  require("./src/functions/inDebugger"),
 

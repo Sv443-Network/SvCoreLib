@@ -1,12 +1,12 @@
 function yesShutdown()
 {
-    if(process.svc != undefined && !process.svc.noShutdown)
+    if(process.scl != undefined && !process.scl.noShutdown)
         return;
 
-    if(process.svc == undefined)
-        process.svc = {};
+    if(process.scl == undefined)
+        process.scl = {};
 
-    process.svc.noShutdown = false;
+    process.scl.noShutdown = false;
     process.on("SIGINT", ()=>process.exit());
     process.on("SIGTERM", ()=>process.exit());
 }

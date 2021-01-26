@@ -6,33 +6,7 @@ const reserialize = require("../functions/reserialize");
 const diff = require("deep-diff");
 const readdirRecursive = require("../functions/filesystem/readdirRecursive");
 
-
-class InvalidPathError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Invalid Path Error";
-    }
-}
-
-class NotAFolderError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Not A Folder Error";
-    }
-}
-
-class PatternInvalidError extends Error
-{
-    constructor(message)
-    {
-        super(message);
-        this.name = "Pattern Invalid Error";
-    }
-}
+const { InvalidPathError, NotAFolderError, PatternInvalidError } = require("./Errors");
 
 
 class FolderDaemon
@@ -154,15 +128,21 @@ class FolderDaemon
                 }
 
                 files.forEach(file => {
-                    this._blacklistPattern.forEach(pattern => {
-                        let match = minimatch(basename(file), pattern);
-                        if(match)
+                    let filePath = !this._recursive ? join(this._dirPath, file) : file;
+
+                    if(Array.isArray(this._blacklistPattern) && this._blacklistPattern.length > 0)
+                    {
+                        this._blacklistPattern.forEach(pattern => {
+                            let match = minimatch(basename(file), pattern);
+                            if(match)
+                                return;
+
+                            promises.push(hashFile(filePath));
                             return;
-
-                        let filePath = !this._recursive ? join(this._dirPath, file) : file;
-
+                        });
+                    }
+                    else
                         promises.push(hashFile(filePath));
-                    });
                 });
 
                 Promise.all(promises).then(results => {
