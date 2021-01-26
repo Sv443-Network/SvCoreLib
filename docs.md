@@ -1,7 +1,26 @@
 # SvCoreLib - Documentation
-This is the documentation of SvCoreLib (referred to as SCL)
+[![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443/svcorelib)](https://github.com/Sv443/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
 
 <br>
+
+This is the documentation of SvCoreLib (also referred to as SCL).  
+SCL, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
+  
+This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
+  
+Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
+Please also note that the examples in this documentation are written in CommonJS.  
+If you use TypeScript, see import examples in the [usage section](#usage) and modify the other code accordingly.  
+  
+Feel free to join my Discord server if you need help or just want to chat:  
+[![Discord Invite](https://img.shields.io/discord/565933531214118942)](https://sv443.net/discord)
+
+<br>
+
+### To get started, please go to [the installation section.](#installation)
+Otherwise, see the table of contents just below.
+
+<br><br>
 
 <!-- #MARKER ToC -->
 ## Table of Contents:
@@ -64,6 +83,7 @@ This is the documentation of SvCoreLib (referred to as SCL)
         - [PatternInvalidError](#errorspatterninvaliderror)
         - [NoStdinError](#errorsnostdinerror)
         - [InvalidMimeTypeError](#errorsinvalidmimetypeerror)
+        - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror)
 - **[Objects](#objects)**
     - [colors](#colors)
     - [info](#info)
@@ -90,18 +110,33 @@ Troubleshooting: Make sure your workspace contains a `package.json` file. If not
 # Usage
 This explains how you can use SCL in your project.  
   
-If your project runs on "normal" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
+If your project runs on "vanilla" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
 ```js
 const scl = require("svcorelib");
-```
+```  
 If your project runs on TypeScript, replace the above with this:
 ```ts
 import * as scl from "svcorelib";
-```
+```  
 
-<br>
+The variable `scl` now contains all of SCL's functions, namespaces, classes and objects.
+  
+<br><br>
+  
+If you only want to import a select number of features and don't like always having to use a variable like `scl`, you can also use the following syntaxes.  
+  
+"Vanilla" Node.js / CommonJS:  
+```js
+const { function1, namespace1, Class1 } = require("svcorelib");
+```  
+TypeScript:  
+```ts
+import { function1, namespace1, Class1 } from "svcorelib";
+```  
+  
+**Note:** You need to replace the placeholder names above with the functions / namespaces / classes / objects you want to import.
 
-The variable `scl` now contains all of SCL's functions, classes and objects.
+
 
 <br><br><br><br><br>
 
@@ -119,7 +154,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 <br>
 
 - Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
-- If you are looking at a subsection, for example [`scl.filesystem`](#filesystem), its description will be marked with this emoji: 🔸
+- If you are looking at a namespace, for example [`scl.filesystem`](#filesystem), its description will be marked with this emoji: 🔸
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌. Their descriptions should also tell you if there are alternatives.
 - You will always encounter a `@since` tag, which indicates with which version the feature was introduced.
@@ -138,7 +173,7 @@ You have to call these without the `new` keyword.
 
 <!-- #SECTION File System -->
 ## File System
-This subsection, accessed with `scl.filesystem`, contains a few file-related functions.
+This namespace, accessed with `scl.filesystem`, contains a few file-related functions.
 
 <br><br>
 
@@ -151,6 +186,8 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let opts = {
 >     timestamp: true,
 >     append_bottom: true
@@ -187,6 +224,8 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > scl.filesystem.readdirRecursive("./").then(result => {
 >     console.log(result);
 >     /*
@@ -214,6 +253,8 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let paths = scl.filesystem.readdirRecursive("./");
 > 
 > console.log(paths);
@@ -241,6 +282,8 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let opts = {
 >     fileName: "page.html",
 >     progressCallback: progress => {
@@ -286,7 +329,7 @@ This subsection, accessed with `scl.filesystem`, contains a few file-related fun
 
 <!-- #SECTION Generate UUID -->
 ## Generate UUID
-This subsection, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
+This namespace, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
   
 One thing these functions all have in common is the `uuidFormat` parameter.  
 This parameter is a string that should contain the characters `x` and `y`. These letters will be replaced by random letters or numbers, while any other characters are left untouched.  
@@ -308,6 +351,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let uuid = scl.generateUUID.alphanumerical("xxxx-yyyy", true);
 > 
 > console.log(uuid); // "U45A-AS6X"
@@ -330,6 +375,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.generateUUID.binary("xxxx-yyyy");
 > let bar = scl.generateUUID.binary("xxxx", true);
 > 
@@ -358,6 +405,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.generateUUID.custom("xxxx-yyyy", "abcd#+_!");
 > let bar = scl.generateUUID.custom("xxxx-yyyy", "12"); // binary system using 1s and 2s maybe? 👀
 > 
@@ -382,6 +431,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let uuid = scl.generateUUID.decimal("xxxx-yyyy");
 > 
 > console.log(uuid); // "5563-0291"
@@ -405,6 +456,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let uuid = scl.generateUUID.hexadecimal("xxxx-yyyy", true);
 > 
 > console.log(uuid); // "F6B6-EFA3"
@@ -418,7 +471,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 
 <!-- #SECTION HTTP -->
 ## HTTP
-This subsection, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules and third-party packages based on them easier to use.  
+This namespace, accessed with `scl.http`, offers functions that make using Node's builtin `http` and `https` modules and third-party packages based on them easier to use.  
 
 
 <br><br>
@@ -559,11 +612,15 @@ This subsection, accessed with `scl.http`, offers functions that make using Node
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > scl.http.ping("https://example.org/", 5000)
-> .then(res => {
->     console.log(`Status ${res.statusCode} (${res.statusMessage}) - Ping: ${res.responseTime}ms`); // Status 200 (OK) - Ping: 526ms
-> })
-> .catch(err => console.error(`Error while pinging URL: ${err}`));
+>     .then(res => {
+>         console.log(`Status ${res.statusCode} (${res.statusMessage}) - Ping: ${res.responseTime}ms`); // Status 200 (OK) - Ping: 526ms
+>     })
+>     .catch(err => {
+>         console.error(`Error while pinging URL: ${err}`);
+>     });
 > ```
 > 
 > </details><br>
@@ -584,7 +641,7 @@ This subsection, accessed with `scl.http`, offers functions that make using Node
 
 <!-- #SECTION Seeded RNG -->
 ## Seeded RNG
-This subsection, accessed with `scl.seededRNG`, offers a few functions to generate numbers based on a seed.  
+This namespace, accessed with `scl.seededRNG`, offers a few functions to generate numbers based on a seed.  
 This means that using the same seed, you will be able to generate the same numbers over and over again, just like Minecraft's world seeds for example.  
 Seeds in SCL need to be of a certain format. Some other functions in this section will help you accomplish just that.
 
@@ -604,6 +661,8 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let seed = scl.seededRNG.generateRandomSeed(5);
 > 
 > console.log(seed); // 35091
@@ -630,6 +689,8 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let seed = scl.seededRNG.generateRandomSeed(5); // 58157
 > 
 > let foo = scl.seededRNG.generateSeededNumbers(8, seed);
@@ -671,6 +732,8 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = jsl.seededRNG.validateSeed(35091);
 > let bar = jsl.seededRNG.validateSeed("35091");
 > let baz = jsl.seededRNG.validateSeed("hello I am a string");
@@ -688,7 +751,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 
 <!-- #SECTION SQL -->
 ## SQL
-This subsection, accessed with `scl.sql`, offers functions to interface with SQL databases.  
+This namespace, accessed with `scl.sql`, offers functions to interface with SQL databases.  
 These functions depend on the native module [`mysql`](https://www.npmjs.com/package/mysql).  
 
 
@@ -744,7 +807,7 @@ These functions depend on the native module [`mysql`](https://www.npmjs.com/pack
 
 <!-- #SECTION Other -->
 ## Other
-This subsection, accessed with just `scl`, offers many miscellaneous functions.  
+This namespace, accessed with just `scl`, offers many miscellaneous functions.  
 
 
 <br><br>
@@ -761,6 +824,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.allEqual([ 1, 1, 1, 1 ]);
 > let bar = scl.allEqual([ 1, 1, 2, 1 ]);
 > 
@@ -790,6 +855,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let str1 = "hello 👋";
 > let str2 = "𒈘"; // this character is U+12218
 > 
@@ -824,6 +891,7 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
 > const { resolve } = require("path");
 > 
 > scl.error("Couldn't establish a connection to the API", resolve("./errors/fatal.log"), true, 1);
@@ -848,6 +916,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > if(!scl.inDebugger())
 > {
 >     // SCLs MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
@@ -872,6 +942,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", null, 5 ]);
 > let bar = scl.isArrayEmpty([ "", null, undefined ]);
 > let baz = scl.isArrayEmpty([ 1, 2, 3, 4, 5, NaN ]);
@@ -897,6 +969,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > console.log(scl.isEmpty(""));        // true
 > console.log(scl.isEmpty([]));        // true
 > console.log(scl.isEmpty({}));        // true
@@ -927,6 +1001,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.mapRange(10, 0, 100, 0, 10);
 > let bar = scl.mapRange(3, 0, 10, 0, 50);
 > 
@@ -968,6 +1044,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > console.log("Hello, World!");
 > 
 > scl.pause("Press any key to exit").then(key => {
@@ -991,6 +1069,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let array = [ 0, 1, null, 2, NaN, 3, { foo: "bar" }, 4, 5, 6 ];
 > 
 > let foo = scl.randomItem(array);
@@ -1017,6 +1097,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let array = [ 0, 1, 2, 3, 4, 5, 6 ];
 > 
 > let foo = scl.randomizeArray(array);
@@ -1046,6 +1128,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let foo = scl.randRange(0, 100);
 > let bar = scl.randRange(0, 100);
 > 
@@ -1071,6 +1155,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > console.log(scl.readableArray([ 1, 2, 3, 4 ])); // "1, 2, 3 and 4"
 > ```
 > 
@@ -1089,6 +1175,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let array = scl.removeDuplicates([ 1, 2, 4, 3, 3, 1, 3 ]);
 > 
 > console.log(array); // [ 1, 2, 4, 3 ]
@@ -1115,6 +1203,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > class Person {
 >     constructor(name, age)
 >     {
@@ -1147,6 +1237,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > let text = scl.replaceAt("Hello, World!", 5, ", beautiful");
 > 
 > console.log(text); // Hello, beautiful World!
@@ -1171,6 +1263,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > // without reserialize:
 > {
 >     let x = { foo: "bar" };
@@ -1244,6 +1338,8 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > console.log("foo");
 > 
 > scl.softShutdown(() => {
@@ -1280,9 +1376,11 @@ This subsection, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const { unused } = require("svcorelib");
+> 
 > let my_unused_var = "Hello, World!"; // linter doesn't warn you about this line when using unused()
 > 
-> scl.unused(my_unused_var);
+> unused(my_unused_var);
 > ```
 > 
 > </details>
@@ -1377,6 +1475,8 @@ These need to be created with the `new` keyword and constructing multiple object
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
+> > const scl = require("svcorelib");
+> > 
 > > let dirPath = "./";          // supervises your entire project workspace
 > > let blacklist = [ "*.txt" ]; // ignores all files with the extension .txt
 > > let recursive = true;        // scans through all subdirectories too
@@ -1579,7 +1679,6 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```js
 > > const scl = require("svcorelib");
 > > 
-> > 
 > > /** @type {scl.MenuPromptOptions} */
 > > let opts = {
 > >     exitKey: "x",
@@ -1707,7 +1806,6 @@ These need to be created with the `new` keyword and constructing multiple object
 > > 
 > > ```js
 > > const scl = require("svcorelib");
-> > 
 > > 
 > > let pb = new scl.ProgressBar(15, "Doing some stuff (Iteration #0)");
 > > 
@@ -1866,6 +1964,8 @@ These need to be created with the `new` keyword and constructing multiple object
 > > 
 > > <br><details><summary><b>Example Localization - click to show</b></summary>
 > > ```js
+> > const scl = require("svcorelib");
+> > 
 > > let sm = new scl.SelectionMenu();
 > > 
 > > sm.addOption("Example Option");
@@ -1886,7 +1986,6 @@ These need to be created with the `new` keyword and constructing multiple object
 > > 
 > > ```js
 > > const scl = require("svcorelib");
-> > 
 > > 
 > > let sm = new scl.SelectionMenu("Example SelectionMenu:", {
 > >     cancelable: true,
@@ -1934,7 +2033,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 <!-- #SECTION File System -->
 ## Errors
-This subsection, accessed with `scl.Errors`, contains all of SCL's custom error classes.  
+This class namespace, accessed with `scl.Errors`, contains all of SCL's custom error classes.  
 They are used by SCL but feel free to also use these.  
 The classes have to be constructed with the `new` keyword.  
 Also, all of these classes inherit from [JavaScript's `Error` class.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
@@ -2099,6 +2198,27 @@ Also, all of these classes inherit from [JavaScript's `Error` class.](https://de
 > > ```
 
 
+<br><br><br>
+
+
+<!-- #SECTION SqlConnectionNotEstablishedError -->
+> ### Errors.SqlConnectionNotEstablishedError
+> This error gets thrown when a SQL database connection was not established yet or errored out.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `SqlConnectionNotEstablishedError`.  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.  
+> > In SCLs case, this parameter contains the current connection state of the DB connection.
+> > ```ts
+> > new Errors.SqlConnectionNotEstablishedError(message?: string)
+> > ```
+
+
 <br><br><br><br><br>
 
 <!-- #MARKER Objects -->
@@ -2144,6 +2264,8 @@ These are read-only, static and passive properties and will not invoke or change
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > const fgc = scl.colors.fg;
 > const bgc = scl.colors.bg;
 > 
@@ -2179,6 +2301,8 @@ These are read-only, static and passive properties and will not invoke or change
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
+> const scl = require("svcorelib");
+> 
 > if(scl.info.intVersion[0] < 1 && scl.info.intVersion[1] < 10)
 >     console.error(`This code needs ${scl.info.name} v1.10.x or higher to run!\nHow to install the latest version: ${scl.info.documentation}#installation`);
 > ```
