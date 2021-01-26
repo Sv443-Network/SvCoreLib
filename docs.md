@@ -803,28 +803,34 @@ These functions depend on the native module [`mysql`](https://www.npmjs.com/pack
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const { sql } = require("svcorelib");
 > const mysql = require("mysql");
 > 
+> 
+> const options = {
+>     timeout: 2000 // after how many milliseconds the queries should time out if they didn't get a response
+> };
+> const database = "database_name"; // set the database name here
+> 
+> // create SQL connection
 > let sqlConnection = mysql.createConnection({
->     host: "127.0.0.1",
->     user: process.env["DB_USERNAME"],     // requires setting an environment variable
->     password: process.env["DB_PASSWORD"], // ^
->     database: "db_name",
->     port: 3306
+>     host: "127.0.0.1",                 // IP address of the SQL server (127.0.0.1 means the server runs locally)
+>     user: process.env.DB_USER,         // requires setting these values in the environment variables - I recommend using the "dotenv" package for this
+>     password: process.env.DB_PASSWORD, // see above ^
+>     insecureAuth: true                 // this is required on newer version of MySQL (like 8.0) since they require some weird ass more secure auth
 > });
 > 
-> let options = {
->     timeout: 2000
-> };
+> // try to connect with the above settings
+> sqlConnection.connect(err => {
+>     if(err)
+>         return console.error(`Error: ${err}`);
 > 
-> let id = 5;
-> 
-> 
-> scl.sql.sendQuery(sqlConnection, "SELECT * FROM foo WHERE ID = ?", options, id).then(res => {
->     console.log(JSON.stringify(res, null, 4));
-> }).catch(err => {
->     console.error(`Error: ${err}`);
+>     // send the actual query
+>     sql.sendQuery(sqlConnection, "SELECT * FROM ??.tablename LIMIT 10", options, database).then(res => {
+>         console.log(JSON.stringify(res, null, 4));
+>     }).catch(err => {
+>         console.error(`Error: ${err}`);
+>     });
 > });
 > ```
 > 
