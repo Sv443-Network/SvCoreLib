@@ -78,13 +78,13 @@ Otherwise, see the table of contents just below.
     - [MenuPrompt](#menuprompt) - a prompt which users can select an option from
     - [ProgressBar](#progressbar) - shows a progress bar in the console
     - [SelectionMenu](#SelectionMenu) - a menu that can be scrolled through
-    - [Errors](#errors)
-        - [InvalidPathError](#errorsinvalidpatherror) - an invalid path was provided
-        - [NotAFolderError](#errorsnotafoldererror) - the provided path is not a folder
-        - [PatternInvalidError](#errorspatterninvaliderror) - GLOB pattern is invalid
-        - [NoStdinError](#errorsnostdinerror) - terminal doesn't have a stdin channel
-        - [InvalidMimeTypeError](#errorsinvalidmimetypeerror) - MIME type is not valid
-        - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror) - SQL connection is invalid
+- **[Errors](#errors)**
+    - [InvalidPathError](#errorsinvalidpatherror) - an invalid path was provided
+    - [NotAFolderError](#errorsnotafoldererror) - the provided path is not a folder
+    - [PatternInvalidError](#errorspatterninvaliderror) - GLOB pattern is invalid
+    - [NoStdinError](#errorsnostdinerror) - terminal doesn't have a stdin channel
+    - [InvalidMimeTypeError](#errorsinvalidmimetypeerror) - MIME type is not valid
+    - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror) - SQL connection is invalid
 - **[Objects](#objects)**
     - [colors](#colors) - color text in the console
     - [info](#info) - information about SCL
@@ -2032,7 +2032,7 @@ These need to be created with the `new` keyword and constructing multiple object
 <br><br><br><br><br>
 
 
-<!-- #SECTION File System -->
+<!-- #MARKER Errors -->
 ## Errors
 This class namespace, accessed with `scl.Errors`, contains all of SCL's custom error classes.  
 They are used by SCL but feel free to also use these.  
