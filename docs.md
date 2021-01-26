@@ -7,6 +7,7 @@ This is the documentation of SvCoreLib (also referred to as SCL).
 SvCoreLib, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
   
 This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
+With the exception of certain features that rely on the filesystem, HTTP or SQL connections, this library should be webpack compatible.  
   
 Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
 Please also note that the examples in this documentation are written in CommonJS.  
@@ -29,64 +30,64 @@ Otherwise, see the table of contents just below.
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
     - [File System](#file-system)
-        - [filesystem.logger()](#filesystemlogger)
-        - [filesystem.readdirRecursive()](#filesystemreaddirrecursive)
-        - [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync)
-        - [filesystem.downloadFile()](#filesystemdownloadfile)
+        - [filesystem.logger()](#filesystemlogger) - logs an error message to the console and/or a log file
+        - [filesystem.readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
+        - [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `filesystem.readdirRecursive()`
+        - [filesystem.downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
     - [Generate UUID](#generate-uuid)
-        - [generateUUID.alphanumerical()](#generateuuidalphanumerical)
-        - [generateUUID.binary()](#generateuuidbinary)
-        - [generateUUID.custom()](#generateuuidcustom)
-        - [generateUUID.decimal()](#generateuuiddecimal)
-        - [generateUUID.hexadecimal()](#generateuuidhexadecimal)
+        - [generateUUID.alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
+        - [generateUUID.binary()](#generateuuidbinary) - generates a binary UUID
+        - [generateUUID.custom()](#generateuuidcustom) - generates a custom UUID
+        - [generateUUID.decimal()](#generateuuiddecimal) - generates a decimal UUID
+        - [generateUUID.hexadecimal()](#generateuuidhexadecimal) - generates a hexadecimal UUID
     - [HTTP](#http)
-        - [http.getClientEncoding()](#httpgetclientencoding)
-        - [http.pipeFile()](#httppipefile)
-        - [http.pipeString()](#httppipestring)
+        - [http.getClientEncoding()](#httpgetclientencoding) - gets the most efficient encoding from a client request
+        - [http.pipeFile()](#httppipefile) - sends a file to a client
+        - [http.pipeString()](#httppipestring) - sends a string to a client
     - [Seeded RNG](#seeded-rng)
-        - [seededRNG.generateRandomSeed()](#seededrnggeneraterandomseed)
-        - [seededRNG.generateSeededNumbers()](#seededrnggenerateseedednumbers)
-        - [seededRNG.validateSeed()](#seededrngvalidateseed)
+        - [seededRNG.generateRandomSeed()](#seededrnggeneraterandomseed) - generates a random seed
+        - [seededRNG.generateSeededNumbers()](#seededrnggenerateseedednumbers) - generates numbers based on a seed
+        - [seededRNG.validateSeed()](#seededrngvalidateseed) - validates a seed
     - [SQL](#sql)
-        - [sql.sendQuery()](#sqlsendquery)
+        - [sql.sendQuery()](#sqlsendquery) - sends a SQL query
     - [Other](#other)
-        - [allEqual()](#allequal)
-        - [byteLength()](#bytelength)
-        - [error()](#error)
-        - [inDebugger()](#indebugger)
-        - [insertValues](#insertvalues)
-        - [isArrayEmpty()](#isarrayempty)
-        - [isEmpty()](#isempty)
-        - [mapRange()](#maprange)
-        - [noShutdown()](#noshutdown)
-        - [pause()](#pause)
-        - [ping()](#ping)
-        - [randomItem()](#randomitem)
-        - [randomizeArray()](#randomizearray)
-        - [randRange()](#randrange)
-        - [readableArray()](#readablearray)
-        - [removeDuplicates()](#removeduplicates)
-        - [replaceAt()](#replaceat)
-        - [reserialize()](#reserialize)
-        - [setWindowTitle()](#setwindowtitle)
-        - [softShutdown()](#softshutdown)
-        - [unused()](#unused)
-        - [yesShutdown()](#yesshutdown)
+        - [allEqual()](#allequal) - checks if all values in an array are equal
+        - [byteLength()](#bytelength) - returns the length of a string in bytes
+        - [error()](#error) - sends an error message and/or exits the process
+        - [inDebugger()](#indebugger) - checks if the process is running in a debugger
+        - [insertValues()](#insertvalues) - inserts values into a preformatted string
+        - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
+        - [isEmpty()](#isempty) - checks if a value is considered empty
+        - [mapRange()](#maprange) - maps a number from one numerical range to another
+        - [noShutdown()](#noshutdown) - prevents process shutdown
+        - [pause()](#pause) - pauses code execution until the user presses a key
+        - [ping()](#ping) - pings a specified URL
+        - [randomItem()](#randomitem) - returns a random item from an array
+        - [randomizeArray()](#randomizearray) - randomizes the items in an array
+        - [randRange()](#randrange) - returns a random number in the provided range
+        - [readableArray()](#readablearray) - converts an array to a better readable string
+        - [removeDuplicates()](#removeduplicates) - removes duplicate items in an array
+        - [replaceAt()](#replaceat) - replaces a character in a string with another string
+        - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
+        - [setWindowTitle()](#setwindowtitle) - sets the terminal window's title (Windows & *nix)
+        - [softShutdown()](#softshutdown) - executes a synchronous function before the process exits
+        - [unused()](#unused) - indicates to a linter that one or more variables are unused
+        - [yesShutdown()](#yesshutdown) - re-enables process shutdown
 - **[Classes](#classes)**
-    - [FolderDaemon](#folderdaemon)
-    - [MenuPrompt](#menuprompt)
-    - [ProgressBar](#progressbar)
-    - [SelectionMenu](#SelectionMenu)
+    - [FolderDaemon](#folderdaemon) - monitors a folder's contents for changes
+    - [MenuPrompt](#menuprompt) - a prompt which users can select an option from
+    - [ProgressBar](#progressbar) - shows a progress bar in the console
+    - [SelectionMenu](#SelectionMenu) - a menu that can be scrolled through
     - [Errors](#errors)
-        - [InvalidPathError](#errorsinvalidpatherror)
-        - [NotAFolderError](#errorsnotafoldererror)
-        - [PatternInvalidError](#errorspatterninvaliderror)
-        - [NoStdinError](#errorsnostdinerror)
-        - [InvalidMimeTypeError](#errorsinvalidmimetypeerror)
-        - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror)
+        - [InvalidPathError](#errorsinvalidpatherror) - an invalid path was provided
+        - [NotAFolderError](#errorsnotafoldererror) - the provided path is not a folder
+        - [PatternInvalidError](#errorspatterninvaliderror) - GLOB pattern is invalid
+        - [NoStdinError](#errorsnostdinerror) - terminal doesn't have a stdin channel
+        - [InvalidMimeTypeError](#errorsinvalidmimetypeerror) - MIME type is not valid
+        - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror) - SQL connection is invalid
 - **[Objects](#objects)**
-    - [colors](#colors)
-    - [info](#info)
+    - [colors](#colors) - color text in the console
+    - [info](#info) - information about SCL
 - **[Legal Information](#legal-information)**
     - [License](#license)
     - [Disclaimer](#disclaimer)
