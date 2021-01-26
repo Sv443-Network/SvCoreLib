@@ -30,26 +30,26 @@ Otherwise, see the table of contents just below.
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
     - [File System](#file-system)
-        - [filesystem.logger()](#filesystemlogger) - logs an error message to the console and/or a log file
-        - [filesystem.readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
-        - [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `filesystem.readdirRecursive()`
-        - [filesystem.downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
+        - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
+        - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
+        - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `filesystem.readdirRecursive()`
+        - [downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
     - [Generate UUID](#generate-uuid)
-        - [generateUUID.alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
-        - [generateUUID.binary()](#generateuuidbinary) - generates a binary UUID
-        - [generateUUID.custom()](#generateuuidcustom) - generates a custom UUID
-        - [generateUUID.decimal()](#generateuuiddecimal) - generates a decimal UUID
-        - [generateUUID.hexadecimal()](#generateuuidhexadecimal) - generates a hexadecimal UUID
+        - [alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
+        - [binary()](#generateuuidbinary) - generates a binary UUID
+        - [custom()](#generateuuidcustom) - generates a custom UUID
+        - [decimal()](#generateuuiddecimal) - generates a decimal UUID
+        - [hexadecimal()](#generateuuidhexadecimal) - generates a hexadecimal UUID
     - [HTTP](#http)
-        - [http.getClientEncoding()](#httpgetclientencoding) - gets the most efficient encoding from a client request
-        - [http.pipeFile()](#httppipefile) - sends a file to a client
-        - [http.pipeString()](#httppipestring) - sends a string to a client
+        - [getClientEncoding()](#httpgetclientencoding) - gets the most efficient encoding from a client request
+        - [pipeFile()](#httppipefile) - sends a file to a client
+        - [pipeString()](#httppipestring) - sends a string to a client
     - [Seeded RNG](#seeded-rng)
-        - [seededRNG.generateRandomSeed()](#seededrnggeneraterandomseed) - generates a random seed
-        - [seededRNG.generateSeededNumbers()](#seededrnggenerateseedednumbers) - generates numbers based on a seed
-        - [seededRNG.validateSeed()](#seededrngvalidateseed) - validates a seed
+        - [generateRandomSeed()](#seededrnggeneraterandomseed) - generates a random seed
+        - [generateSeededNumbers()](#seededrnggenerateseedednumbers) - generates numbers based on a seed
+        - [validateSeed()](#seededrngvalidateseed) - validates a seed
     - [SQL](#sql)
-        - [sql.sendQuery()](#sqlsendquery) - sends a SQL query
+        - [sendQuery()](#sqlsendquery) - sends a SQL query
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
         - [byteLength()](#bytelength) - returns the length of a string in bytes
