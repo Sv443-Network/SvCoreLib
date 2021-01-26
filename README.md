@@ -4,7 +4,7 @@ Although it is intended for my own projects, feel free to use this library (make
 
 <br>
 
-## [Click here to go to the documentation](./docs.md)
+## [Click here to go to the documentation](./docs.md#readme)
 
 <br><br>
 
