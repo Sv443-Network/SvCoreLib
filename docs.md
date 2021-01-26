@@ -7,11 +7,12 @@ This is the documentation of SvCoreLib (also referred to as SCL).
 SvCoreLib, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
   
 This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
-With the exception of certain features that rely on the filesystem, HTTP or SQL connections, this library should be webpack compatible.  
+Many features are probably incompatible with Deno (unverified).  
+With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be webpack compatible (also unverified).  
   
 Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
-Please also note that the examples in this documentation are written in CommonJS.  
-If you use TypeScript, see import examples in the [usage section](#usage) and modify the other code accordingly.  
+  
+If you don't understand how this documentation works and what certain things mean, please read [this section](#how-this-documentation-works)
   
 Feel free to join my Discord server if you need help or just want to chat:  
 [![Discord Invite](https://img.shields.io/discord/565933531214118942)](https://sv443.net/discord)
@@ -27,6 +28,7 @@ Otherwise, see the table of contents just below.
 ## Table of Contents:
 - **[Installation](#installation)**
 - **[Usage](#usage)**
+- **[How this documentation works](#how-this-documentation-works)**
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
     - [File System](#file-system)
@@ -111,14 +113,17 @@ Troubleshooting: Make sure your workspace contains a `package.json` file. If not
 # Usage
 This explains how you can use SCL in your project.  
   
-If your project runs on "vanilla" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
-```js
-const scl = require("svcorelib");
-```  
-If your project runs on TypeScript, replace the above with this:
-```ts
-import * as scl from "svcorelib";
-```  
+- If your project runs on "vanilla" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
+    ```js
+    const scl = require("svcorelib");
+    ```  
+
+<br>
+
+- If your project runs on TypeScript, replace the above with this:
+    ```ts
+    import * as scl from "svcorelib";
+    ```  
 
 The variable `scl` now contains all of SCL's functions, namespaces, classes and objects.
   
@@ -126,20 +131,43 @@ The variable `scl` now contains all of SCL's functions, namespaces, classes and 
   
 If you only want to import a select number of features and don't like always having to use a variable like `scl`, you can also use the following syntaxes.  
   
-"Vanilla" Node.js / CommonJS:  
-```js
-const { function1, namespace1, Class1 } = require("svcorelib");
-```  
-TypeScript:  
-```ts
-import { function1, namespace1, Class1 } from "svcorelib";
-```  
+- "Vanilla" Node.js / CommonJS:  
+    ```js
+    const { function1, namespace1, Class1 } = require("svcorelib");
+    ```
+
+<br>
+
+- TypeScript:  
+    ```ts
+    import { function1, namespace1, Class1 } from "svcorelib";
+    ```  
   
 **Note:** You need to replace the placeholder names above with the functions / namespaces / classes / objects you want to import.
 
 
 
 <br><br><br><br><br>
+
+
+<!-- #MARKER How this documentation works -->
+# How this documentation works
+- The first code block of each feature tells you about the parameters of the function / method and what type of value it returns.
+    - Each parameter name is followed by a colon and then a type name (for example `parameter: string`).
+    - If the colon is prefixed by a question mark, this parameter is optional (for example: `parameter?: string`).
+    - Everything after the colon or question mark is not needed for actually interfacing with the library. It is merely for documentation purposes.
+- Most features have a code example which is collaped by default and can be expanded by clicking on it (it also tells you to do so).
+- Note that the code examples in this documentation are written in CommonJS.
+    - If you use TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
+- All code examples don't require installing any third party packages. All of the used packages are natively included in Node.js.
+- The example GIF included in some features uses the exact code that is included in that same feature under "example code".
+- Custom objects are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
+- Class constructors start with the header `Constructor` and don't have a return type (since they return an instance of themselves).
+    - This instance, created with the `new` keyword, should then be used to call the methods that are part of that same class.
+    - Do not use methods on the class directly unless the documentation explicitly states that they are static methods!
+
+<br><br><br><br><br>
+
 
 <!-- #MARKER In-IDE Documentation -->
 # In-IDE Documentation
