@@ -25,7 +25,7 @@
     - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
     - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))
 - Added SCL's custom error classes to new namespace `scl.Errors`
-- Fixed a lot of mistakes in the documentation
+- Massively improved the documentation
 
 <br>
 
