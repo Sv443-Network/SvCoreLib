@@ -15,6 +15,7 @@
 // requires the @type/* packages specified in devDependencies in `package.json`
 import * as _http  from 'http';
 import * as _mysql from 'mysql';
+import * as _fs from 'fs';
 
 
 declare module "svcorelib" {
@@ -26,10 +27,11 @@ declare module "svcorelib" {
      * 🔹 Returns true, if the input is undefined, null, an empty string, an empty array or an object with length = 0.  
      * Otherwise returns false. The number 0 and NaN will return false though, so check them independently if needed! 🔹
      * @param input Variable that should be checked - this can be of any type but the basic types will work best
-     * @returns true or false
+     * @returns true, if empty or false, if not
      * @since 1.4.0
      * @version 1.6.5 lowercase alias scl.isempty was removed
      * @version 1.8.0 Added check for objects with length = 0
+     * @version 1.13.0 Fixed TypeError when input is `null`
      */
     function isEmpty(input: any): boolean;
 
@@ -485,6 +487,15 @@ declare module "svcorelib" {
          * @version 1.8.0 Now the paths are being resolved as absolute, not relative + fixed JSDoc return type
          */
         function readdirRecursiveSync(folder: string): string[];
+
+        /**
+         * Wrapper for [`fs.access()`](https://nodejs.org/api/fs.html#fs_fs_access_path_mode_callback) - Checks if a file exists at the given path.
+         * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
+         * @returns Returned Promise always resolves to a boolean - true, if the file exists, false if not
+         * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
+         * @since 1.13.0
+         */
+        function exists(path: _fs.PathLike): Promise<boolean>;
     }
 
     //#SECTION SQL
