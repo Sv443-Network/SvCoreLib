@@ -33,6 +33,7 @@ Otherwise, see the table of contents just below.
 - **[Functions](#functions)**
     - [File System](#file-system)
         - [downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
+        - [exists()](#filesystemexists) - modern reimplementation of the deprecated `fs.exists()`
         - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
         - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
         - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
@@ -351,6 +352,24 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 >     totalMB: number;   // total file size in megabytes
 > }
 > ```
+
+
+<br><br><br>
+
+<!--TODO: document this function -->
+> ### filesystem.exists()
+> 
+> ```ts
+> scl.filesystem.exists();
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> ```
+> 
+> </details><br>
 
 
 <br><br><br><br>
@@ -1444,6 +1463,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION FolderDaemon -->
+<!--TODO: different constructor params -->
 > ### FolderDaemon
 > The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
 > `changed` means if a file's content has changed, a file has been removed or a file has been added.
