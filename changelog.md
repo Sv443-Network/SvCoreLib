@@ -1,9 +1,10 @@
 ## SvCoreLib
-### Version [1.12.0](#1120)
+### Version [1.13.0](#1130)
 
 <br><br>
 
 ## Version History:
+- [1.13.0](#1130)
 - [1.12.0](#1120)
 - [1.11.1](#1111)
 - [1.11.0](#1110)
@@ -15,6 +16,16 @@
 
 <br>
 
+
+## 1.13.0
+- Added functions
+	- `filesystem.exists()` to provide a wrapper to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
+- Changes
+    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443/SvCoreLib/issues/13))
+- Fixed bugs
+    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443/SvCoreLib/issues/15))
+
+<br>
 
 ## 1.12.0
 - Added functions
