@@ -701,6 +701,28 @@ declare module "svcorelib" {
         validateMenu(menu: MenuPromptMenu): boolean | string[];
     }
 
+    //#MARKER FolderDaemon
+
+    /** The options of the FolderDaemon */
+    interface FolderDaemonOptions {
+        /**
+         * An array of glob patterns. Only the matched files will be supervised by the FolderDaemon.  
+         * Example: `['*.js']` will make the daemon only scan files that end in `.js`.  
+         * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
+         */
+        whitelist?: string[];
+        /**
+         * An array of glob patterns. The matched files will be ignored by the FolderDaemon.  
+         * Example: `['*.js']` will block all .js files from being scanned by the daemon.  
+         * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
+         */
+        blacklist?: string[];
+        /** Whether to recursively scan through all subdirectories to supervise files. Defaults to `false` */
+        recursive?: boolean;
+        /** The interval in milliseconds at which to check if files have been changed. Defaults to 500. */
+        updateInterval?: number;
+    }
+
     /**
      * 🔹 Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed. 🔹  
      *   
@@ -711,23 +733,23 @@ declare module "svcorelib" {
          * 🔹 Constructs a new object of class FolderDaemon.  
          * The FolderDaemon supervises a directory and listens for changes in the files and then it executes a callback function that is registered with the method `onChanged()`. 🔹
          * @param dirPath The path to the directory you want the daemon to supervise
-         * @param filesBlacklist An optional array of [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)) strings. Example: `['*.js']` will block all .js files from being scanned by the daemon.
-         * @param recursive Set to `true` to scan for files recursively (in subdirectories). Defaults to `false`
-         * @param updateInterval The interval (in milliseconds) at which to scan for changed files. Defaults to `500` ms. Set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.
+         * @param options Options of the FolderDaemon
          * 
          * @throws Throws an `InvalidPathError` if the path to the directory is invalid
          * @throws Throws a `NotAFolderError` if the path leads to a file instead of a directory
          * @throws Throws a `PatternInvalidError` if the provided glob blacklist pattern is invalid
+         * @throws Throws a `TypeError` if both the `whitelist` and `blacklist` properties are set in the `options` object
          * 
          * @since 1.10.0
+         * @version 1.13.0 Condensed parameters into options object + added whitelist option
          */
-        constructor(dirPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number);
+        constructor(dirPath: string, options?: FolderDaemonOptions);
 
         /**
          * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹  
          * ❗ Warning: If you use the Promise API, due to how it works fundamentally, you will only receive a single callback. If you want to receive more than one callback, either call this function again once the Promise has resolved for the first time or use the callback_fn parameter
          * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an array of strings, which are the absolute paths of the changed files
-         * @returns Returns a promise that resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
+         * @returns Returns a promise that **only once** resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
          */
         onChanged(callback_fn: (error: null | string, daemonResult: string[]) => {}): Promise<string[]>;
 

@@ -9,14 +9,34 @@ const readdirRecursive = require("../functions/filesystem/readdirRecursive");
 const { InvalidPathError, NotAFolderError, PatternInvalidError } = require("./Errors");
 
 
+
+// FolderDaemonOptions {
+//     whitelist?: string[];
+//     blacklist?: string[];
+//     recursive?: boolean;
+//     updateInterval?: number;
+// }
+
 class FolderDaemon
 {
-    constructor(dirPath, filesBlacklist, recursive = false, updateInterval = 500)
+    constructor(dirPath, options)
     {
-        updateInterval = parseInt(updateInterval);
+        // TODO: parse options object
 
-        if((!updateInterval && updateInterval !== 0) || isNaN(updateInterval))
-            updateInterval = 500;
+        options.updateInterval = parseInt(options.updateInterval);
+        
+        if(Array.isArray(options.blacklist) && options.blacklist.length > 0 && Array.isArray(options.whitelist) && options.whitelist.length > 0)
+            throw new TypeError(`Invalid option parameters: Can't use a whitelist and blacklist at the same time.`);
+        
+        if(options.blacklist != undefined && !Array.isArray(options.blacklist))
+            throw new PatternInvalidError(`Blacklist glob pattern parameter was provided but is not an array containing strings`);
+        
+        if(options.whitelist != undefined && !Array.isArray(options.whitelist))
+            throw new PatternInvalidError(`Whitelist glob pattern parameter was provided but is not an array containing strings`);
+
+        if((!options.updateInterval && options.updateInterval !== 0) || isNaN(options.updateInterval))
+            options.updateInterval = 500;
+
 
         try
         {
@@ -35,24 +55,19 @@ class FolderDaemon
             throw new InvalidPathError(`Path "${dirPath}" is invalid or couldn't be resolved`);
         }
 
-        if(filesBlacklist != undefined && !Array.isArray(filesBlacklist))
-            throw new PatternInvalidError(`Blacklist glob pattern parameter was provided but is not an array containing strings`);
-
-        if(typeof recursive != "boolean")
-            recursive = false;
-        
-        this._recursive = recursive;
+        this._recursive = (typeof options.recursive !== "boolean") ? false : options.recursive;
 
         this._callbackAttached = false;
         this._callbackFn = () => {};
-        this._blacklistPattern = filesBlacklist || [];
+        this._blacklistPattern = options.blacklist || [];
+        this._whitelistPattern = options.whitelist || [];
 
         this._lastHashes = {};
         this._currentHashes = {};
 
-        if(updateInterval > 0)
+        if(options.updateInterval > 0)
         {
-            this._interval = setInterval(() => this.intervalCall(), updateInterval);
+            this._interval = setInterval(() => this.intervalCall(), options.updateInterval);
             this.intervalCall();
         }
 
@@ -185,6 +200,8 @@ class FolderDaemon
      */
     scanDir()
     {
+        // TODO: implement whitelist
+
         return new Promise((res, rej) => {
             if(!this._recursive)
             {

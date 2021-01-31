@@ -4,7 +4,7 @@
 <br><br>
 
 ## Version History:
-- [1.13.0](#1130)
+- [1.13.0](#1130) (current)
 - [1.12.0](#1120)
 - [1.11.1](#1111)
 - [1.11.0](#1110)
@@ -18,6 +18,10 @@
 
 
 ## 1.13.0
+### Migration warning: You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+
+<br>
+
 - Added functions
 	- `filesystem.exists()` to provide a wrapper to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
 - Changes
