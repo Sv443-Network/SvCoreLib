@@ -1456,15 +1456,15 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 # Classes
 This section contains all of SCLs classes.  
 If you don't know about Object Oriented Programming in JavaScript, you can learn about it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
-These need to be created with the `new` keyword and constructing multiple objects of these classes will not make them interfere with each other.
+These need to be created with the `new` keyword unless a method explicitly states that it is static.  
+Constructing multiple objects of these classes will not make them interfere with each other.
 
 
 <br>
 
 
 <!-- #SECTION FolderDaemon -->
-<!--TODO: different constructor params -->
-> ### FolderDaemon
+> ## FolderDaemon
 > The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
 > `changed` means if a file's content has changed, a file has been removed or a file has been added.
 > 
@@ -1476,11 +1476,9 @@ These need to be created with the `new` keyword and constructing multiple object
 > > Constructs a new object of the class `FolderDaemon`.  
 > >   
 > > Specify the path to the directory you want to supervise with the param `dirPath`.  
-> > The param `filesBlacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
-> > If you set `recursive` to `true`, the FolderDaemon will recursively look through all subdirectories of the specified directory.  
-> > The `updateInterval` parameter can be used to set an interval at which the daemon should check all files. Defaults to `500` ms - set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.
+> > The optional parameter `options` has to be an object of type [`FolderDaemonOptions`](#folderdaemonoptions-object)
 > > ```ts
-> > new FolderDaemon(dirPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number)
+> > new FolderDaemon(dirPath: string, options?: FolderDaemonOptions)
 > > ```
 > 
 > 
@@ -1524,6 +1522,29 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```
 > 
 > 
+> <br><br>
+> 
+> 
+> > ### FolderDaemonOptions object
+> > This object is used in the construction of a FolderDaemon.  
+> >   
+> > If you set `recursive` to `true`, the FolderDaemon will recursively look through all subdirectories of the specified directory.  
+> > The `updateInterval` property can be used to set an interval at which the daemon should check all files. Defaults to `500` ms - set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.  
+> >   
+> > The property `blacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
+> > Similarly, if the `whitelist` property, which is also an array of strings containing [glob patterns](https://en.wikipedia.org/wiki/Glob_(programming)), is set, only the matched files will be supervised by the daemon.  
+> >   
+> > Note: You can only use **either** the whitelist **or** the blacklist, not both at the same time - else a `TypeError` is thrown.
+> > ```ts
+> > {
+> >     recursive?: true,        // default is false
+> >     updateInterval?: 1000,   // default is 500
+> >     blacklist?: [ "*.txt" ], // default is []
+> >     whitelist?: []           // default is []
+> > }
+> > ```
+> 
+> 
 > <br><br><br>
 > 
 > 
@@ -1554,7 +1575,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION MenuPrompt -->
-> ### MenuPrompt
+> ## MenuPrompt
 > The class `MenuPrompt` creates an interactive prompt with one or many menus - add them using [`MenuPrompt.addMenu()`](#addmenu)  
 > To translate the messages, you can use the [`MenuPromptLocalization`](#menupromptlocalization-object) object, which is where all text variables are stored.  
 >   
@@ -1785,7 +1806,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION ProgressBar -->
-> ### ProgressBar
+> ## ProgressBar
 > The ProgressBar simply displays a progress bar in the Command Line Interface (CLI).  
 > It displays an automatically calculated percentage value and an optional message.  
 >   
@@ -1893,7 +1914,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION SelectionMenu -->
-> ### SelectionMenu
+> ## SelectionMenu
 > The SelectionMenu allows a user to scroll through a list of options and select one of them.  
 >   
 > <details><summary><b>Click here to see an example of how this might look like</b></summary>
