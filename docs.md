@@ -356,17 +356,35 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 
 <br><br><br>
 
-<!--TODO: document this function -->
 > ### filesystem.exists()
+> This function checks if a file exists at the given path.  
+> (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`)  
+>   
+> The parameter `path` specifies which file to check for its existence - This path gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)  
+>   
+> A Promise is returned that always resolves to a boolean.  
+>   
+> This function throws a `TypeError` if the `path` argument is not a string or couldn't be resolved to a valid path.
 > 
 > ```ts
-> scl.filesystem.exists();
+> scl.filesystem.exists(path: string): Promise<boolean>;
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
 > const scl = require("svcorelib");
+> 
+> async function checkExists()
+> {
+>     let foo = await scl.exists("./index.js");
+>     let bar = await scl.exists("./path/that/doesn't/exist.txt");
+> 
+>     console.log(foo); // true
+>     console.log(bar); // false
+> }
+> 
+> checkExists();
 > ```
 > 
 > </details><br>

@@ -15,7 +15,6 @@
 // requires the @type/* packages specified in devDependencies in `package.json`
 import * as _http  from 'http';
 import * as _mysql from 'mysql';
-import * as _fs from 'fs';
 
 
 declare module "svcorelib" {
@@ -496,7 +495,7 @@ declare module "svcorelib" {
          * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
          * @since 1.13.0
          */
-        function exists(path: _fs.PathLike): Promise<boolean>;
+        function exists(path: string): Promise<boolean>;
     }
 
     //#SECTION SQL
