@@ -1,75 +1,86 @@
 // This file contains all of SCL's custom error classes
 
-class InvalidPathError extends Error
+/**
+ * Base class for all SCL Error classes.  
+ * Adds a `date` property that tracks the exact datetime an error was created / thrown.
+ */
+class SCLError extends Error
+{
+    constructor(message, ...params)
+    {
+        super(message, ...params);
+        this.date = new Date();
+    }
+}
+
+
+
+
+
+class InvalidPathError extends SCLError
 {
     constructor(message, ...params)
     {
         super(message, ...params);
         this.name = "Invalid Path Error";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, InvalidPathError);
     }
 }
 
-class NotAFolderError extends Error
+class NotAFolderError extends SCLError
 {
     constructor(message, ...params)
     {
         super(message, ...params);
         this.name = "Not A Folder Error";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, NotAFolderError);
     }
 }
 
-class PatternInvalidError extends Error
+class PatternInvalidError extends SCLError
 {
     constructor(message, ...params)
     {
         super(message, ...params);
         this.name = "Pattern Invalid Error";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, PatternInvalidError);
     }
 }
 
-class NoStdinError extends Error
+class NoStdinError extends SCLError
 {
     constructor(message)
     {
         super(message);
         this.name = "Error: Terminal can't be read from";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, NoStdinError);
     }
 }
 
-class InvalidMimeTypeError extends Error {
+class InvalidMimeTypeError extends SCLError {
     constructor(message)
     {
         super(message);
         this.name = "Invalid MIME Type";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, InvalidMimeTypeError);
     }
 }
 
-class SqlConnectionNotEstablishedError extends Error {
+class SqlConnectionNotEstablishedError extends SCLError {
     constructor(message)
     {
         super(message);
         this.name = "SQL connection was not established";
-        this.date = new Date();
 
         if(Error.captureStackTrace)
             Error.captureStackTrace(this, SqlConnectionNotEstablishedError);

@@ -22,11 +22,12 @@
 
 <br>
 
-- Added functions
-	- `filesystem.exists()` to provide a wrapper to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
-- Changes
+- Added functions:
+	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
+- Changes:
     - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443/SvCoreLib/issues/13))
-- Fixed bugs
+    - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443/SvCoreLib/issues/17))
+- Fixed bugs:
     - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443/SvCoreLib/issues/15))
 
 <br>

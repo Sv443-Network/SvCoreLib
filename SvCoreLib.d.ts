@@ -489,7 +489,8 @@ declare module "svcorelib" {
         function readdirRecursiveSync(folder: string): string[];
 
         /**
-         * Wrapper for [`fs.access()`](https://nodejs.org/api/fs.html#fs_fs_access_path_mode_callback) - Checks if a file exists at the given path.
+         * This function checks if a file exists at the given path.  
+         * (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`)
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
          * @returns Returned Promise always resolves to a boolean - true, if the file exists, false if not
          * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
@@ -706,17 +707,17 @@ declare module "svcorelib" {
     /** The options of the FolderDaemon */
     interface FolderDaemonOptions {
         /**
-         * An array of glob patterns. Only the matched files will be supervised by the FolderDaemon.  
+         * An array of [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) Only the matched files will be supervised by the FolderDaemon.  
          * Example: `['*.js']` will make the daemon only scan files that end in `.js`.  
          * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
          */
-        whitelist?: string[];
+        whitelist?: string[] | undefined;
         /**
-         * An array of glob patterns. The matched files will be ignored by the FolderDaemon.  
+         * An array of [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) The matched files will be ignored by the FolderDaemon.  
          * Example: `['*.js']` will block all .js files from being scanned by the daemon.  
-         * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
+         * ❗ You can only use *either* a blacklist *or* a whitelist, not both!
          */
-        blacklist?: string[];
+        blacklist?: string[] | undefined;
         /** Whether to recursively scan through all subdirectories to supervise files. Defaults to `false` */
         recursive?: boolean;
         /** The interval in milliseconds at which to check if files have been changed. Defaults to 500. */
@@ -724,7 +725,7 @@ declare module "svcorelib" {
     }
 
     /**
-     * 🔹 Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed. 🔹  
+     * 🔹 Supervises a directory (and optionally its subdirectories) and executes a callback function if one or more of the files have changed. 🔹  
      *   
      * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
      */
@@ -737,7 +738,7 @@ declare module "svcorelib" {
          * 
          * @throws Throws an `InvalidPathError` if the path to the directory is invalid
          * @throws Throws a `NotAFolderError` if the path leads to a file instead of a directory
-         * @throws Throws a `PatternInvalidError` if the provided glob blacklist pattern is invalid
+         * @throws Throws a `PatternInvalidError` if the whitelist or blacklist glob pattern is invalid
          * @throws Throws a `TypeError` if both the `whitelist` and `blacklist` properties are set in the `options` object
          * 
          * @since 1.10.0
@@ -865,7 +866,6 @@ declare module "svcorelib" {
 
     /**
      * 🔸 Contains all of SCL's custom error classes 🔸
-     * @since 1.12.0
      */
     namespace Errors {
         /**
