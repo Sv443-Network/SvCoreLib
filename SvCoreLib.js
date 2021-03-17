@@ -1,16 +1,13 @@
 // SvCoreLib by Sv443 - licensed under the MIT license: https://sv443.net/LICENSE
 // For more information, please read the `README.md` file or go to https://github.com/Sv443/SvCoreLib
 
-module.exports = {
+module.exports = Object.freeze({
     //#MARKER functions
     isEmpty:           require("./src/functions/isEmpty"),
     isArrayEmpty:      require("./src/functions/isArrayEmpty"),
     error:             require("./src/functions/error"),
     allEqual:          require("./src/functions/allEqual"),
     allOfType:         require("./src/functions/allOfType"),
-    softShutdown:      require("./src/functions/softShutdown"),
-    noShutdown:        require("./src/functions/noShutdown"),
-    yesShutdown:       require("./src/functions/yesShutdown"),
     reserialize:       require("./src/functions/reserialize"),
     readableArray:     require("./src/functions/readableArray"),
     mapRange:          require("./src/functions/mapRange"),
@@ -22,7 +19,6 @@ module.exports = {
     randomItem:        require("./src/functions/randomItem"),
     removeDuplicates:  require("./src/functions/removeDuplicates"),
     insertValues:      require("./src/functions/insertValues"),
-    setWindowTitle:    require("./src/functions/setWindowTitle"),
     seededRNG: {
         generateSeededNumbers:  require("./src/functions/seededRNG/generateSeededNumbers"),
         generateRandomSeed:     require("./src/functions/seededRNG/generateRandomSeed"),
@@ -39,7 +35,7 @@ module.exports = {
         pipeFile:           require("./src/functions/http/pipeFile"),
         pipeString:         require("./src/functions/http/pipeString"),
         getClientEncoding:  require("./src/functions/http/getClientEncoding"),
-        ping:               require("./src/functions/ping"),
+        ping:               require("./src/functions/http/ping"),
     },
     filesystem: {
         readdirRecursive:      require("./src/functions/filesystem/readdirRecursive"),
@@ -50,9 +46,16 @@ module.exports = {
     sql: {
         sendQuery:  require("./src/functions/sql/sendQuery"),
     },
-    Errors:      require("./src/classes/Errors"),
-    pause:       require("./src/functions/pause"),
-    inDebugger:  require("./src/functions/inDebugger"),
+    system: {
+        usedHeap:        require("./src/functions/system/usedHeap"),
+        inDebugger:      require("./src/functions/system/inDebugger"),
+        softShutdown:    require("./src/functions/system/softShutdown"),
+        noShutdown:      require("./src/functions/system/noShutdown"),
+        yesShutdown:     require("./src/functions/system/yesShutdown"),
+        setWindowTitle:  require("./src/functions/system/setWindowTitle"),
+    },
+    Errors:  require("./src/classes/Errors"),
+    pause:   require("./src/functions/system/pause"),
 
     //#MARKER classes
     ProgressBar:    require("./src/classes/ProgressBar"),
@@ -63,4 +66,4 @@ module.exports = {
     //#MARKER objects
     info:    require("./src/objects/info"),
     colors:  require("./src/objects/colors")
-};
+});

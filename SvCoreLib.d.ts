@@ -531,6 +531,20 @@ declare module "svcorelib" {
         function sendQuery(connection: _mysql.Connection, query: string, options: _mysql.QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
     }
 
+    //#SECTION System
+
+    /**
+     * 🔸 Offers few functions that refer to the system the process is executed on 🔸
+     */
+    namespace system {
+        /**
+         * 🔹 Returns the percentage of heap space that is used by the process 🔹
+         * @returns Returns a floating point number between 0 and 100
+         * @since 1.13.0
+         */
+        function usedHeap(): number;
+    }
+
     //#MARKER classes
 
     /**
