@@ -99,7 +99,7 @@ declare module "svcorelib" {
     /**
      * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
      * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
-     * - ❗ Asynchronous function execution is not supported (yet)  
+     * - ❗ Asynchronous function execution is not supported  
      * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
      * @param funct This function will get executed before process shutdown
      * @param code The exit code with which the process should be closed. Defaults to 0
@@ -108,7 +108,7 @@ declare module "svcorelib" {
      * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
      * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
      */
-    function softShutdown(funct: (any) => any, code?: number): void;
+     function softShutdown(funct: () => void, code?: number): void;
 
     /**
      * 🔹 Prevents the script from shutting down with default commands (CTRL + C).
