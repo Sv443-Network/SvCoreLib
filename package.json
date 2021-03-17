@@ -45,7 +45,8 @@
     "deep-diff": "^1.0.2",
     "fs-extra": "^9.0.1",
     "keypress": "^0.2.1",
-    "minimatch": "^3.0.4"
+    "minimatch": "^3.0.4",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.17",
