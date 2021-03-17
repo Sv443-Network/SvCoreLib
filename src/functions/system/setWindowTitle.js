@@ -1,7 +1,3 @@
-/**
- * Sets the terminal window's title (supports Windows and *nix)
- * @param {String} title
- */
 function setWindowTitle(title)
 {
     if(typeof title !== "string")

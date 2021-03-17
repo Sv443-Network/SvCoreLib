@@ -33,9 +33,12 @@ Otherwise, see the table of contents just below.
 - **[Functions](#functions)**
     - [File System](#file-system)
         - [downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
+        - [exists()](#filesystemexists) - modern reimplementation of the deprecated `fs.exists()`
         - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
         - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
         - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
+        - [ensureDirs()](#filesystemensuredirs) - ensures a set of directories exist and creates them if not
+        - [ensureDirsSync()](#filesystemensuredirssync) - synchronous counterpart to `ensureDirs()`
     - [Generate UUID](#generate-uuid)
         - [alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
         - [binary()](#generateuuidbinary) - generates a binary UUID
@@ -46,24 +49,29 @@ Otherwise, see the table of contents just below.
         - [getClientEncoding()](#httpgetclientencoding) - gets the most efficient encoding from a client request
         - [pipeFile()](#httppipefile) - sends a file to a client
         - [pipeString()](#httppipestring) - sends a string to a client
+        - [ping()](#httpping) - pings a specified URL
     - [Seeded RNG](#seeded-rng)
         - [generateRandomSeed()](#seededrnggeneraterandomseed) - generates a random seed
         - [generateSeededNumbers()](#seededrnggenerateseedednumbers) - generates numbers based on a seed
         - [validateSeed()](#seededrngvalidateseed) - validates a seed
     - [SQL](#sql)
         - [sendQuery()](#sqlsendquery) - sends a SQL query
+    - [System](#system)
+        - [usedHeap()](#systemusedheap) - how much of the heap space is used
+        - [inDebugger()](#systemindebugger) - checks if the process is running in a debugger
+        - [noShutdown()](#systemnoshutdown) - prevents process shutdown
+        - [yesShutdown()](#systemyesshutdown) - re-enables process shutdown
+        - [softShutdown()](#systemsoftshutdown) - executes a synchronous function before the process exits
+        - [setWindowTitle()](#systemsetwindowtitle) - sets the terminal window's title (Windows & *nix)
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
         - [byteLength()](#bytelength) - returns the length of a string in bytes
         - [error()](#error) - sends an error message and/or exits the process
-        - [inDebugger()](#indebugger) - checks if the process is running in a debugger
         - [insertValues()](#insertvalues) - inserts values into a preformatted string
         - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
         - [isEmpty()](#isempty) - checks if a value is considered empty
         - [mapRange()](#maprange) - maps a number from one numerical range to another
-        - [noShutdown()](#noshutdown) - prevents process shutdown
         - [pause()](#pause) - pauses code execution until the user presses a key
-        - [ping()](#ping) - pings a specified URL
         - [randomItem()](#randomitem) - returns a random item from an array
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
@@ -71,10 +79,7 @@ Otherwise, see the table of contents just below.
         - [removeDuplicates()](#removeduplicates) - removes duplicate items in an array
         - [replaceAt()](#replaceat) - replaces a character in a string with another string
         - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
-        - [setWindowTitle()](#setwindowtitle) - sets the terminal window's title (Windows & *nix)
-        - [softShutdown()](#softshutdown) - executes a synchronous function before the process exits
         - [unused()](#unused) - indicates to a linter that one or more variables are unused
-        - [yesShutdown()](#yesshutdown) - re-enables process shutdown
 - **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon) - monitors a folder's contents for changes
     - [MenuPrompt](#menuprompt) - a prompt which users can select an option from
@@ -155,13 +160,13 @@ If you only want to import a select number of features and don't like always hav
 - The first code block of each feature tells you about the parameters of the function / method and what type of value it returns.
     - Each parameter name is followed by a colon and then a type name (for example `parameter: string`).
     - If the colon is prefixed by a question mark, this parameter is optional (for example: `parameter?: string`).
-    - Everything after the colon or question mark is not needed for actually interfacing with the library. It is merely for documentation purposes.
-- Most features have a code example which is collaped by default and can be expanded by clicking on it (it also tells you to do so).
+    - Everything after the colon or question mark is not needed for actually interfacing with the library. It is merely there to tell you of which type a parameter should be.
+- Most features have a code example which is collapsed by default and can be expanded by clicking on it.
 - Note that the code examples in this documentation are written in CommonJS.
     - If you use TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
-- All code examples don't require installing any third party packages. All of the used packages are natively included in Node.js.
+- All code examples don't require installing any third party packages (excluding SCL's dependencies which should get auto-installed). All of the used packages are natively included in Node.js.
 - The example GIF included in some features uses the exact code that is included in that same feature under "example code".
-- Custom objects are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
+- Custom objects (aka interfaces) are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
 - Class constructors start with the header `Constructor` and don't have a return type (since they return an instance of themselves).
     - This instance, created with the `new` keyword, should then be used to call the methods that are part of that same class.
     - Do not use methods on the class directly unless the documentation explicitly states that they are static methods!
@@ -196,7 +201,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 <!-- #MARKER Functions -->
 # Functions
 This section tells you all about the static functions SCL offers.  
-You have to call these without the `new` keyword.  
+You have to call these *without* creating a class instance using the `new` keyword.  
 
 <br>
 
@@ -274,7 +279,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > ### filesystem.readdirRecursiveSync()
 > Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution, thus making it synchronous.  
 >   
-> ❗ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
+> ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
 > scl.filesystem.readdirRecursiveSync(folder: string): string[]
 > ```
@@ -351,6 +356,108 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 >     totalMB: number;   // total file size in megabytes
 > }
 > ```
+
+
+<br><br><br>
+
+> ### filesystem.exists()
+> This function checks if a file exists at the given path.  
+> (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`)  
+>   
+> The parameter `path` specifies which file to check for its existence - This path gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)  
+>   
+> A Promise is returned that always resolves to a boolean.  
+>   
+> This function throws a `TypeError` if the `path` argument is not a string or couldn't be resolved to a valid path.
+> 
+> ```ts
+> scl.filesystem.exists(path: string): Promise<boolean>;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> async function checkExists()
+> {
+>     let foo = await scl.exists("./index.js");
+>     let bar = await scl.exists("./path/that/doesn't/exist.txt");
+> 
+>     console.log(foo); // true
+>     console.log(bar); // false
+> }
+> 
+> checkExists();
+> ```
+> 
+> </details><br>
+
+
+<br><br><br>
+
+
+> ### filesystem.ensureDirs()
+> This function ensures a set of directories exists and creates them if not.  
+>   
+> A path of the `directories` parameter can also contain sub-directories (see example).  
+> In this case the full path will also be created if it doesn't exist.
+> 
+> ```ts
+> scl.filesystem.ensureDirs(directories: string[]): Promise<void>;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { filesystem } = require("svcorelib");
+> 
+> 
+> const dirs = [ "data/foo", "data/bar/baz" ];
+> 
+> async function init()
+> {
+>     await filesystem.ensureDirs(dirs);
+> }
+> 
+> init();
+> ```
+> 
+> </details><br>
+
+
+<br><br><br>
+
+
+> ### filesystem.ensureDirsSync()
+> This function ensures a set of directories exists and creates them if not.  
+>   
+> A path of the `directories` parameter can also contain sub-directories (see example).  
+> In this case the full path will also be created if it doesn't exist.  
+>   
+>  ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.ensureDirs()](#filesystemensuredirs) so it is recommended that you try to use the async function over this synchronous one.
+> 
+> ```ts
+> scl.filesystem.ensureDirsSync(directories: string[]): void;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { filesystem } = require("svcorelib");
+> 
+> 
+> const dirs = [ "data/foo", "data/bar/baz" ];
+> 
+> function init()
+> {
+>     filesystem.ensureDirsSync(dirs);
+> }
+> 
+> init();
+> ```
+> 
+> </details><br>
 
 
 <br><br><br><br>
@@ -781,7 +888,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 <!-- #SECTION SQL -->
 ## SQL
 This namespace, accessed with `scl.sql`, offers functions to interface with SQL databases.  
-These functions depend on the native module [`mysql`](https://www.npmjs.com/package/mysql).  
+These functions depend on the package [`mysql`](https://www.npmjs.com/package/mysql).  
 
 
 <br><br>
@@ -832,6 +939,146 @@ These functions depend on the native module [`mysql`](https://www.npmjs.com/pack
 >         console.error(`Error: ${err}`);
 >     });
 > });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION System -->
+## System
+This namespace, accessed with `scl.system`, offers functions that refer to the system the process is executed on or the process itself.  
+
+
+<br><br>
+
+
+> ### system.usedHeap()
+> Returns the percentage of heap space that is used by the process as a floating point number between 0 and 100.
+> ```ts
+> scl.system.usedHeap(): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { system } = require("svcorelib");
+> 
+> console.log(`Used heap space: ${system.usedHeap().toFixed(2)}%`);
+> ```
+> 
+> </details>
+
+
+<br><br>
+
+
+> ### system.inDebugger()
+> Checks if the process is currently running in the debugger environment.  
+> This can be useful because some features like child processes and reading from stdin do not work in most debuggers.  
+> Should support all major Node.js debuggers.  
+> Returns `true` if the current process runs in a debugger environment - else returns `false`
+> ```ts
+> scl.system.inDebugger(): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { system, MenuPrompt } = require("svcorelib");
+> 
+> if(!system.inDebugger())
+> {
+>     // SCL's MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
+>     let mp = new MenuPrompt();
+>     // ...
+> }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### system.noShutdown()
+> Prevents the process from being shut down.  
+> This can prevent people from exiting the process using CTRL+C.  
+> Using `process.exit()` in your script will still exit the process though!  
+> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#yesshutdown).
+>   
+> Note: this only listens for the signals "SIGINT" and "SIGTERM".  
+> Due to many OSes not supporting it, using "SIGKILL" will still kill the process.
+> ```ts
+> scl.system.noShutdown(): void
+> ```
+
+
+<br><br><br>
+
+
+> ### system.yesShutdown()
+> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#noshutdown).
+> ```ts
+> scl.system.yesShutdown(): void
+> ```
+
+
+<br><br><br>
+
+
+> ### system.softShutdown()
+> Executes a synchronous function before the process is exited.
+> ```ts
+> scl.system.softShutdown(funct: function, code?: number): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { system } = require("svcorelib");
+> 
+> console.log("foo");
+> 
+> system.softShutdown(() => {
+>     console.log("Bye!");
+>     // async functions can't be used in here
+> });
+> 
+> setTimeout(() => process.exit(), 500);
+> 
+> console.log("bar");
+> ```
+>   
+> Output:
+> ```
+> foo
+> bar
+> Bye!
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### system.setWindowTitle()
+> Sets the window title of the CLI / terminal.  
+> This function supports both Windows and *nix.
+> ```ts
+> scl.system.setWindowTitle(title: string): void
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { system } = require("svcorelib");
+> const packageJson = require("./package.json"); // adjust this path if you're not in the project root dir
+> 
+> system.setWindowTitle(`${packageJson.name} v${packageJson.version}`);
 > ```
 > 
 > </details>
@@ -939,34 +1186,6 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
-> ### inDebugger()
-> Checks if the process is currently running in the debugger environment.  
-> This can be useful because some features like child processes and reading from stdin do not work in most debuggers.  
-> Should support all major Node.js debuggers.  
-> Returns `true` if the current process runs in a debugger environment - else returns `false`
-> ```ts
-> scl.inDebugger(): boolean
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const scl = require("svcorelib");
-> 
-> if(!scl.inDebugger())
-> {
->     // SCLs MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
->     let mp = new scl.MenuPrompt();
->     // ...
-> }
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
 > ### isArrayEmpty()
 > Checks how many values of an array are empty (does the same check as [`scl.isEmpty()`](#isempty), but on each array item).  
 > Returns `true` if all items are empty, `false` if none are empty, or returns a number of how many items are empty.
@@ -1046,22 +1265,6 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 > 
 > </details>
-
-
-<br><br><br>
-
-
-> ### noShutdown()
-> Prevents the process from being shut down.  
-> This can prevent people from exiting the process using CTRL+C.  
-> Using `process.exit()` in your script will still exit the process though!  
-> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#yesshutdown).
->   
-> Note: this only listens for the signals "SIGINT" and "SIGTERM".  
-> Due to many OSes not supporting it, using "SIGKILL" will still kill the process.
-> ```ts
-> scl.noShutdown(): void
-> ```
 
 
 <br><br><br>
@@ -1342,64 +1545,6 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
-> ### setWindowTitle()
-> Sets the window title of the CLI / terminal.  
-> This function supports both Windows and *nix.
-> ```ts
-> scl.setWindowTitle(title: string): void
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const scl = require("svcorelib");
-> const packageJson = require("./package.json"); // adjust this path if you're not in the project root dir
-> 
-> scl.setWindowTitle(`${packageJson.name} v${packageJson.version}`);
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
-> ### softShutdown()
-> Executes a synchronous function before the process is exited.
-> ```ts
-> scl.softShutdown(funct: function, code?: number): void
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const scl = require("svcorelib");
-> 
-> console.log("foo");
-> 
-> scl.softShutdown(() => {
->     console.log("Bye!");
->     // async functions can't be used in here
-> });
-> 
-> setTimeout(() => process.exit(), 500);
-> 
-> console.log("bar");
-> ```
->   
-> Output:
-> ```
-> foo
-> bar
-> Bye!
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
 > ### unused()
 > Use this if you are using a linter that complains about unused vars.  
 > As this function basically does nothing, you can even leave it in once the variable is used again and nothing will break.  
@@ -1421,30 +1566,21 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > </details>
 
 
-<br><br><br>
-
-
-> ### yesShutdown()
-> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#noshutdown).
-> ```ts
-> scl.yesShutdown(): void
-> ```
-
-
 <br><br><br><br><br>
 
 <!-- #MARKER Classes -->
 # Classes
-This section contains all of SCLs classes.  
+This section contains all of SCL's classes.  
 If you don't know about Object Oriented Programming in JavaScript, you can learn about it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
-These need to be created with the `new` keyword and constructing multiple objects of these classes will not make them interfere with each other.
+These need to be created with the `new` keyword unless a method explicitly states that it is static.  
+Constructing multiple objects of these classes will not make them interfere with each other.
 
 
 <br>
 
 
 <!-- #SECTION FolderDaemon -->
-> ### FolderDaemon
+> ## FolderDaemon
 > The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
 > `changed` means if a file's content has changed, a file has been removed or a file has been added.
 > 
@@ -1456,11 +1592,9 @@ These need to be created with the `new` keyword and constructing multiple object
 > > Constructs a new object of the class `FolderDaemon`.  
 > >   
 > > Specify the path to the directory you want to supervise with the param `dirPath`.  
-> > The param `filesBlacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
-> > If you set `recursive` to `true`, the FolderDaemon will recursively look through all subdirectories of the specified directory.  
-> > The `updateInterval` parameter can be used to set an interval at which the daemon should check all files. Defaults to `500` ms - set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.
+> > The optional parameter `options` has to be an object of type [`FolderDaemonOptions`](#folderdaemonoptions-object)
 > > ```ts
-> > new FolderDaemon(dirPath: string, filesBlacklist?: string[], recursive?: boolean, updateInterval?: number)
+> > new FolderDaemon(dirPath: string, options?: FolderDaemonOptions)
 > > ```
 > 
 > 
@@ -1504,6 +1638,29 @@ These need to be created with the `new` keyword and constructing multiple object
 > > ```
 > 
 > 
+> <br><br>
+> 
+> 
+> > ### FolderDaemonOptions object
+> > This object is used in the construction of a FolderDaemon.  
+> >   
+> > If you set `recursive` to `true`, the FolderDaemon will recursively look through all subdirectories of the specified directory.  
+> > The `updateInterval` property can be used to set an interval at which the daemon should check all files. Defaults to `500` ms - set to `0` to disable the interval, then call `intervalCall()` to manually scan the directory.  
+> >   
+> > The property `blacklist` can be passed an array of strings which contain [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) If a file matches any of these patterns, the file will be ignored.  
+> > Similarly, if the `whitelist` property, which is also an array of strings containing [glob patterns](https://en.wikipedia.org/wiki/Glob_(programming)), is set, only the matched files will be supervised by the daemon.  
+> >   
+> > Note: You can only use **either** the whitelist **or** the blacklist, not both at the same time - else a `TypeError` is thrown.
+> > ```ts
+> > {
+> >     recursive?: true,        // default is false
+> >     updateInterval?: 1000,   // default is 500
+> >     blacklist?: [ "*.txt" ], // default is []
+> >     whitelist?: []           // default is []
+> > }
+> > ```
+> 
+> 
 > <br><br><br>
 > 
 > 
@@ -1534,7 +1691,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION MenuPrompt -->
-> ### MenuPrompt
+> ## MenuPrompt
 > The class `MenuPrompt` creates an interactive prompt with one or many menus - add them using [`MenuPrompt.addMenu()`](#addmenu)  
 > To translate the messages, you can use the [`MenuPromptLocalization`](#menupromptlocalization-object) object, which is where all text variables are stored.  
 >   
@@ -1765,7 +1922,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION ProgressBar -->
-> ### ProgressBar
+> ## ProgressBar
 > The ProgressBar simply displays a progress bar in the Command Line Interface (CLI).  
 > It displays an automatically calculated percentage value and an optional message.  
 >   
@@ -1873,7 +2030,7 @@ These need to be created with the `new` keyword and constructing multiple object
 
 
 <!-- #SECTION SelectionMenu -->
-> ### SelectionMenu
+> ## SelectionMenu
 > The SelectionMenu allows a user to scroll through a list of options and select one of them.  
 >   
 > <details><summary><b>Click here to see an example of how this might look like</b></summary>
