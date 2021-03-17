@@ -18,9 +18,11 @@
 
 
 ## 1.13.0
-### Migration warning: You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+### Migration warnings:
+- You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+- The namespace of a few functions has changed (see [changes](#changes))
 
-<br>
+<br><br>
 
 - Added functions:
 	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
