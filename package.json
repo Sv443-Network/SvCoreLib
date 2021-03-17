@@ -51,7 +51,7 @@
   "devDependencies": {
     "@types/mysql": "^2.15.17",
     "@types/node": "^14.6.0",
-    "eslint": "^7.7.0",
-    "snyk": "^1.439.1"
+    "eslint": "^7.22.0",
+    "snyk": "^1.493.0"
   }
 }
