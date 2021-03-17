@@ -42,6 +42,8 @@ module.exports = Object.freeze({
         readdirRecursiveSync:  require("./src/functions/filesystem/readdirRecursiveSync"),
         logger:                require("./src/functions/filesystem/logger"),
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
+        ensureDirs:            require("./src/functions/filesystem/ensureDirs"),
+        ensureDirsSync:        require("./src/functions/filesystem/ensureDirsSync"),
     },
     sql: {
         sendQuery:  require("./src/functions/sql/sendQuery"),

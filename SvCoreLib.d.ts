@@ -504,14 +504,32 @@ declare module "svcorelib" {
         function readdirRecursiveSync(folder: string): string[];
 
         /**
-         * This function checks if a file exists at the given path.  
-         * (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`)
+         * 🔹 This function checks if a file exists at the given path.  
+         * (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
          * @returns Returned Promise always resolves to a boolean - true, if the file exists, false if not
          * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
          * @since 1.13.0
          */
         function exists(path: string): Promise<boolean>;
+
+        /**
+         * 🔹 Synchronously ensures that a set of directories exist and creates them if not. 🔹
+         * ❗ Warning! Large amounts of directories can freeze the process completely or take a long time - instead use `ensureDirs()` if possible
+         * @param directories The directories to ensure the existance of
+         * @throws Throws a TypeError if the `directories` parameter is not an array of strings
+         * @since 1.13.0
+         */
+        function ensureDirsSync(directories: string[]): void;
+
+        /**
+         * 🔹 Ensures that a set of directories exist and creates them if not. 🔹
+         * @param directories The directories to ensure the existance of
+         * @async
+         * @throws Throws a TypeError if the `directories` parameter is not an array of strings
+         * @since 1.13.0
+         */
+        function ensureDirs(directories: string[]): Promise<void>;
     }
 
     //#SECTION SQL

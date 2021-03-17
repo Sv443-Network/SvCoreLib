@@ -37,6 +37,8 @@ Otherwise, see the table of contents just below.
         - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
         - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
         - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
+        - [ensureDirs()](#filesystemensuredirs) - ensures a set of directories exist and creates them if not
+        - [ensureDirsSync()](#filesystemensuredirssync) - synchronous counterpart to `ensureDirs()`
     - [Generate UUID](#generate-uuid)
         - [alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
         - [binary()](#generateuuidbinary) - generates a binary UUID
@@ -277,7 +279,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > ### filesystem.readdirRecursiveSync()
 > Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution, thus making it synchronous.  
 >   
-> ❗ This function is more resource-heavy than the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
+> ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
 > scl.filesystem.readdirRecursiveSync(folder: string): string[]
 > ```
@@ -387,6 +389,72 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > }
 > 
 > checkExists();
+> ```
+> 
+> </details><br>
+
+
+<br><br><br>
+
+
+> ### filesystem.ensureDirs()
+> This function ensures a set of directories exists and creates them if not.  
+>   
+> A path of the `directories` parameter can also contain sub-directories (see example).  
+> In this case the full path will also be created if it doesn't exist.
+> 
+> ```ts
+> scl.filesystem.ensureDirs(directories: string[]): Promise<void>;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { filesystem } = require("svcorelib");
+> 
+> 
+> const dirs = [ "data/foo", "data/bar/baz" ];
+> 
+> async function init()
+> {
+>     await filesystem.ensureDirs(dirs);
+> }
+> 
+> init();
+> ```
+> 
+> </details><br>
+
+
+<br><br><br>
+
+
+> ### filesystem.ensureDirsSync()
+> This function ensures a set of directories exists and creates them if not.  
+>   
+> A path of the `directories` parameter can also contain sub-directories (see example).  
+> In this case the full path will also be created if it doesn't exist.  
+>   
+>  ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.ensureDirs()](#filesystemensuredirs) so it is recommended that you try to use the async function over this synchronous one.
+> 
+> ```ts
+> scl.filesystem.ensureDirsSync(directories: string[]): void;
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { filesystem } = require("svcorelib");
+> 
+> 
+> const dirs = [ "data/foo", "data/bar/baz" ];
+> 
+> function init()
+> {
+>     filesystem.ensureDirsSync(dirs);
+> }
+> 
+> init();
 > ```
 > 
 > </details><br>
