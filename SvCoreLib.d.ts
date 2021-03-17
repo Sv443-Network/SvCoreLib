@@ -4,7 +4,7 @@
 
 
     >> If you came here looking for the source code, you're in the wrong file!
-    >> See the file `SvCoreLib.js` instead, since it acts as a proxy to all of SCLs features.
+    >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
     >> From there, you can follow the require()'s.
 
 
@@ -17,6 +17,22 @@ import * as _http  from 'http';
 import * as _mysql from 'mysql';
 
 
+/**
+ * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
+ * ## SvCoreLib  
+ * The core library used in almost all of Sv443's projects.  
+ *   
+ * ---
+ *   
+ * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [Contact](https://sv443.net/discord)**
+ *   
+ * ---
+ *   
+ * @author Sv443
+ * @license MIT
+ * @version 1.13.0
+ * @module svcorelib
+ */
 declare module "svcorelib" {
     //#MARKER functions
 
