@@ -56,6 +56,6 @@
   },
   "publishConfig": {
     "cache": "~/.npm",
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.com"
   }
 }
