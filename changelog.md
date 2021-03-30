@@ -1,10 +1,11 @@
 ## SvCoreLib
-### Version [1.13.0](#1130)
+### Version [1.13.1](#1131)
 
 <br><br>
 
 ## Version History:
-- [1.13.0](#1130) (current)
+- [1.13.1](#1131) (current)
+- [1.13.0](#1130)
 - [1.12.0](#1120)
 - [1.11.1](#1111)
 - [1.11.0](#1110)
@@ -16,13 +17,19 @@
 
 <br>
 
+## 1.13.1
+
+- Security:
+    - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
+
+<br><br>
 
 ## 1.13.0
 ### Migration warnings:
 - You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
 - The namespace of a few functions has changed (see changes below)
 
-<br><br>
+<br>
 
 - Added functions:
 	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
@@ -43,7 +50,7 @@
     - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443/SvCoreLib/issues/21))
     - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443/SvCoreLib/issues/20))
 
-<br>
+<br><br>
 
 ## 1.12.0
 - Added functions
@@ -56,19 +63,19 @@
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 
-<br>
+<br><br>
 
 ## 1.11.1
 - My dumbass left some debug text in
 
-<br>
+<br><br>
 
 ## 1.11.0
 ### The SelectionMenu update
 - Added the class `SelectionMenu` to create a menu with a scrollable list of options a user can select
 - Added the function `allOfType()` to see if all items of an array are of a specified type
 
-<br>
+<br><br>
 
 ## 1.10.0
 ### The initial release
