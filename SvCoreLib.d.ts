@@ -1,20 +1,18 @@
 /*
     TypeScript Type Declaration file
-    Originally made by @canarado
+    Original declarations made by @canarado
 
 
     >> If you came here looking for the source code, you're in the wrong file!
-    >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
+    >> See the file `SvCoreLib.js` instead, it acts as a relay to all of SCLs features.
     >> From there, you can follow the require()'s.
 
-
-    This file is responsible for the In-IDE documentation (usually seen by pressing CTRL+Space)
+    >> This file is responsible for the In-IDE documentation (usually seen by pressing CTRL+Space or hovering over stuff)
 */
 
 
-// requires the @type/* packages specified in devDependencies in `package.json`
-import * as _http  from 'http';
-import * as _mysql from 'mysql';
+import { ServerResponse, IncomingMessage } from "http";
+import { Connection, QueryOptions } from "mysql";
 
 
 /**
@@ -24,7 +22,7 @@ import * as _mysql from 'mysql';
  *   
  * ---
  *   
- * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [Contact](https://sv443.net/discord)**
+ * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [Discord](https://dc.sv443.net)**
  *   
  * ---
  *   
@@ -315,7 +313,7 @@ declare module "svcorelib" {
          * @returns Returns `null` if there was no error or a string containing the error message
          * @throws Throws an "InvalidMimeTypeError" if the provided "mimeType" parameter is not a valid MIME type
          */
-        function pipeFile(res: _http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string;
+        function pipeFile(res: ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string;
         
         /**
          * 🔹 Pipes a string into a HTTP response. This is a tiny bit faster and much more efficient than loading the string into RAM first. 🔹
@@ -326,7 +324,7 @@ declare module "svcorelib" {
          * @returns Returns `null` if there was no error or a string containing the error message
          * @throws Throws an "InvalidMimeTypeError" if the provided "mimeType" parameter is not a valid MIME type
          */
-        function pipeString(res: _http.ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string;
+        function pipeString(res: ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string;
         
         /**
          * 🔹 Returns the name of the client's accepted encoding.  
@@ -336,7 +334,7 @@ declare module "svcorelib" {
          * @returns Returns "identity" if no encodings are supported, else returns the encoding's name
          * @since 1.10.0
          */
-        function getClientEncoding(req: _http.IncomingMessage): EncodingName;
+        function getClientEncoding(req: IncomingMessage): EncodingName;
 
         /**
          * This object contains the return values of a ping
@@ -501,7 +499,7 @@ declare module "svcorelib" {
          * @param insertValues [Rest parameter] The values to be inserted into the question marks - use the primitive type `null` for an empty value
          * @since 1.12.0
          */
-        function sendQuery(connection: _mysql.Connection, query: string, options: _mysql.QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
+        function sendQuery(connection: Connection, query: string, options: QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
     }
 
     //#SECTION System

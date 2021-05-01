@@ -3,6 +3,7 @@
 
 module.exports = Object.freeze({
     //#MARKER functions
+
     isEmpty:           require("./src/functions/isEmpty"),
     isArrayEmpty:      require("./src/functions/isArrayEmpty"),
     error:             require("./src/functions/error"),
@@ -56,16 +57,21 @@ module.exports = Object.freeze({
         yesShutdown:     require("./src/functions/system/yesShutdown"),
         setWindowTitle:  require("./src/functions/system/setWindowTitle"),
     },
-    Errors:  require("./src/classes/Errors"),
     pause:   require("./src/functions/system/pause"),
-
+    
     //#MARKER classes
+    
     ProgressBar:    require("./src/classes/ProgressBar"),
     MenuPrompt:     require("./src/classes/MenuPrompt"),
     FolderDaemon:   require("./src/classes/FolderDaemon"),
     SelectionMenu:  require("./src/classes/SelectionMenu"),
 
+    //#SECTION namespaced classes
+
+    Errors:         require("./src/classes/Errors"),
+
     //#MARKER objects
+
     info:    require("./src/objects/info"),
     colors:  require("./src/objects/colors")
 });
