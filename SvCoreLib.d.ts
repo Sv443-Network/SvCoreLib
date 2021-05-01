@@ -4,7 +4,7 @@
 
 
     >> If you came here looking for the source code, you're in the wrong file!
-    >> See the file `SvCoreLib.js` instead, since it acts as a proxy to all of SCLs features.
+    >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
     >> From there, you can follow the require()'s.
 
 
@@ -15,9 +15,24 @@
 // requires the @type/* packages specified in devDependencies in `package.json`
 import * as _http  from 'http';
 import * as _mysql from 'mysql';
-import * as _fs from 'fs';
 
 
+/**
+ * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
+ * ## SvCoreLib  
+ * The core library used in almost all of Sv443's projects.  
+ *   
+ * ---
+ *   
+ * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [Contact](https://sv443.net/discord)**
+ *   
+ * ---
+ *   
+ * @author Sv443
+ * @license MIT
+ * @version 1.13.0
+ * @module svcorelib
+ */
 declare module "svcorelib" {
     //#MARKER functions
 
@@ -82,34 +97,6 @@ declare module "svcorelib" {
     function allOfType(array: any[], type: JSPrimitiveDataTypeName): boolean;
 
     /**
-     * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
-     * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
-     * - ❗ Asynchronous function execution is not supported (yet)  
-     * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
-     * @param funct This function will get executed before process shutdown
-     * @param code The exit code with which the process should be closed. Defaults to 0
-     * @since 1.5.0
-     * @version 1.8.0 Added "code" parameter to specify an exit code
-     * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
-     * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
-     */
-    function softShutdown(funct: (any) => any, code?: number): void;
-
-    /**
-     * 🔹 Prevents the script from shutting down with default commands (CTRL + C).
-     * It has to either be killed with the task manager or internally, through the script (using `process.exit()`) 🔹
-     * @since 1.5.0
-     */
-    function noShutdown(): void;
-
-    /**
-     * 🔹 Removes the script shut down prevention that was previously enabled with noShutdown() 🔹
-     * (Sorry for the name, I saw an opportunity and I took it, don't judge me)
-     * @since 1.6.0
-     */
-    function yesShutdown(): void;
-
-    /**
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
      * Using an object that contains special JavaScript classes or a circular structure will result in unexpected behavior. 🔹
      * @param obj The object you want to reserialize - if this is not of type `object`, you will just get the original value back
@@ -170,15 +157,6 @@ declare module "svcorelib" {
     function pause(text?: string): Promise<string>;
 
     /**
-     * 🔹 Checks if the process is currently running in the debugger environment.  
-     * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers.  
-     * Should support all major debuggers. 🔹
-     * @returns true, if the process is currently running in a debugger, false if not.
-     * @since 1.9.0
-     */
-    function inDebugger(): boolean;
-
-    /**
      * 🔹 Returns the length of a string in bytes.  
      * Passing anything other than a string will return `-1` 🔹
      * @param str
@@ -232,14 +210,6 @@ declare module "svcorelib" {
      * @since 1.12.0
      */
     function insertValues(str: string, ...values: any[]): string;
-
-    /**
-     * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
-     * @param title The string to set the window title to
-     * @throws Throws a "TypeError" if the parameter `title` is not a string and couldn't be converted to one
-     * @since 1.12.0
-     */
-    function setWindowTitle(title: string): void;
 
     /**
      * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -489,13 +459,32 @@ declare module "svcorelib" {
         function readdirRecursiveSync(folder: string): string[];
 
         /**
-         * Wrapper for [`fs.access()`](https://nodejs.org/api/fs.html#fs_fs_access_path_mode_callback) - Checks if a file exists at the given path.
+         * 🔹 This function checks if a file exists at the given path.  
+         * (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
-         * @returns Returned Promise always resolves to a boolean - true, if the file exists, false if not
+         * @returns Returned Promise always resolves to a boolean (and never rejects) - true, if the file exists, false if not
          * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
          * @since 1.13.0
          */
-        function exists(path: _fs.PathLike): Promise<boolean>;
+        function exists(path: string): Promise<boolean>;
+
+        /**
+         * 🔹 Ensures that a set of directories exist and creates them if not. 🔹
+         * @param directories The directories to ensure the existance of
+         * @async
+         * @throws Throws a TypeError if the `directories` parameter is not an array of strings
+         * @since 1.13.0
+         */
+        function ensureDirs(directories: string[]): Promise<void>;
+
+        /**
+         * 🔹 Synchronously ensures that a set of directories exist and creates them if not. 🔹
+         * ❗ Warning! Large amounts of directories can freeze the process completely or take a long time - instead use `ensureDirs()` if possible
+         * @param directories The directories to ensure the existance of
+         * @throws Throws a TypeError if the `directories` parameter is not an array of strings
+         * @since 1.13.0
+         */
+        function ensureDirsSync(directories: string[]): void;
     }
 
     //#SECTION SQL
@@ -513,6 +502,70 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         function sendQuery(connection: _mysql.Connection, query: string, options: _mysql.QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
+    }
+
+    //#SECTION System
+
+    /**
+     * 🔸 Offers few functions that refer to the system the process is executed on 🔸
+     */
+    namespace system {
+        /**
+         * 🔹 Returns the percentage of heap space that is used by the process 🔹
+         * @returns Returns a floating point number between 0 and 100
+         * @since 1.13.0
+         */
+        function usedHeap(): number;
+        
+        /**
+         * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
+         * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
+         * - ❗ Asynchronous function execution is not supported  
+         * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
+         * @param funct This function will get executed before process shutdown
+         * @param code The exit code with which the process should be closed. Defaults to 0
+         * @since 1.5.0
+         * @version 1.8.0 Added "code" parameter to specify an exit code
+         * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
+         * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
+         * @version 1.13.0 Moved namespace
+         */
+        function softShutdown(funct: () => void, code?: number): void;
+
+        /**
+         * 🔹 Prevents the script from shutting down with default commands (CTRL + C).
+         * It has to either be killed with the task manager or internally, through the script (using `process.exit()`) 🔹
+         * @since 1.5.0
+         * @version 1.13.0 Moved namespace
+         */
+        function noShutdown(): void;
+    
+        /**
+         * 🔹 Removes the script shut down prevention that was previously enabled with noShutdown() 🔹
+         * (Sorry for the name, I saw an opportunity and I took it, don't judge me)
+         * @since 1.6.0
+         * @version 1.13.0 Moved namespace
+         */
+        function yesShutdown(): void;
+
+        /**
+         * 🔹 Checks if the process is currently running in the debugger environment.  
+         * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers.  
+         * Should support all major debuggers. 🔹
+         * @returns true, if the process is currently running in a debugger, false if not.
+         * @since 1.9.0
+         * @version 1.13.0 Moved namespace
+         */
+        function inDebugger(): boolean;
+
+        /**
+         * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
+         * @param title The string to set the window title to
+         * @throws Throws a "TypeError" if the parameter `title` is not a string and couldn't be converted to one
+         * @since 1.12.0
+         * @version 1.13.0 Moved namespace
+         */
+        function setWindowTitle(title: string): void;
     }
 
     //#MARKER classes
@@ -706,17 +759,17 @@ declare module "svcorelib" {
     /** The options of the FolderDaemon */
     interface FolderDaemonOptions {
         /**
-         * An array of glob patterns. Only the matched files will be supervised by the FolderDaemon.  
+         * An array of [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) Only the matched files will be supervised by the FolderDaemon.  
          * Example: `['*.js']` will make the daemon only scan files that end in `.js`.  
          * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
          */
-        whitelist?: string[];
+        whitelist?: string[] | undefined;
         /**
-         * An array of glob patterns. The matched files will be ignored by the FolderDaemon.  
+         * An array of [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) The matched files will be ignored by the FolderDaemon.  
          * Example: `['*.js']` will block all .js files from being scanned by the daemon.  
-         * ❗ You can only use *either* a whitelist *or* a blacklist, not both!
+         * ❗ You can only use *either* a blacklist *or* a whitelist, not both!
          */
-        blacklist?: string[];
+        blacklist?: string[] | undefined;
         /** Whether to recursively scan through all subdirectories to supervise files. Defaults to `false` */
         recursive?: boolean;
         /** The interval in milliseconds at which to check if files have been changed. Defaults to 500. */
@@ -724,7 +777,7 @@ declare module "svcorelib" {
     }
 
     /**
-     * 🔹 Supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed. 🔹  
+     * 🔹 Supervises a directory (and optionally its subdirectories) and executes a callback function if one or more of the files have changed. 🔹  
      *   
      * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
      */
@@ -737,7 +790,7 @@ declare module "svcorelib" {
          * 
          * @throws Throws an `InvalidPathError` if the path to the directory is invalid
          * @throws Throws a `NotAFolderError` if the path leads to a file instead of a directory
-         * @throws Throws a `PatternInvalidError` if the provided glob blacklist pattern is invalid
+         * @throws Throws a `PatternInvalidError` if the whitelist or blacklist glob pattern is invalid
          * @throws Throws a `TypeError` if both the `whitelist` and `blacklist` properties are set in the `options` object
          * 
          * @since 1.10.0
@@ -865,7 +918,6 @@ declare module "svcorelib" {
 
     /**
      * 🔸 Contains all of SCL's custom error classes 🔸
-     * @since 1.12.0
      */
     namespace Errors {
         /**

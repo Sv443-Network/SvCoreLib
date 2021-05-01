@@ -1,4 +1,4 @@
-## SvCoreLib
+## SvCoreLib - Changelog
 ### Version [1.13.1](#1130)
 
 <br><br>
@@ -17,6 +17,12 @@
 
 <br>
 
+## 1.13.1
+
+- Security:
+    - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
+
+<br><br>
 
 ## 1.13.1
 
@@ -43,6 +49,7 @@
 <br>
 
 ## 1.13.0
+<<<<<<< HEAD
 ### Migration warning: You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
 
 <br>
@@ -53,8 +60,34 @@
     - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443-Network/SvCoreLib/issues/13))
 - Fixed bugs
     - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443-Network/SvCoreLib/issues/15))
+=======
+### Migration warnings:
+- You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+- The namespace of a few functions has changed (see changes below)
 
 <br>
+
+- Added functions:
+	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
+    - `filesystem.ensureDirs()` to ensure a set of directories exists ([issue #18](https://github.com/Sv443/SvCoreLib/issues/18))
+    - `filesystem.ensureDirsSync()` synchronous counterpart to `ensureDirs()` ([issue #18](https://github.com/Sv443/SvCoreLib/issues/18))
+    - `system.usedHeap()` to get the current heap usage in percent ([issue #19](https://github.com/Sv443/SvCoreLib/issues/19))
+- Changes:
+    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443/SvCoreLib/issues/13))
+    - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443/SvCoreLib/issues/17))
+    - Moved a few functions to the new `system` namespace:
+        - `noShutdown()` - moved to `system`
+        - `yesShutdown()` - moved to `system`
+        - `softShutdown()` - moved to `system`
+        - `inDebugger()` - moved to `system`
+        - `setWindowTitle()` - moved to `system`
+- Fixed bugs:
+    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443/SvCoreLib/issues/15))
+    - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443/SvCoreLib/issues/21))
+    - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443/SvCoreLib/issues/20))
+>>>>>>> master
+
+<br><br>
 
 ## 1.12.0
 - Added functions
@@ -67,19 +100,19 @@
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 
-<br>
+<br><br>
 
 ## 1.11.1
 - My dumbass left some debug text in
 
-<br>
+<br><br>
 
 ## 1.11.0
 ### The SelectionMenu update
 - Added the class `SelectionMenu` to create a menu with a scrollable list of options a user can select
 - Added the function `allOfType()` to see if all items of an array are of a specified type
 
-<br>
+<br><br>
 
 ## 1.10.0
 ### The initial release
