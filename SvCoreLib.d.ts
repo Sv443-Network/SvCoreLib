@@ -45,7 +45,7 @@ declare class SCLError extends Error
  *   
  * ---
  *   
- * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [Discord](https://dc.sv443.net)**
+ * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
  *   
  * ---
  *   
