@@ -30,6 +30,7 @@
 
 - Changes
     - Moved repository to @Sv443-Network
+    - Improved type declaration file (`.d.ts`)
 - Security
     - Audited dependencies
 

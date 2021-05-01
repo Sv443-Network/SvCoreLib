@@ -165,6 +165,7 @@ If you only want to import a select number of features and don't like always hav
     - Each parameter name is followed by a colon and then a type name (for example `parameter: string`).
     - If the colon is prefixed by a question mark, this parameter is optional (for example: `parameter?: string`).
     - Everything after the colon or question mark is not needed for actually interfacing with the library. It is merely there to tell you of which type a parameter should be.
+    - If there are overloads to the method or function in question, they will be listed on a separate line each ([`randRange()`](#randrange) for example).
 - Most features have a code example which is collapsed by default and can be expanded by clicking on it.
 - Note that the code examples in this documentation are written in CommonJS.
     - If you use TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
@@ -535,11 +536,9 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 >   
 > The parameter `uuidFormat` is explained [here.](#generate-uuid)  
 >   
-> The parameter `possibleValues` needs to be a string of characters that should be used to generate the UUID.  
-> These characters need no separator.  
-> Example: `"abc!?"` could produce something similar to this: `"ba!a-c?a!"`.
+> The parameter `possibleValues` needs to be a string array of characters that should be used to generate the UUID.  
 > ```ts
-> scl.generateUUID.custom(uuidFormat: string, possibleValues: string): string
+> scl.generateUUID.custom(uuidFormat: string, possibleValues: string[]): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -1034,7 +1033,15 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 
 > ### system.softShutdown()
-> Executes a synchronous function before the process is exited.
+> Executes a function or Promise before the process is exited.  
+> Rejecting the Promise will prevent a shutdown.  
+>   
+> ❗ **Warning:**
+> - If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
+> - Due to how the Promise API works, you will need to call this function again if the passed Promise is rejected
+> 
+> <br>
+> 
 > ```ts
 > scl.system.softShutdown(funct: function, code?: number): void
 > ```
@@ -1044,23 +1051,19 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > ```js
 > const { system } = require("svcorelib");
 > 
-> console.log("foo");
+> const promise = new Promise((res) => {
+>     console.log("Goodbye!");
 > 
-> system.softShutdown(() => {
->     console.log("Bye!");
->     // async functions can't be used in here
+>     // sqlConnection.close();
+>     // someOtherStuff.end();
+> 
+>     setTimeout(() => res(), 1000);
 > });
 > 
-> setTimeout(() => process.exit(), 500);
+> system.softShutdown(promise);
 > 
-> console.log("bar");
-> ```
->   
-> Output:
-> ```
-> foo
-> bar
-> Bye!
+> // trigger shutdown:
+> process.exit();
 > ```
 > 
 > </details>
@@ -1358,25 +1361,26 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 > ### randRange()
 > Highly random number generator where you can specify an upper and lower boundary.  
-> `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random.  
 >   
 > Specify the upper and lower boundary with the parameters `min` and `max`  
+> If `min` is not provided, it will be set to the default of `0`  
 >   
 > ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
 > ```ts
 > scl.randRange(min: number, max: number): number
+> scl.randRange(max: number): number
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const { randRange } = require("svcorelib");
 > 
-> let foo = scl.randRange(0, 100);
-> let bar = scl.randRange(0, 100);
+> let foo = randRange(50, 60);
+> let bar = randRange(10);
 > 
-> console.log(foo); // 62
-> console.log(bar); // 14
+> console.log(foo); // 57
+> console.log(bar); // 3
 > ```
 > 
 > </details>

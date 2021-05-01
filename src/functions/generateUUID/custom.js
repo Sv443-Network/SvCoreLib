@@ -7,11 +7,12 @@ function custom(uuidFormat, possibleValues)
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
-    let possible = possibleValues.toString();
-    possible = possible.split("");
+    // string overload is deprecated since v1.13.1
+
+    let possible = Array.isArray(possibleValues) ? possibleValues.map(v => v.toString()) : possibleValues.toString().split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new TypeError(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     let regex = /[xy]/gm;
     let match;

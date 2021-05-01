@@ -1,3 +1,6 @@
+const unused = require("../unused");
+
+
 function softShutdown(funct, code)
 {
     code = parseInt(code);
@@ -5,12 +8,21 @@ function softShutdown(funct, code)
     if(isNaN(code) || code < 0)
         code = 0;
 
-    let onbeforeshutdown = () => {
+    const onbeforeshutdown = () => {
+        if(process.scl.noShutdown)
+            return;
+
         if(typeof funct == "function")
+        {
             funct();
-        if(!process.scl.noShutdown)
             process.exit(code);
-        return;
+        }
+        else if(funct instanceof Promise)
+        {
+            funct().then(() => {
+                process.exit(code);
+            }).catch((e) => unused(e));
+        }
     };
     
     process.on("SIGINT", onbeforeshutdown);

@@ -16,6 +16,29 @@ import { Connection, QueryOptions } from "mysql";
 
 
 /**
+ * Describes an object that is JSON-compatible, aka doesn't contain self- / circular references or non-primitive JS properties  
+ * [Source](https://github.com/microsoft/TypeScript/issues/1897#issuecomment-338650717)
+ */
+declare type JSONCompatible =  boolean | number | string | null | JSONArray | JSONMap;
+interface JSONMap { [key: string]: JSONCompatible; }
+interface JSONArray extends Array<JSONCompatible> {}
+
+/**
+ * Describes a value that has a `.toString()` method, meaning it can be converted to a string
+ */
+declare interface Stringifiable {
+    toString(): string;
+}
+
+/**
+ * Base class for all of SCL's error classes
+ */
+declare class SCLError extends Error
+{
+    date: Date;
+}
+
+/**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * ## SvCoreLib  
  * The core library used in almost all of Sv443's projects.  
@@ -46,7 +69,7 @@ declare module "svcorelib" {
      * @version 1.8.0 Added check for objects with length = 0
      * @version 1.13.0 Fixed TypeError when input is `null`
      */
-    function isEmpty(input: any): boolean;
+    function isEmpty<T>(input: T): boolean;
 
     /**
      * 🔹 Checks how many values of the array are empty (does the same check as `scl.isEmpty()`, but on each array item) 🔹
@@ -56,7 +79,7 @@ declare module "svcorelib" {
      * @since 1.5.0
      * @version 1.8.0 Throwing error now instead of returning string
      */
-    function isArrayEmpty(array: any[]): boolean | number;
+    function isArrayEmpty<T>(array: T[]): boolean | number;
 
     /**
      * 🔹 Sends a red console message and optionally exits the process with an optional status code. 🔹
@@ -80,9 +103,9 @@ declare module "svcorelib" {
      * @since 1.5.0
      * @version 1.8.0 Throwing error now instead of returning string
      */
-    function allEqual(array: any[], loose?: boolean): boolean;
+    function allEqual<T>(array: T[], loose?: boolean): boolean;
 
-    type JSPrimitiveDataTypeName = "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
+    type JSPrimitiveTypeName = "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
 
     /**
      * 🔹 Tests if all items of an array are of the specified type. 🔹
@@ -92,7 +115,7 @@ declare module "svcorelib" {
      * @throws Throws a TypeError if the first parameter is not an array or if the second parameter is not a valid primitive data type name
      * @since 1.11.0
      */
-    function allOfType(array: any[], type: JSPrimitiveDataTypeName): boolean;
+    function allOfType<T>(array: T[], type: JSPrimitiveTypeName): boolean;
 
     /**
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
@@ -102,17 +125,17 @@ declare module "svcorelib" {
      * @returns Returns the reserialized object or the original value if it is not of type `object`
      * @since 1.10.0
      */
-    function reserialize(obj: object, immutable?: boolean): object;
+    function reserialize(obj: JSONCompatible, immutable?: boolean): JSONCompatible;
 
     /**
      * 🔹 Converts an array to a better readable one 🔹
      * @param array The array you want to make readable
-     * @param separators The default separator for all values except the last one. Defaults to ", " if left empty. Add whitespaces if needed!
-     * @param lastSeparator The last separator. Defaults to " and " if empty. Add whitespaces if needed!
+     * @param separators The default separator for all values except the last one. Defaults to `, ` if left empty. Add whitespaces if needed!
+     * @param lastSeparator The last separator. Defaults to ` and ` if empty. Add whitespaces if needed!
      * @returns Better readable array as string
      * @since 1.7.0
      */
-    function readableArray(array: any[], separators?: string, lastSeparator?: string): string;
+    function readableArray(array: Stringifiable[], separators?: string, lastSeparator?: string): string;
 
     /**
      * 🔹 Transforms the `value` parameter from the numerical range [`range_1_min`-`range_1_max`] to the numerical range [`range_2_min`-`range_2_max`] 🔹
@@ -130,11 +153,11 @@ declare module "svcorelib" {
     /**
      * 🔹 Use this if you are using a linter that complains about unused vars.  
      * As this function basically does nothing, you can even leave it in once the variable is used again and nothing will break. 🔹
-     * @param any Any variable(s) of any type
+     * @param any Any amount of variable(s) of any type
      * @since 1.8.0
      * @version 1.9.0 Function now accepts an infinite number of parameters
      */
-    function unused(...any: any): void;
+    function unused<T>(...any: T[]): void;
 
     /**
      * 🔹 Replaces a character from the specified `string` at the specified `index` with the value of `replacement` 🔹
@@ -165,15 +188,26 @@ declare module "svcorelib" {
     //#SECTION randomization
 
     /**
-     * 🔹 Highly random number generator with upper and lower boundary.  
-     * `Highly random` means that contrary to `Math.random()` which uses a seed, this RNG additionally uses a timestamp to calculate the number, making it much more random. 🔹  
+     * 🔹 Highly random number generator with upper and lower boundary. 🔹  
+     *   
      * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
      * @param min Lower boundary of the RNG
      * @param max Upper boundary of the RNG
-     * @throws Throws an error if the arguments are not of type 'Number'
+     * @throws Throws a TypeError if the arguments are not of type `number`
      * @since 1.5.0
      */
     function randRange(min: number, max: number): number;
+
+    /**
+     * 🔹 Highly random number generator with upper boundary.  
+     * This overload automatically sets the lower boundary to 0. 🔹  
+     *   
+     * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
+     * @param max Upper boundary of the RNG - using this overload will set the lower boundary to 0
+     * @throws Throws a TypeError if the arguments are not of type `number`
+     * @since 1.13.1
+     */
+     function randRange(max: number): number;
 
     /**
      * 🔹 Randomizes all items in an array and returns it 🔹
@@ -182,7 +216,7 @@ declare module "svcorelib" {
      * @throws Throws an error if the parameter is not an array
      * @since 1.8.0
      */
-    function randomizeArray(array: any[]): any[];
+    function randomizeArray<T>(array: T[]): T[];
 
     /**
      * 🔹 Chooses a random item in an array and returns it 🔹
@@ -190,31 +224,42 @@ declare module "svcorelib" {
      * @returns Returns a random item of the provided array
      * @since 1.9.4
      */
-    function randomItem(array: any[]): any;
+    function randomItem<T>(array: T[]): T;
 
     /**
      * 🔹 Removes duplicate items in an array 🔹
      * @param array An array with any values
      * @since 1.9.0
      */
-    function removeDuplicates(array: any[]): any[];
+    function removeDuplicates<T>(array: T[]): T[];
 
     /**
      * 🔹 Inserts values into a percent-formatted string.  
      * If there are no insertion marks, this function returns the unmodified input string. 🔹
      * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
-     * @param values [Rest parameter] The values to insert into the string - All values that are not of type `string` will be converted using their method `.toString()`
+     * @param values [Rest parameter] The values to insert into the string - All values that are not of type `string` will be attempted to be converted using their method `.toString()`
      * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
      * @since 1.12.0
      */
-    function insertValues(str: string, ...values: any[]): string;
+    function insertValues(str: string, ...values: Stringifiable[]): string;
 
     /**
      * 🔸 Offers a few functions to generate seeded random numbers.  
      * This means using the same input seed, you will always get the same output number, just like you get the same Minecraft world when using the same seed twice. 🔸
      */
     namespace seededRNG {
-        interface SeededRandomNumbers {
+        /**
+         * Represents a seed to be used in functions of the `seededRNG` namespace
+         */
+        type Seed = (number | string);
+
+        /**
+         * Describes a set of numbers generated or needed by functions of the `seededRNG` namespace
+         */
+        interface SeededRandomNumbers
+        {
+            [key: string]: number[] | string | number;
+
             /** An array of the random numbers */
             numbers: number[];
             /** The random numbers, but as a string */
@@ -233,7 +278,7 @@ declare module "svcorelib" {
          * @returns An object containing the seed and the random number in three different formats
          * @since 1.8.0
          */
-        function generateSeededNumbers(count?: number, seed?: number | string): SeededRandomNumbers;
+        function generateSeededNumbers(count?: number, seed?: Seed): SeededRandomNumbers;
         
         /**
          * 🔹 Creates a random seed 🔹
@@ -247,7 +292,7 @@ declare module "svcorelib" {
          * @param seed The seed to validate
          * @since 1.8.0
          */
-        function validateSeed(seed: number | string): boolean;
+        function validateSeed(seed: Seed): boolean;
     }
 
     /**
@@ -256,7 +301,7 @@ declare module "svcorelib" {
     namespace generateUUID {
         /**
          * 🔹 Creates an alphanumerical [0-9,A-Z] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
-         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
          * @param upperCase Set to true to have all letters in upper case, false for lower case
          * @since 1.8.0
          */
@@ -264,30 +309,41 @@ declare module "svcorelib" {
         
         /**
          * 🔹 Creates a binary [0-1] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
-         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
          * @param asBooleanArray Set to true to get an array of booleans instead of a string of 1 and 0. Setting this to true will ignore the uuidFormat parameter. Instead, the amount of x's and y's will be equivalent to the resulting array items.
          * @since 1.8.0
          */
         function binary(uuidFormat: string, asBooleanArray?: boolean): string | boolean[];
         
         /**
+         * ❌ Warning: This overload is deprecated! Please use the other one. ❌  
+         *   
          * 🔹 Creates a custom UUID with a given format from a list of characters specified by the possibleValues parameter. This uses a RNG that is even more random than the standard Math.random() 🔹
-         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
-         * @param possibleValues A string containing all characters that should be injected into the final UUID - (delimited by nothing) - Example: "ABCDEF01234$%&#"
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
+         * @param possibleValues A string containing all characters that can be injected into the final UUID - (delimited by nothing) - Example: "ABCDEF01234$%&#"
          * @since 1.8.0
+         * @deprecated
          */
         function custom(uuidFormat: string, possibleValues: string): string;
+
+        /**
+         * 🔹 Creates a custom UUID with a given format from a list of characters specified by the possibleValues parameter. This uses a RNG that is even more random than the standard Math.random() 🔹
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
+         * @param possibleValues An array containing all characters that can be injected into the final UUID
+         * @since 1.13.1
+         */
+        function custom(uuidFormat: string, possibleValues: Stringifiable[]): string;
         
         /**
          * 🔹 Creates a decimal [0-9] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
-         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
          * @since 1.8.0
          */
         function decimal(uuidFormat: string): string;
         
         /**
          * 🔹 Creates a hexadecimal [0-9,A-F] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
-         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, prefix it with this character: ^
+         * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
          * @param upperCase Set to true to have all letters in upper case, false for lower case
          * @since 1.5.0
          * @version 1.8.0 Renamed the function and moved it
@@ -301,8 +357,10 @@ declare module "svcorelib" {
      * 🔸 Offers a few functions that work in conjunction with Node's builtin `http` and `https` modules 🔸
      */
     namespace http {
-        /** The encoding's identifier / name */
-        type EncodingName = "br" | "gzip" | "deflate" | "compress" | "identity";
+        /**
+         * An encoding's identifier / name
+         */
+        type EncodingName = ("br" | "gzip" | "deflate" | "compress" | "identity");
 
         /**
          * 🔹 Pipes a file into a HTTP response. This is a tiny bit faster and much more efficient than loading the file into RAM first. 🔹
@@ -339,7 +397,10 @@ declare module "svcorelib" {
         /**
          * This object contains the return values of a ping
          */
-        interface PingReturnValues {
+        interface PingReturnValues
+        {
+            [key: string]: number | string;
+
             /** The ping's returned status code (eg. 200 or 404) */
             statusCode: number;
             /** The status message of the ping - Could be something like "Ok" for status 200 or "Not Found" for status 404 */
@@ -367,7 +428,10 @@ declare module "svcorelib" {
 
     //#SECTION networking
 
-    interface DownloadProgress {
+    interface DownloadProgress
+    {
+        [key: string]: number;
+
         /** The current download progress in bytes */
         currentB: number;
         /** The current download progress in kilobytes */
@@ -382,17 +446,26 @@ declare module "svcorelib" {
         totalMB: number;
     }
 
-    interface ProgressCallback {
+    interface ProgressCallback
+    {
+        [key: string]: DownloadProgress;
+
         /** This object contains the current progress of the download */
         DownloadProgress: DownloadProgress;
     }
 
-    interface FinishedCallback {
+    interface FinishedCallback
+    {
+        [key: string]: string | null;
+
         /** This parameter is null if no error was encountered, or contains a string if an error was encountered */
-        error: string | undefined;
+        error: string | null;
     }
 
-    interface DownloadOptions {
+    interface DownloadOptions
+    {
+        [key: string]: string | ProgressCallback | FinishedCallback;
+
         /** The name that the downloaded file should be saved as, including the file extension - for example: "image.png" or "archive.zip" - defaults to "download.txt" */
         fileName: string;
         /** A callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal. */
@@ -418,7 +491,10 @@ declare module "svcorelib" {
      * 🔸 Offers a few functions to interface with the file system 🔸
      */
     namespace filesystem {
-        interface LoggerOptions {
+        interface LoggerOptions
+        {
+            [key: string]: boolean;
+
             /** Set to true to append content to the bottom of a file, false to just override the file's contents */
             append_bottom: boolean;
             /** Set to true to add a timestamp to the logged content */
@@ -433,7 +509,7 @@ declare module "svcorelib" {
          * @throws Throws an error if the parameters are of the wrong type or not present
          * @since 1.5.0
          */
-        function logger(path: string, content: string, options?: LoggerOptions): void;
+        function logger(path: string, content: string, options?: Partial<LoggerOptions>): void;
 
         /**
          * 🔹 Reads a folder asynchronously and recursively and returns all absolute file paths (starting at the drive letter (eg. "C:/Users/...")) in the callback - Warning! Large amounts of files (like letting it run on "C:/") can freeze the process completely or exceed the maximum possible index of a JS array 🔹
@@ -448,7 +524,8 @@ declare module "svcorelib" {
 
         /**
          * 🔹 Reads a folder synchronously and recursively and returns all absolute file paths (starting at the drive letter (eg. "C:/Users/...")) in the callback 🔹  
-         * ❗ Warning! Large amounts of files (like letting it run on a directory like "C:/Windows") can freeze the process completely or exceed the maximum possible index of a JS array - instead use `readdirRecursive()` if possible
+         *   
+         * ❗ Warning! Large amounts of files (like letting it run on a directory like `C:\` or `/`) can freeze the process completely or exceed the maximum possible index of a JS array - instead use `readdirRecursive()` if possible
          * @param folder The folder that should be recursively read
          * @returns an array of strings containing absolute paths to all found files
          * @since 1.7.0
@@ -476,8 +553,9 @@ declare module "svcorelib" {
         function ensureDirs(directories: string[]): Promise<void>;
 
         /**
-         * 🔹 Synchronously ensures that a set of directories exist and creates them if not. 🔹
-         * ❗ Warning! Large amounts of directories can freeze the process completely or take a long time - instead use `ensureDirs()` if possible
+         * 🔹 Synchronously ensures that a set of directories exist and creates them if not. 🔹  
+         *   
+         * ❗ Warning! Large amounts of directories can freeze the process completely or take a long time - use `ensureDirs()` instead if possible
          * @param directories The directories to ensure the existance of
          * @throws Throws a TypeError if the `directories` parameter is not an array of strings
          * @since 1.13.0
@@ -496,10 +574,10 @@ declare module "svcorelib" {
          * @param connection An SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)
          * @param query The SQL query with question marks where the inserted values should be
          * @param options The options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options
-         * @param insertValues [Rest parameter] The values to be inserted into the question marks - use the primitive type `null` for an empty value
+         * @param insertValues [Rest parameter] The values to be inserted into the question marks
          * @since 1.12.0
          */
-        function sendQuery(connection: Connection, query: string, options: QueryOptions | undefined, ...insertValues: null[] | string[] | number[]): Promise<object>;
+        function sendQuery(connection: Connection, query: string, options?: QueryOptions, ...insertValues: any[]): Promise<object>;
     }
 
     //#SECTION System
@@ -518,17 +596,19 @@ declare module "svcorelib" {
         /**
          * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
          * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
-         * - ❗ Asynchronous function execution is not supported  
+         *   
          * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
-         * @param funct This function will get executed before process shutdown
+         * - ❗ Due to how the Promise API works, you will need to call this function again if the passed Promise is rejected
+         * @param funct This function or Promise will get executed before process shutdown. Rejecting the Promise will prevent a shutdown.
          * @param code The exit code with which the process should be closed. Defaults to 0
          * @since 1.5.0
          * @version 1.8.0 Added "code" parameter to specify an exit code
          * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
          * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
          * @version 1.13.0 Moved namespace
+         * @version 1.13.1 Added support for the Promise API
          */
-        function softShutdown(funct: () => void, code?: number): void;
+        function softShutdown(funct: (() => void | Promise<void>), code?: number): void;
 
         /**
          * 🔹 Prevents the script from shutting down with default commands (CTRL + C).
@@ -606,13 +686,13 @@ declare module "svcorelib" {
         onFinish(callback: () => void): Promise<void>;
         
         /**
-         * 🔹 Get the current progress as a float value 🔹
+         * 🔹 Get the current progress as a float value (between `0.0` and `1.0`) 🔹
          * @since 1.7.0
          */
         getProgress(): number;
         
         /**
-         * 🔹 Get the amount of increments that are still needed to reach 100% progress aka how many times you need to call the `next()` method 🔹
+         * 🔹 Get the amount of increments that are still needed to reach 100% progress aka how many times the `next()` method still needs to be called 🔹
          * @returns {Number}
          * @since 1.7.0
          */
@@ -620,7 +700,10 @@ declare module "svcorelib" {
     }
 
     /** An option of a menu of the menu prompt */
-    interface MenuPromptMenuOption {
+    interface MenuPromptMenuOption
+    {
+        [key: string]: string;
+
         /** The key(s) that need(s) to be pressed to select this option */
         key: string;
         /** The description of this option */
@@ -628,7 +711,10 @@ declare module "svcorelib" {
     }
 
     /** A single menu of the menu prompt */
-    interface MenuPromptMenu {
+    interface MenuPromptMenu
+    {
+        [key: string]: string | MenuPromptMenuOption[];
+
         /** The title of this menu */
         title: string;
         /** An array of options for this menu */
@@ -636,7 +722,10 @@ declare module "svcorelib" {
     }
 
     /** The result of a single menu of a menu prompt. This object is usually present inside an array. */
-    interface MenuPromptResult {
+    interface MenuPromptResult
+    {
+        [key: string]: string | number;
+
         /** The key that had to be pressed to select this option */
         key: string;
         /** The description of the selected option */
@@ -650,13 +739,19 @@ declare module "svcorelib" {
     }
 
     /** A callback that gets executed once the MenuPrompt has finished */
-    interface MenuPromptOnFinishedCallback {
+    interface MenuPromptOnFinishedCallback
+    {
+        [key: string]: MenuPromptResult[];
+
         /** The results of the MenuPrompt (an array containing objects) - will be an empty array if there aren't any results */
         results: MenuPromptResult[];
     }
 
     /** The options of the menu prompt */
-    interface MenuPromptOptions {
+    interface MenuPromptOptions
+    {
+        [key: string]: string | boolean | MenuPromptOnFinishedCallback;
+
         /** The key or keys that need to be entered to exit the prompt */
         exitKey: string;
         /** The separator character(s) between the option key and the option description */
@@ -672,7 +767,10 @@ declare module "svcorelib" {
     }
 
     /** Used for translating a menu prompt */
-    interface MenuPromptLocalization {
+    interface MenuPromptLocalization
+    {
+        [key: string]: string;
+
         /** The text that's displayed when a wrong key was pressed */
         wrongOption: string;
         /** A different text that's displayed when a wrong key was pressed */
@@ -702,7 +800,7 @@ declare module "svcorelib" {
          * @version 1.8.2 Removed second parameter - use `MenuPrompt.addMenu()` instead
          * @version 1.9.0 The construction of a MenuPrompt object will now set the process.stdin raw mode to true + There is now a `localization` property you can use to translate some messages
          */
-        constructor(options?: MenuPromptOptions);
+        constructor(options?: Partial<MenuPromptOptions>);
 
         /**
          * 🔹 Opens the menu 🔹
@@ -755,7 +853,10 @@ declare module "svcorelib" {
     //#MARKER FolderDaemon
 
     /** The options of the FolderDaemon */
-    interface FolderDaemonOptions {
+    interface FolderDaemonOptions
+    {
+        [key: string]: string[] | undefined | boolean | number;
+
         /**
          * An array of [glob patterns.](https://en.wikipedia.org/wiki/Glob_(programming)) Only the matched files will be supervised by the FolderDaemon.  
          * Example: `['*.js']` will make the daemon only scan files that end in `.js`.  
@@ -802,7 +903,7 @@ declare module "svcorelib" {
          * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an array of strings, which are the absolute paths of the changed files
          * @returns Returns a promise that **only once** resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
          */
-        onChanged(callback_fn: (error: null | string, daemonResult: string[]) => {}): Promise<string[]>;
+        onChanged(callback_fn: (error: null | string, changedFiles: string[]) => {}): Promise<string[]>;
 
         /**
          * 🔹 Removes the previously registered callback function(s) 🔹
@@ -820,7 +921,10 @@ declare module "svcorelib" {
     /**
      * An object of settings to be used in the constructor of the `SelectionMenu` class
      */
-    interface SelectionMenuSettings {
+    interface SelectionMenuSettings
+    {
+        [key: string]: boolean | undefined;
+
         /** Whether or not the user can cancel the prompt with the Esc key */
         cancelable?: boolean;
         /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
@@ -840,7 +944,10 @@ declare module "svcorelib" {
         }
     }
 
-    interface SelectionMenuLocale {
+    interface SelectionMenuLocale
+    {
+        [key: string]: string | undefined;
+
         /** Shorthand name of the escape key - defaults to "Esc" */
         escKey?: string;
         /** Cancel text - defaults to "Cancel" */
@@ -867,7 +974,7 @@ declare module "svcorelib" {
          * @throws Throws a NoStdinError when the currently used terminal doesn't have a stdin stream or isn't a compatible TTY terminal.
          * @since 1.11.0
          */
-        constructor(title?: string, settings?: SelectionMenuSettings);
+        constructor(title?: string, settings?: Partial<SelectionMenuSettings>);
 
         /**
          * 🔹 Registers a function to be called when the user selected an option. 🔹
@@ -911,7 +1018,7 @@ declare module "svcorelib" {
         /**
          * Used to translate the SelectionMenu
          */
-        locale: SelectionMenuLocale;
+        public locale: SelectionMenuLocale;
     }
 
     /**
@@ -922,37 +1029,37 @@ declare module "svcorelib" {
          * 🔹 This error gets thrown if an invalid path was provided 🔹
          * @since 1.12.0
          */
-        class InvalidPathError extends Error {}
+        class InvalidPathError extends SCLError {}
 
         /**
          * 🔹 This error gets thrown if the provided path is not a folder 🔹
          * @since 1.12.0
          */
-        class NotAFolderError extends Error {}
+        class NotAFolderError extends SCLError {}
 
         /**
          * 🔹 This error gets thrown if an invalid glob pattern was provided 🔹
          * @since 1.12.0
          */
-        class PatternInvalidError extends Error {}
+        class PatternInvalidError extends SCLError {}
 
         /**
          * 🔹 This error gets thrown when the terminal that the process runs in doesn't provide an stdin channel 🔹
          * @since 1.12.0
          */
-        class NoStdinError extends Error {}
+        class NoStdinError extends SCLError {}
 
         /**
          * 🔹 This error gets thrown when an invalid [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) was provided. 🔹
          * @since 1.12.0
          */
-        class InvalidMimeTypeError extends Error {}
+        class InvalidMimeTypeError extends SCLError {}
 
         /**
          * 🔹 This error gets thrown when a provided SQL connection was not established or errored out 🔹
          * @since 1.12.0
          */
-        class SqlConnectionNotEstablishedError extends Error {}
+        class SqlConnectionNotEstablishedError extends SCLError {}
     }
 
     //#MARKER objects
@@ -962,7 +1069,8 @@ declare module "svcorelib" {
      * @since 1.5.0
      * @version 1.8.0 added "contributors" array
      */
-    namespace info {
+    namespace info
+    {
         /** The current version */
         let version: string;
         /** The current version of SvCoreLib, but as an array of numbers for easier manipulation */
@@ -971,7 +1079,7 @@ declare module "svcorelib" {
         let name: string;
         /** A short description of SvCoreLib */
         let desc: string;
-        /** The author of SvCoreLib - format: "name <email> (website)" */
+        /** The name of the author of SvCoreLib */
         let author: string;
         /** People that contributed to SvCoreLib - this is the raw object from package.json */
         let contributors: object;
@@ -986,7 +1094,8 @@ declare module "svcorelib" {
      * @since 1.8.0
      * @version 1.10.0 Added `rst` to the `fg` and `bg` objects
      */
-    namespace colors {
+    namespace colors
+    {
         /** Resets the color to default */
         let rst: string;
         let fat: string;
