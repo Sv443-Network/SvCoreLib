@@ -1,5 +1,5 @@
 // SvCoreLib by Sv443 - licensed under the MIT license: https://sv443.net/LICENSE
-// For more information, please read the `README.md` file or go to https://github.com/Sv443/SvCoreLib
+// For more information, please read the `README.md` file or go to https://github.com/Sv443-Network/SvCoreLib#readme
 
 module.exports = {
     //#MARKER functions

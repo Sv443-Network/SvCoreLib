@@ -1,10 +1,10 @@
 # SvCoreLib - Documentation
-[![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443/svcorelib)](https://github.com/Sv443/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
+[![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443-Network/SvCoreLib)](https://github.com/Sv443-Network/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
 
 <br>
 
 This is the documentation of SvCoreLib (also referred to as SCL).  
-SvCoreLib, as the name suggests, is the core library used by [Sv443](https://github.com/Sv443) in all of his Node.js projects.  
+SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
   
 This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
 Many features are probably incompatible with Deno (unverified).  
@@ -12,10 +12,14 @@ With the exception of certain features that rely on the filesystem, HTTP, SQL or
   
 Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
   
-If you don't understand how this documentation works and what certain things mean, please read [this section](#how-this-documentation-works)
+If you don't understand how this documentation works and what certain things mean, please read [this section.](#how-this-documentation-works)  
+If you find any bugs or want to suggest a new feature, please [open a new issue on GitHub.](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose)
   
-Feel free to join my Discord server if you need help or just want to chat:  
-[![Discord Invite](https://img.shields.io/discord/565933531214118942)](https://sv443.net/discord)
+<br>
+
+You can join the Sv443 Network Discord server if you need help or just want to chat:  
+  
+[![Discord Invite](https://img.shields.io/discord/565933531214118942)](https://dc.sv443.net)
 
 <br>
 
@@ -2396,7 +2400,7 @@ Below is a short summary of the license (it is not legal advice though):
 I will hereby not claim any legal responsibility or liability for SvCoreLib. Whether it is used maliciously or breaks something, I can't be held accountable.  
 I am doing my best to ensure security and stability but there's only so much a single developer can do.  
 Security patches are created as soon as possible but I don't have any binding responsibility to make these patches.  
-Please create a backup before using this library if you want to be extra secure and report any issue that may arise to the [GitHub issue tracker](https://github.com/Sv443/SvCoreLib/issues/new/choose) and I will try my best to fix it as soon as possible.
+Please create a backup before using this library if you want to be extra secure and report any issue that may arise to the [GitHub issue tracker](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose) and I will try my best to fix it as soon as possible.
 
 <br>
 

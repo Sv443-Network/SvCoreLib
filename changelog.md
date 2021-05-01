@@ -1,14 +1,15 @@
 ## SvCoreLib
-### Version [1.13.0](#1130)
+### Version [1.13.1](#1130)
 
 <br><br>
 
 ## Version History:
-- [1.13.0](#1130) (current)
-- [1.12.0](#1120)
-- [1.11.1](#1111)
-- [1.11.0](#1110)
-- [1.10.0](#1100)
+- [1.13.1](#1131) (current)
+- **[1.13.0](#1130)**
+- **[1.12.0](#1120)**
+- **[1.11.1](#1111)**
+- **[1.11.0](#1110)**
+- **[1.10.0](#1100)**
 
 <br>
 
@@ -17,28 +18,52 @@
 <br>
 
 
-## 1.13.0
-### Migration warning: You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+## 1.13.1
 
 <br>
 
-- Added functions
-	- `filesystem.exists()` to provide a wrapper to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
 - Changes
-    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443/SvCoreLib/issues/13))
-- Fixed bugs
-    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443/SvCoreLib/issues/15))
+    - Moved repository to @Sv443-Network
+- Security
+    - Audited dependencies
 
 <br>
 
 ## 1.12.0
 - Added functions
-	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443/SvCoreLib/issues/10))
-	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443/SvCoreLib/issues/11))
-	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443/SvCoreLib/issues/12))
+	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443-Network/SvCoreLib/issues/10))
+	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443-Network/SvCoreLib/issues/11))
+	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443-Network/SvCoreLib/issues/12))
 - Fixed bugs
-    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
-    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))
+    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443-Network/SvCoreLib/issues/6))
+    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443-Network/SvCoreLib/issues/7))
+- Added SCL's custom error classes to new namespace `scl.Errors`
+- Massively improved the documentation
+
+<br>
+
+## 1.13.0
+### Migration warning: You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+
+<br>
+
+- Added functions
+	- `filesystem.exists()` to provide a wrapper to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443-Network/SvCoreLib/issues/14))
+- Changes
+    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443-Network/SvCoreLib/issues/13))
+- Fixed bugs
+    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443-Network/SvCoreLib/issues/15))
+
+<br>
+
+## 1.12.0
+- Added functions
+	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443-Network/SvCoreLib/issues/10))
+	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443-Network/SvCoreLib/issues/11))
+	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443-Network/SvCoreLib/issues/12))
+- Fixed bugs
+    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443-Network/SvCoreLib/issues/6))
+    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443-Network/SvCoreLib/issues/7))
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 

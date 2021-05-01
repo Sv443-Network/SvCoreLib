@@ -23,7 +23,7 @@ jobs:
       run: npm ci
       env:
         CI: "true"
-    - name: Install ESLint # installs ESLint
+    - name: Install ESLint # installs ESLint - idk why it doesn't pull this out of the devDependencies but whatever
       run: npm i -g eslint
       env:
         CI: "true"
@@ -44,12 +44,12 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: '✅ **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) was successful (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)' 
+        args: '✅ **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) was successful (see https://github.com/Sv443-Network/SvCoreLib/commit/{{GITHUB_SHA}}/checks)' 
     - name: Discord failure notification # sends a Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: '🚫 **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) has failed (see https://github.com/Sv443/SvCoreLib/commit/{{GITHUB_SHA}}/checks)'
+        args: '🚫 **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) has failed (see https://github.com/Sv443-Network/SvCoreLib/commit/{{GITHUB_SHA}}/checks)'
       if: failure()
 
