@@ -50,8 +50,8 @@ declare class SCLError extends Error
  * ---
  *   
  * @author Sv443
- * @license MIT
- * @version 1.13.0
+ * @license [MIT](https://sv443.net/LICENSE)
+ * @version 1.13.1
  * @module svcorelib
  */
 declare module "svcorelib" {
