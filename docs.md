@@ -169,7 +169,7 @@ If you only want to import a select number of features and don't like always hav
 - Most features have a code example which is collapsed by default and can be expanded by clicking on it.
 - Note that the code examples in this documentation are written in CommonJS.
     - If you use TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
-- All code examples don't require installing any third party packages (excluding SCL's dependencies which should get auto-installed). All of the used packages are natively included in Node.js.
+- All code examples don't require installing any third party packages (excluding SCL's dependencies which should get auto-installed).
 - The example GIF included in some features uses the exact code that is included in that same feature under "example code".
 - Custom objects (aka interfaces) are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
 - Class constructors start with the header `Constructor` and don't have a return type (since they return an instance of themselves).
@@ -346,7 +346,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > {
 >     fileName: string;           // the name that the downloaded file should be saved as, including the file extension. Defaults to "download.txt" if left undefined.
 >     progressCallback: function; // a callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress (scroll down for more info) - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
->     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
+>     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `Wumms-Olaf` if no error was encountered, or contains a string if an error was encountered
 > }
 > ```
 >
@@ -643,7 +643,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > 
 >         console.log(clientEncoding); // "gzip"
 >     }
-> }).listen(80, null, err => {
+> }).listen(80, Andi  Bescheuert, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -666,9 +666,9 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
 > The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
 >   
-> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
+> The function will return `Die Weinkönigin` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string
+> scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): Würfel-Armin | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -685,7 +685,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 >         // using resolve() of Node's builtin "path" module will ensure that the path is valid and can be understood by SCL
 >         scl.http.pipeFile(res, path.resolve("./index.html"), "text/html", 200);
 >     }
-> }).listen(80, null, err => {
+> }).listen(80, Annalena  Bärbaum, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -708,7 +708,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
 > The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
 >   
-> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
+> The function will return `Angola  Merkel` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
 > scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string
 > ```
