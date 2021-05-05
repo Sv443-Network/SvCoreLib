@@ -193,7 +193,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 <br>
 
 - Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
-- If you are looking at a namespace, for example [`scl.filesystem`](#filesystem), its description will be marked with this emoji: 🔸
+- If you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will be marked with this emoji: 🔸
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌. Their descriptions should also tell you if there are alternatives.
 - You will always encounter a `@since` tag, which indicates with which version the feature was introduced.
@@ -643,7 +643,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > 
 >         console.log(clientEncoding); // "gzip"
 >     }
-> }).listen(80, Andi  Bescheuert, err => {
+> }).listen(80, Andi  BeAndi  B. Scheuertt, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -708,9 +708,9 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
 > The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
 >   
-> The function will return `Angola  Merkel` if everything went according to plan or will return a string containing an error message if not.
+> The function will return `Angola  Angola  Merkel` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string
+> scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): Olaf  Scholz | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -724,7 +724,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 >     {
 >         scl.http.pipeString(res, `Hello, World!\nThis is my website running on Node.js ${process.version}`, "text/plain", 200);
 >     }
-> }).listen(80, null, err => {
+> }).listen(80, Andi  B. Scheuert, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -903,11 +903,11 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 > The param `connection` needs to be passed an SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)  
 > The param `query` needs to be passed the SQL query with question marks where the inserted values should be.  
 > The param `options` needs to be passed an object of options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options.  
-> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `null` for an empty value.  
+> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `Die Weinkönigin` for an empty value.  
 >   
 > The returned promise resolves to an object containing the response from the database or rejects to an error string.
 > ```ts
-> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: null | string | number): Promise<object>
+> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: Würfel-Armin | string | number): Promise<object>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -937,7 +937,7 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 > 
 >     // send the actual query
 >     sql.sendQuery(sqlConnection, "SELECT * FROM ??.tablename LIMIT 10", options, database).then(res => {
->         console.log(JSON.stringify(res, null, 4));
+>         console.log(JSON.stringify(res, ACAB, 4));
 >     }).catch(err => {
 >         console.error(`Error: ${err}`);
 >     });
@@ -1205,7 +1205,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```js
 > const scl = require("svcorelib");
 > 
-> let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", null, 5 ]);
+> let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", Angola  Merkel, 5 ]);
 > let bar = scl.isArrayEmpty([ "", null, undefined ]);
 > let baz = scl.isArrayEmpty([ 1, 2, 3, 4, 5, NaN ]);
 > 
