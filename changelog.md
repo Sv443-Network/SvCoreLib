@@ -25,7 +25,7 @@
     - Added single-parameter overload to `randRange()`
     - Added string array overload to `generateUUID.custom()`, deprecated older overload
 - Changes
-    - Moved repository to @Sv443-Network
+    - Moved repository to [@Sv443-Network](https://github.com/Sv443-Network)
     - Improved type declaration file (`.d.ts`) by a lot
 - Security
     - Audited dependencies
