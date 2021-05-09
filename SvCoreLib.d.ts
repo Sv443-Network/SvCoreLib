@@ -51,7 +51,7 @@ declare class SCLError extends Error
  *   
  * @author Sv443
  * @license [MIT](https://sv443.net/LICENSE)
- * @version 1.13.1
+ * @version 1.14.0
  * @module svcorelib
  */
 declare module "svcorelib" {
@@ -205,7 +205,7 @@ declare module "svcorelib" {
      * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
      * @param max Upper boundary of the RNG - using this overload will set the lower boundary to 0
      * @throws Throws a TypeError if the arguments are not of type `number`
-     * @since 1.13.1
+     * @since 1.14.0
      */
      function randRange(max: number): number;
 
@@ -330,7 +330,7 @@ declare module "svcorelib" {
          * 🔹 Creates a custom UUID with a given format from a list of characters specified by the possibleValues parameter. This uses a RNG that is even more random than the standard Math.random() 🔹
          * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
          * @param possibleValues An array containing all characters that can be injected into the final UUID
-         * @since 1.13.1
+         * @since 1.14.0
          */
         function custom(uuidFormat: string, possibleValues: Stringifiable[]): string;
         
@@ -594,10 +594,10 @@ declare module "svcorelib" {
         function usedHeap(): number;
         
         /**
-         * 🔹 Executes a synchronous function before the process gets shut down (on SIGINT or SIGTERM).  
+         * 🔹 Executes a synchronous function or promise before the process gets shut down (on SIGINT or SIGTERM).  
          * This can be used to close files, abort connections or just to print a console message before shutdown. 🔹  
          *   
-         * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit
+         * - ❗ If `scl.noShutdown()` was used, the passed function will be executed, but the process will not exit  
          * - ❗ Due to how the Promise API works, you will need to call this function again if the passed Promise is rejected
          * @param funct This function or Promise will get executed before process shutdown. Rejecting the Promise will prevent a shutdown.
          * @param code The exit code with which the process should be closed. Defaults to 0
@@ -606,7 +606,7 @@ declare module "svcorelib" {
          * @version 1.9.0 Function will now still be called when `scl.noShutdown()` was used
          * @version 1.9.4 Removed signal SIGKILL because it caused crashes on Linux
          * @version 1.13.0 Moved namespace
-         * @version 1.13.1 Added support for the Promise API
+         * @version 1.14.0 Added support for the Promise API
          */
         function softShutdown(funct: (() => void | Promise<void>), code?: number): void;
 

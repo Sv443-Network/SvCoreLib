@@ -1,10 +1,10 @@
 ## SvCoreLib - Changelog
-### Version [1.13.1](#1130)
+### Version [1.14.0](#1140)
 
 <br><br>
 
 ## Version History:
-- [1.13.1](#1131) (current)
+- **[1.14.0](#1140)** (current)
 - **[1.13.0](#1130)**
 - **[1.12.0](#1120)**
 - **[1.11.1](#1111)**
@@ -15,16 +15,9 @@
 
 ---
 
-<br>
-
-## 1.13.1
-
-- Security:
-    - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
-
 <br><br>
 
-## 1.13.1
+## 1.14.0
 
 <br>
 
