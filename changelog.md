@@ -43,6 +43,7 @@
 - Additions
     - Added single-parameter overload to `randRange()`
     - Added string array overload to `generateUUID.custom()`, deprecated older overload
+    - `softShutdown()` now accepts a Promise for async code execution before shutdown
 - Changes
     - Moved repository to [@Sv443-Network](https://github.com/Sv443-Network)
     - Improved type declaration file (`.d.ts`) by a lot
