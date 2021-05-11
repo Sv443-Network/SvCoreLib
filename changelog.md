@@ -41,6 +41,7 @@
 ## 1.14.0
 
 - Additions
+    - Added class `StatePromise` that keeps track of the state of a promise
     - Added single-parameter overload to `randRange()`
     - Added string array overload to `generateUUID.custom()`, deprecated older overload
     - `softShutdown()` now accepts a Promise for async code execution before shutdown
