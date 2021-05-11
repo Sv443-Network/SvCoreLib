@@ -1,21 +1,61 @@
-## SvCoreLib
-### Version [1.13.1](#1131)
+## SvCoreLib - Changelog
+### Latest version: [1.14.0](#1140)
 
 <br><br>
 
-## Version History:
-- [1.13.1](#1131) (current)
-- [1.13.0](#1130)
-- [1.12.0](#1120)
-- [1.11.1](#1111)
-- [1.11.0](#1110)
+<details><summary><b>Version History - Click to expand</b></summary>
+
+<br>
+
+**JSLib-npm**
+
+- 1.6.0
+    - [1.6.5](#165)
+    - [1.6.6](#166)
+- [1.7.0](#170)
+- [1.8.0](#180)
+    - [1.8.1](#181)
+    - [1.8.2](#182)
+    - [1.8.3](#183)
+    - [1.8.4](#184)
+- [1.9.0](#190)
+    - [1.9.1](#191)
+    - [1.9.2](#192)
+    - [1.9.3](#193)
+    - [1.9.4](#194)
+
+**SvCoreLib**
+
 - [1.10.0](#1100)
+- [1.11.0](#1110)
+    - [1.11.1](#1111)
+- [1.12.0](#1120)
+- [1.13.0](#1130)
+    - [1.13.1](#1131)
+- [1.14.0](#1140)
+
+</details>
 
 <br>
 
 ---
 
-<br>
+<br><br>
+
+## 1.14.0
+
+- Additions
+    - Added class `StatePromise` that keeps track of the state of a promise
+    - Added single-parameter overload to `randRange()`
+    - Added string array overload to `generateUUID.custom()`, deprecated older overload
+    - `softShutdown()` now accepts a Promise for async code execution before shutdown
+- Changes
+    - Moved repository to [@Sv443-Network](https://github.com/Sv443-Network)
+    - Improved type declaration file (`.d.ts`) by a lot
+- Security
+    - Audited dependencies
+
+<br><br>
 
 ## 1.13.1
 
@@ -90,3 +130,141 @@
     - `http.getClientEncoding()` to get the encoding method a client requested
 - Added the `rst` property to `colors.fg` and `colors.bg`
 - Remade the documentation to be a bit more clear and better structured (thanks to @ThatCopy for helping)
+
+
+
+
+<br><br><br><br>
+
+
+
+
+# JSLib-npm versions:
+
+<br><br>
+
+
+## 1.9.4
+- Fixed invalid usage of the "SIGKILL" signal in `jsl.softShutdown()` (GitHub issue #49)
+- Added function `jsl.randomItem()` that returns a random item of an array
+
+<br><br>
+
+## 1.9.3
+- Decreased size of package by adding some files to the `.npmignore` (GitHub issue #45)
+- Fixed memory leak issues as all events in `jsl.pause()` are now correctly unregistered (GitHub issue #43)
+- Fixed the JSDoc documentation comments for `jsl.seededRNG.generateSeededNumbers()` and some other functions (GitHub issue #44)
+- Improved handling of the two separate `package.json` files, for NPM and GPR (GitHub issue #47)
+- Modified the `.editorconfig` a bit
+
+<br><br>
+
+## 1.9.2
+- Fixed some minor docs issues
+- Added Promise return to `jsl.downloadFile()` and `jsl.readdirRecursive()`
+- Made "Exit" text localizable in `jsl.MenuPrompt`
+
+<br><br>
+
+## 1.9.1
+- `jsl.pause()` now correctly unregisters events, fixing memory leak issues
+
+<br><br>
+
+## 1.9.0
+- `jsl.unused()` now has a rest parameter instead of a single parameter
+- Added `jsl.removeDuplicates()` to remove duplicate entries in an array
+- Added `jsl.pause()` to wait until user confirmation before continuing code execution
+- Added a `localization` property to `jsl.MenuPrompt` to enable it for being translated
+- Added `jsl.inDebugger()` to check if the process is currently running in a debugger
+- Fixed a bug in `jsl.MenuPrompt` by ensuring that the raw mode of the stdin is always set to true
+
+<br><br>
+
+## 1.8.4
+- Fixed high severity security vulnerabilities in ESLint's dependencies:
+    - acorn https://app.snyk.io/vuln/SNYK-JS-ACORN-559469
+    - minimist https://app.snyk.io/vuln/SNYK-JS-MINIMIST-559764
+
+<br><br>
+
+## 1.8.3
+- TIL you can't use a previously published and unpublished tag in NPM *sigh #2*
+
+<br><br>
+
+## 1.8.2
+- fixed typo in the JSDoc comment for "jsl.randRange()"
+- fixed JSDoc typedefs for MenuPrompt
+- fixed "directory not found" error in the unit test script
+- added GitHub actions scripts to automate building and publishing
+- added MenuPrompt option to auto submit the menu after a single char was entered
+
+<br><br>
+
+## 1.8.1
+- improvements / fixes:
+    - version bumped because GitHub package registry doesn't allow unpublishing *sigh*
+
+<br><br>
+
+## 1.8.0
+- new features:
+    - function "jsl.seededRNG.generateSeededNumbers(count, seed)" to generate "random" numbers based on a passed seed
+    - function "jsl.seededRNG.generateRandomSeed(digitCount)" to generate a random seed to be used in "jsl.generateSeededNumbers()"
+    - function "jsl.seededRNG.validateSeed(seed)" to check whether or not a seed is valid
+    - function "jsl.mapRange(value, range_1_min, range_1_max, range_2_min, range_2_max)" to transform a value from one numerical range to another
+    - function "jsl.downloadFile(url, destPath, options)" to download a file from a URL
+    - function "jsl.unused(any_var)" to indicate an unused variable to a linter
+    - function "jsl.replaceAt(input: str, index: number, replacement: str)" to replace a character at the specified index of a string with a replacement
+    - function "jsl.randomizeArray(array: array)" to randomize the indexes of the items of an array
+    - object "colors" to make it easier to add colors to the console output - this will replace "jsl.consoleColor()"
+    - class "MenuPrompt" for an interactive menu (directly in the CLI) - methods:
+        - "open()" to open the prompt
+        - "addMenu()" to add a new menu to the prompt
+        - "validateMenu()" to check whether a menu is invalid
+        - "currentMenu()" to get the current menu index
+        - "close()" to prematurely close the prompt and get the results
+        - "result()" to prematurely get the results of the prompt (without closing it)
+    - added unit tests for every function, class and object. They can be run with "npm test" or "node unittest"
+- improvements / fixes:
+    - added support for ESLint (use "npm i --save-dev" and then "npm run lint")
+    - improved time measurement system for "jsl.ping()"
+    - improved the background stuff in "jsl.ping()" to improve performance
+    - added "contentType" property to "jsl.ping()"'s promise callback
+    - edited a bunch of functions and methods to throw an error instead of returning it as a string, which could've caused unwanted and unpredictable behavior
+    - put the UUID generation inside an object, renamed it and added four new ones:
+        - "generateUUID.hexadecimal(format: str, upperCase: bool)" [0-9,a-f/A-F]
+        - "generateUUID.alphanumerical(format: str, upperCase: bool)" [0-9,a-z/A-Z]
+        - "generateUUID.decimal(format: str)" [0-9]
+        - "generateUUID.binary(format: str)" [0-1]
+        - "generateUUID.custom(format: str, possibleValues: str)" [Custom]
+    - added "contributors" and "documentation" properties to the "jsl.info" object
+    - removed the signal "SIGKILL" from the shutdown prevention functions as "SIGKILL" is intended as a signal that forces a process to be exited no matter what
+    - rewrote the entire documentation, I'm crying rn
+    - restructured the entire script to separate each function into its own file
+    - fixed "isEmpty()"'s object-with-length-0-detection
+
+<br><br>
+
+## 1.7.0
+- fixed typo in "readme.md"
+- added "ProgressBar" class to create a dynamic progress bar
+- added function "jsl.readdirRecursive(folder, callback(err, result){})" to read a folder and its subfolders asynchronously
+- added function "jsl.readdirRecursiveSync(folder)" to read a folder and its subfolders synchronously
+- added function "jsl.readableArray(array, separators, lastSeparator)" to make an array more easily human-readable
+- split the package up into three separate files
+- removed all dependencies because they are either included by default or their effect was easily recreatable in vanilla JS
+
+<br><br>
+
+## 1.6.6
+- removed "jsl.settings" completely
+- updated documentation for "jsl.ping()"
+
+<br><br>
+
+## 1.6.5
+- changed dependency "perf_hooks" to "execution-time" because a feature was deprecated
+- completely deprecated the all-lowercase alias "jsl.isempty()" of the function "jsl.isEmpty()"
+- cleaned up the code a bit

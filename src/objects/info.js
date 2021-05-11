@@ -9,7 +9,7 @@ const jslInfo = {
     authorLong: `${packageJSON.author.name} <${packageJSON.author.email}> (${packageJSON.author.url})`,
     contributors: packageJSON.contributors != undefined ? packageJSON.contributors : [],
     license: `${packageJSON.license} (https://sv443.net/LICENSE)`,
-    documentation: "https://github.com/Sv443/SvCoreLib/blob/master/docs.md"
+    documentation: "https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md"
 };
 
 module.exports = jslInfo;

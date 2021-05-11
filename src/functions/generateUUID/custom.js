@@ -1,21 +1,25 @@
 const isEmpty = require("../isEmpty");
 const replaceAt = require("../replaceAt");
 const randRange = require("../randRange");
+const allOfType = require("../allOfType");
 
 function custom(uuidFormat, possibleValues)
 {
-    uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
-    uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
+    uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ").replace(/\^y/gm, "ꮧ");
 
-    let possible = possibleValues.toString();
-    possible = possible.split("");
+    // string overload is deprecated since v1.14.0
+
+    if(Array.isArray(possibleValues) && !allOfType(possibleValues, "string"))
+        possibleValues = possibleValues.map(v => v.toString());
+
+    const possible = Array.isArray(possibleValues) ? possibleValues : possibleValues.toString().split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new TypeError(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
-    let regex = /[xy]/gm;
+    const regex = /[xy]/gm;
     let match;
-    let matches = [];
+    const matches = [];
 
     while((match = regex.exec(uuidFormat)) != null)
         matches.push(match.index)
