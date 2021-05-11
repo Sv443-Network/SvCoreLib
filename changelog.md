@@ -1,9 +1,12 @@
 ## SvCoreLib - Changelog
-### Version [1.14.0](#1140)
+### Latest version: [1.14.0](#1140)
 
 <br><br>
 
-## Version History:
+<details><summary><b>Version History - Click to expand</b></summary>
+
+<br>
+
 **JSLib-npm**
 
 - 1.6.0
@@ -31,6 +34,7 @@
     - [1.13.1](#1131)
 - [1.14.0](#1140)
 
+</details>
 
 <br>
 
