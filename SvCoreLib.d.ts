@@ -38,6 +38,8 @@ declare class SCLError extends Error
     date: Date;
 }
 
+declare type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected";
+
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * ## SvCoreLib  
@@ -1019,6 +1021,49 @@ declare module "svcorelib" {
          * Used to translate the SelectionMenu
          */
         public locale: SelectionMenuLocale;
+    }
+
+    /**
+     * 🔹 This class is a wrapper for the Promise API.  
+     * It keeps track of the state of the promise it wraps. 🔹  
+     *   
+     * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
+     */
+    class StatePromise<T>
+    {
+        /**
+         * 🔹 Constructs a new object of class StatePromise.  
+         *   
+         * This class is a wrapper for the Promise API.  
+         * It keeps track of the state of the promise it wraps. 🔹
+         * ❗ Make sure to call `exec()` to actually execute the passed promise and to retrieve the returned value(s)
+         * @param promise The promise to wrap around and to extract the state from
+         * @throws Throws a TypeError if the passed parameter is not an instance of the `Promise` class
+         * @since 1.14.0
+         */
+        constructor(promise: Promise<T>);
+
+        /**
+         * 🔹 Actually executes the Promise. 🔹
+         * @returns Returns a new Promise instance (not the one from the constructor) that does however inherit the returned values from the constructor promise
+         * @since 1.14.0
+         */
+        exec(): Promise<T>;
+
+        /**
+         * 🔹 Returns the state of this Promise, as a string. 🔹  
+         *   
+         * The possible states are:  
+         *   
+         * | State | Description |
+         * | :-- | :-- |
+         * | `initialized` | The StatePromise instance was created but the `exec()` method wasn't called yet |
+         * | `pending` | The promise execution was started but it hasn't been resolved or rejected yet |
+         * | `fulfilled` | Execution was finished and the promise was resolved |
+         * | `rejected` | Execution was finished but the promise was rejected |
+         * @since 1.14.0
+         */
+        getState(): PromiseState;
     }
 
     /**

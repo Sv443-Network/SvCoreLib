@@ -65,6 +65,7 @@ module.exports = Object.freeze({
     MenuPrompt:     require("./src/classes/MenuPrompt"),
     FolderDaemon:   require("./src/classes/FolderDaemon"),
     SelectionMenu:  require("./src/classes/SelectionMenu"),
+    StatePromise:   require("./src/classes/StatePromise"),
 
     //#SECTION namespaced classes
 

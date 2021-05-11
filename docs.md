@@ -89,6 +89,7 @@ Otherwise, see the table of contents just below.
     - [MenuPrompt](#menuprompt) - a prompt which users can select an option from
     - [ProgressBar](#progressbar) - shows a progress bar in the console
     - [SelectionMenu](#SelectionMenu) - a menu that can be scrolled through
+    - [StatePromise](#StatePromise) - wrapper around the Promise API that provides a way to check its state
 - **[Errors](#errors)**
     - [InvalidPathError](#errorsinvalidpatherror) - an invalid path was provided
     - [NotAFolderError](#errorsnotafoldererror) - the provided path is not a folder
@@ -2223,6 +2224,120 @@ Constructing multiple objects of these classes will not make them interfere with
 > > 
 > > if(typeof openRes == "string")
 > >     console.error(`Error while opening SelectionMenu: ${openRes}`);
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
+
+<!-- #SECTION StatePromise -->
+> ## StatePromise
+> This class is a wrapper for the Promise API.  
+> It keeps track of the state of the promise it wraps around.
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `StatePromise`  
+> >   
+> > This class is a wrapper for the Promise API.  
+> > It keeps track of the state of the promise it wraps.  
+> >   
+> > Make sure to call `exec()` to actually execute the passed promise and to retrieve the returned value(s).  
+> >   
+> > The param `promise` is the promise to wrap around and to extract the state from.  
+> >   
+> > Throws a `TypeError` if the `promise` parameter is not an instance of the `Promise` class.
+> > ```ts
+> > new StatePromise(promise: Promise)
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### exec()
+> > This function actually executes the Promise.  
+> >   
+> > Returns a new Promise instance (not the one from the constructor) that does however inherit the returned values from the constructor promise.
+> > ```ts
+> > StatePromise.exec(): Promise
+> > ```
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### getState()
+> > Returns the state of this Promise, as a string.  
+> >   
+> > The possible states are:  
+> > | State | Description |
+> > | :-- | :-- |
+> > | `initialized` | The StatePromise instance was created but the `exec()` method wasn't called yet |
+> > | `pending` | The promise execution was started but it hasn't been resolved or rejected yet |
+> > | `fulfilled` | Execution was finished and the promise was resolved |
+> > | `rejected` | Execution was finished but the promise was rejected |
+> >   
+> > <br>
+> > 
+> > ```ts
+> > SelectionMenu.getState(): "initialized" | "pending" | "fulfilled" | "rejected"
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > const { StatePromise } = require("svcorelib");
+> > 
+> > // Promise to wrap around
+> > const prom = new Promise((res, rej) => {
+> >     // replace `res` with `rej` to test promise rejection
+> >     setTimeout(() => res("test123"), 3500);
+> > });
+> > 
+> > const stp = new StatePromise(prom);
+> > 
+> > console.log("START");
+> > 
+> > // Execute the StatePromise
+> > stp.exec().then((...returnedValues) => {
+> >     console.log(`THEN: ${returnedValues}`);
+> > }).catch(err => {
+> >     console.error(`CATCH: ${err}`);
+> > });
+> > 
+> > 
+> > let iter = 0;
+> > 
+> > const interval = setInterval(() => {
+> >     console.log(`Iteration #${iter} - State: ${stp.getState()}`);
+> > 
+> >     iter++;
+> > 
+> >     if(iter == 5)
+> >         clearInterval(interval);
+> > }, 1000);
+> > ```
+> > 
+> > <br>
+> > 
+> > **Output:**  
+> > ```
+> > START - State: initialized
+> > Iteration #0 - State: pending
+> > Iteration #1 - State: pending
+> > Iteration #2 - State: pending
+> > THEN: test123
+> > Iteration #3 - State: fulfilled
+> > Iteration #4 - State: fulfilled
 > > ```
 > > 
 > > </details>
