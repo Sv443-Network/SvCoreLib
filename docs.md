@@ -2379,24 +2379,24 @@ Also, all of these classes inherit from [JavaScript's `Error` class.](https://de
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const scl = require("svcorelib");
+> > const { filesystem, Errors } = require("svcorelib");
 > > const fs = require("fs");
 > > const { resolve } = require("path");
 > > 
 > > 
 > > /** @throws InvalidPathError if the provided path doesn't exist */
-> > function pathExists(path)
+> > async function throwIfNotExists(path)
 > > {
 > >     path = resolve(path);
 > > 
-> >     if(!fs.existsSync(path))
-> >         throw new scl.Errors.InvalidPathError(`Path "${path}" doesn't exist.`);
+> >     if(!(await filesystem.exists(path)))
+> >         throw new Errors.InvalidPathError(`Path "${path}" doesn't exist.`);
 > > 
 > >     return;
 > > }
 > > 
-> > pathExists("./src/");                   // no error is thrown
-> > pathExists("./path/that/doesnt/exist"); // error is thrown here
+> > throwIfNotExists("./src/");                   // no error is thrown
+> > throwIfNotExists("./path/that/doesnt/exist"); // error is thrown here
 > > ```
 > > 
 > > </details>

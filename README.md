@@ -8,7 +8,12 @@ Although it is intended for the Sv443 Network's own projects, feel free to use t
 
 <br>
 
-## [Click here to go to the documentation](./docs.md#readme)
+<div align="center" style="text-align:center;">
+
+## >> [Documentation](./docs.md#readme) <<
+#### [Changelog](./changelog.md#readme) • [Discord](https://dc.sv443.net)
+
+</div>
 
 <br><br>
 

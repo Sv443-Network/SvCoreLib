@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.14.0](#1140)
+### Latest version: [1.14.1](#1141)
 
 <br><br>
 
@@ -33,12 +33,20 @@
 - [1.13.0](#1130)
     - [1.13.1](#1131)
 - [1.14.0](#1140)
+    - [1.14.1](#1141)
 
 </details>
 
 <br>
 
 ---
+
+<br><br>
+
+## 1.14.1
+
+- Fixes
+    - `filesystem.exists()` can now actually be used 🤦 ([issue #25](https://github.com/Sv443-Network/SvCoreLib/issues/25))
 
 <br><br>
 
