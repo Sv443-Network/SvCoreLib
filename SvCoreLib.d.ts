@@ -4,10 +4,10 @@
 
 
     >> If you came here looking for the source code, you're in the wrong file!
-    >> See the file `SvCoreLib.js` instead, it acts as a relay to all of SCLs features.
+    >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
     >> From there, you can follow the require()'s.
 
-    >> This file is responsible for the In-IDE documentation (usually seen by pressing CTRL+Space or hovering over stuff)
+    >> This file is responsible for the In-IDE documentation and explicit types (usually seen by pressing CTRL+Space or hovering over stuff)
 */
 
 
@@ -47,7 +47,9 @@ declare type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected"
  *   
  * ---
  *   
- * **[Documentation](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
+ * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
+ *   
+ * [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
  *   
  * ---
  *   
@@ -537,7 +539,7 @@ declare module "svcorelib" {
 
         /**
          * 🔹 This function checks if a file exists at the given path.  
-         * (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
+         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
          * @returns Returned Promise always resolves to a boolean (and never rejects) - true, if the file exists, false if not
          * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path

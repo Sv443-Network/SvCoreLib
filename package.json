@@ -1,6 +1,6 @@
 {
-  "name": "@sv443-network/svcorelib",
-  "version": "1.14.0",
+  "name": "svcorelib",
+  "version": "1.14.1",
   "description": "Core Library used in almost all of my (Sv443's) projects. Feel free to use it if you want to, it contains some very nice features.",
   "main": "SvCoreLib.js",
   "scripts": {
@@ -60,9 +60,5 @@
     "@types/node": "^14.6.0",
     "eslint": "^7.22.0",
     "snyk": "^1.592.0"
-  },
-  "publishConfig": {
-    "cache": "~/.npm",
-    "registry": "https://registry.npmjs.com"
   }
 }

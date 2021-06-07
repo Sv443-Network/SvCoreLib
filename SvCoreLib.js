@@ -45,6 +45,7 @@ module.exports = Object.freeze({
         downloadFile:          require("./src/functions/filesystem/downloadFile"),
         ensureDirs:            require("./src/functions/filesystem/ensureDirs"),
         ensureDirsSync:        require("./src/functions/filesystem/ensureDirsSync"),
+        exists:                require("./src/functions/filesystem/exists"),
     },
     sql: {
         sendQuery:  require("./src/functions/sql/sendQuery"),
