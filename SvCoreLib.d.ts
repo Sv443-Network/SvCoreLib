@@ -30,24 +30,24 @@ declare interface Stringifiable {
     toString(): string;
 }
 
-declare type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected";
-
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
+ * 
  * ## SvCoreLib  
- * The core library used in almost all of Sv443's projects.  
+ * #### The core library used in almost all projects of the [Sv443 Network](https://sv443.net/) and [Sv443](https://github.com/Sv443)  
  *   
  * ---
  *   
- * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
- *   
- * [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
- *   
+ * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
+ * 
  * ---
  *   
+ * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
+ *   
+ * 
  * @author Sv443
  * @license [MIT](https://sv443.net/LICENSE)
- * @version 1.14.0
+ * @version 1.14.2
  * @module svcorelib
  */
 declare module "svcorelib" {
@@ -1034,6 +1034,8 @@ declare module "svcorelib" {
     }
 
     //#SECTION StatePromise
+
+    type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected";
 
     /**
      * 🔹 This class is a wrapper for the Promise API.  

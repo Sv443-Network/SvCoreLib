@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest a feature or an idea for SvCoreLib
 title: "[Feature] "
-labels: "✨ enhancement"
+labels: "enhancement"
 assignees: Sv443
 
 ---
