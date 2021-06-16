@@ -30,14 +30,6 @@ declare interface Stringifiable {
     toString(): string;
 }
 
-/**
- * Base class for all of SCL's error classes
- */
-declare class SCLError extends Error
-{
-    date: Date;
-}
-
 declare type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected";
 
 /**
@@ -60,6 +52,8 @@ declare type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected"
  */
 declare module "svcorelib" {
     //#MARKER functions
+
+
 
     //#SECTION Miscellaneous
 
@@ -139,7 +133,7 @@ declare module "svcorelib" {
      * @returns Better readable array as string
      * @since 1.7.0
      */
-    function readableArray(array: Stringifiable[], separators?: string, lastSeparator?: string): string;
+    function readableArray(array: (string[] | Stringifiable[]), separators?: string, lastSeparator?: string): string;
 
     /**
      * 🔹 Transforms the `value` parameter from the numerical range [`range_1_min`-`range_1_max`] to the numerical range [`range_2_min`-`range_2_max`] 🔹
@@ -245,7 +239,7 @@ declare module "svcorelib" {
      * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
      * @since 1.12.0
      */
-    function insertValues(str: string, ...values: Stringifiable[]): string;
+    function insertValues(str: string, ...values: (string[] | Stringifiable[])): string;
 
     /**
      * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -336,7 +330,7 @@ declare module "svcorelib" {
          * @param possibleValues An array containing all characters that can be injected into the final UUID
          * @since 1.14.0
          */
-        function custom(uuidFormat: string, possibleValues: Stringifiable[]): string;
+        function custom(uuidFormat: string, possibleValues: (string[] | Stringifiable[])): string;
         
         /**
          * 🔹 Creates a decimal [0-9] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
@@ -652,6 +646,10 @@ declare module "svcorelib" {
 
     //#MARKER classes
 
+
+
+    //#SECTION ProgressBar
+
     /**
      * 🔹 Creates a dynamic progress bar in the CLI 🔹  
      *   
@@ -661,6 +659,11 @@ declare module "svcorelib" {
      * ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png)
      */
     class ProgressBar {
+        /** The character to use for filled parts of the progress bar */
+        filledChar: string;
+        /** The character to use for blank / empty parts of the progress bar */
+        blankChar: string;
+
         /**
          * 🔹 Creates a dynamic progress bar with a percentage and custom message display 🔹  
          *   
@@ -702,6 +705,8 @@ declare module "svcorelib" {
          */
         getRemainingIncrements(): number;
     }
+
+    //#SECTION MenuPrompt
 
     /** An option of a menu of the menu prompt */
     interface MenuPromptMenuOption
@@ -792,6 +797,9 @@ declare module "svcorelib" {
      * ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
      */
     class MenuPrompt {
+        /** This is where all texts of the MenuPrompt are stored. Use this to translate or change them. */
+        public localization: MenuPromptLocalization;
+
         /**
          * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.  
          * To translate the messages, you can use the `MenuPrompt.localization` object, which is where all localization variables are stored. 🔹  
@@ -854,7 +862,7 @@ declare module "svcorelib" {
         validateMenu(menu: MenuPromptMenu): boolean | string[];
     }
 
-    //#MARKER FolderDaemon
+    //#SECTION FolderDaemon
 
     /** The options of the FolderDaemon */
     interface FolderDaemonOptions
@@ -920,7 +928,7 @@ declare module "svcorelib" {
         intervalCall(): void;
     }
 
-    //#MARKER SelectionMenu
+    //#SECTION SelectionMenu
 
     /**
      * An object of settings to be used in the constructor of the `SelectionMenu` class
@@ -971,6 +979,11 @@ declare module "svcorelib" {
      */
     class SelectionMenu {
         /**
+         * Used to translate the SelectionMenu
+         */
+        public locale: SelectionMenuLocale;
+
+        /**
          * 🔹 Constructs a new object of class SelectionMenu.  
          * The SelectionMenu is an interactive menu in the Command Line Interface with a list of options that can be scrolled through and selected. 🔹
          * @param title The title of the menu. Leave undefined to not have a title.
@@ -1018,12 +1031,9 @@ declare module "svcorelib" {
          * @since 1.11.0
          */
         close(): string | boolean;
-
-        /**
-         * Used to translate the SelectionMenu
-         */
-        public locale: SelectionMenuLocale;
     }
+
+    //#SECTION StatePromise
 
     /**
      * 🔹 This class is a wrapper for the Promise API.  
@@ -1073,6 +1083,16 @@ declare module "svcorelib" {
      */
     namespace Errors {
         /**
+         * 🔹 Base class for all of SCL's error classes.  
+         * Adds a `date` property that tracks the exact time an Error instance was created. 🔹
+         */
+        class SCLError extends Error
+        {
+            /** A Date instance set to the exact time this Error instance was created */
+            date: Date;
+        }
+
+        /**
          * 🔹 This error gets thrown if an invalid path was provided 🔹
          * @since 1.12.0
          */
@@ -1111,6 +1131,10 @@ declare module "svcorelib" {
 
     //#MARKER objects
 
+
+
+    //#SECTION info
+
     /**
      * 🔹 Info about SvCoreLib 🔹
      * @since 1.5.0
@@ -1135,6 +1159,8 @@ declare module "svcorelib" {
         /** The URL to SvCoreLib's documentation */
         let documentation: string;
     }
+
+    //#SECTION colors
 
     /**
      * 🔹 Use this to add color to your console output 🔹
