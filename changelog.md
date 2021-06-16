@@ -47,8 +47,11 @@
 
 ## 1.14.2
 
-- Fixes
+- Fixes & Changes
     - Fixed `.d.ts` type declarations ([issue #27](https://github.com/Sv443-Network/SvCoreLib/issues/27))
+    - Improved documentation a little bit
+- Internal stuff
+    - Added CodeQL analysis workflow
 
 <br>
 
