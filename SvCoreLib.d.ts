@@ -151,11 +151,11 @@ declare module "svcorelib" {
     /**
      * 🔹 Use this if you are using a linter that complains about unused vars.  
      * As this function basically does nothing, you can even leave it in once the variable is used again and nothing will break. 🔹
-     * @param any Any amount of variable(s) of any type
+     * @param variables Any amount of variable(s) of any type
      * @since 1.8.0
      * @version 1.9.0 Function now accepts an infinite number of parameters
      */
-    function unused<T>(...any: T[]): void;
+    function unused(...variables: any): void;
 
     /**
      * 🔹 Replaces a character from the specified `string` at the specified `index` with the value of `replacement` 🔹
