@@ -19,14 +19,14 @@ import { Connection, QueryOptions } from "mysql";
  * Describes an object that is JSON-compatible, aka doesn't contain self- / circular references or non-primitive JS properties  
  * [Source](https://github.com/microsoft/TypeScript/issues/1897#issuecomment-338650717)
  */
-declare type JSONCompatible =  boolean | number | string | null | JSONArray | JSONMap;
+export type JSONCompatible =  boolean | number | string | null | JSONArray | JSONMap;
 interface JSONMap { [key: string]: JSONCompatible; }
 interface JSONArray extends Array<JSONCompatible> {}
 
 /**
  * Describes a value that has a `.toString()` method, meaning it can be converted to a string
  */
-declare interface Stringifiable {
+export interface Stringifiable {
     toString(): string;
 }
 
@@ -133,7 +133,7 @@ declare module "svcorelib" {
      * @returns Better readable array as string
      * @since 1.7.0
      */
-    function readableArray(array: (string[] | Stringifiable[]), separators?: string, lastSeparator?: string): string;
+    function readableArray(array: (string | Stringifiable)[], separators?: string, lastSeparator?: string): string;
 
     /**
      * 🔹 Transforms the `value` parameter from the numerical range [`range_1_min`-`range_1_max`] to the numerical range [`range_2_min`-`range_2_max`] 🔹
@@ -239,7 +239,7 @@ declare module "svcorelib" {
      * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
      * @since 1.12.0
      */
-    function insertValues(str: string, ...values: (string[] | Stringifiable[])): string;
+    function insertValues(str: string, ...values: (string | Stringifiable)[]): string;
 
     /**
      * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -247,7 +247,8 @@ declare module "svcorelib" {
      */
     namespace seededRNG {
         /**
-         * Represents a seed to be used in functions of the `seededRNG` namespace
+         * Represents a seed to be used in functions of the `seededRNG` namespace.  
+         * Note that seeds can't start with the number `0` as they need to be compatible with both `string` and `number` types
          */
         type Seed = (number | string);
 
@@ -330,7 +331,7 @@ declare module "svcorelib" {
          * @param possibleValues An array containing all characters that can be injected into the final UUID
          * @since 1.14.0
          */
-        function custom(uuidFormat: string, possibleValues: (string[] | Stringifiable[])): string;
+        function custom(uuidFormat: string, possibleValues: (string | Stringifiable)[]): string;
         
         /**
          * 🔹 Creates a decimal [0-9] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
@@ -481,7 +482,7 @@ declare module "svcorelib" {
      * @since 1.8.0
      * @version 1.9.2 Added the option of using the Promise API instead of a callback
      */
-    function downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<string | void>;
+    function downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<void | string>;
 
     //#SECTION file system
 
@@ -846,7 +847,7 @@ declare module "svcorelib" {
         currentMenu(): number;
         
         /**
-         * 🔹 Returns the current results of the menu prompt.
+         * 🔹 Returns the current results of the menu prompt.  
          * This does **not** close the menu prompt, unlike `close()` 🔹
          * @returns Returns the results of the menu prompt or null, if there aren't any results yet
          * @since 1.8.0
