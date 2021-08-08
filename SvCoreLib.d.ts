@@ -661,9 +661,9 @@ declare module "svcorelib" {
      */
     class ProgressBar {
         /** The character to use for filled parts of the progress bar */
-        filledChar: string;
+        public filledChar: string;
         /** The character to use for blank / empty parts of the progress bar */
-        blankChar: string;
+        public blankChar: string;
 
         /**
          * 🔹 Creates a dynamic progress bar with a percentage and custom message display 🔹  
