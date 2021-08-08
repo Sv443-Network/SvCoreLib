@@ -627,11 +627,14 @@ declare module "svcorelib" {
 
         /**
          * 🔹 Checks if the process is currently running in the debugger environment.  
-         * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers.  
-         * Should support all major debuggers. 🔹
+         * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers. 🔹  
+         * ❗ This function should support all major debuggers but this isn't guaranteed!  
+         * If it doesn't detect your debugger, pass the command line argument `--debug` or `--inspect` ❗
+         * @param {string} [checkArg] If provided, checks if this command line argument is present. Makes the function return `true` if it is.
          * @returns true, if the process is currently running in a debugger, false if not.
          * @since 1.9.0
          * @version 1.13.0 Moved namespace
+         * @version 1.14.2 Added `inspector.url()` check for better results
          */
         function inDebugger(): boolean;
 

@@ -97,7 +97,7 @@ Otherwise, see the table of contents just below.
     - [PatternInvalidError](#errorspatterninvaliderror) - GLOB pattern is invalid
     - [NoStdinError](#errorsnostdinerror) - terminal doesn't have a stdin channel
     - [InvalidMimeTypeError](#errorsinvalidmimetypeerror) - MIME type is not valid
-    - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror) - SQL connection is invalid
+    - [SqlConnectionNotEstablishedError](#errorssqlconnectionnotestablishederror) - SQL connection is invalid
 - **[Objects](#objects)**
     - [colors](#colors) - color text in the console
     - [info](#info) - information about SCL
@@ -991,15 +991,18 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 
 > ### system.inDebugger()
-> Checks if the process is currently running in the debugger environment.  
+> Checks if the process is currently running in a debugger.  
 > This can be useful because some features like child processes and reading from stdin do not work in most debuggers.  
-> Should support all major Node.js debuggers.  
-> Returns `true` if the current process runs in a debugger environment - else returns `false`
+> Should support all major Node.js debuggers, but this is not guaranteed.  
+> Returns `true` if the current process runs in a debugger - else returns `false`  
+>   
+> If `checkArg` is provided, the function searches for a matching command line argument and returns `true` if it was found.  
+> This enables you to explicitly set the debugger state, for example if your debugger isn't properly detected by this function.
 > ```ts
-> scl.system.inDebugger(): boolean
+> scl.system.inDebugger(checkArg?: string): boolean
 > ```
 > 
-> <br><details><summary><b>Example Code - click to show</b></summary>
+> <br><details><summary><b>Basic example code - click to show</b></summary>
 > 
 > ```js
 > const { system, MenuPrompt } = require("svcorelib");
@@ -1007,8 +1010,24 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > if(!system.inDebugger())
 > {
 >     // SCL's MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
->     let mp = new MenuPrompt();
+>     const mp = new MenuPrompt();
 >     // ...
+> }
+> ```
+> 
+> </details>
+> 
+> <br><details><summary><b>Example with custom CLI argument - click to show</b></summary>
+> 
+> ```js
+> const { system } = require("svcorelib");
+> 
+> console.log(process.argv); // [ '.../node.exe', '.../this_file.js', '--debugger-enabled' ]
+> 
+> // explicitly test if `--debugger-enabled` is present in the CLI arguments
+> if(system.inDebugger("--debugger-enabled"))
+> {
+>     console.log("in debugger");
 > }
 > ```
 > 
@@ -1022,7 +1041,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > Prevents the process from being shut down.  
 > This can prevent people from exiting the process using CTRL+C.  
 > Using `process.exit()` in your script will still exit the process though!  
-> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#yesshutdown).
+> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#systemyesshutdown).
 >   
 > Note: this only listens for the signals "SIGINT" and "SIGTERM".  
 > Due to many OSes not supporting it, using "SIGKILL" will still kill the process.
@@ -1035,7 +1054,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 
 > ### system.yesShutdown()
-> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#noshutdown).
+> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#systemnoshutdown).
 > ```ts
 > scl.system.yesShutdown(): void
 > ```
