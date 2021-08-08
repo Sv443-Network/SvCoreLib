@@ -2,54 +2,53 @@
 ### Latest version: [1.14.2](#1142)
 
 
-<br><br>
+<br>
 
-<details><summary><b>Version History - Click to expand</b></summary>
+<details><summary><b>Click to expand version history</b></summary>
 
 <br>
 
-**JSLib-npm**
-
-- 1.6.0
-    - (1.6.1 - 1.6.4)
-    - [1.6.5](#165)
-    - [1.6.6](#166)
-- [1.7.0](#170)
-- [1.8.0](#180)
-    - [1.8.1](#181)
-    - [1.8.2](#182)
-    - [1.8.3](#183)
-    - [1.8.4](#184)
-- [1.9.0](#190)
-    - [1.9.1](#191)
-    - [1.9.2](#192)
-    - [1.9.3](#193)
-    - [1.9.4](#194)
-
-**SvCoreLib**
-
-- [1.10.0](#1100)
-- [1.11.0](#1110)
-    - [1.11.1](#1111)
-- [1.12.0](#1120)
-- [1.13.0](#1130)
-    - [1.13.1](#1131)
-- [1.14.0](#1140)
-    - [1.14.1](#1141)
-    - [1.14.2](#1142)
+> **JSLib-npm**
+> 
+> - 1.6.x
+>     - [1.6.5](#165)
+>     - [1.6.6](#166)
+> - [1.7.0](#170)
+> - [1.8.0](#180)
+>     - [1.8.1](#181)
+>     - [1.8.2](#182)
+>     - [1.8.3](#183)
+>     - [1.8.4](#184)
+> - [1.9.0](#190)
+>     - [1.9.1](#191)
+>     - [1.9.2](#192)
+>     - [1.9.3](#193)
+>     - [1.9.4](#194)
+> 
+> **SvCoreLib**
+> 
+> - [1.10.0](#1100)
+> - [1.11.0](#1110)
+>     - [1.11.1](#1111)
+> - [1.12.0](#1120)
+> - [1.13.0](#1130)
+>     - [1.13.1](#1131)
+> - [1.14.0](#1140)
+>     - [1.14.1](#1141)
+>     - [1.14.2](#1142)
+> 
+> <br>
 
 </details>
-
-<br>
-
----
 
 <br><br>
 
 ## 1.14.2
 
-- Fixes & Changes
+- Fixes
     - Fixed `.d.ts` type declarations ([issue #27](https://github.com/Sv443-Network/SvCoreLib/issues/27))
+    - Fixed `system.inDebugger()` not detecting debugger ([issue #30](https://github.com/Sv443-Network/SvCoreLib/issues/30))
+    - Set `mysql` as a peer dependency ([issue #29](https://github.com/Sv443-Network/SvCoreLib/issues/29))
     - Improved documentation a little bit
 - Internal stuff
     - Added CodeQL analysis workflow
