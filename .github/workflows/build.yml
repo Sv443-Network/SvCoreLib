@@ -24,7 +24,9 @@ jobs:
       env:
         CI: "true"
     - name: Install ESLint # installs ESLint - idk why it doesn't pull this out of the devDependencies but whatever
-      run: npm i -g eslint
+      run: |
+        npm i -g eslint
+        npm i -D eslint
       env:
         CI: "true"
     - name: Run ESLint # Runs ESLint on the project
@@ -52,4 +54,3 @@ jobs:
       with:
         args: '🚫 **SvCoreLib CI** (triggered by `{{GITHUB_ACTOR}}` on `{{GITHUB_REF}}`) has failed (see https://github.com/Sv443-Network/SvCoreLib/commit/{{GITHUB_SHA}}/checks)'
       if: failure()
-
