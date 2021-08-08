@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a bug report to help improve SvCoreLib
 title: "[Bug] "
-labels: "\U0001F41B bug"
+labels: "bug"
 assignees: Sv443
 
 ---

@@ -89,6 +89,7 @@ class SqlConnectionNotEstablishedError extends SCLError {
 
 
 module.exports = {
+    SCLError,
     InvalidPathError,
     NotAFolderError,
     PatternInvalidError,

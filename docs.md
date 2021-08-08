@@ -23,7 +23,7 @@ You can join the Sv443 Network Discord server if you need help or just want to c
 
 <br>
 
-### To get started, please go to [the installation section.](#installation)
+### >> To get started, please go to [the installation section.](#installation) <<
 Otherwise, see the table of contents just below.
 
 <br><br>
@@ -91,12 +91,13 @@ Otherwise, see the table of contents just below.
     - [SelectionMenu](#SelectionMenu) - a menu that can be scrolled through
     - [StatePromise](#StatePromise) - wrapper around the Promise API that provides a way to check its state
 - **[Errors](#errors)**
+    - [SCLError](#errorssclerror) - base class of all SCL error classes
     - [InvalidPathError](#errorsinvalidpatherror) - an invalid path was provided
     - [NotAFolderError](#errorsnotafoldererror) - the provided path is not a folder
     - [PatternInvalidError](#errorspatterninvaliderror) - GLOB pattern is invalid
     - [NoStdinError](#errorsnostdinerror) - terminal doesn't have a stdin channel
     - [InvalidMimeTypeError](#errorsinvalidmimetypeerror) - MIME type is not valid
-    - [SqlConnectionNotEstablishedError](#sqlconnectionnotestablishederror) - SQL connection is invalid
+    - [SqlConnectionNotEstablishedError](#errorssqlconnectionnotestablishederror) - SQL connection is invalid
 - **[Objects](#objects)**
     - [colors](#colors) - color text in the console
     - [info](#info) - information about SCL
@@ -105,9 +106,12 @@ Otherwise, see the table of contents just below.
     - [Disclaimer](#disclaimer)
     - [Privacy Policy](#privacy-policy)
     - [Security Policy](#security-policy)
-    - [Site Notice / Impressum](#site-notice)
 
-<br><br><br><br><br>
+<br>
+
+---
+
+<br><br><br><br>
 
 <!-- #MARKER Installation -->
 # Installation
@@ -117,7 +121,7 @@ npm i svcorelib
 ```
 Troubleshooting: Make sure your workspace contains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.  
 
-<br><br><br><br><br>
+<br><br><br>
 
 <!-- #MARKER Usage -->
 # Usage
@@ -157,7 +161,7 @@ If you only want to import a select number of features and don't like always hav
 
 
 
-<br><br><br><br><br>
+<br><br><br>
 
 
 <!-- #MARKER How this documentation works -->
@@ -173,7 +177,7 @@ If you only want to import a select number of features and don't like always hav
 - All code examples don't require installing any third party packages (excluding SCL's dependencies which should get auto-installed).
 - The example GIF included in some features uses the exact code that is included in that same feature under "example code".
 - Custom objects (aka interfaces) are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
-- Class constructors start with the header `Constructor` and don't have a return type (since they return an instance of themselves).
+- Class constructors start with the header `Constructor` and don't have a return type (since they return an instance of the class they belong to).
     - This instance, created with the `new` keyword, should then be used to call the methods that are part of that same class.
     - Do not use methods on the class directly unless the documentation explicitly states that they are static methods!
 
@@ -188,26 +192,26 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 ![(Image)](https://cdn.sv443.net/scl/docs/jsdoc_ide.gif)
 
 </details>
-  
----
 
 <br>
 
 - Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
 - If you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will be marked with this emoji: 🔸
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
-- Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌. Their descriptions should also tell you if there are alternatives.
+- Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
+    Their descriptions should also tell you if there are alternatives.
 - You will always encounter a `@since` tag, which indicates with which version the feature was introduced.
 - The `@version` tag will tell you that something changed in a certain version.
-- If a function / method can throw an error, the `@throws` tag will tell you when this might happen and of which class the Error might be.
-- Private class methods should be unlisted but if not, they will start with an underscore, will be tagged with `@private` and their description will be delimited from other sections with this emoji: ❌. Private methods shouldn't be used, or else something might break.
+- If a function / method can throw an error, the `@throws` tag will tell you when this might happen and of which class the Error instance might be.
+- Private class methods should be unlisted but if not, they will start with an underscore, will be tagged with `@private` and their description will be delimited from other sections with this emoji: ❌  
+    Private methods shouldn't be used, or else something might break.
 
 <br><br><br><br><br>
 
 <!-- #MARKER Functions -->
 # Functions
 This section tells you all about the static functions SCL offers.  
-You have to call these *without* creating a class instance using the `new` keyword.  
+You have to call these *without* creating a class instance (without using the `new` keyword).  
 
 <br>
 
@@ -283,9 +287,9 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 
 
 > ### filesystem.readdirRecursiveSync()
-> Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution, thus making it synchronous.  
+> Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution until it's finished, making it synchronous.  
 >   
-> ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
+> ❗ This function uses blocking operations, contrary to the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
 > scl.filesystem.readdirRecursiveSync(folder: string): string[]
 > ```
@@ -618,18 +622,21 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 
 
 > ### http.getClientEncoding()
-> This function parses the `Accept-Encoding` header of a clien't request and returns the most efficient and modern encoding methods the client supports. 
-> Currently supported encoding methods (sorted by priority, highest priority first) are:  
-> - `br` ([Brotli](https://en.wikipedia.org/wiki/Brotli))  
-> - `gzip` ([Gzip / Lempel-Ziv / LZ77](https://en.wikipedia.org/wiki/Gzip))  
-> - `deflate` ([Deflate](https://en.wikipedia.org/wiki/DEFLATE))  
-> - `compress` ([Lempel-Ziv-Welch / LZW](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch))  
-> - `identity` (No Encoding / Raw Data)  
->   
+> This function parses the `Accept-Encoding` header of a clien't request and returns the most efficient and modern encoding methods the client supports.  
 > If no header was provided or the client doesn't support any encodings, `"identity"` is returned, meaning the client wants the original, non-encoded data.  
+>   
 > ```ts
 > scl.http.getClientEncoding(req: http.IncomingMessage): string
 > ```
+>   
+> Currently supported encoding methods (sorted by priority, highest priority first) are:  
+> | Encoding | Name | Priority |
+> | :-- | :-- | :-: |
+> | `br` | [Brotli](https://en.wikipedia.org/wiki/Brotli) | 4 |  
+> | `gzip` | [Gzip / Lempel-Ziv / LZ77](https://en.wikipedia.org/wiki/Gzip) | 3 |  
+> | `deflate` | [Deflate](https://en.wikipedia.org/wiki/DEFLATE) | 2 |  
+> | `compress` | [Lempel-Ziv-Welch / LZW](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch) | 1 |  
+> | `identity` | No Encoding / Raw Data | 0 |  
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
@@ -640,15 +647,19 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > http.createServer((req, res) => {
 >     if(req.method == "GET")
 >     {
->         let clientEncoding = scl.http.getClientEncoding(req);
+>         console.log(`Client accepts encodings: ${req.headers["accept-encoding"]}`); // "Client accepts encodings: gzip, deflate"
+>
+>         // let SCL determine the encoding that's highest on the priority list and also supported by the client (present in the "Accept-Encoding" header)
+>         const clientEncoding = scl.http.getClientEncoding(req);
 > 
->         console.log(clientEncoding); // "gzip"
+>         res.writeHead(200, { "Content-Type": "text/plain; utf-8" });
+>         res.end(`Selected encoding: ${clientEncoding}`); // "Selected encoding: gzip"
 >     }
-> }).listen(80, Andi  BeAndi  B. Roller-Anditt, err => {
+> }).listen(80, undefined, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
->         console.log(`HTTP server listening at 127.0.0.1:80`);
+>         console.log(`HTTP server is listening at http://127.0.0.1/`);
 > });
 > ```
 > 
@@ -707,7 +718,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `res` contains the server's response to the client's request.  
 > Put the string you want to send to the client in the parameter `text`.  
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
-> The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
+> The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`  
 >   
 > The function will return `Angola  Angola  Mutti` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
@@ -980,15 +991,18 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 
 > ### system.inDebugger()
-> Checks if the process is currently running in the debugger environment.  
+> Checks if the process is currently running in a debugger.  
 > This can be useful because some features like child processes and reading from stdin do not work in most debuggers.  
-> Should support all major Node.js debuggers.  
-> Returns `true` if the current process runs in a debugger environment - else returns `false`
+> Should support all major Node.js debuggers, but this is not guaranteed.  
+> Returns `true` if the current process runs in a debugger - else returns `false`  
+>   
+> If `checkArg` is provided, the function searches for a matching command line argument and returns `true` if it was found.  
+> This enables you to explicitly set the debugger state, for example if your debugger isn't properly detected by this function.
 > ```ts
-> scl.system.inDebugger(): boolean
+> scl.system.inDebugger(checkArg?: string): boolean
 > ```
 > 
-> <br><details><summary><b>Example Code - click to show</b></summary>
+> <br><details><summary><b>Basic example code - click to show</b></summary>
 > 
 > ```js
 > const { system, MenuPrompt } = require("svcorelib");
@@ -996,8 +1010,24 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > if(!system.inDebugger())
 > {
 >     // SCL's MenuPrompt doesn't work in some debuggers since it needs to read from process.stdin
->     let mp = new MenuPrompt();
+>     const mp = new MenuPrompt();
 >     // ...
+> }
+> ```
+> 
+> </details>
+> 
+> <br><details><summary><b>Example with custom CLI argument - click to show</b></summary>
+> 
+> ```js
+> const { system } = require("svcorelib");
+> 
+> console.log(process.argv); // [ '.../node.exe', '.../this_file.js', '--debugger-enabled' ]
+> 
+> // explicitly test if `--debugger-enabled` is present in the CLI arguments
+> if(system.inDebugger("--debugger-enabled"))
+> {
+>     console.log("in debugger");
 > }
 > ```
 > 
@@ -1011,7 +1041,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > Prevents the process from being shut down.  
 > This can prevent people from exiting the process using CTRL+C.  
 > Using `process.exit()` in your script will still exit the process though!  
-> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#yesshutdown).
+> If you want the process to be able to be shut down again, use [`scl.yesShutdown()`](#systemyesshutdown).
 >   
 > Note: this only listens for the signals "SIGINT" and "SIGTERM".  
 > Due to many OSes not supporting it, using "SIGKILL" will still kill the process.
@@ -1024,7 +1054,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 
 > ### system.yesShutdown()
-> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#noshutdown).
+> Removes the script shut down prevention that was previously enabled with [`scl.noShutdown()`](#systemnoshutdown).
 > ```ts
 > scl.system.yesShutdown(): void
 > ```
@@ -2351,9 +2381,54 @@ Constructing multiple objects of these classes will not make them interfere with
 This class namespace, accessed with `scl.Errors`, contains all of SCL's custom error classes.  
 They are used by SCL but feel free to also use these.  
 The classes have to be constructed with the `new` keyword.  
-Also, all of these classes inherit from [JavaScript's `Error` class.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+  
+All of these classes extend from the [base class `SCLError`](#errorssclerror), which in turn extends from the [`Error` class.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)  
+The `SCLError` base class adds a property `date`, which is an instance of `Date` and which represents the exact time the error instance was created.
 
 <br><br>
+
+
+<!-- #SECTION SCLError -->
+> ### Errors.SCLError
+> This is the base class of all of SCL's Error classes.
+> 
+> 
+> <br><br>
+> 
+> 
+> > ### Constructor
+> > Constructs a new object of the class `SCLError`  
+> >   
+> > The param `message` is optional. It contains a more detailed error message.
+> > ```ts
+> > new Errors.SCLError(message?: string)
+> > ```
+> 
+> 
+> <br><br><br>
+> 
+> 
+> > **<details><summary>Example Code - Click to view</summary>**
+> > 
+> > ```js
+> > const { Errors, colors } = require("svcorelib");
+> > 
+> > try
+> > {
+> >     throw new SCLError("idk, something probably went wrong");
+> > }
+> > catch(err)
+> > {
+> >     // SCLError exposes the `date` property, which you can use for logging, debugging, etc.:
+> >     console.error(`${colors.fg.red}Error thrown at ${err.date.toString()}: ${colors.rst}${err.toString()}`);
+> > }
+> > ```
+> > 
+> > </details>
+
+
+<br><br><br>
+
 
 <!-- #SECTION InvalidPathError -->
 > ### Errors.InvalidPathError
@@ -2668,13 +2743,9 @@ Please create a backup before using this library if you want to be extra secure 
 ## Security Policy
 [Click here to view the security policy.](./.github/SECURITY.md)
 
-<br>
-
-## Site Notice
-[Click here to view the site notice / Impressum.](https://sv443.net/imprint/en)
-
 
 <br><br><br><br>
+
 
 <div align="center" style="text-align: center">
 

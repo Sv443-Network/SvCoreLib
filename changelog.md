@@ -1,54 +1,66 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.14.1](#1141)
+### Latest version: [1.14.2](#1142)
 
-<br><br>
-
-<details><summary><b>Version History - Click to expand</b></summary>
 
 <br>
 
-**JSLib-npm**
+<details><summary><b>Click to expand version history</b></summary>
 
-- 1.6.0
-    - [1.6.5](#165)
-    - [1.6.6](#166)
-- [1.7.0](#170)
-- [1.8.0](#180)
-    - [1.8.1](#181)
-    - [1.8.2](#182)
-    - [1.8.3](#183)
-    - [1.8.4](#184)
-- [1.9.0](#190)
-    - [1.9.1](#191)
-    - [1.9.2](#192)
-    - [1.9.3](#193)
-    - [1.9.4](#194)
+<br>
 
-**SvCoreLib**
-
-- [1.10.0](#1100)
-- [1.11.0](#1110)
-    - [1.11.1](#1111)
-- [1.12.0](#1120)
-- [1.13.0](#1130)
-    - [1.13.1](#1131)
-- [1.14.0](#1140)
-    - [1.14.1](#1141)
+> **JSLib-npm**
+> 
+> - 1.6.x
+>     - [1.6.5](#165)
+>     - [1.6.6](#166)
+> - [1.7.0](#170)
+> - [1.8.0](#180)
+>     - [1.8.1](#181)
+>     - [1.8.2](#182)
+>     - [1.8.3](#183)
+>     - [1.8.4](#184)
+> - [1.9.0](#190)
+>     - [1.9.1](#191)
+>     - [1.9.2](#192)
+>     - [1.9.3](#193)
+>     - [1.9.4](#194)
+> 
+> **SvCoreLib**
+> 
+> - [1.10.0](#1100)
+> - [1.11.0](#1110)
+>     - [1.11.1](#1111)
+> - [1.12.0](#1120)
+> - [1.13.0](#1130)
+>     - [1.13.1](#1131)
+> - [1.14.0](#1140)
+>     - [1.14.1](#1141)
+>     - [1.14.2](#1142)
+> 
+> <br>
 
 </details>
 
-<br>
-
----
-
 <br><br>
+
+## 1.14.2
+
+- Fixes
+    - Fixed `.d.ts` type declarations ([issue #27](https://github.com/Sv443-Network/SvCoreLib/issues/27))
+    - Fixed `system.inDebugger()` not detecting debugger ([issue #30](https://github.com/Sv443-Network/SvCoreLib/issues/30))
+    - Set `mysql` as a peer dependency ([issue #29](https://github.com/Sv443-Network/SvCoreLib/issues/29))
+    - Improved documentation a little bit
+- Internal stuff
+    - Added CodeQL analysis workflow
+
+<br>
 
 ## 1.14.1
 
 - Fixes
     - `filesystem.exists()` can now actually be used 🤦 ([issue #25](https://github.com/Sv443-Network/SvCoreLib/issues/25))
 
-<br><br>
+<br>
 
 ## 1.14.0
 
@@ -63,14 +75,14 @@
 - Security
     - Audited dependencies
 
-<br><br>
+<br>
 
 ## 1.13.1
 
 - Security:
     - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
 
-<br><br>
+<br>
 
 ## 1.13.0
 ### Migration warnings:
@@ -98,7 +110,7 @@
     - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443/SvCoreLib/issues/21))
     - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443/SvCoreLib/issues/20))
 
-<br><br>
+<br>
 
 ## 1.12.0
 - Added functions
@@ -111,19 +123,19 @@
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 
-<br><br>
+<br>
 
 ## 1.11.1
 - My dumbass left some debug text in
 
-<br><br>
+<br>
 
 ## 1.11.0
 ### The SelectionMenu update
 - Added the class `SelectionMenu` to create a menu with a scrollable list of options a user can select
 - Added the function `allOfType()` to see if all items of an array are of a specified type
 
-<br><br>
+<br>
 
 ## 1.10.0
 ### The initial release

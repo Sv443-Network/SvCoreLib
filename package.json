@@ -1,6 +1,6 @@
 {
   "name": "svcorelib",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "Core Library used in almost all of my (Sv443's) projects. Feel free to use it if you want to, it contains some very nice features.",
   "main": "SvCoreLib.js",
   "scripts": {
@@ -52,7 +52,9 @@
     "deep-diff": "^1.0.2",
     "fs-extra": "^9.0.1",
     "keypress": "^0.2.1",
-    "minimatch": "^3.0.4",
+    "minimatch": "^3.0.4"
+  },
+  "peerDependencies": {
     "mysql": "^2.18.1"
   },
   "devDependencies": {

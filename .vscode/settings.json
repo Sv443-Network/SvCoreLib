@@ -1,20 +1,30 @@
 {
     // requires extension "coenraads.bracket-pair-colorizer-2"
     "bracket-pair-colorizer-2.colors": [
-        "#4B8AE3",
+        "#0f6a8f",
         "#659061",
-        "#41BCA3",
-        "#EDD553",
-        "#E09563",
-        "#B85442"
+        "#41bca3",
+        "#edd553",
+        "#e09563",
+        "#b85442",
+        "#8ced68",
+        "#7d56a6",
     ],
 
     // requires extension "fabiospampinato.vscode-highlight"
+    "highlight.regexFlags": "g",
     "highlight.regexes": {
-        "((jsl\\.|scl\\.)?unused\\([a-zA-Z_,\\[\\]\\s\"'$]+\\);*)": [ // jsl.unused([some_var, some_other_var]); or scl.unused("foo"); or just unused(variable)
+        "((scl\\.)?unused\\([a-zA-Z_,\\[\\]\\s\\-\":.]*\\)\\s*;?)": [ // scl.unused(xy); or just unused(xy);
             {
-                "backgroundColor": "rgba(0, 0, 0, 0.2)",
-                "color": "#f88"
+                "backgroundColor": "inherit",
+                "color": "rgba(221, 102, 102, 0.75)"
+            }
+        ],
+        "(TODO:?)": [ // TODO: or TODO but not todo
+            {
+                "backgroundColor": "#cd5",
+                "color": "#000",
+                "overviewRulerColor": "#cd5"
             }
         ],
         "(#MARKER)": [ // #MARKER test
@@ -25,19 +35,31 @@
                 "overviewRulerColor": "#f41"
             }
         ],
-        "(#SECTION ([^\\S\\r\\n]*\\w+)*[:]*)": [ // #SECTION test
+        "(#SECTION ([^\\S\\r\\n]*[\\w,.\\-_&]+)*[:]*)": [ // #SECTION test, 123 & foo
             {
                 "backgroundColor": "#44f",
                 "color": "white",
                 "overviewRulerColor": "#44f"
             }
         ],
-        "(#DEBUG#?)": [ // #DEBUG# or just #DEBUG
+        "(#DEBUG#?)": [ // #DEBUG# or #DEBUG
             {
                 "backgroundColor": "#ff0",
                 "color": "blue",
                 "overviewRulerColor": "#ff0"
             }
-        ]
+        ],
+        "(IMPORTANT:)": [ // IMPORTANT:
+            {
+                "backgroundColor": "#a22",
+                "color": "#fff"
+            }
+        ],
+        "(FIXME:)": // FIXME:
+        {
+            "backgroundColor": "#a22",
+            "color": "#fff",
+            "overviewRulerColor": "#752020"
+        }
     },
 }

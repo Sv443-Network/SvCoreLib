@@ -2,7 +2,7 @@
 name: Change request
 about: Suggest changes to an already existing feature
 title: "[Change] "
-labels: "✨ enhancement"
+labels: "enhancement"
 assignees: Sv443
 
 ---

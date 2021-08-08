@@ -1,6 +1,6 @@
 function unused(...any)
 {
-    void(any);
+    void any;
     return;
 }
 
