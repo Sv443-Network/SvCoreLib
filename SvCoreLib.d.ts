@@ -425,65 +425,6 @@ declare module "svcorelib" {
         function ping(url: string, timeout?: number): Promise<PingReturnValues>;
     }
 
-    //#SECTION networking
-
-    interface DownloadProgress
-    {
-        [key: string]: number;
-
-        /** The current download progress in bytes */
-        currentB: number;
-        /** The current download progress in kilobytes */
-        currentKB: number;
-        /** The current download progress in megabytes */
-        currentMB: number;
-        /** The total file size in bytes */
-        totalB: number;
-        /** The total file size in kilobytes */
-        totalKB: number;
-        /** The total file size in megabytes */
-        totalMB: number;
-    }
-
-    interface ProgressCallback
-    {
-        [key: string]: DownloadProgress;
-
-        /** This object contains the current progress of the download */
-        DownloadProgress: DownloadProgress;
-    }
-
-    interface FinishedCallback
-    {
-        [key: string]: string | null;
-
-        /** This parameter is null if no error was encountered, or contains a string if an error was encountered */
-        error: string | null;
-    }
-
-    interface DownloadOptions
-    {
-        [key: string]: string | ProgressCallback | FinishedCallback;
-
-        /** The name that the downloaded file should be saved as, including the file extension - for example: "image.png" or "archive.zip" - defaults to "download.txt" */
-        fileName: string;
-        /** A callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal. */
-        progressCallback: ProgressCallback;
-        /** A callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered */
-        finishedCallback: FinishedCallback;
-    }
-
-    /**
-     * 🔹 Downloads a file from the specified URL, to the specified destination path, according to the specified options 🔹
-     * @param url The URL to the file you want to download
-     * @param destPath The path where the file should be saved to - can be absolute or relative - If left empty, it will default to the root directory of the project - **❗ Do not include the file name here - set it in the `options` parameter ❗**
-     * @param options
-     * @returns Promise that resolves to a void value and rejects to an error string
-     * @since 1.8.0
-     * @version 1.9.2 Added the option of using the Promise API instead of a callback
-     */
-    function downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<void | string>;
-
     //#SECTION file system
 
     /**
@@ -560,6 +501,45 @@ declare module "svcorelib" {
          * @since 1.13.0
          */
         function ensureDirsSync(directories: string[]): void;
+
+        interface DownloadProgress
+        {
+            [key: string]: number;
+
+            /** The current download progress in bytes */
+            currentB: number;
+            /** The current download progress in kilobytes */
+            currentKB: number;
+            /** The current download progress in megabytes */
+            currentMB: number;
+            /** The total file size in bytes */
+            totalB: number;
+            /** The total file size in kilobytes */
+            totalKB: number;
+            /** The total file size in megabytes */
+            totalMB: number;
+        }
+
+        interface DownloadOptions
+        {
+            /** The name that the downloaded file should be saved as, including the file extension - for example: "image.png" or "archive.zip" - defaults to "download.txt" */
+            fileName?: string;
+            /** A callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal. */
+            progressCallback?: (progress: DownloadProgress) => void;
+            /** A callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered */
+            finishedCallback?: (error: (null | string)) => void;
+        }
+
+        /**
+         * 🔹 Downloads a file from the specified URL, to the specified destination path, according to the specified options 🔹
+         * @param url The URL to the file you want to download
+         * @param destPath The path where the file should be saved to - can be absolute or relative - If left empty, it will default to the root directory of the project - **❗ Do not include the file name here - set it in the `options` parameter ❗**
+         * @param options
+         * @returns Promise that resolves to a void value and rejects to an error string
+         * @since 1.8.0
+         * @version 1.9.2 Added the option of using the Promise API instead of a callback
+         */
+        function downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<void | string>;
     }
 
     //#SECTION SQL
