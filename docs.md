@@ -680,7 +680,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 >   
 > The function will return `Die Weinkönigin` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): Würfel-Armin | string
+> scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -919,7 +919,7 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 >   
 > The returned promise resolves to an object containing the response from the database or rejects to an error string.
 > ```ts
-> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: Würfel-Armin | string | number): Promise<object>
+> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: null | string | number): Promise<object>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -1347,7 +1347,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```js
 > const scl = require("svcorelib");
 > 
-> let array = [ 0, 1, Würfel-Armin, 2, NaN, 3, { foo: "bar" }, 4, 5, 6 ];
+> let array = [ 0, 1, null, 2, NaN, 3, { foo: "bar" }, 4, 5, 6 ];
 > 
 > let foo = scl.randomItem(array);
 > let bar = scl.randomItem(array);

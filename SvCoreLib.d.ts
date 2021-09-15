@@ -576,7 +576,7 @@ declare module "svcorelib" {
          * @param insertValues [Rest parameter] The values to be inserted into the question marks
          * @since 1.12.0
          */
-        function sendQuery(connection: Connection, query: string, options?: QueryOptions, ...insertValues: any[]): Promise<object>;
+        function sendQuery(connection: Connection, query: string, options?: QueryOptions, ...insertValues: (null | string | number)[]): Promise<object>;
     }
 
     //#SECTION System
