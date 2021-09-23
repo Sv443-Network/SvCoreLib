@@ -47,6 +47,8 @@
 ## 1.15.0
 
 <!-- TODO: -->
+- Fixes
+    - Updated dependencies
 
 <br>
 
