@@ -45,9 +45,9 @@ export interface Stringifiable {
  * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
  *   
  * 
- * @author Sv443
+ * @author [Sv443](https://github.com/Sv443)
  * @license [MIT](https://sv443.net/LICENSE)
- * @version 1.14.2
+ * @version 1.15.0 [(changelog)](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
  * @module svcorelib
  */
 declare module "svcorelib" {
