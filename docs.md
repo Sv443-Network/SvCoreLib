@@ -875,7 +875,8 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > Seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`).  
 > This function does exactly those checks to ensure the seed is valid.  
 >   
-> The `seed` parameter is where you should provide your seed. It can be a string or a number.
+> The `seed` parameter is where you should provide your seed. It can be a string or a number.  
+> It also accepts octal and hexadecimal notation (like `0123` and `0x123`).
 > ```ts
 > scl.seededRNG.validateSeed(seed: number | string): boolean
 > ```

@@ -1,20 +1,16 @@
-const isEmpty = require("../isEmpty");
-
 function validateSeed(seed)
 {
-    let digitCount = null;
-    
-    if(typeof seed == "string")
-        digitCount = parseInt(seed.length);
-    else if(seed != null)
-        digitCount = parseInt(seed.toString().length);
-
-    if(isEmpty(seed) || isEmpty(digitCount) || isNaN(parseInt(digitCount)))
-        throw new Error(`Invalid argument provided for validateSeed() - make sure it is not empty / null / undefined and is of the correct type.\nExpected: "number" or "string", got: "${typeof seed}"`);
+    if(!["string", "number"].includes(typeof(seed)))
+        throw new TypeError(`validateSeed(): expected parameter of type string or number but got '${typeof seed}'`);
 
     seed = seed.toString();
 
-    let regex = new RegExp(`^[0-9]{${digitCount}}`, "gm");
+    if(seed.startsWith("0"))
+        return false;
+
+    const digitCount = seed.length;
+
+    const regex = new RegExp(`^[0-9]{${digitCount}}`, "gm");
 
     if(!seed.match(regex) || seed.match(/\n/gm))
         return false;

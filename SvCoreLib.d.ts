@@ -288,7 +288,7 @@ declare module "svcorelib" {
         
         /**
          * 🔹 Validates a seed to be used in `generateSeededNumbers()` 🔹
-         * @param seed The seed to validate
+         * @param seed The seed to validate - accepts string or number (also accepts octal and hexadecimal notation)
          * @since 1.8.0
          */
         function validateSeed(seed: Seed): boolean;
