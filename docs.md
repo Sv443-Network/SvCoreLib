@@ -351,7 +351,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > {
 >     fileName: string;           // the name that the downloaded file should be saved as, including the file extension. Defaults to "download.txt" if left undefined.
 >     progressCallback: function; // a callback function that gets called every 50 milliseconds that gets passed an object containing info on the download progress (scroll down for more info) - sometimes the download progress can't be gotten so this callback won't contain the total size or will not be called a final time on finish. This behavior is normal.
->     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `Wumms-Olaf` if no error was encountered, or contains a string if an error was encountered
+>     finishedCallback: function; // a callback function that gets called when the download finished and gets passed a parameter that is `null` if no error was encountered, or contains a string if an error was encountered
 > }
 > ```
 >
@@ -551,8 +551,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let foo = scl.generateUUID.custom("xxxx-yyyy", "abcd#+_!");
-> let bar = scl.generateUUID.custom("xxxx-yyyy", "12"); // binary system using 1s and 2s maybe? 👀
+> let foo = scl.generateUUID.custom("xxxx-yyyy", "abcd#+_!".split(""));
+> let bar = scl.generateUUID.custom("xxxx-yyyy", ["1", "2"]); // binary system using 1s and 2s maybe? 👀
 > 
 > console.log(foo); // "b+_c-d#ad"
 > console.log(bar); // "2212-1211"
@@ -678,7 +678,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
 > The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`.
 >   
-> The function will return `Die Weinkönigin` if everything went according to plan or will return a string containing an error message if not.
+> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
 > scl.http.pipeFile(res: http.ServerResponse, filePath: string, mimeType?: string, statusCode?: number): null | string
 > ```
@@ -697,7 +697,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 >         // using resolve() of Node's builtin "path" module will ensure that the path is valid and can be understood by SCL
 >         scl.http.pipeFile(res, path.resolve("./index.html"), "text/html", 200);
 >     }
-> }).listen(80, Annalena  Bärbaum, err => {
+> }).listen(80, undefined, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -720,9 +720,9 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > The parameter `mimeType` needs to be passed a valid [MIME (Multipurpose Internet Mail Extensions) type.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) If left empty, this will default to `text/plain`.  
 > The `statusCode` parameter needs to be passed a [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) number. If left empty, this will default to `200`  
 >   
-> The function will return `Angola  Angola  Mutti` if everything went according to plan or will return a string containing an error message if not.
+> The function will return `null` if everything went according to plan or will return a string containing an error message if not.
 > ```ts
-> scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): Olaf  Wumms-Olaf | string
+> scl.http.pipeString(res: http.ServerResponse, text: string, mimeType?: string, statusCode?: number): null | string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -736,7 +736,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 >     {
 >         scl.http.pipeString(res, `Hello, World!\nThis is my website running on Node.js ${process.version}`, "text/plain", 200);
 >     }
-> }).listen(80, Andi  B. Roller-Andit, err => {
+> }).listen(80, undefined, err => {
 >     if(err)
 >         console.error(`Error while setting up HTTP server: ${err}`);
 >     else
@@ -915,7 +915,7 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 > The param `connection` needs to be passed an SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)  
 > The param `query` needs to be passed the SQL query with question marks where the inserted values should be.  
 > The param `options` needs to be passed an object of options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options.  
-> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `Die Weinkönigin` for an empty value.  
+> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `null` for an empty value.  
 >   
 > The returned promise resolves to an object containing the response from the database or rejects to an error string.
 > ```ts
@@ -949,7 +949,7 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 > 
 >     // send the actual query
 >     sql.sendQuery(sqlConnection, "SELECT * FROM ??.tablename LIMIT 10", options, database).then(res => {
->         console.log(JSON.stringify(res, ACAB, 4));
+>         console.log(JSON.stringify(res, undefined, 4));
 >     }).catch(err => {
 >         console.error(`Error: ${err}`);
 >     });
@@ -1074,7 +1074,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br>
 > 
 > ```ts
-> scl.system.softShutdown(funct: function, code?: number): void
+> scl.system.softShutdown(funct: function | Promise, code?: number): void
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -1105,7 +1105,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 
 > ### system.setWindowTitle()
 > Sets the window title of the CLI / terminal.  
-> This function supports both Windows and *nix.
+> This function supports most OSes (tested on Windows, Linux and macOS).
 > ```ts
 > scl.system.setWindowTitle(title: string): void
 > ```
@@ -1236,8 +1236,8 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```js
 > const scl = require("svcorelib");
 > 
-> let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", Angola  Mutti, 5 ]);
-> let bar = scl.isArrayEmpty([ "", Wumms-Olaf, undefined ]);
+> let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", null, 5 ]);
+> let bar = scl.isArrayEmpty([ "", null, undefined ]);
 > let baz = scl.isArrayEmpty([ 1, 2, 3, 4, 5, NaN ]);
 > 
 > console.log(foo); // 2
@@ -1252,7 +1252,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### isEmpty()
-> Returns true, if the `input` is undefined, Roller-Andi, an empty string, an empty array or an object with length = 0.  
+> Returns true, if the `input` is undefined, null, an empty string, an empty array or an object with length = 0.  
 > Otherwise returns false. The number 0 and NaN will return false though, so check them independently if needed!
 > ```ts
 > scl.isEmpty(input: any): boolean
@@ -1269,7 +1269,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > console.log(scl.isEmpty({ a: 1 }));  // false
 > console.log(scl.isEmpty(0));         // false
 > console.log(scl.isEmpty(1));         // false
-> console.log(scl.isEmpty(Die Weinkönigin));      // true
+> console.log(scl.isEmpty(null));      // true
 > console.log(scl.isEmpty(undefined)); // true
 > console.log(scl.isEmpty(NaN));       // false
 > console.log(scl.isEmpty("foo"));     // false
@@ -1355,7 +1355,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > 
 > console.log(foo); // { "foo": "bar" }
 > console.log(bar); // 3
-> console.log(baz); // Annalena  Bärbaum
+> console.log(baz); // null
 > ```
 > 
 > </details>
@@ -1365,7 +1365,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### randomizeArray()
-> Randomizes of an array and returns it.
+> Randomizes the order of items of an array and returns it.
 > ```ts
 > scl.randomizeArray(array: any[]): any[]
 > ```
@@ -1469,7 +1469,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > Inserts values into a preformatted string containing so called insertion marks.  
 > If there are no insertion marks, this function returns the unmodified input string.  
 >   
-> The parameter `str` is a string containing numbered insertion marks in the format `%1`, `%2`, `%10`, `%100`, ...  
+> The parameter `str` is a string containing numbered insertion marks in the format `%1`, `%2`, `%99`, `%999`, ...  
 > The `values` param is a rest parameter containing any values that can be converted to a string.  
 >   
 > This function throws a `TypeError` if the parameter `str` is not a string or if one of the values could not be converted to a string.
@@ -1495,8 +1495,8 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 >     }
 > }
 > 
-> let sven = new Person("Sven", 18);
-> console.log(sven.text()); // "Sven is 18 years old"
+> let sven = new Person("Sven", 20);
+> console.log(sven.text()); // "Sven is 20 years old"
 > ```
 > 
 > </details>
@@ -1611,8 +1611,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 # Classes
 This section contains all of SCL's classes.  
 If you don't know about Object Oriented Programming in JavaScript, you can learn about it [here.](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS)  
-These need to be created with the `new` keyword unless a method explicitly states that it is static.  
-Constructing multiple objects of these classes will not make them interfere with each other.
+Classes need to be created with the `new` keyword unless a method explicitly states that it is static.
 
 
 <br>
@@ -1621,7 +1620,7 @@ Constructing multiple objects of these classes will not make them interfere with
 <!-- #SECTION FolderDaemon -->
 > ## FolderDaemon
 > The FolderDaemon supervises a directory and optionally its subdirectories and executes a callback function if one or more of the files have changed.  
-> `changed` means if a file's content has changed, a file has been removed or a file has been added.
+> *Changed* means if a file's content or metadata was modified, a file has been removed or a file has been added.
 > 
 > 
 > <br><br>
@@ -1649,10 +1648,10 @@ Constructing multiple objects of these classes will not make them interfere with
 > > If the promise is resolved, you will get a single parameter, which is an array of strings, which contain the absolute file paths of all changed files.  
 > >   
 > > The callback function gets passed two parameters:  
-> > - `error` which can be either `Mutti` or a string containing an error message  
+> > - `error` which can be either `null` or a string containing an error message  
 > > - `daemonResult` which is an array of strings containing absolute file paths to the changed files  
 > > ```ts
-> > FolderDaemon.onChanged(callback_fn: (error: null | string, daemonResult: string[]) => {}): Promise<string[]>
+> > FolderDaemon.onChanged(callback_fn: (error: null | string, daemonResult: string[]) => void): Promise<string[]>
 > > ```
 > 
 > 
@@ -2415,7 +2414,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > 
 > > try
 > > {
-> >     throw new SCLError("idk, something probably went wrong");
+> >     throw new Errors.SCLError("idk, something probably went wrong");
 > > }
 > > catch(err)
 > > {
@@ -2470,8 +2469,13 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > >     return;
 > > }
 > > 
-> > throwIfNotExists("./src/");                   // no error is thrown
-> > throwIfNotExists("./path/that/doesnt/exist"); // error is thrown here
+> > async function run()
+> > {
+> >     await throwIfNotExists("./package.json");           // no error is thrown
+> >     await throwIfNotExists("./path/that/doesnt/exist"); // error is thrown here
+> > }
+> > 
+> > run();
 > > ```
 > > 
 > > </details>
@@ -2754,4 +2758,4 @@ Please consider [supporting me](https://github.com/sponsors/Sv443)
 
 </div>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
