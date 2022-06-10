@@ -613,22 +613,22 @@ declare module "svcorelib" {
          * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers. 🔹  
          * ❗ This function should support all major debuggers but this isn't guaranteed!  
          * If it doesn't detect your debugger, pass the command line argument `--debug` or `--inspect` ❗
-         * @param {string} [checkArg] If provided, checks if this command line argument is present. Makes the function return `true` if it is.
+         * @param checkArg If provided, checks if this command line argument is present. Makes the function return `true` if it is.
          * @returns true, if the process is currently running in a debugger, false if not.
          * @since 1.9.0
          * @version 1.13.0 Moved namespace
-         * @version 1.14.2 Added `inspector.url()` check for better results
+         * @version 1.14.2 Added `inspector.url()` check for better results & added `checkArg` argument
          */
-        function inDebugger(): boolean;
+        function inDebugger(checkArg?: string | Stringifiable): boolean;
 
         /**
          * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
          * @param title The string to set the window title to
-         * @throws Throws a "TypeError" if the parameter `title` is not a string and couldn't be converted to one
+         * @throws Throws a "TypeError" if the parameter `title` is not a string or couldn't be converted to one
          * @since 1.12.0
          * @version 1.13.0 Moved namespace
          */
-        function setWindowTitle(title: string): void;
+        function setWindowTitle(title: string | Stringifiable): void;
     }
 
     //#MARKER classes
