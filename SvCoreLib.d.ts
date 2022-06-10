@@ -122,11 +122,11 @@ declare module "svcorelib" {
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
      * Using an object that contains special JavaScript classes or a circular structure will result in unexpected behavior. 🔹
      * @param obj The object you want to reserialize - if this is not of type `object`, you will just get the original value back
-     * @param immutable Set this to `true` if you want to make the returned object immutable (its properties can't be modified)
-     * @returns Returns the reserialized object or the original value if it is not of type `object`
+     * @param immutable Set this to `true` if you want to make the returned object immutable (its properties can't be modified anymore)
+     * @returns Returns the reserialized object or the unmodified original value if it is not of type `object`
      * @since 1.10.0
      */
-    function reserialize<T extends JSONCompatible>(obj: T, immutable?: boolean): T;
+    function reserialize<O extends JSONCompatible, I extends boolean>(obj: O, immutable?: I): I extends true ? Readonly<O> : O;
 
     /**
      * 🔹 Converts an array to a better readable one 🔹

@@ -50,6 +50,8 @@
     - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
 - Fixes
     - Updated dependencies
+    - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
+    - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
 
 <br>
 
