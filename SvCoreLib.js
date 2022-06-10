@@ -1,7 +1,7 @@
 // SvCoreLib by Sv443 - licensed under the MIT license: https://sv443.net/LICENSE
 // For more information, please read the `README.md` file or go to https://github.com/Sv443-Network/SvCoreLib#readme
 
-module.exports = Object.freeze({
+module.exports = {
     //#MARKER functions
 
     isEmpty:           require("./src/functions/isEmpty"),
@@ -76,4 +76,4 @@ module.exports = Object.freeze({
 
     info:    require("./src/objects/info"),
     colors:  require("./src/objects/colors")
-});
+};
