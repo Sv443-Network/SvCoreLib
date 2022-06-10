@@ -126,7 +126,7 @@ declare module "svcorelib" {
      * @returns Returns the reserialized object or the original value if it is not of type `object`
      * @since 1.10.0
      */
-    function reserialize(obj: JSONCompatible, immutable?: boolean): JSONCompatible;
+    function reserialize<T extends JSONCompatible>(obj: T, immutable?: boolean): T;
 
     /**
      * 🔹 Converts an array to a better readable one 🔹
