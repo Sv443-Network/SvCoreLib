@@ -54,7 +54,7 @@
     "keypress": "^0.2.1",
     "minimatch": "^3.0.4"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "mysql": "^2.18.1"
   },
   "devDependencies": {

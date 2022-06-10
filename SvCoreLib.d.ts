@@ -11,8 +11,11 @@
 */
 
 
+import { EventEmitter } from "events";
 import { ServerResponse, IncomingMessage } from "http";
 import { Connection, QueryOptions } from "mysql";
+
+import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./src/types/SelectionMenu";
 
 
 /**
@@ -914,46 +917,13 @@ declare module "svcorelib" {
 
     //#SECTION SelectionMenu
 
-    /**
-     * An object of settings to be used in the constructor of the `SelectionMenu` class
-     */
-    interface SelectionMenuSettings
+    export interface SelectionMenu
     {
-        [key: string]: boolean | undefined;
-
-        /** Whether or not the user can cancel the prompt with the Esc key */
-        cancelable?: boolean;
-        /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
-        overflow?: boolean;
-    }
-
-    interface SelectionMenuResult {
-        /** If this is `true`, the user has canceled the SelectionMenu by pressing the Escape key */
-        canceled: boolean;
-
-        /** An object containing the index and text of the selected option */
-        option: {
-            /** The zero-based index of the option the user has selected */
-            index: number;
-            /** The description / text of the option the user has selected */
-            description: string;
-        }
-    }
-
-    interface SelectionMenuLocale
-    {
-        [key: string]: string | undefined;
-
-        /** Shorthand name of the escape key - defaults to "Esc" */
-        escKey?: string;
-        /** Cancel text - defaults to "Cancel" */
-        cancel?: string;
-        /** Scroll text - defaults to "Scroll" */
-        scroll?: string;
-        /** Shorthand name of the return key - defaults to "Return" */
-        returnKey?: string;
-        /** Select text - defaults to "Select" */
-        select?: string;
+        /**
+         * 📡 This event is emitted when the user has selected an option or exited the menu 📡
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
+         */
+        on(event: "submit", listener: (result: SelectionMenuResult) => void): this;
     }
 
     /**
@@ -961,7 +931,8 @@ declare module "svcorelib" {
      *   
      * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
      */
-    class SelectionMenu {
+    export class SelectionMenu extends EventEmitter
+    {
         /**
          * Used to translate the SelectionMenu
          */
@@ -974,48 +945,49 @@ declare module "svcorelib" {
          * @param settings The settings of the menu. Leave undefined for the default settings to be applied.
          * @throws Throws a NoStdinError when the currently used terminal doesn't have a stdin stream or isn't a compatible TTY terminal.
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
         constructor(title?: string, settings?: Partial<SelectionMenuSettings>);
 
         /**
-         * 🔹 Registers a function to be called when the user selected an option. 🔹
-         * @param callback_fn 
-         * @returns Returns a Promise that is resolved with the zero-based index number of the selected option
-         * @since 1.11.0
-         */
-        onSubmit(callback_fn: (result: SelectionMenuResult) => any): Promise<SelectionMenuResult>;
-
-        /**
          * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
          * @param options An array of strings which are the options a user can scroll through and select
-         * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns void if the options were set successfully
+         * @throws {TypeError} if the options parameter is not an array of string or null
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        setOptions(options: string[]): string | boolean;
+        setOptions(options: SelectionMenuOption[]): void;
 
         /**
          * 🔹 Adds an option. 🔹
          * @param option
-         * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns void if the option was added
+         * @throws {TypeError} if the option parameter is not a string or null
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        addOption(option: string): string | boolean;
+        addOption(option: SelectionMenuOption): void;
 
         /**
          * 🔹 Opens the SelectionMenu. Make sure not to write anything to the console / stdout / stderr while the menu is open! 🔹
-         * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns a promise that resolves after a user selected an option or exited the menu
+         * @throws {Error} if the menu can't be opened
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        open(): string | boolean;
+        open(): Promise<SelectionMenuResult>;
 
         /**
          * 🔹 Closes the SelectionMenu. 🔹  
-         * ❗ Using this method does **not** call the callback registered with `onSubmit()`
-         * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+         * ❗ Using this method does not emit the event `submit` and it does not resolve the promise returned by `open()`
+         * @returns Returns `true` if the menu was closed, `false` if it couldn't be closed
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        close(): string | boolean;
+        close(): boolean;
     }
+
 
     //#SECTION StatePromise
 

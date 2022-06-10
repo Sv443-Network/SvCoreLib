@@ -195,8 +195,9 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 
 <br>
 
-- Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
-- If you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will be marked with this emoji: 🔸
+- Each piece of documentation will have a description. It is usually delimited from other sections by this emoji: 🔹, unless:
+    - you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will instead be marked with this emoji: 🔸
+    - it is an event that uses the native module "events" with the `.on("event", (data) => {})` syntax, which is marked by this emoji: 📡
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
     Their descriptions should also tell you if there are alternatives.
@@ -2249,11 +2250,19 @@ Constructing multiple objects of these classes will not make them interfere with
 > >     console.error(`Error while submitting SelectionMenu: ${err}`);
 > > });
 > > 
+> > // Alternatively, use the EventEmitter's .on() method
+> > sm.on("submit", (res) => {
+> >     if(res.canceled)
+> >         console.log(`User canceled the SelectionMenu`);
+> >     else
+> >         console.log(`User selected option "${res.option.description}" (index ${res.option.index})`);
+> > });
+> > 
 > > 
 > > // Open the menu
 > > let openRes = sm.open();
 > > 
-> > if(typeof openRes == "string")
+> > if(typeof openRes === "string")
 > >     console.error(`Error while opening SelectionMenu: ${openRes}`);
 > > ```
 > > 
