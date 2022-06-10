@@ -5,7 +5,7 @@
 
     >> If you came here looking for the source code, you're in the wrong file!
     >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
-    >> From there, you can follow the require()'s.
+    >> From there, you can follow the file paths.
 
     >> This file is responsible for the In-IDE documentation and explicit types (usually seen by pressing CTRL+Space or hovering over stuff)
 */
@@ -36,18 +36,16 @@ export interface Stringifiable {
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * 
- * ## SvCoreLib  
- * #### The core library used in almost all projects of the [Sv443 Network](https://sv443.net/) and [Sv443](https://github.com/Sv443)  
+ * ## SvCoreLib
+ * The core library used in almost all projects of the [Sv443 Network](https://sv443.net/) and [Sv443](https://github.com/Sv443)  
  *   
  * ---
  *   
- * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
+ * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [Discord](https://dc.sv443.net)**
  * 
  * ---
  *   
  * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
- *   
- * 
  * @author [Sv443](https://github.com/Sv443)
  * @license [MIT](https://sv443.net/LICENSE)
  * @version 1.15.0 [(changelog)](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
@@ -139,12 +137,12 @@ declare module "svcorelib" {
     function readableArray(array: (string | Stringifiable)[], separators?: string, lastSeparator?: string): string;
 
     /**
-     * 🔹 Transforms the `value` parameter from the numerical range [`range_1_min`-`range_1_max`] to the numerical range [`range_2_min`-`range_2_max`] 🔹
+     * 🔹 Transforms the `value` parameter, which is inside the numerical range [`range_1_min`-`range_1_max`] to where it would be on the numerical range [`range_2_min`-`range_2_max`] 🔹
      * @param value The value from the first numerical range, that you want to transform to a value inside the second numerical range
-     * @param range_1_min The lowest possible value of the first numerical range
-     * @param range_1_max The highest possible value of the first numerical range
-     * @param range_2_min The lowest possible value of the second numerical range
-     * @param range_2_max The highest possible value of the second numerical range
+     * @param range_1_min lowest possible value of the **first** numerical range
+     * @param range_1_max highest possible value of the **first** numerical range
+     * @param range_2_min lowest possible value of the **second** numerical range
+     * @param range_2_max highest possible value of the **second** numerical range
      * @returns Floating point number of `value` inside the second numerical range
      * @throws Throws an error if the arguments are not of type `Number` or the `*_max` argument(s) is/are equal to 0
      * @since 1.8.0
@@ -362,7 +360,7 @@ declare module "svcorelib" {
         /**
          * An encoding's identifier / name
          */
-        type EncodingName = ("br" | "gzip" | "deflate" | "compress" | "identity");
+        type EncodingName = "br" | "gzip" | "deflate" | "compress" | "identity";
 
         /**
          * 🔹 Pipes a file into a HTTP response. This is a tiny bit faster and much more efficient than loading the file into RAM first. 🔹
