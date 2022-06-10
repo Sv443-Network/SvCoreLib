@@ -617,7 +617,7 @@ declare module "svcorelib" {
          * @version 1.13.0 Moved namespace
          * @version 1.14.2 Added `inspector.url()` check for better results & added `checkArg` argument
          */
-        function inDebugger(checkArg?: string | Stringifiable): boolean;
+        function inDebugger(checkArg?: string): boolean;
 
         /**
          * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
