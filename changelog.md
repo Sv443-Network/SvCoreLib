@@ -48,6 +48,7 @@
 <!-- TODO: -->
 - Additions
     - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
+    - Added function `halves(array)` to get the two halves of an array
 - Fixes
     - Updated dependencies
     - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))

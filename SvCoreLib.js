@@ -26,6 +26,7 @@ module.exports = {
     randomizeArray:   imp("functions/randomizeArray"),
     randomItem:       imp("functions/randomItem"),
     removeDuplicates: imp("functions/removeDuplicates"),
+    halves:           imp("functions/halves"),
     insertValues:     imp("functions/insertValues"),
     seededRNG: {
         generateSeededNumbers: imp("functions/seededRNG/generateSeededNumbers"),

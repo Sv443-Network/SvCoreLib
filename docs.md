@@ -81,6 +81,7 @@ Otherwise, see the table of contents just below.
         - [randRange()](#randrange) - returns a random number in the provided range
         - [readableArray()](#readablearray) - converts an array to a better readable string
         - [removeDuplicates()](#removeduplicates) - removes duplicate items in an array
+        - [halves()](#halves) - returns both halves of an array
         - [replaceAt()](#replaceat) - replaces a character in a string with another string
         - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
         - [unused()](#unused) - indicates to a linter that one or more variables are unused
@@ -1459,6 +1460,36 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > let array = scl.removeDuplicates([ 1, 2, 4, 3, 3, 1, 3 ]);
 > 
 > console.log(array); // [ 1, 2, 4, 3 ]
+> ```
+> 
+> </details>
+> </details>
+
+
+<br><br><br>
+
+
+> ### halves()
+> Returns both halves of an array as a tuple.  
+>   
+> If the passed array has one entry, the returned tuple also only has one entry.  
+> If the passed array is empty, the returned array will be empty.
+> ```ts
+> scl.halves(array: any[]): [any[], any[]]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> const halves = scl.halves([ 1, 2, 3, 4, 5, 6, 7 ]);
+> const [first, second] = halves;
+> 
+> console.log(halves); // [ [ 1, 2, 3, 4 ], [ 5, 6, 7 ] ]
+> 
+> console.log(first); // [ 1, 2, 3, 4 ]
+> console.log(second); // [ 5, 6, 7 ]
 > ```
 > 
 > </details>

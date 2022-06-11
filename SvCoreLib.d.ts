@@ -233,6 +233,20 @@ declare module "svcorelib" {
     function removeDuplicates<T>(array: T[]): T[];
 
     /**
+     * 🔹 Returns both halves of an array as a tuple. 🔹
+     * @param array An array of any size, with any values contained inside
+     * @returns Returns a tuple with two array entries, being the first and second half of the array
+     * @since 1.15.0
+     * @example ```js
+     * const [first, second] = halves([ 1, 2, 3, 4, 5 ]);
+     * 
+     * console.log(first);  // [ 1, 2, 3 ]
+     * console.log(second); // [ 4, 5 ]
+     * ```
+     */
+    function halves<T>(array: T[]): [first: T[], second: T[]];
+
+    /**
      * 🔹 Inserts values into a percent-formatted string.  
      * If there are no insertion marks, this function returns the unmodified input string. 🔹
      * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
