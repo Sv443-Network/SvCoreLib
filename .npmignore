@@ -10,3 +10,4 @@ package-npm.json
 test.js
 test.ts
 test.d.ts
+tsconfig.json
