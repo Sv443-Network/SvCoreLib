@@ -393,8 +393,8 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > 
 > async function checkExists()
 > {
->     let foo = await scl.exists("./index.js");
->     let bar = await scl.exists("./path/that/doesn't/exist.txt");
+>     let foo = await scl.files.exists("./index.js");
+>     let bar = await scl.files.exists("./path/that/doesn't/exist.txt");
 > 
 >     console.log(foo); // true
 >     console.log(bar); // false
@@ -404,6 +404,30 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > ```
 > 
 > </details><br>
+
+
+<br><br><br>
+
+
+> ### filesystem.existsSync()
+> Basically the same thing as [files.exists()](#filesexists), but this function blocks code execution until it's finished, making it synchronous.  
+>   
+> ❗ This function uses blocking operations, contrary to the asynchronous [files.exists()](#filesexists) so it is recommended that you try to use the async function over this synchronous one.
+> ```ts
+> scl.files.exists(path: string): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> let foo = scl.files.existsSync("./index.js");
+> let bar = scl.files.existsSync("./path/that/doesn't/exist.txt");
+> 
+> console.log(foo); // true
+> console.log(bar); // false
+> ```
 
 
 <br><br><br>
