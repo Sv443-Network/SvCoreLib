@@ -3,13 +3,13 @@
 
 /**
  * @param {string} path
- * @returns {(...args: any) => void}
+ * @returns {(...args: any) => any}
  */
 const imp = (path) => require(`./src/${path}`);
 
 
 module.exports = {
-    //#MARKER functions
+    //#SECTION functions
 
     isEmpty:          imp("functions/isEmpty"),
     isArrayEmpty:     imp("functions/isArrayEmpty"),
@@ -28,12 +28,12 @@ module.exports = {
     removeDuplicates: imp("functions/removeDuplicates"),
     halves:           imp("functions/halves"),
     insertValues:     imp("functions/insertValues"),
-    seededRNG: {
+    rng: {
         generateSeededNumbers: imp("functions/seededRNG/generateSeededNumbers"),
         generateRandomSeed:    imp("functions/seededRNG/generateRandomSeed"),
         validateSeed:          imp("functions/seededRNG/validateSeed"),
     },
-    generateUUID: {
+    uuid: {
         hexadecimal:    imp("functions/generateUUID/hexadecimal"),
         decimal:        imp("functions/generateUUID/decimal"),
         alphanumerical: imp("functions/generateUUID/alphanumerical"),
@@ -46,7 +46,7 @@ module.exports = {
         getClientEncoding: imp("functions/http/getClientEncoding"),
         ping:              imp("functions/http/ping"),
     },
-    filesystem: {
+    files: {
         readdirRecursive:     imp("functions/filesystem/readdirRecursive"),
         readdirRecursiveSync: imp("functions/filesystem/readdirRecursiveSync"),
         logger:               imp("functions/filesystem/logger"),
@@ -54,6 +54,7 @@ module.exports = {
         ensureDirs:           imp("functions/filesystem/ensureDirs"),
         ensureDirsSync:       imp("functions/filesystem/ensureDirsSync"),
         exists:               imp("functions/filesystem/exists"),
+        existsSync:           imp("functions/filesystem/existsSync"),
     },
     sql: {
         sendQuery: imp("functions/sql/sendQuery"),
@@ -68,7 +69,7 @@ module.exports = {
     },
     pause: imp("functions/system/pause"),
     
-    //#MARKER classes
+    //#SECTION classes
     
     ProgressBar:   imp("classes/ProgressBar"),
     MenuPrompt:    imp("classes/MenuPrompt"),
@@ -76,11 +77,11 @@ module.exports = {
     SelectionMenu: imp("classes/SelectionMenu"),
     StatePromise:  imp("classes/StatePromise"),
 
-    //#SECTION namespaced classes
+    // namespaced classes
 
     Errors: imp("classes/Errors"),
 
-    //#MARKER objects
+    //#SECTION objects
 
     info:   imp("objects/info"),
     colors: imp("objects/colors"),
