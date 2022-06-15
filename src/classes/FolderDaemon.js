@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const diff = require("deep-diff");
 
 const reserialize = require("../functions/reserialize");
-const readdirRecursive = require("../functions/filesystem/readdirRecursive");
+const readdirRecursive = require("../functions/files/readdirRecursive");
 const allOfType = require("../functions/allOfType");
 
 const { InvalidPathError, NotAFolderError, PatternInvalidError } = require("./Errors");

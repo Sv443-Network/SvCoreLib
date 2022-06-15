@@ -68,6 +68,7 @@ Otherwise, see the table of contents just below.
         - [yesShutdown()](#systemyesshutdown) - re-enables process shutdown
         - [softShutdown()](#systemsoftshutdown) - executes a synchronous function before the process exits
         - [setWindowTitle()](#systemsetwindowtitle) - sets the terminal window's title (Windows & *nix)
+        - [pause()](#systempause) - pauses code execution until the user presses a key
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
         - [byteLength()](#bytelength) - returns the length of a string in bytes
@@ -76,7 +77,6 @@ Otherwise, see the table of contents just below.
         - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
         - [isEmpty()](#isempty) - checks if a value is considered empty
         - [mapRange()](#maprange) - maps a number from one numerical range to another
-        - [pause()](#pause) - pauses code execution until the user presses a key
         - [randomItem()](#randomitem) - returns a random item from an array
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
@@ -85,6 +85,8 @@ Otherwise, see the table of contents just below.
         - [halves()](#halves) - returns both halves of an array
         - [replaceAt()](#replaceat) - replaces a character in a string with another string
         - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
+        - [parseDuration()](#parseduration) - parses a duration in milliseconds to days, hours, mins, secs and ms
+        - [formatDuration()](#formatduration) - turns a millisecond duration into a string with a custom format
         - [unused()](#unused) - indicates to a linter that one or more variables are unused
 - **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon) - monitors a folder's contents for changes
@@ -1152,6 +1154,34 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 <br><br><br>
 
 
+> ### system.pause()
+> Asks the user for a key press and then resolves a promise.  
+>   
+> Specify the text to display with the param `text` - if left empty this defaults to "Press any key to continue..."  
+> The promise gets passed the key that the user has pressed.
+> ```ts
+> scl.system.pause(text?: string): Promise<string>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> console.log("Hello, World!");
+> 
+> scl.system.pause("Press any key to exit").then(key => {
+>     console.log(`Pressed key: ${key}\nGoodbye, World!`);
+>     process.exit();
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 <!-- #SECTION Other -->
 ## Other
 This namespace, accessed with just `scl`, offers many miscellaneous functions.  
@@ -1327,34 +1357,6 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > 
 > console.log(foo); // 1
 > console.log(bar); // 15
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
-> ### pause()
-> Asks the user for a key press and then resolves a promise.  
->   
-> Specify the text to display with the param `text` - if left empty this defaults to "Press any key to continue..."  
-> The promise gets passed the key that the user has pressed.
-> ```ts
-> scl.pause(text?: string): Promise<string>
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const scl = require("svcorelib");
-> 
-> console.log("Hello, World!");
-> 
-> scl.pause("Press any key to exit").then(key => {
->     console.log(`Pressed key: ${key}\nGoodbye, World!`);
->     process.exit();
-> });
 > ```
 > 
 > </details>
@@ -1633,6 +1635,74 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 >     console.log(x.foo); // bar
 >     console.log(y.foo); // bar
 > }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### parseDuration()
+> Parses a duration in milliseconds into the larger units; days, hours, minutes, seconds and milliseconds.  
+>   
+> The returned value is an object of type `ParseDurationResult` (see below).  
+>   
+> Throws a TypeError if the `millis` argument is not a number or less than 0.
+> ```ts
+> scl.parseDuration(millis: number): ParseDurationResult
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> console.log(scl.parseDuration(61419000)); // { days: 0, hrs: 17, mins: 3, secs: 39, ms: 0 }
+> ```
+> 
+> </details><br>
+> 
+> ### ParseDurationResult object
+> ```ts
+> {
+>     days: number; // days
+>     hrs: number;  // hours
+>     mins: number; // minutes
+>     secs: number; // seconds
+>     ms: number;   // milliseconds
+> }
+> ```
+
+
+<br><br><br>
+
+
+> ### formatDuration()
+> Formats a duration in milliseconds to a human-friendly string, according to a provided format.  
+>   
+> The format string can contain the following placeholders: `%d` for days, `%h` for hours, `%m` for minutes, `%s` for seconds and `%ms` for milliseconds.  
+> Note that plurality (1 secon**d** vs 2 second**s**) isn't supported yet. Use [`parseDuration()`](#parseduration) instead.  
+>   
+> `leadingZeroes` defaults to true. Set it to false to leave every number as-is, and not add leading zeroes.  
+>   
+> Throws a TypeError if the arguments are invalid or the `millis` argument is less than 0.
+> ```ts
+> scl.formatDuration(millis: number, format: string, leadingZeroes?: boolean): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> const dur = 234219005;
+> 
+> const foo = scl.formatDuration(dur, "%dd, %h:%m:%s.%ms");
+> const bar = scl.formatDuration(dur, "%dd, %h:%m:%s.%ms", false);
+> 
+> console.log(foo); // 2d, 17:03:39.005
+> console.log(bar); // 2d, 17:3:39.5
 > ```
 > 
 > </details>
