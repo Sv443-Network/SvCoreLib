@@ -1498,7 +1498,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ### halves()
 > Returns both halves of an array as a tuple.  
 >   
-> If the passed array has one entry, the returned tuple also only has one entry.  
+> If the passed array has one entry, the second value in the returned tuple will be an empty array.  
 > If the passed array is empty, the returned array will be empty.
 > ```ts
 > scl.halves(array: any[]): [any[], any[]]

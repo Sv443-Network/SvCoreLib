@@ -7,7 +7,7 @@ function halves(arr)
     if(arr.length === 0)
         return [];
     if(arr.length === 1)
-        return [[arr[0]]];
+        return [[arr[0]], []];
 
     const half = Math.ceil(arr.length / 2);
     const first = arr.slice(0, half);
