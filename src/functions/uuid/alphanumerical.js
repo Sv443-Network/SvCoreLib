@@ -12,7 +12,7 @@ function alphanumerical(uuidFormat, upperCase)
     possible = possible.split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.alphanumerical() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.uuid.alphanumerical() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     let regex = /[xy]/gm;
     let match;

@@ -4,7 +4,7 @@ const randRange = require("../randRange");
 function binary(uuidFormat, asBooleanArray)
 {    
     if(typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.binary() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.uuid.binary() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");

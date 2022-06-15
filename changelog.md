@@ -46,13 +46,20 @@
 ## 1.15.0
 
 <!-- TODO: -->
+- Breaking changes
+    - Shortened namespace names:
+        - `generateUUID` -> `uuid`
+        - `filesystem` -> `files`
+    - Renamed functions:
+        - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
+        - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
 - Additions
     - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
     - Added function `halves()` to get the two halves of an array
     - Added function `files.existsSync()` as a synchronous counterpart to `files.exists()`
 - Fixes
     - Updated dependencies
-    - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
+    - `rng.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
     - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
     - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
 

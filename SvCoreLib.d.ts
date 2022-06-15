@@ -260,7 +260,7 @@ declare module "svcorelib" {
      * 🔸 Offers a few functions to generate seeded random numbers.  
      * This means using the same input seed, you will always get the same output number, just like you get the same Minecraft world when using the same seed twice. 🔸
      */
-    namespace rng {
+    namespace seededRNG {
         /**
          * Represents a seed to be used in functions of the `seededRNG` namespace.  
          * Note that seeds can't start with the number `0` as they need to be compatible with both `string` and `number` types
@@ -292,14 +292,14 @@ declare module "svcorelib" {
          * @returns An object containing the seed and the random number in three different formats
          * @since 1.8.0
          */
-        function generateSeededNumbers(count?: number, seed?: Seed): SeededRandomNumbers;
+        function generateNumbers(count?: number, seed?: Seed): SeededRandomNumbers;
         
         /**
          * 🔹 Creates a random seed 🔹
          * @param digitCount How many digits the seed should have - defaults to 10 if left empty
          * @since 1.8.0
          */
-        function generateRandomSeed(digitCount?: number): number;
+        function randomSeed(digitCount?: number): number;
         
         /**
          * 🔹 Validates a seed to be used in `generateSeededNumbers()` 🔹

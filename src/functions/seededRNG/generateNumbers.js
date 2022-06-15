@@ -1,5 +1,5 @@
 const isEmpty = require("../isEmpty");
-const generateRandomSeed = require("./generateRandomSeed");
+const generateRandomSeed = require("./randomSeed");
 const validateSeed = require("./validateSeed");
 
 // thanks to olsn for this code snippet: http://indiegamr.com/generate-repeatable-random-numbers-in-js/
