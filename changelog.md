@@ -54,12 +54,14 @@
         - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
         - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
 - Additions
-    - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
     - Added function `halves()` to get the two halves of an array
+    - Added function `parseDuration()` to parse out time units from a passed duration in milliseconds
+    - Added function `formatDuration()` to convert a duration in milliseconds to a string with custom format
     - Added function `files.existsSync()` as a synchronous counterpart to `files.exists()`
+    - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
 - Fixes
     - Updated dependencies
-    - `rng.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
+    - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
     - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
     - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
 

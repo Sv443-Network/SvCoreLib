@@ -28,10 +28,14 @@ module.exports = {
     removeDuplicates: imp("functions/removeDuplicates"),
     halves:           imp("functions/halves"),
     insertValues:     imp("functions/insertValues"),
-    rng: {
-        generateSeededNumbers: imp("functions/rng/generateSeededNumbers"),
-        generateRandomSeed:    imp("functions/rng/generateRandomSeed"),
-        validateSeed:          imp("functions/rng/validateSeed"),
+    formatDuration:   imp("functions/formatDuration"),
+    parseDuration:    imp("functions/parseDuration"),
+
+    // namespaces
+    seededRNG: {
+        randomSeed:      imp("functions/seededRNG/randomSeed"),
+        generateNumbers: imp("functions/seededRNG/generateNumbers"),
+        validateSeed:    imp("functions/seededRNG/validateSeed"),
     },
     uuid: {
         hexadecimal:    imp("functions/uuid/hexadecimal"),
@@ -66,11 +70,11 @@ module.exports = {
         noShutdown:     imp("functions/system/noShutdown"),
         yesShutdown:    imp("functions/system/yesShutdown"),
         setWindowTitle: imp("functions/system/setWindowTitle"),
+        pause:          imp("functions/system/pause"),
     },
-    pause: imp("functions/system/pause"),
-    
+
     //#SECTION classes
-    
+
     ProgressBar:   imp("classes/ProgressBar"),
     MenuPrompt:    imp("classes/MenuPrompt"),
     FolderDaemon:  imp("classes/FolderDaemon"),

@@ -126,6 +126,26 @@ declare module "svcorelib" {
      */
     function reserialize<O extends JSONCompatible, I extends boolean>(obj: O, immutable?: I): I extends true ? Readonly<O> : O;
 
+    type ParseDurationResult = Record<"days" | "hrs" | "mins" | "secs" | "ms", number>;
+
+    /**
+     * 🔹 Parses a duration in milliseconds into the larger units; days, hours, minutes, seconds and milliseconds 🔹
+     * @param millis The duration in milliseconds
+     * @throws Throws a TypeError if `millis` is not a number or less than 0
+     * @since 1.15.0
+     */
+    function parseDuration(millis: number): ParseDurationResult;
+
+    /**
+     * 🔹 Formats a duration in milliseconds to a human-friendly string, according to a provided format 🔹
+     * @param millis The duration in milliseconds
+     * @param format The format of the duration. Use the following placeholders: `%d` for days, `%h` for hours, `%m` for minutes, `%s` for seconds and `%ms` for milliseconds
+     * @param leadingZeroes Whether to pad the numbers with leading zero(es). Defaults to true
+     * @throws Throws a TypeError if the parameters are invalid or `millis` is less than 0
+     * @since 1.15.0
+     */
+    function formatDuration(millis: number, format: string, leadingZeroes?: boolean): string;
+
     /**
      * 🔹 Converts an array to a better readable one 🔹
      * @param array The array you want to make readable
@@ -166,15 +186,6 @@ declare module "svcorelib" {
      * @since 1.8.0
      */
     function replaceAt(input: string, index: number, replacement: string): string;
-
-    /**
-     * 🔹 Waits for the user to press a key and then resolves a Promise 🔹
-     * @param text The text to display - if left empty this defaults to "Press any key to continue..."
-     * @returns Passes the pressed key in the resolution or the error message in the rejection
-     * @since 1.9.0
-     * @version 1.9.3 Events are now being correctly unregistered
-     */
-    function pause(text?: string): Promise<string>;
 
     /**
      * 🔹 Returns the length of a string in bytes.  
@@ -651,6 +662,15 @@ declare module "svcorelib" {
          * @version 1.13.0 Moved namespace
          */
         function setWindowTitle(title: string | Stringifiable): void;
+
+        /**
+         * 🔹 Waits for the user to press a key and then resolves a Promise 🔹
+         * @param text The text to display - if left empty this defaults to "Press any key to continue..."
+         * @returns Passes the pressed key in the resolution or the error message in the rejection
+         * @since 1.9.0
+         * @version 1.9.3 Events are now being correctly unregistered
+         */
+        function pause(text?: string): Promise<string>;
     }
 
     //#MARKER classes
