@@ -1,18 +1,17 @@
-const fs = require("fs-extra");
+const { pathExists } = require("fs-extra");
 const { resolve } = require("path");
 
 
-function exists(path)
+async function exists(path)
 {
-    path = resolve(path);
-
-    return new Promise((pRes) => {
-        fs.access(path).then(() => {
-            return pRes(true);
-        }).catch(() => {
-            return pRes(false);
-        });
-    });
+    try
+    {
+        return await pathExists(resolve(path));
+    }
+    catch(_e)
+    {
+        return false;
+    }
 }
 
 module.exports = exists;

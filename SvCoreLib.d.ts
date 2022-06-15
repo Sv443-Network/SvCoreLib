@@ -490,11 +490,11 @@ declare module "svcorelib" {
 
         /**
          * 🔹 This function checks if a file exists at the given path.  
-         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
+         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback)) 🔹
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
          * @returns Returned Promise always resolves to a boolean (and never rejects) - true, if the file exists, false if not
-         * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
          * @since 1.13.0
+         * @version 1.15.0 Now using [`fs-extra`](https://npmjs.com/package/fs-extra)'s `pathExists()`
          */
         function exists(path: string): Promise<boolean>;
 
