@@ -1,24 +1,39 @@
+const { EventEmitter } = require("events");
+
 const allOfType = require("../functions/allOfType");
 const unused = require("../functions/unused");
+const keypress = require("keypress");
 
 const { NoStdinError } = require("./Errors");
 
 const col = require("../objects/colors").fg;
 
+
+/** @typedef {import("../types/SelectionMenu").SelectionMenuResult} SelectionMenuResult */
+
+
 const inputCooldown = 35;
 
 
-class SelectionMenu
+keypress(process.stdin);
+
+
+// TODO: refactor this according to .d.ts
+
+class SelectionMenu extends EventEmitter
 {
+    /* Emits events:
+     * "submit" - called when user submits an option - (result: SelectionMenuResult) => {}
+     */
+
     constructor(title, settings)
     {
+        super();
+
         if(!process.stdin || !process.stdin.isTTY || typeof process.stdin.setRawMode != "function")
             throw new NoStdinError(`The current terminal doesn't have a stdin stream or is not a compatible TTY terminal.`);
 
-
-        require("keypress")(process.stdin);
-
-        if(settings == undefined || typeof settings != "object")
+        if(settings === undefined || typeof settings !== "object")
         {
             settings = {
                 overflow: true,   // if the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side?
@@ -28,20 +43,16 @@ class SelectionMenu
         else
         {
             settings = {
-                overflow: (typeof settings.overflow == "boolean" ? settings.overflow : true),
-                cancelable: (typeof settings.cancelable == "boolean" ? settings.cancelable : true)
+                overflow: (typeof settings.overflow === "boolean" ? settings.overflow : true),
+                cancelable: (typeof settings.cancelable === "boolean" ? settings.cancelable : true)
             }
         }
 
-        this.promiseRes = () => {};
-        this.promiseRej = () => {};
-        this.callbackFn = () => {};
-
-        this.title = (typeof title == "string" || typeof title == "number") ? title.toString() : null;
+        this.title = (typeof title === "string" || typeof title === "number") ? title.toString() : null;
         this.settings = settings;
         this.options = [];
         this.optIndex = 0;
-        
+
         this.locale = {
             escKey: "Esc",
             cancel: "Cancel",
@@ -54,8 +65,8 @@ class SelectionMenu
     setOptions(options)
     {
         if(!Array.isArray(options) || (Array.isArray(options) && !allOfType(options, "string")))
-            return `Parameter "options" is not an array of strings`;
-        
+            throw new TypeError(`Parameter "options" is not an array of strings`);
+
         this.options = options;
         return true;
     }
@@ -197,6 +208,8 @@ class SelectionMenu
         };
 
         this.clearConsole();
+
+        this.emit("submit", retObj);
 
         this.callbackFn(retObj);
         this.promiseRes(retObj);

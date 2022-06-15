@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.14.2](#1142)
+### Latest version: [1.15.0](#1150)
 
 
 <br>
@@ -8,40 +8,62 @@
 
 <br>
 
-> **JSLib-npm**
+> **SvCoreLib**
+> - [1.15.0](#1150)
+> - [1.14.0](#1140)
+>     - [1.14.1](#1141)
+>     - [1.14.2](#1142)
+> - [1.13.0](#1130)
+>     - [1.13.1](#1131)
+> - [1.12.0](#1120)
+> - [1.11.0](#1110)
+>     - [1.11.1](#1111)
+> - [1.10.0](#1100)
 > 
-> - 1.6.x
->     - [1.6.5](#165)
->     - [1.6.6](#166)
-> - [1.7.0](#170)
-> - [1.8.0](#180)
->     - [1.8.1](#181)
->     - [1.8.2](#182)
->     - [1.8.3](#183)
->     - [1.8.4](#184)
+> **JSLib-npm** (deprecated)
 > - [1.9.0](#190)
 >     - [1.9.1](#191)
 >     - [1.9.2](#192)
 >     - [1.9.3](#193)
 >     - [1.9.4](#194)
+> - [1.8.0](#180)
+>     - [1.8.1](#181)
+>     - [1.8.2](#182)
+>     - [1.8.3](#183)
+>     - [1.8.4](#184)
+> - [1.7.0](#170)
+> - 1.6.x
+>     - [1.6.5](#165)
+>     - [1.6.6](#166)
 > 
-> **SvCoreLib**
-> 
-> - [1.10.0](#1100)
-> - [1.11.0](#1110)
->     - [1.11.1](#1111)
-> - [1.12.0](#1120)
-> - [1.13.0](#1130)
->     - [1.13.1](#1131)
-> - [1.14.0](#1140)
->     - [1.14.1](#1141)
->     - [1.14.2](#1142)
 > 
 > <br>
 
 </details>
 
 <br><br>
+
+## 1.15.0
+- Breaking changes
+    - Shortened namespace names:
+        - `generateUUID` -> `uuid`
+        - `filesystem` -> `files`
+    - Renamed functions:
+        - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
+        - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
+- Additions
+    - Added function `halves()` to get the two halves of an array
+    - Added function `parseDuration()` to parse out time units from a passed duration in milliseconds
+    - Added function `formatDuration()` to convert a duration in milliseconds to a string with custom format
+    - Added function `files.existsSync()` as a synchronous counterpart to `files.exists()`
+    - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
+- Fixes
+    - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
+    - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
+    - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
+    - Updated dependencies
+
+<br>
 
 ## 1.14.2
 

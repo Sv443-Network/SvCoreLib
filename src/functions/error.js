@@ -1,5 +1,5 @@
 const isEmpty = require("./isEmpty");
-const logger = require("./filesystem/logger");
+const logger = require("./files/logger");
 
 function error(cause, log_file_path, shutdown, status, consoleMsg)
 {

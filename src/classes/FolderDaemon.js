@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const diff = require("deep-diff");
 
 const reserialize = require("../functions/reserialize");
-const readdirRecursive = require("../functions/filesystem/readdirRecursive");
+const readdirRecursive = require("../functions/files/readdirRecursive");
 const allOfType = require("../functions/allOfType");
 
 const { InvalidPathError, NotAFolderError, PatternInvalidError } = require("./Errors");
@@ -23,31 +23,18 @@ class FolderDaemon
 {
     constructor(dirPath, options)
     {
-        // TODO: parse options object
-        if(typeof options !== "object")
-        {
-            this.options = {
-                whitelist: [],
-                blacklist: [],
-                recursive: false,
-                updateInterval: 500
-            };
-        }
-        else
-        {
-            if(options.whitelist != undefined && (!Array.isArray(options.whitelist) || !allOfType(options.whitelist, "string")))
-                throw new PatternInvalidError(`Whitelist glob pattern parameter was provided but is not an array containing strings`);
+        if(options.whitelist != undefined && (!Array.isArray(options.whitelist) || !allOfType(options.whitelist, "string")))
+            throw new PatternInvalidError(`Whitelist glob pattern parameter was provided but is not an array containing strings`);
 
-            if(options.blacklist != undefined && (!Array.isArray(options.blacklist) || !allOfType(options.blacklist, "string")))
-                throw new PatternInvalidError(`Blacklist glob pattern parameter was provided but is not an array containing strings`);
+        if(options.blacklist != undefined && (!Array.isArray(options.blacklist) || !allOfType(options.blacklist, "string")))
+            throw new PatternInvalidError(`Blacklist glob pattern parameter was provided but is not an array containing strings`);
 
-            this.options = {
-                whitelist: options.whitelist || [],
-                blacklist: options.blacklist || [],
-                recursive: typeof options.recursive === "boolean" ? options.recursive : false ,
-                updateInterval: typeof options.updateInterval === "number" ? parseInt(options.updateInterval) : 500
-            };
-        }
+        this.options = {
+            whitelist: options.whitelist || [],
+            blacklist: options.blacklist || [],
+            recursive: typeof options.recursive === "boolean" ? options.recursive : false ,
+            updateInterval: typeof options.updateInterval === "number" ? parseInt(options.updateInterval) : 500
+        };
 
         if(this.options.blacklist.length > 0 && this.options.whitelist.length > 0)
             throw new TypeError(`Invalid option parameters: Can't use a whitelist and blacklist at the same time.`);

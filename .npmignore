@@ -9,4 +9,5 @@ package-npm.json
 .editorconfig
 test.js
 test.ts
-docs.md
+test.d.ts
+tsconfig.json

@@ -36,3 +36,4 @@ typings/
 # dev test files
 test.js
 test.ts
+test.d.ts

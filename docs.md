@@ -36,28 +36,29 @@ Otherwise, see the table of contents just below.
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
     - [File System](#file-system)
-        - [downloadFile()](#filesystemdownloadfile) - downloads a file from a provided URL
-        - [exists()](#filesystemexists) - modern reimplementation of the deprecated `fs.exists()`
-        - [logger()](#filesystemlogger) - logs an error message to the console and/or a log file
-        - [readdirRecursive()](#filesystemreaddirrecursive) - async function that recursively searches through a directory
-        - [readdirRecursiveSync()](#filesystemreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
-        - [ensureDirs()](#filesystemensuredirs) - ensures a set of directories exist and creates them if not
-        - [ensureDirsSync()](#filesystemensuredirssync) - synchronous counterpart to `ensureDirs()`
-    - [Generate UUID](#generate-uuid)
-        - [alphanumerical()](#generateuuidalphanumerical) - generates an alphanumerical UUID
-        - [binary()](#generateuuidbinary) - generates a binary UUID
-        - [custom()](#generateuuidcustom) - generates a custom UUID
-        - [decimal()](#generateuuiddecimal) - generates a decimal UUID
-        - [hexadecimal()](#generateuuidhexadecimal) - generates a hexadecimal UUID
+        - [downloadFile()](#filesdownloadfile) - downloads a file from a provided URL
+        - [exists()](#filesexists) - reimplementation of the deprecated `fs.exists()`
+        - [existsSync()](#filesexistssync) - synchronous counterpart to `exists()`
+        - [logger()](#fileslogger) - logs an error message to the console and/or a log file
+        - [readdirRecursive()](#filesreaddirrecursive) - async function that recursively searches through a directory
+        - [readdirRecursiveSync()](#filesreaddirrecursivesync) - synchronous counterpart to `readdirRecursive()`
+        - [ensureDirs()](#filesensuredirs) - ensures a set of directories exist and creates them if not
+        - [ensureDirsSync()](#filesensuredirssync) - synchronous counterpart to `ensureDirs()`
+    - [UUID](#uuid)
+        - [alphanumerical()](#uuidalphanumerical) - generates an alphanumerical UUID
+        - [binary()](#uuidbinary) - generates a binary UUID
+        - [custom()](#uuidcustom) - generates a custom UUID
+        - [decimal()](#uuiddecimal) - generates a decimal UUID
+        - [hexadecimal()](#uuidhexadecimal) - generates a hexadecimal UUID
     - [HTTP](#http)
         - [getClientEncoding()](#httpgetclientencoding) - gets the most efficient encoding from a client request
         - [pipeFile()](#httppipefile) - sends a file to a client
         - [pipeString()](#httppipestring) - sends a string to a client
         - [ping()](#httpping) - pings a specified URL
     - [Seeded RNG](#seeded-rng)
-        - [generateRandomSeed()](#seededrnggeneraterandomseed) - generates a random seed
-        - [generateSeededNumbers()](#seededrnggenerateseedednumbers) - generates numbers based on a seed
-        - [validateSeed()](#seededrngvalidateseed) - validates a seed
+        - [randomSeed()](#rngrandomseed) - generates a random seed
+        - [generateNumbers()](#rnggeneratenumbers) - generates numbers based on a seed
+        - [validateSeed()](#rngvalidateseed) - validates a seed
     - [SQL](#sql)
         - [sendQuery()](#sqlsendquery) - sends a SQL query
     - [System](#system)
@@ -67,6 +68,7 @@ Otherwise, see the table of contents just below.
         - [yesShutdown()](#systemyesshutdown) - re-enables process shutdown
         - [softShutdown()](#systemsoftshutdown) - executes a synchronous function before the process exits
         - [setWindowTitle()](#systemsetwindowtitle) - sets the terminal window's title (Windows & *nix)
+        - [pause()](#systempause) - pauses code execution until the user presses a key
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
         - [byteLength()](#bytelength) - returns the length of a string in bytes
@@ -75,14 +77,16 @@ Otherwise, see the table of contents just below.
         - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
         - [isEmpty()](#isempty) - checks if a value is considered empty
         - [mapRange()](#maprange) - maps a number from one numerical range to another
-        - [pause()](#pause) - pauses code execution until the user presses a key
         - [randomItem()](#randomitem) - returns a random item from an array
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
         - [readableArray()](#readablearray) - converts an array to a better readable string
         - [removeDuplicates()](#removeduplicates) - removes duplicate items in an array
+        - [halves()](#halves) - returns both halves of an array
         - [replaceAt()](#replaceat) - replaces a character in a string with another string
         - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
+        - [parseDuration()](#parseduration) - parses a duration in milliseconds to days, hours, mins, secs and ms
+        - [formatDuration()](#formatduration) - turns a millisecond duration into a string with a custom format
         - [unused()](#unused) - indicates to a linter that one or more variables are unused
 - **[Classes](#classes)**
     - [FolderDaemon](#folderdaemon) - monitors a folder's contents for changes
@@ -195,8 +199,9 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 
 <br>
 
-- Each piece of documentation will have a description. It is delimited from other sections by this emoji: 🔹
-- If you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will be marked with this emoji: 🔸
+- Each piece of documentation will have a description. It is usually delimited from other sections by this emoji: 🔹, unless:
+    - you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will instead be marked with this emoji: 🔸
+    - it is an event that uses the native module "events" with the `.on("event", (data) => {})` syntax, which is marked by this emoji: 📡
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
     Their descriptions should also tell you if there are alternatives.
@@ -215,16 +220,16 @@ You have to call these *without* creating a class instance (without using the `n
 
 <br>
 
-<!-- #SECTION File System -->
-## File System
-This namespace, accessed with `scl.filesystem`, contains a few file-related functions.
+<!-- #SECTION Files -->
+## Files
+This namespace, accessed with `scl.files`, contains a few filesystem-related functions.
 
 <br><br>
 
-> ### filesystem.logger()
+> ### files.logger()
 > This function logs a message to a file
 > ```ts
-> scl.filesystem.logger(path: string, content?: string, options?: LoggerOptions): void
+> scl.files.logger(path: string, content?: string, options?: LoggerOptions): void
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -237,7 +242,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 >     append_bottom: true
 > };
 > 
-> scl.filesystem.logger("./error.log", "There was an error while ...", opts);
+> scl.files.logger("./error.log", "There was an error while ...", opts);
 > ```
 > 
 > </details><br>
@@ -254,15 +259,15 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br>
 
 
-> ### filesystem.readdirRecursive()
+> ### files.readdirRecursive()
 > Used to recursively search through a directory, returning an array of all files and folders contained within.  
 > The returned paths are always absolute, meaning they start on `C:\` (Windows) or `/` (Unix).  
 > If you want relative paths instead, use the function [`relative()`](https://nodejs.org/api/path.html#path_path_relative_from_to) of Node's builtin `path` module.  
 >   
 > This is an asynchronous function. You can either pass a callback function as the second parameter or use the Promise API (`.then()`).  
-> This function is less resource-heavy than the synchronous [filesystem.readdirRecursiveSync()](#filesystemreaddirrecursivesync) and it doesn't block the execution of the rest of your code so it is recommended that you try to use this function over the synchronous one.
+> This function is less resource-heavy than the synchronous [files.readdirRecursiveSync()](#filesreaddirrecursivesync) and it doesn't block the execution of the rest of your code so it is recommended that you try to use this function over the synchronous one.
 > ```ts
-> scl.filesystem.readdirRecursive(folder: string, callback?: function): Promise<string[]>
+> scl.files.readdirRecursive(folder: string, callback?: function): Promise<string[]>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -270,7 +275,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > ```js
 > const scl = require("svcorelib");
 > 
-> scl.filesystem.readdirRecursive("./").then(result => {
+> scl.files.readdirRecursive("./").then(result => {
 >     console.log(result);
 >     /*
 >         [
@@ -286,12 +291,12 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br>
 
 
-> ### filesystem.readdirRecursiveSync()
-> Basically the same thing as [filesystem.readdirRecursive()](#filesystemreaddirrecursive), but this function blocks code execution until it's finished, making it synchronous.  
+> ### files.readdirRecursiveSync()
+> Basically the same thing as [files.readdirRecursive()](#filesreaddirrecursive), but this function blocks code execution until it's finished, making it synchronous.  
 >   
-> ❗ This function uses blocking operations, contrary to the asynchronous [filesystem.readdirRecursive()](#filesystemreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
+> ❗ This function uses blocking operations, contrary to the asynchronous [files.readdirRecursive()](#filesreaddirrecursive) so it is recommended that you try to use the async function over this synchronous one.
 > ```ts
-> scl.filesystem.readdirRecursiveSync(folder: string): string[]
+> scl.files.readdirRecursiveSync(folder: string): string[]
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -299,7 +304,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > ```js
 > const scl = require("svcorelib");
 > 
-> let paths = scl.filesystem.readdirRecursive("./");
+> let paths = scl.files.readdirRecursive("./");
 > 
 > console.log(paths);
 > /*
@@ -315,12 +320,12 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br>
 
 
-> ### filesystem.downloadFile()
+> ### files.downloadFile()
 > Downloads a file from the specified `url` and puts it in the folder at the specified `destPath`.  
 > The parameter `options` needs to be an object of type DownloadOptions (scroll down for definition).  
 > The function will return a Promise that resolves to a void value or rejects to an error message string.  
 > ```ts
-> scl.filesystem.downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<string | void>
+> scl.files.downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<string | void>
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -341,7 +346,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 >     }
 > };
 > 
-> scl.filesystem.downloadFile("https://example.org/", "./", opts);
+> scl.files.downloadFile("https://example.org/", "./", opts);
 > ```
 > 
 > </details><br>
@@ -370,7 +375,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 
 <br><br><br>
 
-> ### filesystem.exists()
+> ### files.exists()
 > This function checks if a file exists at the given path.  
 > (Reimplementation of [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`)  
 >   
@@ -381,7 +386,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > This function throws a `TypeError` if the `path` argument is not a string or couldn't be resolved to a valid path.
 > 
 > ```ts
-> scl.filesystem.exists(path: string): Promise<boolean>;
+> scl.files.exists(path: string): Promise<boolean>;
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -391,8 +396,8 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > 
 > async function checkExists()
 > {
->     let foo = await scl.exists("./index.js");
->     let bar = await scl.exists("./path/that/doesn't/exist.txt");
+>     let foo = await scl.files.exists("./index.js");
+>     let bar = await scl.files.exists("./path/that/doesn't/exist.txt");
 > 
 >     console.log(foo); // true
 >     console.log(bar); // false
@@ -407,14 +412,38 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br>
 
 
-> ### filesystem.ensureDirs()
+> ### files.existsSync()
+> Basically the same thing as [files.exists()](#filesexists), but this function blocks code execution until it's finished, making it synchronous.  
+>   
+> ❗ This function uses blocking operations, contrary to the asynchronous [files.exists()](#filesexists) so it is recommended that you try to use the async function over this synchronous one.
+> ```ts
+> scl.files.exists(path: string): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> let foo = scl.files.existsSync("./index.js");
+> let bar = scl.files.existsSync("./path/that/doesn't/exist.txt");
+> 
+> console.log(foo); // true
+> console.log(bar); // false
+> ```
+
+
+<br><br><br>
+
+
+> ### files.ensureDirs()
 > This function ensures a set of directories exists and creates them if not.  
 >   
 > A path of the `directories` parameter can also contain sub-directories (see example).  
 > In this case the full path will also be created if it doesn't exist.
 > 
 > ```ts
-> scl.filesystem.ensureDirs(directories: string[]): Promise<void>;
+> scl.files.ensureDirs(directories: string[]): Promise<void>;
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -427,7 +456,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > 
 > async function init()
 > {
->     await filesystem.ensureDirs(dirs);
+>     await files.ensureDirs(dirs);
 > }
 > 
 > init();
@@ -439,16 +468,16 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br>
 
 
-> ### filesystem.ensureDirsSync()
+> ### files.ensureDirsSync()
 > This function ensures a set of directories exists and creates them if not.  
 >   
 > A path of the `directories` parameter can also contain sub-directories (see example).  
 > In this case the full path will also be created if it doesn't exist.  
 >   
->  ❗ This function blocks the main thread, contrary to the asynchronous [filesystem.ensureDirs()](#filesystemensuredirs) so it is recommended that you try to use the async function over this synchronous one.
+>  ❗ This function blocks the main thread, contrary to the asynchronous [files.ensureDirs()](#filesensuredirs) so it is recommended that you try to use the async function over this synchronous one.
 > 
 > ```ts
-> scl.filesystem.ensureDirsSync(directories: string[]): void;
+> scl.files.ensureDirsSync(directories: string[]): void;
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -461,7 +490,7 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 > 
 > function init()
 > {
->     filesystem.ensureDirsSync(dirs);
+>     files.ensureDirsSync(dirs);
 > }
 > 
 > init();
@@ -473,9 +502,9 @@ This namespace, accessed with `scl.filesystem`, contains a few file-related func
 <br><br><br><br>
 
 
-<!-- #SECTION Generate UUID -->
-## Generate UUID
-This namespace, accessed with `scl.generateUUID`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
+<!-- #SECTION UUID -->
+## UUID
+This namespace, accessed with `scl.uuid`, offers a few functions to generate Universally Unique Identifiers (UUIDs).  
   
 One thing these functions all have in common is the `uuidFormat` parameter.  
 This parameter is a string that should contain the characters `x` and `y`. These letters will be replaced by random letters or numbers, while any other characters are left untouched.  
@@ -486,12 +515,12 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 <br><br>
 
 
-> ### generateUUID.alphanumerical()
+> ### uuid.alphanumerical()
 > This function generates an alphanumerical (`A-Z0-9` or `a-z0-9`) UUID.  
-> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> The parameter `uuidFormat` is explained [here.](#uuid)  
 > If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
 > ```ts
-> scl.generateUUID.alphanumerical(uuidFormat: string, upperCase?: boolean): string
+> scl.uuid.alphanumerical(uuidFormat: string, upperCase?: boolean): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -499,7 +528,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let uuid = scl.generateUUID.alphanumerical("xxxx-yyyy", true);
+> let uuid = scl.uuid.alphanumerical("xxxx-yyyy", true);
 > 
 > console.log(uuid); // "U45A-AS6X"
 > ```
@@ -510,12 +539,12 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 <br><br><br>
 
 
-> ### generateUUID.binary()
+> ### uuid.binary()
 > This function generates a binary (`0-1` or `true-false`) UUID.  
-> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> The parameter `uuidFormat` is explained [here.](#uuid)  
 > If the parameter `asBooleanArray` is set to `true`, the resulting UUID will be an array of booleans. Any characters of the `uuidFormat` that aren't `x` or `y` will then be ignored.
 > ```ts
-> scl.generateUUID.binary(uuidFormat: string, asBooleanArray?: boolean): string | boolean[]
+> scl.uuid.binary(uuidFormat: string, asBooleanArray?: boolean): string | boolean[]
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -523,8 +552,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let foo = scl.generateUUID.binary("xxxx-yyyy");
-> let bar = scl.generateUUID.binary("xxxx", true);
+> let foo = scl.uuid.binary("xxxx-yyyy");
+> let bar = scl.uuid.binary("xxxx", true);
 > 
 > console.log(foo); // "1110-1010"
 > console.log(bar); // [ true, true, false, true ]
@@ -536,14 +565,14 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 <br><br><br>
 
 
-> ### generateUUID.custom()
+> ### uuid.custom()
 > This function generates a custom UUID.  
 >   
-> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> The parameter `uuidFormat` is explained [here.](#uuid)  
 >   
 > The parameter `possibleValues` needs to be a string array of characters that should be used to generate the UUID.  
 > ```ts
-> scl.generateUUID.custom(uuidFormat: string, possibleValues: string[]): string
+> scl.uuid.custom(uuidFormat: string, possibleValues: string[]): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -551,8 +580,8 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let foo = scl.generateUUID.custom("xxxx-yyyy", "abcd#+_!".split(""));
-> let bar = scl.generateUUID.custom("xxxx-yyyy", ["1", "2"]); // binary system using 1s and 2s maybe? 👀
+> let foo = scl.uuid.custom("xxxx-yyyy", "abcd#+_!".split(""));
+> let bar = scl.uuid.custom("xxxx-yyyy", ["1", "2"]); // binary system using 1s and 2s maybe? 👀
 > 
 > console.log(foo); // "b+_c-d#ad"
 > console.log(bar); // "2212-1211"
@@ -564,12 +593,12 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 <br><br><br>
 
 
-> ### generateUUID.decimal()
+> ### uuid.decimal()
 > This function generates a decimal (`0-9`) UUID.  
 >   
-> The parameter `uuidFormat` is explained [here.](#generate-uuid)
+> The parameter `uuidFormat` is explained [here.](#uuid)
 > ```ts
-> scl.generateUUID.decimal(uuidFormat: string): string
+> scl.uuid.decimal(uuidFormat: string): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -577,7 +606,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let uuid = scl.generateUUID.decimal("xxxx-yyyy");
+> let uuid = scl.uuid.decimal("xxxx-yyyy");
 > 
 > console.log(uuid); // "5563-0291"
 > ```
@@ -588,13 +617,13 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 <br><br><br>
 
 
-> ### generateUUID.hexadecimal()
+> ### uuid.hexadecimal()
 > This function generates a hexadecimal (`a-f0-9` or `A-F0-9`) UUID.  
 >   
-> The parameter `uuidFormat` is explained [here.](#generate-uuid)  
+> The parameter `uuidFormat` is explained [here.](#uuid)  
 > If the parameter `upperCase` is set to `true`, the resulting UUID will have its alphabetical letters in uppercase.
 > ```ts
-> scl.generateUUID.hexadecimal(uuidFormat: string, upperCase?: boolean): string
+> scl.uuid.hexadecimal(uuidFormat: string, upperCase?: boolean): string
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -602,7 +631,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > ```js
 > const scl = require("svcorelib");
 > 
-> let uuid = scl.generateUUID.hexadecimal("xxxx-yyyy", true);
+> let uuid = scl.uuid.hexadecimal("xxxx-yyyy", true);
 > 
 > console.log(uuid); // "F6B6-EFA3"
 > ```
@@ -800,13 +829,13 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 <br><br>
 
 
-> ### seededRNG.generateRandomSeed()
-> This function generates a random seed to be used in [generateSeededNumbers()](#seededrnggenerateseedednumbers)  
+> ### seededRNG.randomSeed()
+> This function generates a random seed to be used in [generateNumbers()](#seededrnggeneratenumbers)  
 > Since seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`), I recommend you use this function to randomize the seeds.  
 >   
-> The parameter `digitCount` specifies how many digits the resulting seed should have.
+> The parameter `digitCount` specifies how many digits the resulting seed should have (default is 10).
 > ```ts
-> scl.seededRNG.generateRandomSeed(digitCount: number): number
+> scl.seededRNG.generateRandomSeed(digitCount?: number): number
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -814,7 +843,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > ```js
 > const scl = require("svcorelib");
 > 
-> let seed = scl.seededRNG.generateRandomSeed(5);
+> let seed = scl.seededRNG.randomSeed(5);
 > 
 > console.log(seed); // 35091
 > ```
@@ -825,14 +854,14 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 <br><br><br>
 
 
-> ### seededRNG.generateSeededNumbers()
-> This function generates the actual pseudo-random numbers based on a seed.  
+> ### seededRNG.generateNumbers()
+> This function generates the actual pseudo-random numbers based on a passed seed.  
 >   
 > Seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`).  
-> That's why I recommend generating them with [generateRandomSeed()](#seededrnggeneraterandomseed) or validating them with [validateSeed()](#seededrngvalidateseed).
+> That's why I recommend generating them with [randomSeed()](#seededrngrandomseed) or validating them with [validateSeed()](#seededrngvalidateseed).
 >   
 > With the parameter `count` you can specify how many pseudo-random numbers you want to receive. Defaults to 16 if left undefined.  
-> The `seed` parameter is where you should provide your seed. If no seed is provided, a random seed will be generated. You will be able to access this seed in the returned object.
+> The `seed` parameter is where you should provide your seed. If no seed is provided, a random seed will be generated using [randomSeed()](#seededrngrandomseed). You will be able to view the generated seed in the returned object.
 > ```ts
 > scl.seededRNG.generateSeededNumbers(count?: number, seed?: number | string): SeededRandomNumbers
 > ```
@@ -842,10 +871,10 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > ```js
 > const scl = require("svcorelib");
 > 
-> let seed = scl.seededRNG.generateRandomSeed(5); // 58157
+> let seed = scl.seededRNG.randomSeed(5); // 58157
 > 
-> let foo = scl.seededRNG.generateSeededNumbers(8, seed);
-> let bar = scl.seededRNG.generateSeededNumbers(8, seed);
+> let foo = scl.seededRNG.generateNumbers(8, seed);
+> let bar = scl.seededRNG.generateNumbers(8, seed);
 > 
 > console.log(foo.integer === bar.integer); // true - the numbers are identical since the seed is identical
 > 
@@ -857,9 +886,9 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > ### SeededRandomNumbers object
 > ```ts
 > {
->     numbers: number[],   // an array of numbers
->     stringified: string, // a string containing the numbers
->     integer: number,     // the generated numbers as an integer / number
+>     numbers: number[],   // the generated numbers as an array of numbers
+>     stringified: string, // the generated numbers as a string
+>     integer: number,     // the generated numbers as a single integer / number
 >     seed: number         // the seed that was used to generate the numbers
 > }
 > ```
@@ -869,7 +898,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 
 
 > ### seededRNG.validateSeed()
-> This function validates a seed to be used in [generateSeededNumbers()](#seededrnggenerateseedednumbers)  
+> This function validates a seed to be used in [generateNumbers()](#seededrnggeneratenumbers)  
 > It is especially useful to validate user-entered seeds.  
 >   
 > Seeds in SCL need to be of a certain format (a number or string containing only numbers that can't start with a `0`).  
@@ -1125,6 +1154,34 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 <br><br><br>
 
 
+> ### system.pause()
+> Asks the user for a key press and then resolves a promise.  
+>   
+> Specify the text to display with the param `text` - if left empty this defaults to "Press any key to continue..."  
+> The promise gets passed the key that the user has pressed.
+> ```ts
+> scl.system.pause(text?: string): Promise<string>
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> console.log("Hello, World!");
+> 
+> scl.system.pause("Press any key to exit").then(key => {
+>     console.log(`Pressed key: ${key}\nGoodbye, World!`);
+>     process.exit();
+> });
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 <!-- #SECTION Other -->
 ## Other
 This namespace, accessed with just `scl`, offers many miscellaneous functions.  
@@ -1308,34 +1365,6 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
-> ### pause()
-> Asks the user for a key press and then resolves a promise.  
->   
-> Specify the text to display with the param `text` - if left empty this defaults to "Press any key to continue..."  
-> The promise gets passed the key that the user has pressed.
-> ```ts
-> scl.pause(text?: string): Promise<string>
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const scl = require("svcorelib");
-> 
-> console.log("Hello, World!");
-> 
-> scl.pause("Press any key to exit").then(key => {
->     console.log(`Pressed key: ${key}\nGoodbye, World!`);
->     process.exit();
-> });
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
 > ### randomItem()
 > Returns a random item of an array.
 > ```ts
@@ -1460,6 +1489,36 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 > 
 > </details>
+> </details>
+
+
+<br><br><br>
+
+
+> ### halves()
+> Returns both halves of an array as a tuple.  
+>   
+> If the passed array has one entry, the second value in the returned tuple will be an empty array.  
+> If the passed array is empty, the returned array will be empty.
+> ```ts
+> scl.halves(array: any[]): [any[], any[]]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> const halves = scl.halves([ 1, 2, 3, 4, 5, 6, 7 ]);
+> const [first, second] = halves;
+> 
+> console.log(halves); // [ [ 1, 2, 3, 4 ], [ 5, 6, 7 ] ]
+> 
+> console.log(first); // [ 1, 2, 3, 4 ]
+> console.log(second); // [ 5, 6, 7 ]
+> ```
+> 
+> </details>
 
 
 <br><br><br>
@@ -1576,6 +1635,74 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 >     console.log(x.foo); // bar
 >     console.log(y.foo); // bar
 > }
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### parseDuration()
+> Parses a duration in milliseconds into the larger units; days, hours, minutes, seconds and milliseconds.  
+>   
+> The returned value is an object of type `ParseDurationResult` (see below).  
+>   
+> Throws a TypeError if the `millis` argument is not a number or less than 0.
+> ```ts
+> scl.parseDuration(millis: number): ParseDurationResult
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> console.log(scl.parseDuration(61419000)); // { days: 0, hrs: 17, mins: 3, secs: 39, ms: 0 }
+> ```
+> 
+> </details><br>
+> 
+> ### ParseDurationResult object
+> ```ts
+> {
+>     days: number; // days
+>     hrs: number;  // hours
+>     mins: number; // minutes
+>     secs: number; // seconds
+>     ms: number;   // milliseconds
+> }
+> ```
+
+
+<br><br><br>
+
+
+> ### formatDuration()
+> Formats a duration in milliseconds to a human-friendly string, according to a provided format.  
+>   
+> The format string can contain the following placeholders: `%d` for days, `%h` for hours, `%m` for minutes, `%s` for seconds and `%ms` for milliseconds.  
+> Note that plurality (1 secon**d** vs 2 second**s**) isn't supported yet. Use [`parseDuration()`](#parseduration) instead.  
+>   
+> `leadingZeroes` defaults to true. Set it to false to leave every number as-is, and not add leading zeroes.  
+>   
+> Throws a TypeError if the arguments are invalid or the `millis` argument is less than 0.
+> ```ts
+> scl.formatDuration(millis: number, format: string, leadingZeroes?: boolean): string
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> const dur = 234219005;
+> 
+> const foo = scl.formatDuration(dur, "%dd, %h:%m:%s.%ms");
+> const bar = scl.formatDuration(dur, "%dd, %h:%m:%s.%ms", false);
+> 
+> console.log(foo); // 2d, 17:03:39.005
+> console.log(bar); // 2d, 17:3:39.5
 > ```
 > 
 > </details>
@@ -2247,11 +2374,19 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > >     console.error(`Error while submitting SelectionMenu: ${err}`);
 > > });
 > > 
+> > // Alternatively, use the EventEmitter's .on() method
+> > sm.on("submit", (res) => {
+> >     if(res.canceled)
+> >         console.log(`User canceled the SelectionMenu`);
+> >     else
+> >         console.log(`User selected option "${res.option.description}" (index ${res.option.index})`);
+> > });
+> > 
 > > 
 > > // Open the menu
 > > let openRes = sm.open();
 > > 
-> > if(typeof openRes == "string")
+> > if(typeof openRes === "string")
 > >     console.error(`Error while opening SelectionMenu: ${openRes}`);
 > > ```
 > > 
@@ -2463,7 +2598,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > {
 > >     path = resolve(path);
 > > 
-> >     if(!(await filesystem.exists(path)))
+> >     if(!(await files.exists(path)))
 > >         throw new Errors.InvalidPathError(`Path "${path}" doesn't exist.`);
 > > 
 > >     return;

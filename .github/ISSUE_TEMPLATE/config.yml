@@ -3,7 +3,7 @@ blank_issues_enabled: true
 contact_links:
   -
     name: "Documentation"
-    about: "Please read the documentation before opening a new issue"
+    about: "Please refer to the documentation before opening a new issue"
     url: "https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme"
   -
     name: "Discord"

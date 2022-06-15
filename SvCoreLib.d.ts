@@ -5,14 +5,17 @@
 
     >> If you came here looking for the source code, you're in the wrong file!
     >> See the file `SvCoreLib.js` instead, it acts as a proxy to all of SCLs features.
-    >> From there, you can follow the require()'s.
+    >> From there, you can follow the file paths.
 
     >> This file is responsible for the In-IDE documentation and explicit types (usually seen by pressing CTRL+Space or hovering over stuff)
 */
 
 
+import { EventEmitter } from "events";
 import { ServerResponse, IncomingMessage } from "http";
 import { Connection, QueryOptions } from "mysql";
+
+import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./src/types/SelectionMenu";
 
 
 /**
@@ -33,21 +36,20 @@ export interface Stringifiable {
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * 
- * ## SvCoreLib  
- * #### The core library used in almost all projects of the [Sv443 Network](https://sv443.net/) and [Sv443](https://github.com/Sv443)  
- *   
+ * ### SvCoreLib
+ * Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features
+ * 
  * ---
- *   
- * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Discord](https://dc.sv443.net)**
+ * 
+ * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [Discord](https://dc.sv443.net)**
  * 
  * ---
  *   
  * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
- *   
- * 
- * @author Sv443
+ * @author [Sv443](https://github.com/Sv443)
+ * @version 1.15.0 [(changelog)](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
  * @license [MIT](https://sv443.net/LICENSE)
- * @version 1.14.2
+ * @copyright © 2020 Sv443 Network
  * @module svcorelib
  */
 declare module "svcorelib" {
@@ -119,11 +121,31 @@ declare module "svcorelib" {
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
      * Using an object that contains special JavaScript classes or a circular structure will result in unexpected behavior. 🔹
      * @param obj The object you want to reserialize - if this is not of type `object`, you will just get the original value back
-     * @param immutable Set this to `true` if you want to make the returned object immutable (its properties can't be modified)
-     * @returns Returns the reserialized object or the original value if it is not of type `object`
+     * @param immutable Set this to `true` if you want to make the returned object immutable (its properties can't be modified anymore)
+     * @returns Returns the reserialized object or the unmodified original value if it is not of type `object`
      * @since 1.10.0
      */
-    function reserialize(obj: JSONCompatible, immutable?: boolean): JSONCompatible;
+    function reserialize<O extends JSONCompatible, I extends boolean>(obj: O, immutable?: I): I extends true ? Readonly<O> : O;
+
+    type ParseDurationResult = Record<"days" | "hrs" | "mins" | "secs" | "ms", number>;
+
+    /**
+     * 🔹 Parses a duration in milliseconds into the larger units; days, hours, minutes, seconds and milliseconds 🔹
+     * @param millis The duration in milliseconds
+     * @throws Throws a TypeError if `millis` is not a number or less than 0
+     * @since 1.15.0
+     */
+    function parseDuration(millis: number): ParseDurationResult;
+
+    /**
+     * 🔹 Formats a duration in milliseconds to a human-friendly string, according to a provided format 🔹
+     * @param millis The duration in milliseconds
+     * @param format The format of the duration. Use the following placeholders: `%d` for days, `%h` for hours, `%m` for minutes, `%s` for seconds and `%ms` for milliseconds
+     * @param leadingZeroes Whether to pad the numbers with leading zero(es). Defaults to true
+     * @throws Throws a TypeError if the parameters are invalid or `millis` is less than 0
+     * @since 1.15.0
+     */
+    function formatDuration(millis: number, format: string, leadingZeroes?: boolean): string;
 
     /**
      * 🔹 Converts an array to a better readable one 🔹
@@ -136,12 +158,12 @@ declare module "svcorelib" {
     function readableArray(array: (string | Stringifiable)[], separators?: string, lastSeparator?: string): string;
 
     /**
-     * 🔹 Transforms the `value` parameter from the numerical range [`range_1_min`-`range_1_max`] to the numerical range [`range_2_min`-`range_2_max`] 🔹
+     * 🔹 Transforms the `value` parameter, which is inside the numerical range [`range_1_min`-`range_1_max`] to where it would be on the numerical range [`range_2_min`-`range_2_max`] 🔹
      * @param value The value from the first numerical range, that you want to transform to a value inside the second numerical range
-     * @param range_1_min The lowest possible value of the first numerical range
-     * @param range_1_max The highest possible value of the first numerical range
-     * @param range_2_min The lowest possible value of the second numerical range
-     * @param range_2_max The highest possible value of the second numerical range
+     * @param range_1_min lowest possible value of the **first** numerical range
+     * @param range_1_max highest possible value of the **first** numerical range
+     * @param range_2_min lowest possible value of the **second** numerical range
+     * @param range_2_max highest possible value of the **second** numerical range
      * @returns Floating point number of `value` inside the second numerical range
      * @throws Throws an error if the arguments are not of type `Number` or the `*_max` argument(s) is/are equal to 0
      * @since 1.8.0
@@ -165,15 +187,6 @@ declare module "svcorelib" {
      * @since 1.8.0
      */
     function replaceAt(input: string, index: number, replacement: string): string;
-
-    /**
-     * 🔹 Waits for the user to press a key and then resolves a Promise 🔹
-     * @param text The text to display - if left empty this defaults to "Press any key to continue..."
-     * @returns Passes the pressed key in the resolution or the error message in the rejection
-     * @since 1.9.0
-     * @version 1.9.3 Events are now being correctly unregistered
-     */
-    function pause(text?: string): Promise<string>;
 
     /**
      * 🔹 Returns the length of a string in bytes.  
@@ -232,6 +245,20 @@ declare module "svcorelib" {
     function removeDuplicates<T>(array: T[]): T[];
 
     /**
+     * 🔹 Returns both halves of an array as a tuple. 🔹
+     * @param array An array of any size, with any values contained inside
+     * @returns Returns a tuple with two array entries, being the first and second half of the array
+     * @since 1.15.0
+     * @example ```js
+     * const [first, second] = halves([ 1, 2, 3, 4, 5 ]);
+     * 
+     * console.log(first);  // [ 1, 2, 3 ]
+     * console.log(second); // [ 4, 5 ]
+     * ```
+     */
+    function halves<T>(array: T[]): [first: T[], second: T[]];
+
+    /**
      * 🔹 Inserts values into a percent-formatted string.  
      * If there are no insertion marks, this function returns the unmodified input string. 🔹
      * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
@@ -277,18 +304,18 @@ declare module "svcorelib" {
          * @returns An object containing the seed and the random number in three different formats
          * @since 1.8.0
          */
-        function generateSeededNumbers(count?: number, seed?: Seed): SeededRandomNumbers;
+        function generateNumbers(count?: number, seed?: Seed): SeededRandomNumbers;
         
         /**
          * 🔹 Creates a random seed 🔹
          * @param digitCount How many digits the seed should have - defaults to 10 if left empty
          * @since 1.8.0
          */
-        function generateRandomSeed(digitCount?: number): number;
+        function randomSeed(digitCount?: number): number;
         
         /**
          * 🔹 Validates a seed to be used in `generateSeededNumbers()` 🔹
-         * @param seed The seed to validate
+         * @param seed The seed to validate - accepts string or number (also accepts octal and hexadecimal notation)
          * @since 1.8.0
          */
         function validateSeed(seed: Seed): boolean;
@@ -297,7 +324,7 @@ declare module "svcorelib" {
     /**
      * 🔸 Offers many functions to generate Universally Unique Identifiers (UUIDs) 🔸
      */
-    namespace generateUUID {
+    namespace uuid {
         /**
          * 🔹 Creates an alphanumerical [0-9,A-Z] UUID with a given format. This uses a RNG that is even more random than the standard Math.random() 🔹
          * @param uuidFormat The format of the UUID. All x's and y's will be affected by the RNG. Example: "xxxx-yyyy-xxxx-yyyy" - if you want an x or y to not be replaced, escape (prefix) it with this character: `^`
@@ -359,7 +386,7 @@ declare module "svcorelib" {
         /**
          * An encoding's identifier / name
          */
-        type EncodingName = ("br" | "gzip" | "deflate" | "compress" | "identity");
+        type EncodingName = "br" | "gzip" | "deflate" | "compress" | "identity";
 
         /**
          * 🔹 Pipes a file into a HTTP response. This is a tiny bit faster and much more efficient than loading the file into RAM first. 🔹
@@ -430,7 +457,7 @@ declare module "svcorelib" {
     /**
      * 🔸 Offers a few functions to interface with the file system 🔸
      */
-    namespace filesystem {
+    namespace files {
         interface LoggerOptions
         {
             [key: string]: boolean;
@@ -456,7 +483,6 @@ declare module "svcorelib" {
          * @param folder The folder that should be recursively read
          * @param callback The function that gets called after the folder has been read - has two arguments: error and result - you can also use the returned promise as a callback
          * @returns Returns a Promise - resolution gets passed the result, rejection gets passed an error message
-         * @async
          * @since 1.7.0
          * @version 1.9.2 Now this function also supports the Promise API
          */
@@ -465,7 +491,7 @@ declare module "svcorelib" {
         /**
          * 🔹 Reads a folder synchronously and recursively and returns all absolute file paths (starting at the drive letter (eg. "C:/Users/...")) in the callback 🔹  
          *   
-         * ❗ Warning! Large amounts of files (like letting it run on a directory like `C:\` or `/`) can freeze the process completely or exceed the maximum possible index of a JS array - instead use `readdirRecursive()` if possible
+         * ❗ This function uses blocking operations, contrary to the async `fs.ensureDirs()`, so it is recommended to use the async one if possible.
          * @param folder The folder that should be recursively read
          * @returns an array of strings containing absolute paths to all found files
          * @since 1.7.0
@@ -475,18 +501,29 @@ declare module "svcorelib" {
 
         /**
          * 🔹 This function checks if a file exists at the given path.  
-         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback) based on `fs.access()`) 🔹
+         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback)) 🔹
          * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
          * @returns Returned Promise always resolves to a boolean (and never rejects) - true, if the file exists, false if not
-         * @throws Throws a TypeError if the `path` argument is not a string or couldn't be resolved to a valid path
          * @since 1.13.0
+         * @version 1.15.0 Now using [`fs-extra`](https://npmjs.com/package/fs-extra)'s `pathExists()`
          */
         function exists(path: string): Promise<boolean>;
 
         /**
+         * 🔹 Synchronously checks if a file exists at the given path.  
+         * (Reimplementation of the deprecated [`fs.exists()`](https://nodejs.org/api/fs.html#fs_fs_exists_path_callback)) 🔹  
+         *   
+         * ❗ This function uses blocking operations, contrary to the async `fs.ensureDirs()`, so it is recommended to use the async one if possible.
+         * @param path The path to the file - Gets passed through [`path.resolve()`](https://nodejs.org/api/path.html#path_path_resolve_paths)
+         * @returns Returned Promise always resolves to a boolean (and never rejects) - true, if the file exists, false if not
+         * @since 1.13.0
+         * @version 1.15.0 Now using [`fs-extra`](https://npmjs.com/package/fs-extra)'s `pathExists()`
+         */
+         function existsSync(path: string): Promise<boolean>;
+
+        /**
          * 🔹 Ensures that a set of directories exist and creates them if not. 🔹
          * @param directories The directories to ensure the existance of
-         * @async
          * @throws Throws a TypeError if the `directories` parameter is not an array of strings
          * @since 1.13.0
          */
@@ -495,7 +532,7 @@ declare module "svcorelib" {
         /**
          * 🔹 Synchronously ensures that a set of directories exist and creates them if not. 🔹  
          *   
-         * ❗ Warning! Large amounts of directories can freeze the process completely or take a long time - use `ensureDirs()` instead if possible
+         * ❗ This function uses blocking operations, contrary to the async `fs.ensureDirs()`, so it is recommended to use the async one if possible.
          * @param directories The directories to ensure the existance of
          * @throws Throws a TypeError if the `directories` parameter is not an array of strings
          * @since 1.13.0
@@ -610,22 +647,31 @@ declare module "svcorelib" {
          * This can be useful because some features like child processes and reading from stdin do not work in certain debuggers. 🔹  
          * ❗ This function should support all major debuggers but this isn't guaranteed!  
          * If it doesn't detect your debugger, pass the command line argument `--debug` or `--inspect` ❗
-         * @param {string} [checkArg] If provided, checks if this command line argument is present. Makes the function return `true` if it is.
+         * @param checkArg If provided, checks if this command line argument is present. Makes the function return `true` if it is.
          * @returns true, if the process is currently running in a debugger, false if not.
          * @since 1.9.0
          * @version 1.13.0 Moved namespace
-         * @version 1.14.2 Added `inspector.url()` check for better results
+         * @version 1.14.2 Added `inspector.url()` check for better results & added `checkArg` argument
          */
-        function inDebugger(): boolean;
+        function inDebugger(checkArg?: string): boolean;
 
         /**
          * 🔹 Sets the terminal window's title. Supports both Windows and *nix. 🔹
          * @param title The string to set the window title to
-         * @throws Throws a "TypeError" if the parameter `title` is not a string and couldn't be converted to one
+         * @throws Throws a "TypeError" if the parameter `title` is not a string or couldn't be converted to one
          * @since 1.12.0
          * @version 1.13.0 Moved namespace
          */
-        function setWindowTitle(title: string): void;
+        function setWindowTitle(title: string | Stringifiable): void;
+
+        /**
+         * 🔹 Waits for the user to press a key and then resolves a Promise 🔹
+         * @param text The text to display - if left empty this defaults to "Press any key to continue..."
+         * @returns Passes the pressed key in the resolution or the error message in the rejection
+         * @since 1.9.0
+         * @version 1.9.3 Events are now being correctly unregistered
+         */
+        function pause(text?: string): Promise<string>;
     }
 
     //#MARKER classes
@@ -914,46 +960,13 @@ declare module "svcorelib" {
 
     //#SECTION SelectionMenu
 
-    /**
-     * An object of settings to be used in the constructor of the `SelectionMenu` class
-     */
-    interface SelectionMenuSettings
+    export interface SelectionMenu
     {
-        [key: string]: boolean | undefined;
-
-        /** Whether or not the user can cancel the prompt with the Esc key */
-        cancelable?: boolean;
-        /** If the user scrolls past the end or beginning, should the SelectionMenu overflow to the other side? */
-        overflow?: boolean;
-    }
-
-    interface SelectionMenuResult {
-        /** If this is `true`, the user has canceled the SelectionMenu by pressing the Escape key */
-        canceled: boolean;
-
-        /** An object containing the index and text of the selected option */
-        option: {
-            /** The zero-based index of the option the user has selected */
-            index: number;
-            /** The description / text of the option the user has selected */
-            description: string;
-        }
-    }
-
-    interface SelectionMenuLocale
-    {
-        [key: string]: string | undefined;
-
-        /** Shorthand name of the escape key - defaults to "Esc" */
-        escKey?: string;
-        /** Cancel text - defaults to "Cancel" */
-        cancel?: string;
-        /** Scroll text - defaults to "Scroll" */
-        scroll?: string;
-        /** Shorthand name of the return key - defaults to "Return" */
-        returnKey?: string;
-        /** Select text - defaults to "Select" */
-        select?: string;
+        /**
+         * 📡 This event is emitted when the user has selected an option or exited the menu 📡
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
+         */
+        on(event: "submit", listener: (result: SelectionMenuResult) => void): this;
     }
 
     /**
@@ -961,7 +974,8 @@ declare module "svcorelib" {
      *   
      * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
      */
-    class SelectionMenu {
+    export class SelectionMenu extends EventEmitter
+    {
         /**
          * Used to translate the SelectionMenu
          */
@@ -974,48 +988,49 @@ declare module "svcorelib" {
          * @param settings The settings of the menu. Leave undefined for the default settings to be applied.
          * @throws Throws a NoStdinError when the currently used terminal doesn't have a stdin stream or isn't a compatible TTY terminal.
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
         constructor(title?: string, settings?: Partial<SelectionMenuSettings>);
 
         /**
-         * 🔹 Registers a function to be called when the user selected an option. 🔹
-         * @param callback_fn 
-         * @returns Returns a Promise that is resolved with the zero-based index number of the selected option
-         * @since 1.11.0
-         */
-        onSubmit(callback_fn: (result: SelectionMenuResult) => any): Promise<SelectionMenuResult>;
-
-        /**
          * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
          * @param options An array of strings which are the options a user can scroll through and select
-         * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns void if the options were set successfully
+         * @throws {TypeError} if the options parameter is not an array of string or null
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        setOptions(options: string[]): string | boolean;
+        setOptions(options: SelectionMenuOption[]): void;
 
         /**
          * 🔹 Adds an option. 🔹
          * @param option
-         * @returns Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns void if the option was added
+         * @throws {TypeError} if the option parameter is not a string or null
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        addOption(option: string): string | boolean;
+        addOption(option: SelectionMenuOption): void;
 
         /**
          * 🔹 Opens the SelectionMenu. Make sure not to write anything to the console / stdout / stderr while the menu is open! 🔹
-         * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+         * @returns Returns a promise that resolves after a user selected an option or exited the menu
+         * @throws {Error} if the menu can't be opened
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        open(): string | boolean;
+        open(): Promise<SelectionMenuResult>;
 
         /**
          * 🔹 Closes the SelectionMenu. 🔹  
-         * ❗ Using this method does **not** call the callback registered with `onSubmit()`
-         * @return Returns `true` if the method call was successful or returns a string containing an error message if not
+         * ❗ Using this method does not emit the event `submit` and it does not resolve the promise returned by `open()`
+         * @returns Returns `true` if the menu was closed, `false` if it couldn't be closed
          * @since 1.11.0
+         * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        close(): string | boolean;
+        close(): boolean;
     }
+
 
     //#SECTION StatePromise
 

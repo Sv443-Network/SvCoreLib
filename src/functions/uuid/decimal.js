@@ -11,7 +11,7 @@ function decimal(uuidFormat)
     possible = possible.split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.uuid.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     let regex = /[xy]/gm;
     let match;

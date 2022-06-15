@@ -1,16 +1,17 @@
+const isEmpty = require("../isEmpty");
 const replaceAt = require("../replaceAt");
 const randRange = require("../randRange");
 
-function binary(uuidFormat, asBooleanArray)
-{    
-    if(typeof uuidFormat != "string")
-        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.binary() - (expected: "String", got: "${typeof uuidFormat}")`);
-
+function hexadecimal(uuidFormat, upperCase = false)
+{
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
-    let possible = "01";
+    let possible = "0123456789ABCDEF";
     possible = possible.split("");
+    
+    if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
+        throw new Error(`Wrong parameter provided for "uuidFormat" in scl.uuid.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     let regex = /[xy]/gm;
     let match;
@@ -24,21 +25,8 @@ function binary(uuidFormat, asBooleanArray)
 
     result = result.replace(/[\uABA6]/gmu, "x");
     result = result.replace(/[\uABA7]/gmu, "y");
-
-    if(asBooleanArray === true)
-    {
-        let boolResult = [];
-        result.split("").forEach(char => {
-            if(char == "0")
-                boolResult.push(false);
-            else if(char == "1")
-                boolResult.push(true);
-        });
-
-        return boolResult;
-    }
-
-    return result;
+    if(upperCase) return result;
+    else return result.toLowerCase();
 }
 
-module.exports = binary;
+module.exports = hexadecimal;

@@ -15,7 +15,7 @@ function custom(uuidFormat, possibleValues)
     const possible = Array.isArray(possibleValues) ? possibleValues : possibleValues.toString().split("");
     
     if(isEmpty(uuidFormat) || typeof uuidFormat != "string")
-        throw new TypeError(`Wrong parameter provided for "uuidFormat" in scl.generateUUID.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
+        throw new TypeError(`Wrong parameter provided for "uuidFormat" in scl.uuid.decimal() - (expected: "String", got: "${typeof uuidFormat}")`);
 
     const regex = /[xy]/gm;
     let match;
