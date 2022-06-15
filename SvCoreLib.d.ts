@@ -36,19 +36,20 @@ export interface Stringifiable {
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * 
- * ## SvCoreLib
- * The core library used in almost all projects of the [Sv443 Network](https://sv443.net/) and [Sv443](https://github.com/Sv443)  
- *   
+ * ### SvCoreLib
+ * Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features
+ * 
  * ---
- *   
+ * 
  * **[Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) • [GitHub Repo](https://github.com/Sv443-Network/SvCoreLib) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme) • [Discord](https://dc.sv443.net)**
  * 
  * ---
  *   
  * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
  * @author [Sv443](https://github.com/Sv443)
- * @license [MIT](https://sv443.net/LICENSE)
  * @version 1.15.0 [(changelog)](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
+ * @license [MIT](https://sv443.net/LICENSE)
+ * @copyright © 2020 Sv443 Network
  * @module svcorelib
  */
 declare module "svcorelib" {
