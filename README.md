@@ -5,8 +5,8 @@
 
 <br>
 
-### This is a core dependency of almost all projects of the Sv443 Network and a continuation of [JSLib-npm](https://github.com/Sv443/JSLib-npm)
-It's written in CommonJS, but contains builtin TypeScript definitions
+### Core Library used in the projects of Sv443 and the Sv443 Network,<br>containing tons of miscellaneous quality of life features
+Contains builtin TypeScript definitions
 
 <br>
 
@@ -32,11 +32,13 @@ Use this command in a terminal window inside your Node.js project:
 npm i svcorelib
 ```
 
+If you don't intend on using SQL functions, use `npm i svcorelib --no-optional`
+
 <br>
 
 ## Contributors:
 Thank you very much to these contributors for improving SvCoreLib ❤️
-| Contributor | Their contributions |
+| Name | Contributions |
 | --- | --- |
 | [canarado](https://github.com/canarado) | Added TypeScript declarations, fixed grammar |
 | [ThatCopy](https://github.com/ThatCopy) | Fixed documentation, tested the code |
@@ -49,7 +51,9 @@ I made SvCoreLib so it needs as few dependencies as possible, but in order to en
 - [fs-extra](https://npmjs.com/package/fs-extra)
 - [keypress](https://npmjs.com/package/keypress)
 - [minimatch](https://npmjs.com/package/minimatch)
-- [mysql](https://npmjs.com/package/mysql)
+- [mysql](https://npmjs.com/package/mysql) *
+
+\*<sup> = optional, see [installation](#install)</sup>
 
 <br><br><br>
 
