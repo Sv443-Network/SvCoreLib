@@ -835,7 +835,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 >   
 > The parameter `digitCount` specifies how many digits the resulting seed should have (default is 10).
 > ```ts
-> scl.seededRNG.generateRandomSeed(digitCount?: number): number
+> scl.seededRNG.randomSeed(digitCount?: number): number
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
@@ -863,7 +863,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > With the parameter `count` you can specify how many pseudo-random numbers you want to receive. Defaults to 16 if left undefined.  
 > The `seed` parameter is where you should provide your seed. If no seed is provided, a random seed will be generated using [randomSeed()](#seededrngrandomseed). You will be able to view the generated seed in the returned object.
 > ```ts
-> scl.seededRNG.generateSeededNumbers(count?: number, seed?: number | string): SeededRandomNumbers
+> scl.seededRNG.generateNumbers(count?: number, seed?: number | string): SeededRandomNumbers
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>
