@@ -1,7 +1,7 @@
 {
   "name": "svcorelib",
   "version": "1.15.0",
-  "description": "Core Library used in almost all of my (Sv443's) projects. Feel free to use it if you want to, it contains some very nice features.",
+  "description": "Core Library used in the project of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features.",
   "main": "SvCoreLib.js",
   "scripts": {
     "test": "snyk test",
