@@ -51,6 +51,7 @@
     - Renamed functions:
         - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
         - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
+        - `pause()` -> `system.pause()`
 - Additions
     - Added function `halves()` to get the two halves of an array
     - Added function `parseDuration()` to parse out time units from a passed duration in milliseconds
