@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.15.0](#1150)
+### Latest version: [1.16.0](#1160)
 
 
 <br>
@@ -9,6 +9,7 @@
 <br>
 
 > **SvCoreLib**
+> - [1.16.0](#1160)
 > - [1.15.0](#1150)
 > - [1.14.0](#1140)
 >     - [1.14.1](#1141)
@@ -42,6 +43,16 @@
 </details>
 
 <br><br>
+
+## 1.16.0
+
+- Additions
+    - Added clamp() to ensure a number is between a min and max limit
+- Fixes
+    - randRange() now doesn't depend on the `performance` module anymore
+    - Updated deps
+
+<br>
 
 ## 1.15.0
 - Breaking changes

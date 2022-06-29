@@ -199,9 +199,9 @@ declare module "svcorelib" {
     //#SECTION randomization
 
     /**
-     * 🔹 Highly random number generator with upper and lower boundary. 🔹  
+     * 🔹 Random number generator with upper and lower boundary. 🔹  
      *   
-     * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
+     * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
      * @param min Lower boundary of the RNG
      * @param max Upper boundary of the RNG
      * @throws Throws a TypeError if the arguments are not of type `number`
@@ -210,15 +210,26 @@ declare module "svcorelib" {
     function randRange(min: number, max: number): number;
 
     /**
-     * 🔹 Highly random number generator with upper boundary.  
+     * 🔹 Random number generator with upper boundary.  
      * This overload automatically sets the lower boundary to 0. 🔹  
      *   
-     * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function! ❗
+     * ❗ Warning! This RNG is not cryptographically secure, so don't do any password hashing or stuff that needs to be highly secure with this function!
      * @param max Upper boundary of the RNG - using this overload will set the lower boundary to 0
      * @throws Throws a TypeError if the arguments are not of type `number`
      * @since 1.14.0
+     * @version 1.16.0 No longer depending on the `performance` module
      */
-     function randRange(max: number): number;
+    function randRange(max: number): number;
+
+    /**
+     * 🔹 Makes sure the provided `num` is always in between `min` and `max` 🔹
+     * @param num The number to clamp between `min` and `max`
+     * @param min Lower boundary
+     * @param max Upper boundary
+     * @throws Throws a TypeError if the parameters are not of type `number` or are NaN
+     * @since 1.16.0
+     */
+    function clamp(num: number, min: number, max: number): number;
 
     /**
      * 🔹 Randomizes all items in an array and returns it 🔹

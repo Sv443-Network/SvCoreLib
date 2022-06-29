@@ -23,6 +23,7 @@ module.exports = {
     replaceAt:        imp("functions/replaceAt"),
     byteLength:       imp("functions/byteLength"),
     randRange:        imp("functions/randRange"),
+    clamp:            imp("functions/clamp"),
     randomizeArray:   imp("functions/randomizeArray"),
     randomItem:       imp("functions/randomItem"),
     removeDuplicates: imp("functions/removeDuplicates"),

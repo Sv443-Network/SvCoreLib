@@ -1,10 +1,10 @@
 {
   "name": "svcorelib",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features.",
   "main": "SvCoreLib.js",
   "scripts": {
-    "test": "snyk test",
+    "test": "node test",
     "lint": "eslint ."
   },
   "repository": {
