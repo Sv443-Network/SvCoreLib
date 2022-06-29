@@ -80,6 +80,7 @@ Otherwise, see the table of contents just below.
         - [randomItem()](#randomitem) - returns a random item from an array
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
+        - [clamp()](#clamp) - makes sure a number is always in between a min and max limit
         - [readableArray()](#readablearray) - converts an array to a better readable string
         - [removeDuplicates()](#removeduplicates) - removes duplicate items in an array
         - [halves()](#halves) - returns both halves of an array
@@ -1441,6 +1442,32 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > 
 > console.log(foo); // 57
 > console.log(bar); // 3
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### clamp()
+> Highly random number generator where you can specify an upper and lower boundary.  
+>   
+> Specify the upper and lower boundary with the parameters `min` and `max`
+> ```ts
+> scl.clamp(num: number, min: number, max: number): number
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { clamp } = require("svcorelib");
+> 
+> for(let i = 1; i <= 10; i++)
+>     console.log(clamp(i, 3, 6));
+> 
+> // output:
+> // 3, 3, 3, 4, 5, 6, 6, 6, 6, 6
 > ```
 > 
 > </details>
