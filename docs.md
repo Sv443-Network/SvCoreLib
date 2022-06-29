@@ -1448,7 +1448,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### clamp()
-> Highly random number generator where you can specify an upper and lower boundary.  
+> Makes sure the provided number `num` is always in between a set boundary.  
 >   
 > Specify the upper and lower boundary with the parameters `min` and `max`
 > ```ts
