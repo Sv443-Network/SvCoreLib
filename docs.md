@@ -8,7 +8,7 @@ SvCoreLib, as the name suggests, is the core library used by most Node.js projec
   
 This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
 Many features are probably incompatible with Deno (unverified).  
-With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be webpack compatible (also unverified).  
+With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be web-compatible (also unverified).  
   
 Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
   
