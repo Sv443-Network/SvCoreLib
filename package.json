@@ -4,7 +4,7 @@
   "description": "Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features.",
   "main": "SvCoreLib.js",
   "scripts": {
-    "test": "snyk test",
+    "test": "node test",
     "lint": "eslint ."
   },
   "repository": {
