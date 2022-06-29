@@ -6,11 +6,8 @@
 This is the documentation of SvCoreLib (also referred to as SCL).  
 SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
   
-This library supports both CommonJS ("vanilla" Node.js) and TypeScript.  
-Many features are probably incompatible with Deno (unverified).  
-With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be web-compatible (also unverified).  
-  
-Please note that I am not good at writing documentations and this library is pretty big so please use the code examples as an additional guide.  
+This library supports CommonJS, EcmaScript and TypeScript.  
+With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be web-compatible (unverified).  
   
 If you don't understand how this documentation works and what certain things mean, please read [this section.](#how-this-documentation-works)  
 If you find any bugs or want to suggest a new feature, please [open a new issue on GitHub.](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose)
@@ -178,7 +175,7 @@ If you only want to import a select number of features and don't like always hav
     - If there are overloads to the method or function in question, they will be listed on a separate line each ([`randRange()`](#randrange) for example).
 - Most features have a code example which is collapsed by default and can be expanded by clicking on it.
 - Note that the code examples in this documentation are written in CommonJS.
-    - If you use TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
+    - If you use ES or TypeScript, see import instructions in the [usage section](#usage) and modify the other code accordingly.
 - All code examples don't require installing any third party packages (excluding SCL's dependencies which should get auto-installed).
 - The example GIF included in some features uses the exact code that is included in that same feature under "example code".
 - Custom objects (aka interfaces) are declared at the bottom of the class they are part of or at the bottom of the same section if they belong to a normal function.
