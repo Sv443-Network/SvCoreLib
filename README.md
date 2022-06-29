@@ -1,5 +1,7 @@
 <div align="center" style="text-align:center;">
 
+![logo](https://sv443.net/resources/images/svcorelib_small.png)
+
 # SvCoreLib
 [![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443-Network/SvCoreLib)](https://github.com/Sv443-Network/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
 
