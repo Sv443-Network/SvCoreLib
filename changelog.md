@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.16.0](#1160)
+### Latest version: [1.17.0](#1170)
 
 
 <br>
@@ -9,6 +9,7 @@
 <br>
 
 > **SvCoreLib**
+> - [1.17.0](#1170)
 > - [1.16.0](#1160)
 > - [1.15.0](#1150)
 > - [1.14.0](#1140)
@@ -43,6 +44,12 @@
 </details>
 
 <br><br>
+
+## 1.17.0
+- Additions
+    - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
+
+<br>
 
 ## 1.16.0
 
