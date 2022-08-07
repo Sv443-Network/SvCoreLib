@@ -13,9 +13,11 @@ module.exports = {
 
     isEmpty:          imp("functions/isEmpty"),
     isArrayEmpty:     imp("functions/isArrayEmpty"),
+    isClass:          imp("functions/isClass"),
     error:            imp("functions/error"),
     allEqual:         imp("functions/allEqual"),
     allOfType:        imp("functions/allOfType"),
+    allInstanceOf:    imp("functions/allInstanceOf"),
     reserialize:      imp("functions/reserialize"),
     readableArray:    imp("functions/readableArray"),
     mapRange:         imp("functions/mapRange"),
