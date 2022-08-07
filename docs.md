@@ -6,8 +6,8 @@
 This is the documentation of SvCoreLib (also referred to as SCL).  
 SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
   
-This library supports CommonJS, EcmaScript and TypeScript.  
-With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be web-compatible (unverified).  
+This library supports CommonJS, ESNext and Typescript and has builtin Typescript declarations.  
+With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be DOM-compatible (unverified).  
   
 If you don't understand how this documentation works and what certain things mean, please read [this section.](#how-this-documentation-works)  
 If you find any bugs or want to suggest a new feature, please [open a new issue on GitHub.](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose)
@@ -68,11 +68,14 @@ Otherwise, see the table of contents just below.
         - [pause()](#systempause) - pauses code execution until the user presses a key
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
+        - [allOfType()](#alloftype) - checks if all values in an array are of a certain type
+        - [allInstanceOf()](#allinstanceof) - checks if all values in an array are an instance of a certain class
         - [byteLength()](#bytelength) - returns the length of a string in bytes
         - [error()](#error) - sends an error message and/or exits the process
         - [insertValues()](#insertvalues) - inserts values into a preformatted string
         - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
         - [isEmpty()](#isempty) - checks if a value is considered empty
+        - [isClass()](#isclass) - checks if a value is a reference to a class
         - [mapRange()](#maprange) - maps a number from one numerical range to another
         - [randomItem()](#randomitem) - returns a random item from an array
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
@@ -1220,6 +1223,76 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
+> ### allOfType()
+> This function checks if all values of an array are of a certain JS primitive type.  
+> It does the same check you would do with `if(typeof val === "whatever")`  
+>   
+> Valid type names are: `bigint`, `boolean`, `function`, `number`, `object`, `string`, `symbol`, `undefined`
+> ```ts
+> scl.allOfType(array: any[], type: JSPrimitiveTypeName): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { allOfType } = require("svcorelib");
+> 
+> console.log(allOfType([ 1, 2, 3, NaN ], "number"));     // true
+> console.log(allOfType([ { foo: 1 }, null ], "object")); // true
+> console.log(allOfType([ 1, 2, "yo" ], "number"));       // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### allInstanceOf()
+> This function checks whether or not all items of an array are an instance of a passed class reference.  
+>   
+> Make sure not to pass an instance of the class in the second parameter, but rather the actual class itself.
+> ```ts
+> scl.allInstanceOf(array: any[], Class: AnyClass): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { allInstanceOf } = require("svcorelib");
+> 
+> class MyClass {}
+> abstract class AnotherClass {}
+> class YetAnotherClass extends AnotherClass {}
+> 
+> const foo = [
+>     new MyClass(),
+>     new MyClass(),
+>     new MyClass(),
+> ];
+> 
+> const bar = [
+>     new YetAnotherClass(),
+> ];
+> 
+> const baz = [
+>     new MyClass(),
+>     123,
+>     "yo",
+> ];
+> 
+> console.log(allInstanceOf(foo, MyClass));         // true
+> console.log(allInstanceOf(bar, AnotherClass));    // true
+> console.log(allInstanceOf(bar, YetAnotherClass)); // true
+> console.log(allInstanceOf(baz, MyClass));         // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 > ### byteLength()
 > This function returns the length / size of a string in bytes.  
 > If the param `str` is not of type string, the function will return `-1`.
@@ -1328,6 +1401,34 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > console.log(scl.isEmpty(undefined)); // true
 > console.log(scl.isEmpty(NaN));       // false
 > console.log(scl.isEmpty("foo"));     // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### isClass()
+> Returns true, if the `input` is a reference to a class, else returns false.  
+> The check here is done for a reference to the actual class, not an instance of the class!
+> ```ts
+> scl.isClass(input: any): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> class MyClass {}
+> 
+> const foo = new MyClass();
+> const bar = "hello";
+> 
+> console.log(MyClass); // true
+> console.log(foo);     // false
+> console.log(bar);     // false
 > ```
 > 
 > </details>
