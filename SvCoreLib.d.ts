@@ -18,6 +18,8 @@ import { Connection, QueryOptions } from "mysql";
 import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./src/types/SelectionMenu";
 
 
+//#MARKER types
+
 /**
  * Describes an object that is JSON-compatible, aka doesn't contain self- / circular references or non-primitive JS properties  
  * [Source](https://github.com/microsoft/TypeScript/issues/1897#issuecomment-338650717)
@@ -26,12 +28,15 @@ export type JSONCompatible =  boolean | number | string | null | JSONArray | JSO
 interface JSONMap { [key: string]: JSONCompatible; }
 interface JSONArray extends Array<JSONCompatible> {}
 
-/**
- * Describes a value that has a `.toString()` method, meaning it can be converted to a string
- */
-export interface Stringifiable {
+/** Describes a value that either is a string itself or has a `.toString()` method, meaning it can be converted to a string */
+export type Stringifiable = string | {
     toString(): string;
 }
+
+/** Describes any class reference that is constructable/newable */
+export type Newable<T> = { new(...args: any[]): T; };
+/** Describes any value that is a constructable/newable class reference or a function (ES5 classes and abstract ES6 classes) */
+export type AnyClass<T> = Newable<T> | (Function & { prototype: T });
 
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
@@ -47,15 +52,13 @@ export interface Stringifiable {
  *   
  * If you like this library please consider [supporting me ❤](https://github.com/sponsors/Sv443)
  * @author [Sv443](https://github.com/Sv443)
- * @version 1.15.0 [(changelog)](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
- * @license [MIT](https://sv443.net/LICENSE)
  * @copyright © 2020 Sv443 Network
+ * @license [MIT](https://sv443.net/LICENSE)
  * @module svcorelib
  */
 declare module "svcorelib" {
+
     //#MARKER functions
-
-
 
     //#SECTION Miscellaneous
 
@@ -80,6 +83,13 @@ declare module "svcorelib" {
      * @version 1.8.0 Throwing error now instead of returning string
      */
     function isArrayEmpty<T>(array: T[]): boolean | number;
+
+    /**
+     * 🔹 Checks if the passed value is a reference to a class 🔹
+     * @param val Value to check
+     * @since 1.17.0
+     */
+    function isClass<T>(val: any): val is AnyClass<T>;
 
     /**
      * 🔹 Sends a red console message and optionally exits the process with an optional status code. 🔹
@@ -118,8 +128,18 @@ declare module "svcorelib" {
     function allOfType<T>(array: T[], type: JSPrimitiveTypeName): boolean;
 
     /**
+     * 🔹 Checks if each item of an array is an instance of the passed class reference. 🔹
+     * @param array Array that should be checked
+     * @param Class Reference to the class to be checked. Don't pass an actual instance of that class!
+     * @returns Returns true if all items are an instance of `Class`, else returns false
+     * @throws Throws a TypeError if the parameters are invalid
+     * @since 1.17.0
+     */
+    function allInstanceOf<T>(array: T[], Class: AnyClass<T>): boolean;
+
+    /**
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  
-     * Using an object that contains special JavaScript classes or a circular structure will result in unexpected behavior. 🔹
+     * Using an object that contains special JavaScript classes or circular objects will throw an error. 🔹
      * @param obj The object you want to reserialize - if this is not of type `object`, you will just get the original value back
      * @param immutable Set this to `true` if you want to make the returned object immutable (its properties can't be modified anymore)
      * @returns Returns the reserialized object or the unmodified original value if it is not of type `object`
@@ -196,6 +216,30 @@ declare module "svcorelib" {
      */
     function byteLength(str: string): number;
 
+    /**
+     * 🔹 Returns both halves of an array as a tuple. 🔹
+     * @param array An array of any size, with any values contained inside
+     * @returns Returns a tuple with two array entries, being the first and second half of the array
+     * @since 1.15.0
+     * @example ```js
+     * const [first, second] = halves([ 1, 2, 3, 4, 5 ]);
+     * 
+     * console.log(first);  // [ 1, 2, 3 ]
+     * console.log(second); // [ 4, 5 ]
+     * ```
+     */
+    function halves<T>(array: T[]): [first: T[], second: T[]];
+
+    /**
+     * 🔹 Inserts values into a percent-formatted string.  
+     * If there are no insertion marks, this function returns the unmodified input string. 🔹
+     * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
+     * @param values [Rest parameter] The values to insert into the string - All values that are not of type `string` will be attempted to be converted using their method `.toString()`
+     * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
+     * @since 1.12.0
+     */
+    function insertValues(str: string, ...values: (string | Stringifiable)[]): string;
+
     //#SECTION randomization
 
     /**
@@ -254,30 +298,6 @@ declare module "svcorelib" {
      * @since 1.9.0
      */
     function removeDuplicates<T>(array: T[]): T[];
-
-    /**
-     * 🔹 Returns both halves of an array as a tuple. 🔹
-     * @param array An array of any size, with any values contained inside
-     * @returns Returns a tuple with two array entries, being the first and second half of the array
-     * @since 1.15.0
-     * @example ```js
-     * const [first, second] = halves([ 1, 2, 3, 4, 5 ]);
-     * 
-     * console.log(first);  // [ 1, 2, 3 ]
-     * console.log(second); // [ 4, 5 ]
-     * ```
-     */
-    function halves<T>(array: T[]): [first: T[], second: T[]];
-
-    /**
-     * 🔹 Inserts values into a percent-formatted string.  
-     * If there are no insertion marks, this function returns the unmodified input string. 🔹
-     * @param str A string containing numbered insertion marks (%1, %2, ..., %10, %11, ...)
-     * @param values [Rest parameter] The values to insert into the string - All values that are not of type `string` will be attempted to be converted using their method `.toString()`
-     * @throws Throws a "TypeError" if the parameter `str` is not a string or if one of the values could not be converted to a string
-     * @since 1.12.0
-     */
-    function insertValues(str: string, ...values: (string | Stringifiable)[]): string;
 
     /**
      * 🔸 Offers a few functions to generate seeded random numbers.  
@@ -593,7 +613,7 @@ declare module "svcorelib" {
     //#SECTION SQL
 
     /**
-     * 🔸 Offers a few functions to interface with a SQL database 🔸
+     * 🔸 Offers functions to interface with a SQL database 🔸
      */
     namespace sql {
         /**
@@ -686,8 +706,6 @@ declare module "svcorelib" {
     }
 
     //#MARKER classes
-
-
 
     //#SECTION ProgressBar
 
@@ -1045,7 +1063,7 @@ declare module "svcorelib" {
 
     //#SECTION StatePromise
 
-    type PromiseState = "initialized" | "pending" | "fulfilled" | "rejected";
+    type PromiseState = "initialized" | "pending" | "resolved" | "rejected";
 
     /**
      * 🔹 This class is a wrapper for the Promise API.  
@@ -1083,7 +1101,7 @@ declare module "svcorelib" {
          * | :-- | :-- |
          * | `initialized` | The StatePromise instance was created but the `exec()` method wasn't called yet |
          * | `pending` | The promise execution was started but it hasn't been resolved or rejected yet |
-         * | `fulfilled` | Execution was finished and the promise was resolved |
+         * | `resolved` | Execution was finished and the promise was resolved |
          * | `rejected` | Execution was finished but the promise was rejected |
          * @since 1.14.0
          */
