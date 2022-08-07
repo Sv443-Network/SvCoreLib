@@ -48,6 +48,9 @@
 ## 1.17.0
 - Additions
     - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
+    - Added function `isClass()` to check if a value is a reference to a class
+- Fixes
+    - Added missing documentation for `allOfType()`
 
 <br>
 
