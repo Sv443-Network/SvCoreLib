@@ -49,6 +49,8 @@
 - Additions
     - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
     - Added function `isClass()` to check if a value is a reference to a class
+- Breaking changes
+    - Changed state `fulfilled` to `resolved` in StatePromise
 - Fixes
     - Added missing documentation for `allOfType()`
 
