@@ -2467,13 +2467,13 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > | :-- | :-- |
 > > | `initialized` | The StatePromise instance was created but the `exec()` method wasn't called yet |
 > > | `pending` | The promise execution was started but it hasn't been resolved or rejected yet |
-> > | `fulfilled` | Execution was finished and the promise was resolved |
+> > | `resolved` | Execution was finished and the promise was resolved |
 > > | `rejected` | Execution was finished but the promise was rejected |
 > >   
 > > <br>
 > > 
 > > ```ts
-> > SelectionMenu.getState(): "initialized" | "pending" | "fulfilled" | "rejected"
+> > SelectionMenu.getState(): "initialized" | "pending" | "resolved" | "rejected"
 > > ```
 > 
 > 
@@ -2524,8 +2524,8 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > Iteration #1 - State: pending
 > > Iteration #2 - State: pending
 > > THEN: test123
-> > Iteration #3 - State: fulfilled
-> > Iteration #4 - State: fulfilled
+> > Iteration #3 - State: resolved
+> > Iteration #4 - State: resolved
 > > ```
 > > 
 > > </details>
