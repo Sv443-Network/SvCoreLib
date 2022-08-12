@@ -32,7 +32,7 @@ Otherwise, see the table of contents just below.
 - **[How this documentation works](#how-this-documentation-works)**
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
-    - [File System](#file-system)
+    - [Files](#files)
         - [downloadFile()](#filesdownloadfile) - downloads a file from a provided URL
         - [exists()](#filesexists) - reimplementation of the deprecated `fs.exists()`
         - [existsSync()](#filesexistssync) - synchronous counterpart to `exists()`
@@ -201,7 +201,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 <br>
 
 - Each piece of documentation will have a description. It is usually delimited from other sections by this emoji: 🔹, unless:
-    - you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will instead be marked with this emoji: 🔸
+    - you are looking at a namespace, for example [`scl.files`](#files), its description will instead be marked with this emoji: 🔸
     - it is an event that uses the native module "events" with the `.on("event", (data) => {})` syntax, which is marked by this emoji: 📡
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
@@ -450,7 +450,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { filesystem } = require("svcorelib");
+> const { files } = require("svcorelib");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -484,7 +484,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { filesystem } = require("svcorelib");
+> const { files } = require("svcorelib");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -2713,7 +2713,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const { filesystem, Errors } = require("svcorelib");
+> > const { files, Errors } = require("svcorelib");
 > > const fs = require("fs");
 > > const { resolve } = require("path");
 > > 
