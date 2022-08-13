@@ -3,27 +3,41 @@ const colors = {
     fat:   "\x1b[37m",
     blink: "\x1b[5m",
     fg: {
-        black:   "\x1b[30m\x1b[1m",
-        red:     "\x1b[31m\x1b[1m",
-        green:   "\x1b[32m\x1b[1m",
-        yellow:  "\x1b[33m\x1b[1m",
-        blue:    "\x1b[34m\x1b[1m",
-        magenta: "\x1b[35m\x1b[1m",
-        cyan:    "\x1b[36m\x1b[1m",
-        white:   "\x1b[37m\x1b[1m",
+        black:   "\x1b[30m",
+        red:     "\x1b[31m",
+        green:   "\x1b[32m",
+        yellow:  "\x1b[33m",
+        blue:    "\x1b[34m",
+        magenta: "\x1b[35m",
+        cyan:    "\x1b[36m",
+        white:   "\x1b[37m",
         rst:     "\x1b[0m",
     },
     bg: {
-        black:   "\x1b[40m\x1b[1m",
-        red:     "\x1b[41m\x1b[1m",
-        green:   "\x1b[42m\x1b[1m",
-        yellow:  "\x1b[43m\x1b[1m",
-        blue:    "\x1b[44m\x1b[1m",
-        magenta: "\x1b[45m\x1b[1m",
-        cyan:    "\x1b[46m\x1b[1m",
-        white:   "\x1b[47m\x1b[1m",
+        black:   "\x1b[40m",
+        red:     "\x1b[41m",
+        green:   "\x1b[42m",
+        yellow:  "\x1b[43m",
+        blue:    "\x1b[44m",
+        magenta: "\x1b[45m",
+        cyan:    "\x1b[46m",
+        white:   "\x1b[47m",
         rst:     "\x1b[0m",
     }
 }
 
-module.exports = colors;
+function bright(cols)
+{
+    const retObj = {};
+    Object.entries(cols).forEach(([k, v]) => {
+        if(k !== "rst")
+        retObj[k] = `${v}\x1b[1m`;
+    });
+    return retObj;
+}
+
+module.exports = {
+    ...colors,
+    fgb: bright(colors.fg),
+    bgb: bright(colors.bg)
+};

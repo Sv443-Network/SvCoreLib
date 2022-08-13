@@ -28,6 +28,8 @@ module.exports = {
     clamp:            imp("functions/clamp"),
     randomizeArray:   imp("functions/randomizeArray"),
     randomItem:       imp("functions/randomItem"),
+    randomItemIndex:  imp("functions/randomItemIndex"),
+    takeRandomItem:   imp("functions/takeRandomItem"),
     removeDuplicates: imp("functions/removeDuplicates"),
     halves:           imp("functions/halves"),
     insertValues:     imp("functions/insertValues"),

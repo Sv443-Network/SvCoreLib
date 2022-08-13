@@ -287,10 +287,26 @@ declare module "svcorelib" {
     /**
      * 🔹 Chooses a random item in an array and returns it 🔹
      * @param array An array of any size, with any values contained inside
-     * @returns Returns a random item of the provided array
+     * @returns Returns a random item of the provided array. Returns undefined if the array is empty.
      * @since 1.9.4
      */
-    function randomItem<T>(array: T[]): T;
+    function randomItem<T>(array: T[]): T | undefined;
+
+    /**
+     * 🔹 Chooses a random item in an array and returns it, along with its index in the array. 🔹
+     * @param array An array of any size, with any values contained inside
+     * @returns Returns a tuple array with two entries. First entry is the randomly chosen item, second entry is the index of the random item. Returns undefined if the array is empty.
+     * @since 1.17.0
+     */
+    function randomItemIndex<T>(array: T[]): [item?: T, index?: number];
+
+    /**
+     * 🔹 Chooses a random item in an array and returns it. Mutates the original array so the chosen item is no longer contained! 🔹
+     * @param array An array of any size, with any values contained inside
+     * @returns Returns the randomly chosen item. Returns undefined if the array is empty.
+     * @since 1.17.0
+     */
+    function takeRandomItem<T>(array: T[]): T | undefined;
 
     /**
      * 🔹 Removes duplicate items in an array 🔹
@@ -1141,7 +1157,7 @@ declare module "svcorelib" {
         class PatternInvalidError extends SCLError {}
 
         /**
-         * 🔹 This error gets thrown when the terminal that the process runs in doesn't provide an stdin channel 🔹
+         * 🔹 This error gets thrown when the terminal that the process runs in doesn't provide a stdin channel 🔹
          * @since 1.12.0
          */
         class NoStdinError extends SCLError {}
@@ -1153,7 +1169,7 @@ declare module "svcorelib" {
         class InvalidMimeTypeError extends SCLError {}
 
         /**
-         * 🔹 This error gets thrown when a provided SQL connection was not established or errored out 🔹
+         * 🔹 This error gets thrown when a provided SQL connection was not established yet or has ended 🔹
          * @since 1.12.0
          */
         class SqlConnectionNotEstablishedError extends SCLError {}
@@ -1183,7 +1199,7 @@ declare module "svcorelib" {
         /** The name of the author of SvCoreLib */
         let author: string;
         /** People that contributed to SvCoreLib - this is the raw object from package.json */
-        let contributors: object;
+        let contributors: Record<"name" | "url", string>[];
         /** The license of SvCoreLib */
         let license: string;
         /** The URL to SvCoreLib's documentation */
@@ -1196,15 +1212,16 @@ declare module "svcorelib" {
      * 🔹 Use this to add color to your console output 🔹
      * @since 1.8.0
      * @version 1.10.0 Added `rst` to the `fg` and `bg` objects
+     * @version 1.17.0 Removed brightness from `bg` and `fg`, added it to `bgb` and `fgb` instead and renamed `fat` to `bright`
      */
     namespace colors
     {
         /** Resets the color to default */
         let rst: string;
-        let fat: string;
+        let bright: string;
         let blink: string;
 
-        /** Sets the foreground (text) color */
+        /** Sets a dim foreground (text) color */
         namespace fg {
             let black: string;
             let red: string;
@@ -1218,8 +1235,36 @@ declare module "svcorelib" {
             let rst: string;
         }
         
-        /** Sets the background/backdrop color */
+        /** Sets a dim background color */
         namespace bg {
+            let black: string;
+            let red: string;
+            let green: string;
+            let yellow: string;
+            let blue: string;
+            let magenta: string;
+            let cyan: string;
+            let white: string;
+            /** Resets the color to default */
+            let rst: string;
+        }
+
+        /** Sets a bright foreground (text) color */
+        namespace fgb {
+            let black: string;
+            let red: string;
+            let green: string;
+            let yellow: string;
+            let blue: string;
+            let magenta: string;
+            let cyan: string;
+            let white: string;
+            /** Resets the color to default */
+            let rst: string;
+        }
+        
+        /** Sets a bright background color */
+        namespace bgb {
             let black: string;
             let red: string;
             let green: string;
