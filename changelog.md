@@ -49,10 +49,19 @@
 - Additions
     - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
     - Added function `isClass()` to check if a value is a reference to a class
+    - Added function `randomItemIndex()` to get a random item and its index from an array
+    - Added function `takeRandomItem()` to delete a random item from an array and return it
+    - colors
+        - Added `colors.fgb` and `colors.bgb` for bright colors
+        - Added `dim`, `underscore`, `reverse` and `hidden`
 - Breaking changes
     - Changed state `fulfilled` to `resolved` in StatePromise
+    - colors
+        - Removed brightness modifier from `colors.fg` and `colors.bg`
+        - Renamed `colors.fat` to `colors.bright`
 - Fixes
     - Added missing documentation for `allOfType()`
+    - Fixed docs in various places
 
 <br>
 

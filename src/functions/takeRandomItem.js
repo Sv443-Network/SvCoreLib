@@ -2,6 +2,9 @@ const randomItemIndex = require("./randomItemIndex");
 
 function takeRandomItem(arr)
 {
+    if(!Array.isArray(arr))
+        throw new Error("Parameter is not an array");
+
     if(arr.length === 0)
         return undefined;
 

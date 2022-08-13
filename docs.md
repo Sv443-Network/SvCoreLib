@@ -78,6 +78,8 @@ Otherwise, see the table of contents just below.
         - [isClass()](#isclass) - checks if a value is a reference to a class
         - [mapRange()](#maprange) - maps a number from one numerical range to another
         - [randomItem()](#randomitem) - returns a random item from an array
+        - [randomItemIndex()](#randomitemindex) - returns a random item from an array, along with its index
+        - [takeRandomItem()](#takerandomitem) - deletes a random item from an array and returns it
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
         - [clamp()](#clamp) - makes sure a number is always in between a min and max limit
@@ -1492,6 +1494,68 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
+> ### randomItemIndex()
+> Chooses a random item in an array and returns it, along with its index in the array.  
+> The returned value is a tuple array with two entries; either the item and its index or two times undefined, if the array is empty.
+> ```ts
+> scl.randomItemIndex(array: any[]): [item: any, index: number]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { randomItemIndex } = require("svcorelib");
+> 
+> const foo = [ "a", "b", "c", "d" ];
+> 
+> console.log(randomItemIndex(foo)); // ["b", 1]
+> console.log(randomItemIndex(foo)); // ["d", 3]
+>
+> const [itm, idx] = randomItemIndex(foo);
+> console.log(itm, idx); // a 0
+> 
+> console.log(randomItemIndex([ ])); // [undefined, undefined]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### takeRandomItem()
+> Chooses a random item in an array and returns it.  
+> Also mutates the original array so the chosen item is no longer contained!
+> ```ts
+> scl.takeRandomItem(array: any[]): any
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { takeRandomItem } = require("svcorelib");
+> 
+> const foo = [ "a", "b", "c" ];
+> 
+> console.log(takeRandomItem(foo)); // "b"
+> console.log(foo);                 // [ "a", "c" ]
+> 
+> console.log(takeRandomItem(foo)); // "c"
+> console.log(foo);                 // [ "a" ]
+> 
+> console.log(takeRandomItem(foo)); // "a"
+> console.log(foo);                 // [ ]
+> 
+> console.log(takeRandomItem(foo)); // undefined
+> console.log(foo);                 // [ ]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 > ### randomizeArray()
 > Randomizes the order of items of an array and returns it.
 > ```ts
@@ -2896,8 +2960,8 @@ These are read-only, static and passive properties and will not invoke or change
 > | Color | SCL |
 > | --- | --- |
 > | ❌ Reset to default | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
-> | 🍩 Fat Font | `scl.colors.fat` |
-> | 💡 Blinking | `scl.colors.blink` |
+> | 💡 Bright color | `scl.colors.bright` |
+> | 🚨 Blinking | `scl.colors.blink` |
 > | ⚫️ Black Text | `scl.colors.fg.black` |
 > | ⚫️ Black Background | `scl.colors.bg.black` |
 > | 🟥 Red Text | `scl.colors.fg.red` |

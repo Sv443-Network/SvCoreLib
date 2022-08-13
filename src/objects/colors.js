@@ -1,7 +1,11 @@
 const colors = {
-    rst:   "\x1b[0m",
-    fat:   "\x1b[37m",
-    blink: "\x1b[5m",
+    rst:         "\x1b[0m",
+    fat:         "\x1b[37m",
+    blink:       "\x1b[5m",
+    dim:         "\x1b[2m",
+    underscore:  "\x1b[4m",
+    reverse:     "\x1b[7m",
+    hidden:      "\x1b[8m",
     fg: {
         black:   "\x1b[30m",
         red:     "\x1b[31m",
