@@ -16,7 +16,7 @@ class StatePromise
 
         return new Promise((res, rej) => {
             this.intPromise.then((...args) => {
-                this.state = "fulfilled";
+                this.state = "resolved";
                 return res(...args);
             }).catch((...args) => {
                 this.state = "rejected";

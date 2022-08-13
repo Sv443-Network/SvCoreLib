@@ -6,8 +6,8 @@
 This is the documentation of SvCoreLib (also referred to as SCL).  
 SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
   
-This library supports CommonJS, EcmaScript and TypeScript.  
-With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be web-compatible (unverified).  
+This library supports CommonJS, ESNext and Typescript and has builtin Typescript declarations.  
+With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be DOM-compatible (unverified).  
   
 If you don't understand how this documentation works and what certain things mean, please read [this section.](#how-this-documentation-works)  
 If you find any bugs or want to suggest a new feature, please [open a new issue on GitHub.](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose)
@@ -32,7 +32,7 @@ Otherwise, see the table of contents just below.
 - **[How this documentation works](#how-this-documentation-works)**
 - **[In-IDE Documentation](#in-ide-documentation)**
 - **[Functions](#functions)**
-    - [File System](#file-system)
+    - [Files](#files)
         - [downloadFile()](#filesdownloadfile) - downloads a file from a provided URL
         - [exists()](#filesexists) - reimplementation of the deprecated `fs.exists()`
         - [existsSync()](#filesexistssync) - synchronous counterpart to `exists()`
@@ -68,13 +68,18 @@ Otherwise, see the table of contents just below.
         - [pause()](#systempause) - pauses code execution until the user presses a key
     - [Other](#other)
         - [allEqual()](#allequal) - checks if all values in an array are equal
+        - [allOfType()](#alloftype) - checks if all values in an array are of a certain type
+        - [allInstanceOf()](#allinstanceof) - checks if all values in an array are an instance of a certain class
         - [byteLength()](#bytelength) - returns the length of a string in bytes
         - [error()](#error) - sends an error message and/or exits the process
         - [insertValues()](#insertvalues) - inserts values into a preformatted string
         - [isArrayEmpty()](#isarrayempty) - checks if or how many items of an array are empty
         - [isEmpty()](#isempty) - checks if a value is considered empty
+        - [isClass()](#isclass) - checks if a value is a reference to a class
         - [mapRange()](#maprange) - maps a number from one numerical range to another
         - [randomItem()](#randomitem) - returns a random item from an array
+        - [randomItemIndex()](#randomitemindex) - returns a random item from an array, along with its index
+        - [takeRandomItem()](#takerandomitem) - deletes a random item from an array and returns it
         - [randomizeArray()](#randomizearray) - randomizes the items in an array
         - [randRange()](#randrange) - returns a random number in the provided range
         - [clamp()](#clamp) - makes sure a number is always in between a min and max limit
@@ -198,7 +203,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 <br>
 
 - Each piece of documentation will have a description. It is usually delimited from other sections by this emoji: 🔹, unless:
-    - you are looking at a namespace, for example [`scl.filesystem`](#file-system), its description will instead be marked with this emoji: 🔸
+    - you are looking at a namespace, for example [`scl.files`](#files), its description will instead be marked with this emoji: 🔸
     - it is an event that uses the native module "events" with the `.on("event", (data) => {})` syntax, which is marked by this emoji: 📡
 - Some of the functions / methods have special quirks to look out for or will be deprecated. This warning section is delimited from other sections with this emoji: ❗
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
@@ -447,7 +452,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { filesystem } = require("svcorelib");
+> const { files } = require("svcorelib");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -481,7 +486,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { filesystem } = require("svcorelib");
+> const { files } = require("svcorelib");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -1220,6 +1225,76 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
+> ### allOfType()
+> This function checks if all values of an array are of a certain JS primitive type.  
+> It does the same check you would do with `if(typeof val === "whatever")`  
+>   
+> Valid type names are: `bigint`, `boolean`, `function`, `number`, `object`, `string`, `symbol`, `undefined`
+> ```ts
+> scl.allOfType(array: any[], type: JSPrimitiveTypeName): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { allOfType } = require("svcorelib");
+> 
+> console.log(allOfType([ 1, 2, 3, NaN ], "number"));     // true
+> console.log(allOfType([ { foo: 1 }, null ], "object")); // true
+> console.log(allOfType([ 1, 2, "yo" ], "number"));       // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### allInstanceOf()
+> This function checks whether or not all items of an array are an instance of a passed class reference.  
+>   
+> Make sure not to pass an instance of the class in the second parameter, but rather the actual class itself.
+> ```ts
+> scl.allInstanceOf(array: any[], Class: AnyClass): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { allInstanceOf } = require("svcorelib");
+> 
+> class MyClass {}
+> abstract class AnotherClass {}
+> class YetAnotherClass extends AnotherClass {}
+> 
+> const foo = [
+>     new MyClass(),
+>     new MyClass(),
+>     new MyClass(),
+> ];
+> 
+> const bar = [
+>     new YetAnotherClass(),
+> ];
+> 
+> const baz = [
+>     new MyClass(),
+>     123,
+>     "yo",
+> ];
+> 
+> console.log(allInstanceOf(foo, MyClass));         // true
+> console.log(allInstanceOf(bar, AnotherClass));    // true
+> console.log(allInstanceOf(bar, YetAnotherClass)); // true
+> console.log(allInstanceOf(baz, MyClass));         // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 > ### byteLength()
 > This function returns the length / size of a string in bytes.  
 > If the param `str` is not of type string, the function will return `-1`.
@@ -1336,6 +1411,34 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 <br><br><br>
 
 
+> ### isClass()
+> Returns true, if the `input` is a reference to a class, else returns false.  
+> The check here is done for a reference to the actual class, not an instance of the class!
+> ```ts
+> scl.isClass(input: any): boolean
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const scl = require("svcorelib");
+> 
+> class MyClass {}
+> 
+> const foo = new MyClass();
+> const bar = "hello";
+> 
+> console.log(MyClass); // true
+> console.log(foo);     // false
+> console.log(bar);     // false
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
 > ### mapRange()
 > Transforms the `value` parameter from the numerical range `range_1_min`-`range_1_max` to the numerical range `range_2_min`-`range_2_max`.  
 > For example, you can map the value 2 in the range of 0-5 to the range of 0-10 and you'd get a 4 as a result.  
@@ -1383,6 +1486,68 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > console.log(foo); // { "foo": "bar" }
 > console.log(bar); // 3
 > console.log(baz); // null
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### randomItemIndex()
+> Chooses a random item in an array and returns it, along with its index in the array.  
+> The returned value is a tuple array with two entries; either the item and its index or two times undefined, if the array is empty.
+> ```ts
+> scl.randomItemIndex(array: any[]): [item: any, index: number]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { randomItemIndex } = require("svcorelib");
+> 
+> const foo = [ "a", "b", "c", "d" ];
+> 
+> console.log(randomItemIndex(foo)); // ["b", 1]
+> console.log(randomItemIndex(foo)); // ["d", 3]
+>
+> const [itm, idx] = randomItemIndex(foo);
+> console.log(itm, idx); // a 0
+> 
+> console.log(randomItemIndex([ ])); // [undefined, undefined]
+> ```
+> 
+> </details>
+
+
+<br><br><br>
+
+
+> ### takeRandomItem()
+> Chooses a random item in an array and returns it.  
+> Also mutates the original array so the chosen item is no longer contained!
+> ```ts
+> scl.takeRandomItem(array: any[]): any
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { takeRandomItem } = require("svcorelib");
+> 
+> const foo = [ "a", "b", "c" ];
+> 
+> console.log(takeRandomItem(foo)); // "b"
+> console.log(foo);                 // [ "a", "c" ]
+> 
+> console.log(takeRandomItem(foo)); // "c"
+> console.log(foo);                 // [ "a" ]
+> 
+> console.log(takeRandomItem(foo)); // "a"
+> console.log(foo);                 // [ ]
+> 
+> console.log(takeRandomItem(foo)); // undefined
+> console.log(foo);                 // [ ]
 > ```
 > 
 > </details>
@@ -2467,13 +2632,13 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > | :-- | :-- |
 > > | `initialized` | The StatePromise instance was created but the `exec()` method wasn't called yet |
 > > | `pending` | The promise execution was started but it hasn't been resolved or rejected yet |
-> > | `fulfilled` | Execution was finished and the promise was resolved |
+> > | `resolved` | Execution was finished and the promise was resolved |
 > > | `rejected` | Execution was finished but the promise was rejected |
 > >   
 > > <br>
 > > 
 > > ```ts
-> > SelectionMenu.getState(): "initialized" | "pending" | "fulfilled" | "rejected"
+> > SelectionMenu.getState(): "initialized" | "pending" | "resolved" | "rejected"
 > > ```
 > 
 > 
@@ -2524,8 +2689,8 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > Iteration #1 - State: pending
 > > Iteration #2 - State: pending
 > > THEN: test123
-> > Iteration #3 - State: fulfilled
-> > Iteration #4 - State: fulfilled
+> > Iteration #3 - State: resolved
+> > Iteration #4 - State: resolved
 > > ```
 > > 
 > > </details>
@@ -2612,7 +2777,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const { filesystem, Errors } = require("svcorelib");
+> > const { files, Errors } = require("svcorelib");
 > > const fs = require("fs");
 > > const { resolve } = require("path");
 > > 
@@ -2795,8 +2960,8 @@ These are read-only, static and passive properties and will not invoke or change
 > | Color | SCL |
 > | --- | --- |
 > | ❌ Reset to default | `scl.colors.rst` or `scl.colors.fg.rst` or `scl.colors.bg.rst` |
-> | 🍩 Fat Font | `scl.colors.fat` |
-> | 💡 Blinking | `scl.colors.blink` |
+> | 💡 Bright color | `scl.colors.bright` |
+> | 🚨 Blinking | `scl.colors.blink` |
 > | ⚫️ Black Text | `scl.colors.fg.black` |
 > | ⚫️ Black Background | `scl.colors.bg.black` |
 > | 🟥 Red Text | `scl.colors.fg.red` |
