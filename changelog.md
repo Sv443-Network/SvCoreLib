@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.17.0](#1170)
+### Latest version: [1.18.0](#1180)
 
 
 <br>
@@ -9,6 +9,7 @@
 <br>
 
 > **SvCoreLib**
+> - [1.18.0](#1180)
 > - [1.17.0](#1170)
 > - [1.16.0](#1160)
 > - [1.15.0](#1150)
@@ -44,6 +45,14 @@
 </details>
 
 <br><br>
+
+## 1.18.0
+- Additions
+    - `splitIntoParts()` function to split an array into n parts
+- Fixes
+    - Reverted dynamic imports ([issue #51](https://github.com/Sv443-Network/SvCoreLib/issues/51))
+
+<br>
 
 ## 1.17.0
 - Additions

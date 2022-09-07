@@ -1,97 +1,90 @@
 // SvCoreLib by Sv443 - licensed under the MIT license: https://sv443.net/LICENSE
 // For more information, please read the `README.md` file or go to https://github.com/Sv443-Network/SvCoreLib#readme
 
-/**
- * @param {string} path
- * @returns {(...args: any) => any}
- */
-const imp = (path) => require(`./src/${path}`);
-
-
 module.exports = {
     //#SECTION functions
 
-    isEmpty:          imp("functions/isEmpty"),
-    isArrayEmpty:     imp("functions/isArrayEmpty"),
-    isClass:          imp("functions/isClass"),
-    error:            imp("functions/error"),
-    allEqual:         imp("functions/allEqual"),
-    allOfType:        imp("functions/allOfType"),
-    allInstanceOf:    imp("functions/allInstanceOf"),
-    reserialize:      imp("functions/reserialize"),
-    readableArray:    imp("functions/readableArray"),
-    mapRange:         imp("functions/mapRange"),
-    unused:           imp("functions/unused"),
-    replaceAt:        imp("functions/replaceAt"),
-    byteLength:       imp("functions/byteLength"),
-    randRange:        imp("functions/randRange"),
-    clamp:            imp("functions/clamp"),
-    randomizeArray:   imp("functions/randomizeArray"),
-    randomItem:       imp("functions/randomItem"),
-    randomItemIndex:  imp("functions/randomItemIndex"),
-    takeRandomItem:   imp("functions/takeRandomItem"),
-    removeDuplicates: imp("functions/removeDuplicates"),
-    halves:           imp("functions/halves"),
-    insertValues:     imp("functions/insertValues"),
-    formatDuration:   imp("functions/formatDuration"),
-    parseDuration:    imp("functions/parseDuration"),
+    isEmpty:          require("functions/isEmpty"),
+    isArrayEmpty:     require("functions/isArrayEmpty"),
+    isClass:          require("functions/isClass"),
+    error:            require("functions/error"),
+    allEqual:         require("functions/allEqual"),
+    allOfType:        require("functions/allOfType"),
+    allInstanceOf:    require("functions/allInstanceOf"),
+    reserialize:      require("functions/reserialize"),
+    readableArray:    require("functions/readableArray"),
+    mapRange:         require("functions/mapRange"),
+    unused:           require("functions/unused"),
+    replaceAt:        require("functions/replaceAt"),
+    byteLength:       require("functions/byteLength"),
+    randRange:        require("functions/randRange"),
+    clamp:            require("functions/clamp"),
+    randomizeArray:   require("functions/randomizeArray"),
+    randomItem:       require("functions/randomItem"),
+    randomItemIndex:  require("functions/randomItemIndex"),
+    takeRandomItem:   require("functions/takeRandomItem"),
+    removeDuplicates: require("functions/removeDuplicates"),
+    halves:           require("functions/halves"),
+    insertValues:     require("functions/insertValues"),
+    formatDuration:   require("functions/formatDuration"),
+    parseDuration:    require("functions/parseDuration"),
 
     // namespaces
     seededRNG: {
-        randomSeed:      imp("functions/seededRNG/randomSeed"),
-        generateNumbers: imp("functions/seededRNG/generateNumbers"),
-        validateSeed:    imp("functions/seededRNG/validateSeed"),
+        randomSeed:      require("functions/seededRNG/randomSeed"),
+        generateNumbers: require("functions/seededRNG/generateNumbers"),
+        validateSeed:    require("functions/seededRNG/validateSeed"),
     },
     uuid: {
-        hexadecimal:    imp("functions/uuid/hexadecimal"),
-        decimal:        imp("functions/uuid/decimal"),
-        alphanumerical: imp("functions/uuid/alphanumerical"),
-        binary:         imp("functions/uuid/binary"),
-        custom:         imp("functions/uuid/custom"),
+        hexadecimal:    require("functions/uuid/hexadecimal"),
+        decimal:        require("functions/uuid/decimal"),
+        alphanumerical: require("functions/uuid/alphanumerical"),
+        binary:         require("functions/uuid/binary"),
+        custom:         require("functions/uuid/custom"),
     },
     http: {
-        pipeFile:          imp("functions/http/pipeFile"),
-        pipeString:        imp("functions/http/pipeString"),
-        getClientEncoding: imp("functions/http/getClientEncoding"),
-        ping:              imp("functions/http/ping"),
+        pipeFile:          require("functions/http/pipeFile"),
+        pipeString:        require("functions/http/pipeString"),
+        getClientEncoding: require("functions/http/getClientEncoding"),
+        ping:              require("functions/http/ping"),
     },
     files: {
-        readdirRecursive:     imp("functions/files/readdirRecursive"),
-        readdirRecursiveSync: imp("functions/files/readdirRecursiveSync"),
-        logger:               imp("functions/files/logger"),
-        downloadFile:         imp("functions/files/downloadFile"),
-        ensureDirs:           imp("functions/files/ensureDirs"),
-        ensureDirsSync:       imp("functions/files/ensureDirsSync"),
-        exists:               imp("functions/files/exists"),
-        existsSync:           imp("functions/files/existsSync"),
+        readdirRecursive:     require("functions/files/readdirRecursive"),
+        readdirRecursiveSync: require("functions/files/readdirRecursiveSync"),
+        logger:               require("functions/files/logger"),
+        downloadFile:         require("functions/files/downloadFile"),
+        ensureDirs:           require("functions/files/ensureDirs"),
+        ensureDirsSync:       require("functions/files/ensureDirsSync"),
+        exists:               require("functions/files/exists"),
+        existsSync:           require("functions/files/existsSync"),
     },
     sql: {
-        sendQuery: imp("functions/sql/sendQuery"),
+        sendQuery: require("functions/sql/sendQuery"),
     },
     system: {
-        usedHeap:       imp("functions/system/usedHeap"),
-        inDebugger:     imp("functions/system/inDebugger"),
-        softShutdown:   imp("functions/system/softShutdown"),
-        noShutdown:     imp("functions/system/noShutdown"),
-        yesShutdown:    imp("functions/system/yesShutdown"),
-        setWindowTitle: imp("functions/system/setWindowTitle"),
-        pause:          imp("functions/system/pause"),
+        usedHeap:       require("functions/system/usedHeap"),
+        inDebugger:     require("functions/system/inDebugger"),
+        softShutdown:   require("functions/system/softShutdown"),
+        noShutdown:     require("functions/system/noShutdown"),
+        yesShutdown:    require("functions/system/yesShutdown"),
+        setWindowTitle: require("functions/system/setWindowTitle"),
+        pause:          require("functions/system/pause"),
     },
 
     //#SECTION classes
 
-    ProgressBar:   imp("classes/ProgressBar"),
-    MenuPrompt:    imp("classes/MenuPrompt"),
-    FolderDaemon:  imp("classes/FolderDaemon"),
-    SelectionMenu: imp("classes/SelectionMenu"),
-    StatePromise:  imp("classes/StatePromise"),
+    ProgressBar:   require("classes/ProgressBar"),
+    MenuPrompt:    require("classes/MenuPrompt"),
+    FolderDaemon:  require("classes/FolderDaemon"),
+    SelectionMenu: require("classes/SelectionMenu"),
+    StatePromise:  require("classes/StatePromise"),
 
     // namespaced classes
 
-    Errors: imp("classes/Errors"),
+    Errors: require("classes/Errors"),
 
     //#SECTION objects
 
-    info:   imp("objects/info"),
-    colors: imp("objects/colors"),
+    info:   require("objects/info"),
+    colors: require("objects/colors"),
 };
