@@ -12,8 +12,8 @@ Contains builtin TypeScript definitions
 
 <br>
 
-## >> [Documentation](./docs.md#readme) <<
-#### [Discord](https://dc.sv443.net) • [Changelog](./changelog.md#readme)
+## >> [Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) <<
+#### [Discord](https://dc.sv443.net) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
 
 </div>
 
