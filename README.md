@@ -25,6 +25,8 @@ Contains builtin TypeScript definitions
 - File system tools like reading a directory recursively, downloading a file or supervising a directory for changes
 - Randomization tools like generating UUIDs or a seeded RNG
 - Misc tools involving array manipulation
+  
+See a list of all features [here.](./docs.md#table-of-contents)
 
 <br>
 
