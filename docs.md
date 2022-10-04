@@ -1423,16 +1423,16 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const { isClass } = require("svcorelib");
 > 
 > class MyClass {}
 > 
 > const foo = new MyClass();
 > const bar = "hello";
 > 
-> console.log(MyClass); // true
-> console.log(foo);     // false
-> console.log(bar);     // false
+> console.log(isClass(MyClass)); // true
+> console.log(isClass(foo));     // false
+> console.log(isClass(bar));     // false
 > ```
 > 
 > </details>
@@ -1444,7 +1444,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ### mapRange()
 > Transforms the `value` parameter from the numerical range `range_1_min`-`range_1_max` to the numerical range `range_2_min`-`range_2_max`.  
 > For example, you can map the value 2 in the range of 0-5 to the range of 0-10 and you'd get a 4 as a result.  
-> It can be especially useful when using SCLs [`ProgressBar`](#progressbar) class.  
+> It can be especially useful when calculating percentages, like when using [`files.downloadFile()`](#filesdownloadfile) or the [`ProgressBar` class.](#progressbar)  
 > This function is the same as the [map() function in Arduino.](https://www.arduino.cc/reference/en/language/functions/math/map/)
 > ```ts
 > scl.mapRange(value: number, range_1_min: number, range_1_max: number, range_2_min: number, range_2_max: number): number
@@ -2467,7 +2467,9 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 >   
 > <details><summary><b>Click here to see an example of how this might look like</b></summary>
 > 
-> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/selectionmenu_tty.gif)
+> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/selectionmenu_tty.gif)  
+>  
+> (disregard the `[` character in the first line)
 > 
 > </details>
 > 
