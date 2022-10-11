@@ -1,12 +1,12 @@
 const splitIntoParts = require("./splitIntoParts");
 
 /** @param {any[]} arr */
-function halves(arr)
+function halves(array)
 {
-    if(!Array.isArray(arr))
-        throw new TypeError("Parameter is not an array");
+    if(!Array.isArray(array))
+        throw new TypeError("Invalid argument 'array' provided in halves()");
 
-    return splitIntoParts(arr, 2, true);
+    return splitIntoParts(array, 2, true);
 }
 
 module.exports = halves;

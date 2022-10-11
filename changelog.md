@@ -1,9 +1,6 @@
 ## SvCoreLib - Changelog
 ### Latest version: [1.18.0](#1180)
 
-
-<br>
-
 <details><summary><b>Click to expand version history</b></summary>
 
 <br>
@@ -44,13 +41,15 @@
 
 </details>
 
-<br><br>
+<br><br><br>
 
 ## 1.18.0
 - Additions
     - `splitIntoParts()` function to split an array into n parts
+    - `splitIntoPartsOfLength()` function to split an array into parts of n length
 - Fixes
     - Reverted dynamic imports ([issue #51](https://github.com/Sv443-Network/SvCoreLib/issues/51))
+    - Support Error options ([issue #52](https://github.com/Sv443-Network/SvCoreLib/issues/52))
 
 <br>
 
@@ -150,19 +149,19 @@
 
 ## 1.13.0
 ### Migration warnings:
-- You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
+- You will need to modify all occurrences of [`FolderDaemon`](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#folderdaemon) with the new syntax shown in the docs
 - The namespace of a few functions has changed (see changes below)
 
 <br>
 
 - Added functions:
-	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443/SvCoreLib/issues/14))
-    - `filesystem.ensureDirs()` to ensure a set of directories exists ([issue #18](https://github.com/Sv443/SvCoreLib/issues/18))
-    - `filesystem.ensureDirsSync()` synchronous counterpart to `ensureDirs()` ([issue #18](https://github.com/Sv443/SvCoreLib/issues/18))
-    - `system.usedHeap()` to get the current heap usage in percent ([issue #19](https://github.com/Sv443/SvCoreLib/issues/19))
+	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443-Network/SvCoreLib/issues/14))
+    - `filesystem.ensureDirs()` to ensure a set of directories exists ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
+    - `filesystem.ensureDirsSync()` synchronous counterpart to `ensureDirs()` ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
+    - `system.usedHeap()` to get the current heap usage in percent ([issue #19](https://github.com/Sv443-Network/SvCoreLib/issues/19))
 - Changes:
-    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443/SvCoreLib/issues/13))
-    - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443/SvCoreLib/issues/17))
+    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443-Network/SvCoreLib/issues/13))
+    - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443-Network/SvCoreLib/issues/17))
     - Moved a few functions to the new `system` namespace:
         - `noShutdown()` - moved to `system`
         - `yesShutdown()` - moved to `system`
@@ -170,20 +169,20 @@
         - `inDebugger()` - moved to `system`
         - `setWindowTitle()` - moved to `system`
 - Fixed bugs:
-    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443/SvCoreLib/issues/15))
-    - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443/SvCoreLib/issues/21))
-    - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443/SvCoreLib/issues/20))
+    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443-Network/SvCoreLib/issues/15))
+    - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443-Network/SvCoreLib/issues/21))
+    - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443-Network/SvCoreLib/issues/20))
 
 <br>
 
 ## 1.12.0
 - Added functions
-	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443/SvCoreLib/issues/10))
-	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443/SvCoreLib/issues/11))
-	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443/SvCoreLib/issues/12))
+	- `sql.sendQuery()` to send SQLI protected queries ([issue #10](https://github.com/Sv443-Network/SvCoreLib/issues/10))
+	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443-Network/SvCoreLib/issues/11))
+	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443-Network/SvCoreLib/issues/12))
 - Fixed bugs
-    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443/SvCoreLib/issues/6))
-    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443/SvCoreLib/issues/7))
+    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443-Network/SvCoreLib/issues/6))
+    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443-Network/SvCoreLib/issues/7))
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 

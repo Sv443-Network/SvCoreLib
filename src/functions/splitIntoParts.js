@@ -1,10 +1,10 @@
 function splitIntoParts(array, partsAmt, balanced = false)
 {
     if(!Array.isArray(array))
-        throw new TypeError("Parameter is not an array");
+        throw new TypeError("Invalid argument 'array' provided in splitIntoParts()");
 
     if(typeof partsAmt !== "number" || isNaN(partsAmt))
-        throw new TypeError("Parameter `partsAmt` is not of type number");
+        throw new TypeError("Invalid argument 'partsAmt' provided in splitIntoParts()");
 
     // credits to https://stackoverflow.com/a/8189268/8602926 lol
     if(partsAmt < 2)
@@ -21,8 +21,7 @@ function splitIntoParts(array, partsAmt, balanced = false)
         while(i < len)
             out.push(array.slice(i, i += size));
     }
-
-    else if(balanced)
+    else if(balanced === true)
     {
         while(i < len)
         {

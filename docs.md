@@ -1877,12 +1877,11 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 > ### splitIntoPartsOfLength()
 > Splits an array into any number of parts with a max length each.  
+> `maxLength` has to be a number that's at least 1 or higher.  
 >   
-> `balanced` is set to false by default. This way all returned subarrays have the same length except the last one, which is used as a buffer for uneven splits.  
-> Set this parameter to `true` to make the returned parts equally balanced. This makes them have similar lengths.  
-> See the example for a visual demonstration.  
+> If the provided array is empty, an empty array will also be returned.
 > ```ts
-> scl.splitIntoPartsOfLength(array: any[], maxLength: number, balanced?: boolean): any[][]
+> scl.splitIntoPartsOfLength(array: any[], maxLength: number): any[][]
 > ```
 > 
 > <br><details><summary><b>Example Code - click to show</b></summary>

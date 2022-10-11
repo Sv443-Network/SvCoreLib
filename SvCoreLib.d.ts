@@ -156,12 +156,11 @@ declare module "svcorelib" {
     function splitIntoParts<T>(array: T[], partsAmt: number, balanced: boolean): T[][];
 
     /**
-     * 🔹 Splits an array into any number of parts with a max length 🔹
+     * 🔹 Splits an array into any number of parts with a max length. 🔹
      * @param array The array to split
-     * @param maxLength The maximum length of each part
-     * @param balanced Default (false): returned parts all have the same length except the last one. (true) returned parts are equally balanced and have similar lengths.
+     * @param maxLength The maximum length of each part. Has to be at least 1 or higher.
      */
-    function splitIntoPartsOfLength<T>(array: T[], maxLength: number, balanced: boolean): T[][];
+    function splitIntoPartsOfLength<T>(array: T[], maxLength: number): T[][];
 
     type ParseDurationResult = Record<"days" | "hrs" | "mins" | "secs" | "ms", number>;
 
