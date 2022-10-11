@@ -1,97 +1,92 @@
 // SvCoreLib by Sv443 - licensed under the MIT license: https://sv443.net/LICENSE
 // For more information, please read the `README.md` file or go to https://github.com/Sv443-Network/SvCoreLib#readme
 
-/**
- * @param {string} path
- * @returns {(...args: any) => any}
- */
-const imp = (path) => require(`./src/${path}`);
-
-
 module.exports = {
     //#SECTION functions
 
-    isEmpty:          imp("functions/isEmpty"),
-    isArrayEmpty:     imp("functions/isArrayEmpty"),
-    isClass:          imp("functions/isClass"),
-    error:            imp("functions/error"),
-    allEqual:         imp("functions/allEqual"),
-    allOfType:        imp("functions/allOfType"),
-    allInstanceOf:    imp("functions/allInstanceOf"),
-    reserialize:      imp("functions/reserialize"),
-    readableArray:    imp("functions/readableArray"),
-    mapRange:         imp("functions/mapRange"),
-    unused:           imp("functions/unused"),
-    replaceAt:        imp("functions/replaceAt"),
-    byteLength:       imp("functions/byteLength"),
-    randRange:        imp("functions/randRange"),
-    clamp:            imp("functions/clamp"),
-    randomizeArray:   imp("functions/randomizeArray"),
-    randomItem:       imp("functions/randomItem"),
-    randomItemIndex:  imp("functions/randomItemIndex"),
-    takeRandomItem:   imp("functions/takeRandomItem"),
-    removeDuplicates: imp("functions/removeDuplicates"),
-    halves:           imp("functions/halves"),
-    insertValues:     imp("functions/insertValues"),
-    formatDuration:   imp("functions/formatDuration"),
-    parseDuration:    imp("functions/parseDuration"),
+    isEmpty:                require("./src/functions/isEmpty"),
+    isArrayEmpty:           require("./src/functions/isArrayEmpty"),
+    isClass:                require("./src/functions/isClass"),
+    error:                  require("./src/functions/error"),
+    allEqual:               require("./src/functions/allEqual"),
+    allOfType:              require("./src/functions/allOfType"),
+    allInstanceOf:          require("./src/functions/allInstanceOf"),
+    reserialize:            require("./src/functions/reserialize"),
+    readableArray:          require("./src/functions/readableArray"),
+    mapRange:               require("./src/functions/mapRange"),
+    unused:                 require("./src/functions/unused"),
+    replaceAt:              require("./src/functions/replaceAt"),
+    byteLength:             require("./src/functions/byteLength"),
+    randRange:              require("./src/functions/randRange"),
+    clamp:                  require("./src/functions/clamp"),
+    randomizeArray:         require("./src/functions/randomizeArray"),
+    randomItem:             require("./src/functions/randomItem"),
+    randomItemIndex:        require("./src/functions/randomItemIndex"),
+    takeRandomItem:         require("./src/functions/takeRandomItem"),
+    removeDuplicates:       require("./src/functions/removeDuplicates"),
+    halves:                 require("./src/functions/halves"),
+    insertValues:           require("./src/functions/insertValues"),
+    formatDuration:         require("./src/functions/formatDuration"),
+    parseDuration:          require("./src/functions/parseDuration"),
+    splitIntoParts:         require("./src/functions/splitIntoParts"),
+    splitIntoPartsOfLength: require("./src/functions/splitIntoPartsOfLength"),
 
     // namespaces
     seededRNG: {
-        randomSeed:      imp("functions/seededRNG/randomSeed"),
-        generateNumbers: imp("functions/seededRNG/generateNumbers"),
-        validateSeed:    imp("functions/seededRNG/validateSeed"),
+        randomSeed:      require("./src/functions/seededRNG/randomSeed"),
+        generateNumbers: require("./src/functions/seededRNG/generateNumbers"),
+        validateSeed:    require("./src/functions/seededRNG/validateSeed"),
     },
     uuid: {
-        hexadecimal:    imp("functions/uuid/hexadecimal"),
-        decimal:        imp("functions/uuid/decimal"),
-        alphanumerical: imp("functions/uuid/alphanumerical"),
-        binary:         imp("functions/uuid/binary"),
-        custom:         imp("functions/uuid/custom"),
+        hexadecimal:    require("./src/functions/uuid/hexadecimal"),
+        decimal:        require("./src/functions/uuid/decimal"),
+        alphanumerical: require("./src/functions/uuid/alphanumerical"),
+        binary:         require("./src/functions/uuid/binary"),
+        custom:         require("./src/functions/uuid/custom"),
     },
     http: {
-        pipeFile:          imp("functions/http/pipeFile"),
-        pipeString:        imp("functions/http/pipeString"),
-        getClientEncoding: imp("functions/http/getClientEncoding"),
-        ping:              imp("functions/http/ping"),
+        pipeFile:          require("./src/functions/http/pipeFile"),
+        pipeString:        require("./src/functions/http/pipeString"),
+        getClientEncoding: require("./src/functions/http/getClientEncoding"),
+        ping:              require("./src/functions/http/ping"),
     },
     files: {
-        readdirRecursive:     imp("functions/files/readdirRecursive"),
-        readdirRecursiveSync: imp("functions/files/readdirRecursiveSync"),
-        logger:               imp("functions/files/logger"),
-        downloadFile:         imp("functions/files/downloadFile"),
-        ensureDirs:           imp("functions/files/ensureDirs"),
-        ensureDirsSync:       imp("functions/files/ensureDirsSync"),
-        exists:               imp("functions/files/exists"),
-        existsSync:           imp("functions/files/existsSync"),
+        readdirRecursive:     require("./src/functions/files/readdirRecursive"),
+        readdirRecursiveSync: require("./src/functions/files/readdirRecursiveSync"),
+        logger:               require("./src/functions/files/logger"),
+        downloadFile:         require("./src/functions/files/downloadFile"),
+        ensureDirs:           require("./src/functions/files/ensureDirs"),
+        ensureDirsSync:       require("./src/functions/files/ensureDirsSync"),
+        exists:               require("./src/functions/files/exists"),
+        existsSync:           require("./src/functions/files/existsSync"),
     },
     sql: {
-        sendQuery: imp("functions/sql/sendQuery"),
+        sendQuery: require("./src/functions/sql/sendQuery"),
     },
     system: {
-        usedHeap:       imp("functions/system/usedHeap"),
-        inDebugger:     imp("functions/system/inDebugger"),
-        softShutdown:   imp("functions/system/softShutdown"),
-        noShutdown:     imp("functions/system/noShutdown"),
-        yesShutdown:    imp("functions/system/yesShutdown"),
-        setWindowTitle: imp("functions/system/setWindowTitle"),
-        pause:          imp("functions/system/pause"),
+        usedHeap:       require("./src/functions/system/usedHeap"),
+        inDebugger:     require("./src/functions/system/inDebugger"),
+        softShutdown:   require("./src/functions/system/softShutdown"),
+        noShutdown:     require("./src/functions/system/noShutdown"),
+        yesShutdown:    require("./src/functions/system/yesShutdown"),
+        setWindowTitle: require("./src/functions/system/setWindowTitle"),
+        pause:          require("./src/functions/system/pause"),
     },
 
     //#SECTION classes
 
-    ProgressBar:   imp("classes/ProgressBar"),
-    MenuPrompt:    imp("classes/MenuPrompt"),
-    FolderDaemon:  imp("classes/FolderDaemon"),
-    SelectionMenu: imp("classes/SelectionMenu"),
-    StatePromise:  imp("classes/StatePromise"),
+    ProgressBar:   require("./src/classes/ProgressBar"),
+    MenuPrompt:    require("./src/classes/MenuPrompt"),
+    FolderDaemon:  require("./src/classes/FolderDaemon"),
+    SelectionMenu: require("./src/classes/SelectionMenu"),
+    StatePromise:  require("./src/classes/StatePromise"),
 
     // namespaced classes
 
-    Errors: imp("classes/Errors"),
+    Errors: require("./src/classes/Errors"),
 
     //#SECTION objects
 
-    info:   imp("objects/info"),
-    colors: imp("objects/colors"),
+    info:   require("./src/objects/info"),
+    colors: require("./src/objects/colors"),
 };

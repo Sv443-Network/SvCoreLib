@@ -12,8 +12,8 @@ Contains builtin TypeScript definitions
 
 <br>
 
-## >> [Documentation](./docs.md#readme) <<
-#### [Discord](https://dc.sv443.net) • [Changelog](./changelog.md#readme)
+## >> [Documentation](https://github.com/Sv443-Network/SvCoreLib/blob/master/docs.md#readme) <<
+#### [Discord](https://dc.sv443.net) • [Changelog](https://github.com/Sv443-Network/SvCoreLib/blob/master/changelog.md#readme)
 
 </div>
 
@@ -25,6 +25,8 @@ Contains builtin TypeScript definitions
 - File system tools like reading a directory recursively, downloading a file or supervising a directory for changes
 - Randomization tools like generating UUIDs or a seeded RNG
 - Misc tools involving array manipulation
+  
+See a list of all features [here.](./docs.md#table-of-contents)
 
 <br>
 

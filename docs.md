@@ -88,6 +88,8 @@ Otherwise, see the table of contents just below.
         - [halves()](#halves) - returns both halves of an array
         - [replaceAt()](#replaceat) - replaces a character in a string with another string
         - [reserialize()](#reserialize) - loses internal reference of a JSON-compatible object
+        - [splitIntoParts()](#splitintoparts) - splits an array into n parts
+        - [splitIntoPartsOfLength()](#splitintopartsoflength) - splits an array into n parts with a max length
         - [parseDuration()](#parseduration) - parses a duration in milliseconds to days, hours, mins, secs and ms
         - [formatDuration()](#formatduration) - turns a millisecond duration into a string with a custom format
         - [unused()](#unused) - indicates to a linter that one or more variables are unused
@@ -1421,16 +1423,16 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const { isClass } = require("svcorelib");
 > 
 > class MyClass {}
 > 
 > const foo = new MyClass();
 > const bar = "hello";
 > 
-> console.log(MyClass); // true
-> console.log(foo);     // false
-> console.log(bar);     // false
+> console.log(isClass(MyClass)); // true
+> console.log(isClass(foo));     // false
+> console.log(isClass(bar));     // false
 > ```
 > 
 > </details>
@@ -1442,7 +1444,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ### mapRange()
 > Transforms the `value` parameter from the numerical range `range_1_min`-`range_1_max` to the numerical range `range_2_min`-`range_2_max`.  
 > For example, you can map the value 2 in the range of 0-5 to the range of 0-10 and you'd get a 4 as a result.  
-> It can be especially useful when using SCLs [`ProgressBar`](#progressbar) class.  
+> It can be especially useful when calculating percentages, like when using [`files.downloadFile()`](#filesdownloadfile) or the [`ProgressBar` class.](#progressbar)  
 > This function is the same as the [map() function in Arduino.](https://www.arduino.cc/reference/en/language/functions/math/map/)
 > ```ts
 > scl.mapRange(value: number, range_1_min: number, range_1_max: number, range_2_min: number, range_2_max: number): number
@@ -1686,6 +1688,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 > ### halves()
 > Returns both halves of an array as a tuple.  
+> If you need more than two parts, use [`splitIntoParts()`](#splitintoparts) instead.  
 >   
 > If the passed array has one entry, the second value in the returned tuple will be an empty array.  
 > If the passed array is empty, the returned array will be empty.
@@ -1827,6 +1830,80 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > ```
 > 
 > </details>
+
+
+<br><br><br>
+
+
+> ### splitIntoParts()
+> Splits an array into a certain amount of parts.  
+>   
+> Use the parameter `partsAmt` to specify how many parts.  
+> A value below 2 will return the input array as the only part.  
+>   
+> `balanced` is set to false by default. This way all returned subarrays have the same length except the last one, which is used as a buffer for uneven splits.  
+> Set this parameter to `true` to make the returned parts equally balanced. This makes them have similar lengths.  
+> See the example for a visual demonstration.  
+>   
+> The returned value is an array that contains the parts of the original array.  
+> ```ts
+> scl.splitIntoParts(array: any[], partsAmt: number, balanced?: boolean): any[][]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { splitIntoParts } = require("svcorelib");
+> 
+> // length: 22
+> const bugsnax = [
+>     "Bunger", "Buffalocust", "Charmallow", "Cheepoof", "Cheery", "Cheezer",
+>     "Chillynilly", "Chippie", "Cinnasnail", "Clawbsteroni", "Cobhopper", "Eggler",
+>     "Flapjackarak", "Flutterjam", "Fryder", "Sweet Fryder", "Green Grapeskeeto",
+>     "Grapeskeeto", "Hunnabee", "Incherrito", "Inchwrap", "Instabug",
+> ];
+> 
+> const unbalanced = splitIntoParts(bugsnax, 3);     // [ [...], [...], [...] ]
+> const balanced = splitIntoParts(bugsnax, 3, true); // [ [...], [...], [...] ]
+> 
+> // using .map() to show how many items are in the subarrays:
+> console.log(unbalanced.map(subArr => subArr.length)); // [ 10, 10, 2 ] - only last one has shorter length
+> console.log(balanced.map(subArr => subArr.length));   // [ 8, 7, 7 ]   - all have a similar length
+> ```
+
+
+<br><br><br>
+
+
+> ### splitIntoPartsOfLength()
+> Splits an array into any number of parts with a max length each.  
+> `maxLength` has to be a number that's at least 1 or higher.  
+>   
+> If the provided array is empty, an empty array will also be returned.
+> ```ts
+> scl.splitIntoPartsOfLength(array: any[], maxLength: number): any[][]
+> ```
+> 
+> <br><details><summary><b>Example Code - click to show</b></summary>
+> 
+> ```js
+> const { splitIntoPartsOfLength } = require("svcorelib");
+> 
+> // length: 22
+> const bugsnax = [
+>     "Bunger", "Buffalocust", "Charmallow", "Cheepoof", "Cheery", "Cheezer",
+>     "Chillynilly", "Chippie", "Cinnasnail", "Clawbsteroni", "Cobhopper", "Eggler",
+>     "Flapjackarak", "Flutterjam", "Fryder", "Sweet Fryder", "Green Grapeskeeto",
+>     "Grapeskeeto", "Hunnabee", "Incherrito", "Inchwrap", "Instabug",
+> ];
+> 
+> const foo = splitIntoPartsOfLength(bugsnax, 5);
+> const bar = splitIntoPartsOfLength(bugsnax, 2);
+> 
+> // using .map() to show how many items are in the subarrays:
+> console.log(foo.map(subArr => subArr.length)); // [ 5, 5, 5, 5, 2 ]
+> console.log(bar.map(subArr => subArr.length)); // [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+> ```
 
 
 <br><br><br>
@@ -2389,7 +2466,9 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 >   
 > <details><summary><b>Click here to see an example of how this might look like</b></summary>
 > 
-> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/selectionmenu_tty.gif)
+> ![SelectionMenu example image](https://cdn.sv443.net/scl/docs/selectionmenu_tty.gif)  
+>  
+> (disregard the `[` character in the first line)
 > 
 > </details>
 > 

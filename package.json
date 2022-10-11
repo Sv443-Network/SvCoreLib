@@ -1,6 +1,6 @@
 {
   "name": "svcorelib",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "description": "Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features.",
   "main": "SvCoreLib.js",
   "scripts": {
@@ -50,9 +50,9 @@
   "homepage": "https://github.com/Sv443-Network/SvCoreLib#readme",
   "dependencies": {
     "deep-diff": "^1.0.2",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^10.1.0",
     "keypress": "^0.2.1",
-    "minimatch": "^3.0.4"
+    "minimatch": "^5.1.0"
   },
   "optionalDependencies": {
     "mysql": "^2.18.1"
@@ -60,7 +60,7 @@
   "devDependencies": {
     "@types/mysql": "^2.15.17",
     "@types/node": "^14.6.0",
-    "eslint": "^7.22.0",
-    "snyk": "^1.592.0"
+    "eslint": "^8.25.0",
+    "snyk": "^1.1026.0"
   }
 }
