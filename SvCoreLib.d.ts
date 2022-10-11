@@ -1149,6 +1149,7 @@ declare module "svcorelib" {
          */
         class SCLError extends Error
         {
+            constructor(message?: string, options?: any)
             /** A Date instance set to the exact time this Error instance was created */
             date: Date;
         }
@@ -1157,37 +1158,49 @@ declare module "svcorelib" {
          * 🔹 This error gets thrown if an invalid path was provided 🔹
          * @since 1.12.0
          */
-        class InvalidPathError extends SCLError {}
+        class InvalidPathError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
 
         /**
          * 🔹 This error gets thrown if the provided path is not a folder 🔹
          * @since 1.12.0
          */
-        class NotAFolderError extends SCLError {}
+        class NotAFolderError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
 
         /**
          * 🔹 This error gets thrown if an invalid glob pattern was provided 🔹
          * @since 1.12.0
          */
-        class PatternInvalidError extends SCLError {}
+        class PatternInvalidError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
 
         /**
          * 🔹 This error gets thrown when the terminal that the process runs in doesn't provide a stdin channel 🔹
          * @since 1.12.0
          */
-        class NoStdinError extends SCLError {}
+        class NoStdinError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
 
         /**
          * 🔹 This error gets thrown when an invalid [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) was provided. 🔹
          * @since 1.12.0
          */
-        class InvalidMimeTypeError extends SCLError {}
+        class InvalidMimeTypeError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
 
         /**
          * 🔹 This error gets thrown when a provided SQL connection was not established yet or has ended 🔹
          * @since 1.12.0
          */
-        class SqlConnectionNotEstablishedError extends SCLError {}
+        class SqlConnectionNotEstablishedError extends SCLError {
+            constructor(message?: string, options?: any)
+        }
     }
 
     //#MARKER objects
