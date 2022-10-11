@@ -1897,12 +1897,12 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 >     "Grapeskeeto", "Hunnabee", "Incherrito", "Inchwrap", "Instabug",
 > ];
 > 
-> const unbalanced = splitIntoPartsOfLength(bugsnax, 5);     // [ [...], [...], [...], [...], [...] ]
-> const balanced = splitIntoPartsOfLength(bugsnax, 5, true); // [ [...], [...], [...], [...], [...] ]
+> const foo = splitIntoPartsOfLength(bugsnax, 5);
+> const bar = splitIntoPartsOfLength(bugsnax, 2);
 > 
 > // using .map() to show how many items are in the subarrays:
-> console.log(unbalanced.map(subArr => subArr.length)); // [ 5, 5, 5, 5, 2 ] - only last one has shorter length
-> console.log(balanced.map(subArr => subArr.length));   // [ 5, 5, 4, 4, 4 ] - lengths are balanced
+> console.log(foo.map(subArr => subArr.length)); // [ 5, 5, 5, 5, 2 ]
+> console.log(bar.map(subArr => subArr.length)); // [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
 > ```
 
 

@@ -153,7 +153,7 @@ declare module "svcorelib" {
      * @param partsAmt Into how many parts the array should be split
      * @param balanced Default (false): returned parts all have the same length except the last one. (true): returned parts are equally balanced and have similar lengths.
      */
-    function splitIntoParts<T>(array: T[], partsAmt: number, balanced: boolean): T[][];
+    function splitIntoParts<T>(array: T[], partsAmt: number, balanced?: boolean): T[][];
 
     /**
      * 🔹 Splits an array into any number of parts with a max length. 🔹
