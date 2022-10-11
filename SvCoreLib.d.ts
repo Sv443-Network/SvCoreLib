@@ -152,6 +152,7 @@ declare module "svcorelib" {
      * @param array The array to split
      * @param partsAmt Into how many parts the array should be split
      * @param balanced Default (false): returned parts all have the same length except the last one. (true): returned parts are equally balanced and have similar lengths.
+     * @since 1.18.0
      */
     function splitIntoParts<T>(array: T[], partsAmt: number, balanced?: boolean): T[][];
 
@@ -159,6 +160,7 @@ declare module "svcorelib" {
      * 🔹 Splits an array into any number of parts with a max length. 🔹
      * @param array The array to split
      * @param maxLength The maximum length of each part. Has to be at least 1 or higher.
+     * @since 1.18.0
      */
     function splitIntoPartsOfLength<T>(array: T[], maxLength: number): T[][];
 
@@ -305,7 +307,7 @@ declare module "svcorelib" {
      * @returns Returns a random item of the provided array. Returns undefined if the array is empty.
      * @since 1.9.4
      */
-    function randomItem<T>(array: T[]): T | undefined;
+    function randomItem<T>(array: T[]): T;
 
     /**
      * 🔹 Chooses a random item in an array and returns it, along with its index in the array. 🔹
@@ -313,7 +315,7 @@ declare module "svcorelib" {
      * @returns Returns a tuple array with two entries. First entry is the randomly chosen item, second entry is the index of the random item. Returns undefined if the array is empty.
      * @since 1.17.0
      */
-    function randomItemIndex<T>(array: T[]): [item?: T, index?: number];
+    function randomItemIndex<T>(array: T[]): [item: T, index: number];
 
     /**
      * 🔹 Chooses a random item in an array and returns it. Mutates the original array so the chosen item is no longer contained! 🔹
@@ -321,7 +323,7 @@ declare module "svcorelib" {
      * @returns Returns the randomly chosen item. Returns undefined if the array is empty.
      * @since 1.17.0
      */
-    function takeRandomItem<T>(array: T[]): T | undefined;
+    function takeRandomItem<T>(array: T[]): T;
 
     /**
      * 🔹 Removes duplicate items in an array 🔹
