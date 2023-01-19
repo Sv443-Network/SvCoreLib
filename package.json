@@ -50,17 +50,20 @@
   "homepage": "https://github.com/Sv443-Network/SvCoreLib#readme",
   "dependencies": {
     "deep-diff": "^1.0.2",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "keypress": "^0.2.1",
-    "minimatch": "^5.1.0"
+    "minimatch": "^6.1.5"
   },
   "optionalDependencies": {
     "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.17",
-    "@types/node": "^14.6.0",
+    "@types/node": "^18.11.18",
     "eslint": "^8.25.0",
     "snyk": "^1.1026.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
