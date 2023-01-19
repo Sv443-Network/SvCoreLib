@@ -211,7 +211,7 @@ SCL uses a TypeScript type declaration file (`.d.ts`) in order to provide docume
 - Deprecated features should be unlisted in your IDE but if not or you explicitly entered their name, they are indicated with a `@deprecated` tag and they will contain this emoji: ❌  
     Their descriptions should also tell you if there are alternatives.
 - You will always encounter a `@since` tag, which indicates with which version the feature was introduced.
-- The `@version` tag will tell you that something changed in a certain version.
+- The `@version` tag will tell you about (breaking) changes that have been made in a certain version.
 - If a function / method can throw an error, the `@throws` tag will tell you when this might happen and of which class the Error instance might be.
 - Private class methods should be unlisted but if not, they will start with an underscore, will be tagged with `@private` and their description will be delimited from other sections with this emoji: ❌  
     Private methods shouldn't be used, or else something might break.
