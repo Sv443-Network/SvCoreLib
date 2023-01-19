@@ -1,6 +1,6 @@
 const colors = {
     rst:         "\x1b[0m",
-    fat:         "\x1b[37m",
+    fat:         "\x1b[1m",
     blink:       "\x1b[5m",
     dim:         "\x1b[2m",
     underscore:  "\x1b[4m",
@@ -30,18 +30,17 @@ const colors = {
     }
 }
 
-function bright(cols)
+function fat(cols)
 {
     const retObj = {};
     Object.entries(cols).forEach(([k, v]) => {
-        if(k !== "rst")
-        retObj[k] = `${v}\x1b[1m`;
+        retObj[k] = (k === "rst" ? colors.rst : `${v}${colors.fat}`);
     });
     return retObj;
 }
 
 module.exports = {
     ...colors,
-    fgb: bright(colors.fg),
-    bgb: bright(colors.bg)
+    fgb: fat(colors.fg),
+    bgb: fat(colors.bg)
 };
