@@ -5,11 +5,9 @@
 
 This is the documentation of SvCoreLib (also referred to as SCL).  
 SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
+This library supports CommonJS and has builtin Typescript declarations.  
   
-This library supports CommonJS, ESNext and Typescript and has builtin Typescript declarations.  
-With the exception of certain features that rely on the filesystem, HTTP, SQL or console input, this library should be DOM-compatible (unverified).  
-  
-If you don't understand how this documentation works and what certain things mean, please read [this section.](#how-this-documentation-works)  
+To understand how this documentation works, please first [read this section.](#how-this-documentation-works)  
 If you find any bugs or want to suggest a new feature, please [open a new issue on GitHub.](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose)
   
 <br>
@@ -1585,7 +1583,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 
 
 > ### randRange()
-> Highly random number generator where you can specify an upper and lower boundary.  
+> Pseudo-random number generator where you can specify an upper and lower boundary.  
 >   
 > Specify the upper and lower boundary with the parameters `min` and `max`  
 > If `min` is not provided, it will be set to the default of `0`  
