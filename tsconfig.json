@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
-        "module": "commonJS",
+        "module": "CommonJS",
         "typeRoots": [
-            "./SvCoreLib.d.ts"
+            "./SvCoreLib.d.ts",
         ],
         "types": [
-            "node"
-        ]
+            "node",
+        ],
+        "resolveJsonModule": true,
     }
 }

@@ -304,7 +304,7 @@ declare module "svcorelib" {
     /**
      * 🔹 Chooses a random item in an array and returns it 🔹
      * @param array An array of any size, with any values contained inside
-     * @returns Returns a random item of the provided array. Returns undefined if the array is empty.
+     * @returns Returns a random item of the provided array. **Returns undefined if the array is empty.**
      * @since 1.9.4
      */
     function randomItem<T>(array: T[]): T;
@@ -312,7 +312,7 @@ declare module "svcorelib" {
     /**
      * 🔹 Chooses a random item in an array and returns it, along with its index in the array. 🔹
      * @param array An array of any size, with any values contained inside
-     * @returns Returns a tuple array with two entries. First entry is the randomly chosen item, second entry is the index of the random item. Returns undefined if the array is empty.
+     * @returns Returns a tuple array with two entries. First entry is the randomly chosen item, second entry is the index of the random item. **Both entries are undefined if the array is empty.**
      * @since 1.17.0
      */
     function randomItemIndex<T>(array: T[]): [item: T, index: number];
@@ -320,7 +320,7 @@ declare module "svcorelib" {
     /**
      * 🔹 Chooses a random item in an array and returns it. Mutates the original array so the chosen item is no longer contained! 🔹
      * @param array An array of any size, with any values contained inside
-     * @returns Returns the randomly chosen item. Returns undefined if the array is empty.
+     * @returns Returns the randomly chosen item. **Returns undefined if the array is empty.**
      * @since 1.17.0
      */
     function takeRandomItem<T>(array: T[]): T;

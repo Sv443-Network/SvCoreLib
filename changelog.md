@@ -1,47 +1,26 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.18.0](#1180)
+### Latest version: [1.18.2](#1182)
 
-<details><summary><b>Click to expand version history</b></summary>
+<sub>
+
+[Click here to view the version history](#version-history)
+
+</sub>
+
+<br><br>
+
+## 1.18.2
+- Fixes
+    - Made `system.inDebugger()` no longer dependent on V8's `inspector` module
+    - Fixed wrong color code for `colors.fat`
 
 <br>
 
-> **SvCoreLib**
-> - [1.18.0](#1180)
-> - [1.17.0](#1170)
-> - [1.16.0](#1160)
-> - [1.15.0](#1150)
-> - [1.14.0](#1140)
->     - [1.14.1](#1141)
->     - [1.14.2](#1142)
-> - [1.13.0](#1130)
->     - [1.13.1](#1131)
-> - [1.12.0](#1120)
-> - [1.11.0](#1110)
->     - [1.11.1](#1111)
-> - [1.10.0](#1100)
-> 
-> **JSLib-npm** (deprecated)
-> - [1.9.0](#190)
->     - [1.9.1](#191)
->     - [1.9.2](#192)
->     - [1.9.3](#193)
->     - [1.9.4](#194)
-> - [1.8.0](#180)
->     - [1.8.1](#181)
->     - [1.8.2](#182)
->     - [1.8.3](#183)
->     - [1.8.4](#184)
-> - [1.7.0](#170)
-> - 1.6.x
->     - [1.6.5](#165)
->     - [1.6.6](#166)
-> 
-> 
-> <br>
+## 1.18.1
+- Fixes
+    - Fixed TS types for `randomItem()`, `randomItemIndex()` and `takeRandomItem()`
 
-</details>
-
-<br><br><br>
+<br>
 
 ## 1.18.0
 - Additions
@@ -351,3 +330,49 @@
 - changed dependency "perf_hooks" to "execution-time" because a feature was deprecated
 - completely deprecated the all-lowercase alias "jsl.isempty()" of the function "jsl.isEmpty()"
 - cleaned up the code a bit
+
+<br><br>
+
+---
+
+<br>
+
+## Version history:
+
+<br>
+
+> **SvCoreLib**
+> - [1.18.0](#1180)
+>     - [1.18.1](#1181)
+>     - [1.18.2](#1182)
+> - [1.17.0](#1170)
+> - [1.16.0](#1160)
+> - [1.15.0](#1150)
+> - [1.14.0](#1140)
+>     - [1.14.1](#1141)
+>     - [1.14.2](#1142)
+> - [1.13.0](#1130)
+>     - [1.13.1](#1131)
+> - [1.12.0](#1120)
+> - [1.11.0](#1110)
+>     - [1.11.1](#1111)
+> - [1.10.0](#1100)
+> 
+> **JSLib-npm** (deprecated predecessor)
+> - [1.9.0](#190)
+>     - [1.9.1](#191)
+>     - [1.9.2](#192)
+>     - [1.9.3](#193)
+>     - [1.9.4](#194)
+> - [1.8.0](#180)
+>     - [1.8.1](#181)
+>     - [1.8.2](#182)
+>     - [1.8.3](#183)
+>     - [1.8.4](#184)
+> - [1.7.0](#170)
+> - 1.6.x
+>     - [1.6.5](#165)
+>     - [1.6.6](#166)
+> 
+> 
+> <br>

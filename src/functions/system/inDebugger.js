@@ -1,4 +1,9 @@
-const { url } = require("inspector");
+let inspector;
+try {
+    inspector = require("inspector");
+}
+catch(e) { void e; }
+
 const unused = require("../unused");
 
 function inDebugger(checkArg)
@@ -16,7 +21,7 @@ function inDebugger(checkArg)
     return (
         typeof v8debug === "object"
         || /--debug|--inspect/.test(process.execArgv.join(" "))
-        || typeof url() === "string"
+        || (inspector.url && typeof inspector.url() === "string")
     );
 }
 
