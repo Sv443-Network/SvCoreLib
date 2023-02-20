@@ -11,6 +11,7 @@
 
 ## 1.18.2
 - Fixes
+    - Made `system.inDebugger()` no longer dependent on V8's `inspector` module
     - Fixed wrong color code for `colors.fat`
 
 <br>
