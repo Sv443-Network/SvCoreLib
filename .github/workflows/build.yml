@@ -27,8 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies # runs the npm install command to install all dependencies
         run: npm i
-      - name: Install ESLint # installs ESLint - idk why it doesn't pull this out of the devDependencies but whatever
-        run: npm i -g eslint
       - name: Build library
         run: npm run build
     # - name: Run Unit Tests # runs all unit tests
