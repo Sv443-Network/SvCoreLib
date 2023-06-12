@@ -11,33 +11,14 @@
     >> This file is responsible for the In-IDE documentation and explicit types (usually seen by pressing CTRL+Space or hovering over stuff)
 */
 
-
 import { EventEmitter } from "events";
 import { ServerResponse, IncomingMessage } from "http";
 import { Connection, QueryOptions } from "mysql";
 
-import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./src/types/SelectionMenu";
+import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./types/SelectionMenu";
 
 
 //#MARKER types
-
-/**
- * Describes an object that is JSON-compatible, aka doesn't contain self- / circular references or non-primitive JS properties  
- * [Source](https://github.com/microsoft/TypeScript/issues/1897#issuecomment-338650717)
- */
-export type JSONCompatible =  boolean | number | string | null | JSONArray | JSONMap;
-interface JSONMap { [key: string]: JSONCompatible; }
-interface JSONArray extends Array<JSONCompatible> {}
-
-/** Describes a value that either is a string itself or has a `.toString()` method, meaning it can be converted to a string */
-export type Stringifiable = string | {
-    toString(): string;
-}
-
-/** Describes any class reference that is constructable/newable */
-export type Newable<T> = { new(...args: any[]): T; };
-/** Describes any value that is a constructable/newable class reference or a function (ES5 classes and abstract ES6 classes) */
-export type AnyClass<T> = Newable<T> | (() => unknown & { prototype: T });
 
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
@@ -136,7 +117,7 @@ declare module "svcorelib" {
      * @throws Throws a TypeError if the parameters are invalid
      * @since 1.17.0
      */
-    function allInstanceOf<T>(array: T[], Class: AnyClass<T>): boolean;
+    function allInstanceOf<T>(array: unknown[], Class: AnyClass<T>): boolean;
 
     /**
      * 🔹 Reserializes a JSON-compatible object. This means it copies the value of an object and loses the internal reference to it.  

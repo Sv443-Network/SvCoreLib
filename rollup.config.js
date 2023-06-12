@@ -37,7 +37,7 @@ const config = {
     resolve({ extensions }),
     babel({
       babelHelpers: "bundled",
-      include: ["src/**/*.ts"],
+      include: ["src/**/*"],
       extensions,
       exclude: "./node_modules/**",
     }),

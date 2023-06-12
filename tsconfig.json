@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "declarationMap": true,
+    "emitDeclarationOnly": true,
     "outDir": "lib/types",
-    "allowJs": true,
     "resolveJsonModule": true,
     "typeRoots": [
-      "./SvCoreLib.d.ts",
+      "src/index.d.ts",
     ],
   },
   "include": [
