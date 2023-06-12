@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
     TypeScript Type Declaration file
     Original declarations made by @canarado
@@ -36,12 +37,12 @@ export type Stringifiable = string | {
 /** Describes any class reference that is constructable/newable */
 export type Newable<T> = { new(...args: any[]): T; };
 /** Describes any value that is a constructable/newable class reference or a function (ES5 classes and abstract ES6 classes) */
-export type AnyClass<T> = Newable<T> | (Function & { prototype: T });
+export type AnyClass<T> = Newable<T> | (() => unknown & { prototype: T });
 
 /**
  * ![icon](https://sv443.net/resources/images/svcorelib_tiny.png)  
  * 
- * ### SvCoreLib
+ * ### Sv443 Network CoreLib
  * Core Library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features
  * 
  * ---
@@ -751,12 +752,12 @@ declare module "svcorelib" {
      * ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png)
      */
     class ProgressBar {
-        /** The character to use for filled parts of the progress bar */
-        public filledChar: string;
-        /** The character to use for blank / empty parts of the progress bar */
-        public blankChar: string;
+      /** The character to use for filled parts of the progress bar */
+      public filledChar: string;
+      /** The character to use for blank / empty parts of the progress bar */
+      public blankChar: string;
 
-        /**
+      /**
          * 🔹 Creates a dynamic progress bar with a percentage and custom message display 🔹  
          *   
          * ![ProgressBar example image](https://sv443.net/cdn/jsl/doc/progress_bar_small.png)
@@ -765,16 +766,16 @@ declare module "svcorelib" {
          * @constructor
          * @since 1.7.0
          */
-        constructor(timesToUpdate: number, initialMessage?: string);
+      constructor(timesToUpdate: number, initialMessage?: string);
 
-        /**
+      /**
          * 🔹 Increment the progress bar. The amount of these functions should be known at the point of initially creating the ProgressBar object. 🔹
          * @param message Message that should be displayed
          * @since 1.7.0
          */
-        next(message?: string): void;
+      next(message?: string): void;
         
-        /**
+      /**
          * 🔹 Executes a function once the progress reaches 100% 🔹
          * @param {function} [callback] Function to be called when the progress bar reaches 100%
          * @returns {Promise} Promise that gets resolved when the progress bar reaches 100%
@@ -782,20 +783,20 @@ declare module "svcorelib" {
          * @since 1.7.0
          * @version 1.12.0 Method now also returns a Promise
          */
-        onFinish(callback: () => void): Promise<void>;
+      onFinish(callback: () => void): Promise<void>;
         
-        /**
+      /**
          * 🔹 Get the current progress as a float value (between `0.0` and `1.0`) 🔹
          * @since 1.7.0
          */
-        getProgress(): number;
+      getProgress(): number;
         
-        /**
+      /**
          * 🔹 Get the amount of increments that are still needed to reach 100% progress aka how many times the `next()` method still needs to be called 🔹
          * @returns {Number}
          * @since 1.7.0
          */
-        getRemainingIncrements(): number;
+      getRemainingIncrements(): number;
     }
 
     //#SECTION MenuPrompt
@@ -889,10 +890,10 @@ declare module "svcorelib" {
      * ![MenuPrompt example image](https://sv443.net/cdn/jsl/doc/menu_prompt_small.png)
      */
     class MenuPrompt {
-        /** This is where all texts of the MenuPrompt are stored. Use this to translate or change them. */
-        public localization: MenuPromptLocalization;
+      /** This is where all texts of the MenuPrompt are stored. Use this to translate or change them. */
+      public localization: MenuPromptLocalization;
 
-        /**
+      /**
          * 🔹 Creates an interactive prompt with one or many menus - add them using `MenuPrompt.addMenu()`.  
          * To translate the messages, you can use the `MenuPrompt.localization` object, which is where all localization variables are stored. 🔹  
          * ❗ Warning: After creating a MenuPrompt object, the process will no longer exit automatically until the MenuPrompt has finished or was explicitly closed. You have to explicitly use process.exit() until the menu has finished or is closed  
@@ -904,54 +905,54 @@ declare module "svcorelib" {
          * @version 1.8.2 Removed second parameter - use `MenuPrompt.addMenu()` instead
          * @version 1.9.0 The construction of a MenuPrompt object will now set the process.stdin raw mode to true + There is now a `localization` property you can use to translate some messages
          */
-        constructor(options?: Partial<MenuPromptOptions>);
+      constructor(options?: Partial<MenuPromptOptions>);
 
-        /**
+      /**
          * 🔹 Opens the menu 🔹
          * ❗ Warning: While the menu is opened you shouldn't write anything to the console / to the stdout and stderr as this could mess up the layout of the menu and/or make stuff unreadable
          * @returns Returns true, if the menu could be opened or a string containing an error message, if not
          * @since 1.8.0
          */
-        open(): boolean | string;
+      open(): boolean | string;
         
-        /**
+      /**
          * 🔹 Closes the menu prompt and returns the selected options up to this point 🔹
          * @returns Returns the results of the menu prompt as an array of objects
          * @since 1.8.0
          */
-        close(): MenuPromptResult[];
+      close(): MenuPromptResult[];
         
-        /**
+      /**
          * 🔹 Adds a new menu to the menu prompt.  
          * You can even add new menus while the MenuPrompt is already open. 🔹
          * @param menu The menu to add to the menu prompt
          * @returns Returns true, if the menu could be added or a string containing an error message, if not
          * @since 1.8.0
          */
-        addMenu(menu: MenuPromptMenu): boolean | string;
+      addMenu(menu: MenuPromptMenu): boolean | string;
         
-        /**
+      /**
          * 🔹 Returns the (zero-based) index of the current menu of the menu prompt 🔹
          * @returns The zero-based index of the current menu or `-1` if the menu hasn't been opened yet
          * @since 1.8.0
          */
-        currentMenu(): number;
+      currentMenu(): number;
         
-        /**
+      /**
          * 🔹 Returns the current results of the menu prompt.  
          * This does **not** close the menu prompt, unlike `close()` 🔹
          * @returns Returns the results of the menu prompt or null, if there aren't any results yet
          * @since 1.8.0
          */
-        result(): MenuPromptResult[] | null;
+      result(): MenuPromptResult[] | null;
         
-        /**
+      /**
          * 🔹 Checks a menu for valid syntax 🔹
          * @param menu The menu that should be validated
          * @returns Returns true if the menu is valid, a string array containing the error messages if not
          * @throws Throws an error if a falsy parameter or no parameter at all was passed
          */
-        validateMenu(menu: MenuPromptMenu): boolean | string[];
+      validateMenu(menu: MenuPromptMenu): boolean | string[];
     }
 
     //#SECTION FolderDaemon
@@ -985,7 +986,7 @@ declare module "svcorelib" {
      * **Make sure to use the keyword `new` to create an object of this class, don't just use it like this!**
      */
     class FolderDaemon {
-        /**
+      /**
          * 🔹 Constructs a new object of class FolderDaemon.  
          * The FolderDaemon supervises a directory and listens for changes in the files and then it executes a callback function that is registered with the method `onChanged()`. 🔹
          * @param dirPath The path to the directory you want the daemon to supervise
@@ -999,25 +1000,25 @@ declare module "svcorelib" {
          * @since 1.10.0
          * @version 1.13.0 Condensed parameters into options object + added whitelist option
          */
-        constructor(dirPath: string, options?: FolderDaemonOptions);
+      constructor(dirPath: string, options?: FolderDaemonOptions);
 
-        /**
+      /**
          * 🔹 Registers a callback function to be executed when the FolderDaemon detects one or more changed files 🔹  
          * ❗ Warning: If you use the Promise API, due to how it works fundamentally, you will only receive a single callback. If you want to receive more than one callback, either call this function again once the Promise has resolved for the first time or use the callback_fn parameter
          * @param callback_fn Callback function that contains two parameters: the first one, which is either a string or null and the second one which contains an array of strings, which are the absolute paths of the changed files
          * @returns Returns a promise that **only once** resolves to an array of strings, which are the absolute paths of the changed files or rejects to an error message.
          */
-        onChanged(callback_fn: (error: null | string, changedFiles: string[]) => {}): Promise<string[]>;
+      onChanged(callback_fn: (error: null | string, changedFiles: string[]) => void): Promise<string[]>;
 
-        /**
+      /**
          * 🔹 Removes the previously registered callback function(s) 🔹
          */
-        removeCallbacks(): void;
+      removeCallbacks(): void;
 
-        /**
+      /**
          * 🔹 This is called on interval to check the folder but feel free to call it if you set the interval to `0` or if you want to manually check the folder at a precise time 🔹
          */
-        intervalCall(): void;
+      intervalCall(): void;
     }
 
     //#SECTION SelectionMenu
@@ -1038,12 +1039,12 @@ declare module "svcorelib" {
      */
     export class SelectionMenu extends EventEmitter
     {
-        /**
+      /**
          * Used to translate the SelectionMenu
          */
-        public locale: SelectionMenuLocale;
+      public locale: SelectionMenuLocale;
 
-        /**
+      /**
          * 🔹 Constructs a new object of class SelectionMenu.  
          * The SelectionMenu is an interactive menu in the Command Line Interface with a list of options that can be scrolled through and selected. 🔹
          * @param title The title of the menu. Leave undefined to not have a title.
@@ -1052,9 +1053,9 @@ declare module "svcorelib" {
          * @since 1.11.0
          * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        constructor(title?: string, settings?: Partial<SelectionMenuSettings>);
+      constructor(title?: string, settings?: Partial<SelectionMenuSettings>);
 
-        /**
+      /**
          * 🔹 Sets the options that are available for a user to scroll through and select. 🔹
          * @param options An array of strings which are the options a user can scroll through and select
          * @returns Returns void if the options were set successfully
@@ -1062,9 +1063,9 @@ declare module "svcorelib" {
          * @since 1.11.0
          * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        setOptions(options: SelectionMenuOption[]): void;
+      setOptions(options: SelectionMenuOption[]): void;
 
-        /**
+      /**
          * 🔹 Adds an option. 🔹
          * @param option
          * @returns Returns void if the option was added
@@ -1072,25 +1073,25 @@ declare module "svcorelib" {
          * @since 1.11.0
          * @version 1.15.0 Fixed compatibility with 3rd party libraries & added support for line spacers using `null` option
          */
-        addOption(option: SelectionMenuOption): void;
+      addOption(option: SelectionMenuOption): void;
 
-        /**
+      /**
          * 🔹 Opens the SelectionMenu. Make sure not to write anything to the console / stdout / stderr while the menu is open! 🔹
          * @returns Returns a promise that resolves after a user selected an option or exited the menu
          * @throws {Error} if the menu can't be opened
          * @since 1.11.0
          * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        open(): Promise<SelectionMenuResult>;
+      open(): Promise<SelectionMenuResult>;
 
-        /**
+      /**
          * 🔹 Closes the SelectionMenu. 🔹  
          * ❗ Using this method does not emit the event `submit` and it does not resolve the promise returned by `open()`
          * @returns Returns `true` if the menu was closed, `false` if it couldn't be closed
          * @since 1.11.0
          * @version 1.15.0 Fixed compatibility & changed SelectionMenu interface
          */
-        close(): boolean;
+      close(): boolean;
     }
 
 
@@ -1106,7 +1107,7 @@ declare module "svcorelib" {
      */
     class StatePromise<T>
     {
-        /**
+      /**
          * 🔹 Constructs a new object of class StatePromise.  
          *   
          * This class is a wrapper for the Promise API.  
@@ -1116,16 +1117,16 @@ declare module "svcorelib" {
          * @throws Throws a TypeError if the passed parameter is not an instance of the `Promise` class
          * @since 1.14.0
          */
-        constructor(promise: Promise<T>);
+      constructor(promise: Promise<T>);
 
-        /**
+      /**
          * 🔹 Actually executes the Promise. 🔹
          * @returns Returns a new Promise instance (not the one from the constructor) that does however inherit the returned values from the constructor promise
          * @since 1.14.0
          */
-        exec(): Promise<T>;
+      exec(): Promise<T>;
 
-        /**
+      /**
          * 🔹 Returns the state of this Promise, as a string. 🔹  
          *   
          * The possible states are:  
@@ -1138,7 +1139,7 @@ declare module "svcorelib" {
          * | `rejected` | Execution was finished but the promise was rejected |
          * @since 1.14.0
          */
-        getState(): PromiseState;
+      getState(): PromiseState;
     }
 
     /**
@@ -1151,9 +1152,9 @@ declare module "svcorelib" {
          */
         class SCLError extends Error
         {
-            constructor(message?: string, options?: any)
-            /** A Date instance set to the exact time this Error instance was created */
-            date: Date;
+          constructor(message?: string, options?: any)
+          /** A Date instance set to the exact time this Error instance was created */
+          date: Date;
         }
 
         /**
@@ -1161,7 +1162,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class InvalidPathError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
 
         /**
@@ -1169,7 +1170,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class NotAFolderError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
 
         /**
@@ -1177,7 +1178,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class PatternInvalidError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
 
         /**
@@ -1185,7 +1186,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class NoStdinError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
 
         /**
@@ -1193,7 +1194,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class InvalidMimeTypeError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
 
         /**
@@ -1201,7 +1202,7 @@ declare module "svcorelib" {
          * @since 1.12.0
          */
         class SqlConnectionNotEstablishedError extends SCLError {
-            constructor(message?: string, options?: any)
+          constructor(message?: string, options?: any)
         }
     }
 
@@ -1220,19 +1221,19 @@ declare module "svcorelib" {
     {
         /** The current version */
         let version: string;
-        /** The current version of SvCoreLib, but as an array of numbers for easier manipulation */
+        /** The current version of SCL, but as an array of numbers for easier manipulation */
         let intVersion: number[];
-        /** The name of SvCoreLib */
+        /** The name of SCL */
         let name: string;
-        /** A short description of SvCoreLib */
+        /** A short description of SCL */
         let desc: string;
-        /** The name of the author of SvCoreLib */
+        /** The name of the author of SCL */
         let author: string;
-        /** People that contributed to SvCoreLib - this is the raw object from package.json */
+        /** People that contributed to SCL - this is the raw object from package.json */
         let contributors: Record<"name" | "url", string>[];
-        /** The license of SvCoreLib */
+        /** The license of SCL */
         let license: string;
-        /** The URL to SvCoreLib's documentation */
+        /** The URL to SCL's documentation */
         let documentation: string;
     }
 
