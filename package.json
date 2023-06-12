@@ -1,11 +1,21 @@
 {
-  "name": "svcorelib",
-  "version": "1.18.2",
-  "description": "Core library used in the projects of Sv443 and the Sv443 Network. Contains tons of miscellaneous QoL features.",
-  "main": "SvCoreLib.js",
+  "name": "@sv443-network/core",
+  "version": "2.0.0",
+  "description": "Sv443 Network core library. Contains tons of miscellaneous QoL features.",
+  "type": "module",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "exports": {
+    "require": "./lib/cjs/index.js",
+    "import": "./lib/esm/index.js"
+  },
+  "types": "lib/types/index.d.ts",
   "scripts": {
     "test": "node test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "npm run build-cjs && npm run build-esm",
+    "build-esm": "cross-env BABEL_ENV=esmUnbundled babel src --extensions \".ts\" --out-dir \"lib/esm\" --source-maps",
+    "build-cjs": "cross-env BABEL_ENV=cjs babel src --extensions \".ts\" --out-dir \"lib/cjs\" --source-maps"
   },
   "repository": {
     "type": "git",
@@ -58,12 +68,19 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
     "@types/mysql": "^2.15.17",
     "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "babel-cli": "^6.26.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.25.0",
+    "rollup": "^3.25.1",
     "snyk": "^1.1026.0"
-  },
-  "engines": {
-    "node": ">=14"
   }
 }

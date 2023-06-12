@@ -1,5 +1,5 @@
 ## SvCoreLib - Changelog
-### Latest version: [1.18.2](#1182)
+### Latest version: [2.0.0](#200)
 
 <sub>
 
@@ -9,120 +9,125 @@
 
 <br><br>
 
+## 2.0.0
+- 
+
+<br>
+
 ## 1.18.2
 - Fixes
-    - Made `system.inDebugger()` no longer dependent on V8's `inspector` module
-    - Fixed wrong color code for `colors.fat`
+  - Made `system.inDebugger()` no longer dependent on V8's `inspector` module
+  - Fixed wrong color code for `colors.fat`
 
 <br>
 
 ## 1.18.1
 - Fixes
-    - Fixed TS types for `randomItem()`, `randomItemIndex()` and `takeRandomItem()`
+  - Fixed TS types for `randomItem()`, `randomItemIndex()` and `takeRandomItem()`
 
 <br>
 
 ## 1.18.0
 - Additions
-    - `splitIntoParts()` function to split an array into n parts
-    - `splitIntoPartsOfLength()` function to split an array into parts of n length
+  - `splitIntoParts()` function to split an array into n parts
+  - `splitIntoPartsOfLength()` function to split an array into parts of n length
 - Fixes
-    - Reverted dynamic imports ([issue #51](https://github.com/Sv443-Network/SvCoreLib/issues/51))
-    - Support Error options ([issue #52](https://github.com/Sv443-Network/SvCoreLib/issues/52))
+  - Reverted dynamic imports ([issue #51](https://github.com/Sv443-Network/SvCoreLib/issues/51))
+  - Support Error options ([issue #52](https://github.com/Sv443-Network/SvCoreLib/issues/52))
 
 <br>
 
 ## 1.17.0
 - Additions
-    - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
-    - Added function `isClass()` to check if a value is a reference to a class
-    - Added function `randomItemIndex()` to get a random item and its index from an array
-    - Added function `takeRandomItem()` to delete a random item from an array and return it
-    - colors
-        - Added `colors.fgb` and `colors.bgb` for bright colors
-        - Added `dim`, `underscore`, `reverse` and `hidden`
+  - Added function `allInstanceOf()` to check if all items in an array are an instance of a class
+  - Added function `isClass()` to check if a value is a reference to a class
+  - Added function `randomItemIndex()` to get a random item and its index from an array
+  - Added function `takeRandomItem()` to delete a random item from an array and return it
+  - colors
+    - Added `colors.fgb` and `colors.bgb` for bright colors
+    - Added `dim`, `underscore`, `reverse` and `hidden`
 - Breaking changes
-    - Changed state `fulfilled` to `resolved` in StatePromise
-    - colors
-        - Removed brightness modifier from `colors.fg` and `colors.bg`
-        - Renamed `colors.fat` to `colors.bright`
+  - Changed state `fulfilled` to `resolved` in StatePromise
+  - colors
+    - Removed brightness modifier from `colors.fg` and `colors.bg`
+    - Renamed `colors.fat` to `colors.bright`
 - Fixes
-    - Added missing documentation for `allOfType()`
-    - Fixed docs in various places
+  - Added missing documentation for `allOfType()`
+  - Fixed docs in various places
 
 <br>
 
 ## 1.16.0
 
 - Additions
-    - Added clamp() to ensure a number is between a min and max limit
+  - Added clamp() to ensure a number is between a min and max limit
 - Fixes
-    - randRange() now doesn't depend on the `performance` module anymore
-    - Updated deps
+  - randRange() now doesn't depend on the `performance` module anymore
+  - Updated deps
 
 <br>
 
 ## 1.15.0
 - Breaking changes
-    - Shortened namespace names:
-        - `generateUUID` -> `uuid`
-        - `filesystem` -> `files`
-    - Renamed functions:
-        - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
-        - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
-        - `pause()` -> `system.pause()`
+  - Shortened namespace names:
+    - `generateUUID` -> `uuid`
+    - `filesystem` -> `files`
+  - Renamed functions:
+    - `seededRNG.generateRandomSeed()` -> `seededRNG.randomSeed()`
+    - `seededRNG.generateRandomNumbers()` -> `seededRNG.generateNumbers()`
+    - `pause()` -> `system.pause()`
 - Additions
-    - Added function `halves()` to get the two halves of an array
-    - Added function `parseDuration()` to parse out time units from a passed duration in milliseconds
-    - Added function `formatDuration()` to convert a duration in milliseconds to a string with custom format
-    - Added function `files.existsSync()` as a synchronous counterpart to `files.exists()`
-    - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
+  - Added function `halves()` to get the two halves of an array
+  - Added function `parseDuration()` to parse out time units from a passed duration in milliseconds
+  - Added function `formatDuration()` to convert a duration in milliseconds to a string with custom format
+  - Added function `files.existsSync()` as a synchronous counterpart to `files.exists()`
+  - `SelectionMenu` now supports EventEmitter's `.on("submit")` method
 - Fixes
-    - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
-    - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
-    - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
-    - Updated dependencies
+  - `reserialize()` now keeps the type of the passed object ([issue #38](https://github.com/Sv443-Network/SvCoreLib/issues/38))
+  - `seededRNG.validateSeed()` now returns false when a seed starts with `0` ([issue #34](https://github.com/Sv443-Network/SvCoreLib/issues/34))
+  - Fixed missing argument in `system.inDebugger()` ([issue #37](https://github.com/Sv443-Network/SvCoreLib/issues/37))
+  - Updated dependencies
 
 <br>
 
 ## 1.14.2
 
 - Fixes
-    - Fixed `.d.ts` type declarations ([issue #27](https://github.com/Sv443-Network/SvCoreLib/issues/27))
-    - Fixed `system.inDebugger()` not detecting debugger ([issue #30](https://github.com/Sv443-Network/SvCoreLib/issues/30))
-    - Set `mysql` as a peer dependency ([issue #29](https://github.com/Sv443-Network/SvCoreLib/issues/29))
-    - Improved documentation a little bit
+  - Fixed `.d.ts` type declarations ([issue #27](https://github.com/Sv443-Network/SvCoreLib/issues/27))
+  - Fixed `system.inDebugger()` not detecting debugger ([issue #30](https://github.com/Sv443-Network/SvCoreLib/issues/30))
+  - Set `mysql` as a peer dependency ([issue #29](https://github.com/Sv443-Network/SvCoreLib/issues/29))
+  - Improved documentation a little bit
 - Internal stuff
-    - Added CodeQL analysis workflow
+  - Added CodeQL analysis workflow
 
 <br>
 
 ## 1.14.1
 
 - Fixes
-    - `filesystem.exists()` can now actually be used 🤦 ([issue #25](https://github.com/Sv443-Network/SvCoreLib/issues/25))
+  - `filesystem.exists()` can now actually be used 🤦 ([issue #25](https://github.com/Sv443-Network/SvCoreLib/issues/25))
 
 <br>
 
 ## 1.14.0
 
 - Additions
-    - Added class `StatePromise` that keeps track of the state of a promise
-    - Added single-parameter overload to `randRange()`
-    - Added string array overload to `generateUUID.custom()`, deprecated older overload
-    - `softShutdown()` now accepts a Promise for async code execution before shutdown
+  - Added class `StatePromise` that keeps track of the state of a promise
+  - Added single-parameter overload to `randRange()`
+  - Added string array overload to `generateUUID.custom()`, deprecated older overload
+  - `softShutdown()` now accepts a Promise for async code execution before shutdown
 - Changes
-    - Moved repository to [@Sv443-Network](https://github.com/Sv443-Network)
-    - Improved type declaration file (`.d.ts`) by a lot
+  - Moved repository to [@Sv443-Network](https://github.com/Sv443-Network)
+  - Improved type declaration file (`.d.ts`) by a lot
 - Security
-    - Audited dependencies
+  - Audited dependencies
 
 <br>
 
 ## 1.13.1
 
 - Security:
-    - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
+  - Fixed vulnerability in package `netmask` ([CVE-2021-28918](https://sick.codes/sick-2021-011))
 
 <br>
 
@@ -135,22 +140,22 @@
 
 - Added functions:
 	- `filesystem.exists()` to provide a reimplementation to `fs`' deprecated `exists()` function ([issue #14](https://github.com/Sv443-Network/SvCoreLib/issues/14))
-    - `filesystem.ensureDirs()` to ensure a set of directories exists ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
-    - `filesystem.ensureDirsSync()` synchronous counterpart to `ensureDirs()` ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
-    - `system.usedHeap()` to get the current heap usage in percent ([issue #19](https://github.com/Sv443-Network/SvCoreLib/issues/19))
+  - `filesystem.ensureDirs()` to ensure a set of directories exists ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
+  - `filesystem.ensureDirsSync()` synchronous counterpart to `ensureDirs()` ([issue #18](https://github.com/Sv443-Network/SvCoreLib/issues/18))
+  - `system.usedHeap()` to get the current heap usage in percent ([issue #19](https://github.com/Sv443-Network/SvCoreLib/issues/19))
 - Changes:
-    - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443-Network/SvCoreLib/issues/13))
-    - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443-Network/SvCoreLib/issues/17))
-    - Moved a few functions to the new `system` namespace:
-        - `noShutdown()` - moved to `system`
-        - `yesShutdown()` - moved to `system`
-        - `softShutdown()` - moved to `system`
-        - `inDebugger()` - moved to `system`
-        - `setWindowTitle()` - moved to `system`
+  - Replaced `FolderDaemon`'s configuration parameters with a single settings object ([issue #13](https://github.com/Sv443-Network/SvCoreLib/issues/13))
+  - Added base class `SCLError` to all errors to implement the `date` property ([issue #17](https://github.com/Sv443-Network/SvCoreLib/issues/17))
+  - Moved a few functions to the new `system` namespace:
+    - `noShutdown()` - moved to `system`
+    - `yesShutdown()` - moved to `system`
+    - `softShutdown()` - moved to `system`
+    - `inDebugger()` - moved to `system`
+    - `setWindowTitle()` - moved to `system`
 - Fixed bugs:
-    - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443-Network/SvCoreLib/issues/15))
-    - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443-Network/SvCoreLib/issues/21))
-    - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443-Network/SvCoreLib/issues/20))
+  - `isEmpty()` with value `null` threw a TypeError ([issue #15](https://github.com/Sv443-Network/SvCoreLib/issues/15))
+  - Package `mysql` isn't included in the dependencies ([issue #21](https://github.com/Sv443-Network/SvCoreLib/issues/21))
+  - Definition of `system.softShutdown()`'s callback function was wrong ([issue #20](https://github.com/Sv443-Network/SvCoreLib/issues/20))
 
 <br>
 
@@ -160,8 +165,8 @@
 	- `insertValues()` to insert values into a percent-formatted string ([issue #11](https://github.com/Sv443-Network/SvCoreLib/issues/11))
 	- `setWindowTitle()` to set the terminal's window title ([issue #12](https://github.com/Sv443-Network/SvCoreLib/issues/12))
 - Fixed bugs
-    - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443-Network/SvCoreLib/issues/6))
-    - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443-Network/SvCoreLib/issues/7))
+  - FolderDaemon didn't work when blacklist pattern array was empty ([issue #6](https://github.com/Sv443-Network/SvCoreLib/issues/6))
+  - FolderDaemon didn't call onChanged when file was reset to a previously known file content ([issue #7](https://github.com/Sv443-Network/SvCoreLib/issues/7))
 - Added SCL's custom error classes to new namespace `scl.Errors`
 - Massively improved the documentation
 
@@ -185,11 +190,11 @@
 - Added a TypeScript type declaration file so the in-IDE documentation and type safety is even better than before (thanks to @canarado)
 - Added the class `FolderDaemon` to supervise a directory for changed files
 - Added functions
-    - `reserialize()` to copy a JSON-compatible object by value and lose the reference
-    - `byteLength()` to return the length of a string in bytes
-    - `http.pipeString()` to stream a string into an http request
-    - `http.pipeFile()` to stream a file into an http request
-    - `http.getClientEncoding()` to get the encoding method a client requested
+  - `reserialize()` to copy a JSON-compatible object by value and lose the reference
+  - `byteLength()` to return the length of a string in bytes
+  - `http.pipeString()` to stream a string into an http request
+  - `http.pipeFile()` to stream a file into an http request
+  - `http.getClientEncoding()` to get the encoding method a client requested
 - Added the `rst` property to `colors.fg` and `colors.bg`
 - Remade the documentation to be a bit more clear and better structured (thanks to @ThatCopy for helping)
 
@@ -245,8 +250,8 @@
 
 ## 1.8.4
 - Fixed high severity security vulnerabilities in ESLint's dependencies:
-    - acorn https://app.snyk.io/vuln/SNYK-JS-ACORN-559469
-    - minimist https://app.snyk.io/vuln/SNYK-JS-MINIMIST-559764
+  - acorn https://app.snyk.io/vuln/SNYK-JS-ACORN-559469
+  - minimist https://app.snyk.io/vuln/SNYK-JS-MINIMIST-559764
 
 <br><br>
 
@@ -266,46 +271,46 @@
 
 ## 1.8.1
 - improvements / fixes:
-    - version bumped because GitHub package registry doesn't allow unpublishing *sigh*
+  - version bumped because GitHub package registry doesn't allow unpublishing *sigh*
 
 <br><br>
 
 ## 1.8.0
 - new features:
-    - function "jsl.seededRNG.generateSeededNumbers(count, seed)" to generate "random" numbers based on a passed seed
-    - function "jsl.seededRNG.generateRandomSeed(digitCount)" to generate a random seed to be used in "jsl.generateSeededNumbers()"
-    - function "jsl.seededRNG.validateSeed(seed)" to check whether or not a seed is valid
-    - function "jsl.mapRange(value, range_1_min, range_1_max, range_2_min, range_2_max)" to transform a value from one numerical range to another
-    - function "jsl.downloadFile(url, destPath, options)" to download a file from a URL
-    - function "jsl.unused(any_var)" to indicate an unused variable to a linter
-    - function "jsl.replaceAt(input: str, index: number, replacement: str)" to replace a character at the specified index of a string with a replacement
-    - function "jsl.randomizeArray(array: array)" to randomize the indexes of the items of an array
-    - object "colors" to make it easier to add colors to the console output - this will replace "jsl.consoleColor()"
-    - class "MenuPrompt" for an interactive menu (directly in the CLI) - methods:
-        - "open()" to open the prompt
-        - "addMenu()" to add a new menu to the prompt
-        - "validateMenu()" to check whether a menu is invalid
-        - "currentMenu()" to get the current menu index
-        - "close()" to prematurely close the prompt and get the results
-        - "result()" to prematurely get the results of the prompt (without closing it)
-    - added unit tests for every function, class and object. They can be run with "npm test" or "node unittest"
+  - function "jsl.seededRNG.generateSeededNumbers(count, seed)" to generate "random" numbers based on a passed seed
+  - function "jsl.seededRNG.generateRandomSeed(digitCount)" to generate a random seed to be used in "jsl.generateSeededNumbers()"
+  - function "jsl.seededRNG.validateSeed(seed)" to check whether or not a seed is valid
+  - function "jsl.mapRange(value, range_1_min, range_1_max, range_2_min, range_2_max)" to transform a value from one numerical range to another
+  - function "jsl.downloadFile(url, destPath, options)" to download a file from a URL
+  - function "jsl.unused(any_var)" to indicate an unused variable to a linter
+  - function "jsl.replaceAt(input: str, index: number, replacement: str)" to replace a character at the specified index of a string with a replacement
+  - function "jsl.randomizeArray(array: array)" to randomize the indexes of the items of an array
+  - object "colors" to make it easier to add colors to the console output - this will replace "jsl.consoleColor()"
+  - class "MenuPrompt" for an interactive menu (directly in the CLI) - methods:
+    - "open()" to open the prompt
+    - "addMenu()" to add a new menu to the prompt
+    - "validateMenu()" to check whether a menu is invalid
+    - "currentMenu()" to get the current menu index
+    - "close()" to prematurely close the prompt and get the results
+    - "result()" to prematurely get the results of the prompt (without closing it)
+  - added unit tests for every function, class and object. They can be run with "npm test" or "node unittest"
 - improvements / fixes:
-    - added support for ESLint (use "npm i --save-dev" and then "npm run lint")
-    - improved time measurement system for "jsl.ping()"
-    - improved the background stuff in "jsl.ping()" to improve performance
-    - added "contentType" property to "jsl.ping()"'s promise callback
-    - edited a bunch of functions and methods to throw an error instead of returning it as a string, which could've caused unwanted and unpredictable behavior
-    - put the UUID generation inside an object, renamed it and added four new ones:
-        - "generateUUID.hexadecimal(format: str, upperCase: bool)" [0-9,a-f/A-F]
-        - "generateUUID.alphanumerical(format: str, upperCase: bool)" [0-9,a-z/A-Z]
-        - "generateUUID.decimal(format: str)" [0-9]
-        - "generateUUID.binary(format: str)" [0-1]
-        - "generateUUID.custom(format: str, possibleValues: str)" [Custom]
-    - added "contributors" and "documentation" properties to the "jsl.info" object
-    - removed the signal "SIGKILL" from the shutdown prevention functions as "SIGKILL" is intended as a signal that forces a process to be exited no matter what
-    - rewrote the entire documentation, I'm crying rn
-    - restructured the entire script to separate each function into its own file
-    - fixed "isEmpty()"'s object-with-length-0-detection
+  - added support for ESLint (use "npm i --save-dev" and then "npm run lint")
+  - improved time measurement system for "jsl.ping()"
+  - improved the background stuff in "jsl.ping()" to improve performance
+  - added "contentType" property to "jsl.ping()"'s promise callback
+  - edited a bunch of functions and methods to throw an error instead of returning it as a string, which could've caused unwanted and unpredictable behavior
+  - put the UUID generation inside an object, renamed it and added four new ones:
+    - "generateUUID.hexadecimal(format: str, upperCase: bool)" [0-9,a-f/A-F]
+    - "generateUUID.alphanumerical(format: str, upperCase: bool)" [0-9,a-z/A-Z]
+    - "generateUUID.decimal(format: str)" [0-9]
+    - "generateUUID.binary(format: str)" [0-1]
+    - "generateUUID.custom(format: str, possibleValues: str)" [Custom]
+  - added "contributors" and "documentation" properties to the "jsl.info" object
+  - removed the signal "SIGKILL" from the shutdown prevention functions as "SIGKILL" is intended as a signal that forces a process to be exited no matter what
+  - rewrote the entire documentation, I'm crying rn
+  - restructured the entire script to separate each function into its own file
+  - fixed "isEmpty()"'s object-with-length-0-detection
 
 <br><br>
 
@@ -343,36 +348,36 @@
 
 > **SvCoreLib**
 > - [1.18.0](#1180)
->     - [1.18.1](#1181)
->     - [1.18.2](#1182)
+>   - [1.18.1](#1181)
+>   - [1.18.2](#1182)
 > - [1.17.0](#1170)
 > - [1.16.0](#1160)
 > - [1.15.0](#1150)
 > - [1.14.0](#1140)
->     - [1.14.1](#1141)
->     - [1.14.2](#1142)
+>   - [1.14.1](#1141)
+>   - [1.14.2](#1142)
 > - [1.13.0](#1130)
->     - [1.13.1](#1131)
+>   - [1.13.1](#1131)
 > - [1.12.0](#1120)
 > - [1.11.0](#1110)
->     - [1.11.1](#1111)
+>   - [1.11.1](#1111)
 > - [1.10.0](#1100)
 > 
 > **JSLib-npm** (deprecated predecessor)
 > - [1.9.0](#190)
->     - [1.9.1](#191)
->     - [1.9.2](#192)
->     - [1.9.3](#193)
->     - [1.9.4](#194)
+>   - [1.9.1](#191)
+>   - [1.9.2](#192)
+>   - [1.9.3](#193)
+>   - [1.9.4](#194)
 > - [1.8.0](#180)
->     - [1.8.1](#181)
->     - [1.8.2](#182)
->     - [1.8.3](#183)
->     - [1.8.4](#184)
+>   - [1.8.1](#181)
+>   - [1.8.2](#182)
+>   - [1.8.3](#183)
+>   - [1.8.4](#184)
 > - [1.7.0](#170)
 > - 1.6.x
->     - [1.6.5](#165)
->     - [1.6.6](#166)
+>   - [1.6.5](#165)
+>   - [1.6.6](#166)
 > 
 > 
 > <br>

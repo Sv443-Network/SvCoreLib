@@ -1,12 +1,17 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "typeRoots": [
-            "./SvCoreLib.d.ts",
-        ],
-        "types": [
-            "node",
-        ],
-        "resolveJsonModule": true,
-    }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "lib/types",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./SvCoreLib.d.ts",
+    ],
+  },
+  "include": [
+    "./src/index.ts"
+  ],
 }
