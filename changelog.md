@@ -1,4 +1,4 @@
-## SvCoreLib - Changelog
+## Sv443 Network CoreLib - Changelog
 ### Latest version: [2.0.0](#200)
 
 <sub>

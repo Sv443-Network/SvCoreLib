@@ -1,10 +1,10 @@
-# SvCoreLib - Documentation
-[![MIT License](https://img.shields.io/npm/l/svcorelib)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443-Network/SvCoreLib)](https://github.com/Sv443-Network/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/svcorelib)](https://snyk.io/)
+## Sv443 Network CoreLib Documentation
+[![MIT License](https://img.shields.io/npm/l/@sv443-network%2Fcore)](https://sv443.net/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/Sv443-Network/SvCoreLib)](https://github.com/Sv443-Network/SvCoreLib/issues) [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/@sv443-network%2Fcore)](https://snyk.io/)
 
 <br>
 
-This is the documentation of SvCoreLib (also referred to as SCL).  
-SvCoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
+This is the documentation of Sv443 Network CoreLib (also referred to as SCL).  
+Sv443 Network CoreLib, as the name suggests, is the core library used by most Node.js projects of the [Sv443 Network.](https://github.com/Sv443-Network)  
 This library supports CommonJS and has builtin Typescript declarations.  
   
 To understand how this documentation works, please first [read this section.](#how-this-documentation-works)  
@@ -122,11 +122,13 @@ Otherwise, see the table of contents just below.
 
 <!-- #MARKER Installation -->
 # Installation
-To install SvCoreLib (SCL), use the following command in a terminal inside your Node.js project:  
+To install Sv443 Network CoreLib (SCL), use the following command in a terminal inside your Node.js project:  
 ```
-npm i svcorelib
+npm i @sv443-network/core --no-optional
 ```
-Troubleshooting: Make sure your workspace contains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.  
+If you want to use the MySQL related functions, use `npm i @sv443-network/core` instead.  
+  
+<sub>Troubleshooting: Make sure your workspace contains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.</sub>
 
 <br><br><br>
 
@@ -134,16 +136,16 @@ Troubleshooting: Make sure your workspace contains a `package.json` file. If not
 # Usage
 This explains how you can use SCL in your project.  
   
-- If your project runs on "vanilla" Node.js (or CommonJS), use the following at the top of the file you want to include SCL:
+- If your project runs on "vanilla" Node.js (CommonJS / RequireJS), use the following at the top of the file you want to include SCL:
     ```js
-    const scl = require("svcorelib");
+    const scl = require("@sv443-network/core");
     ```  
 
 <br>
 
-- If your project runs on TypeScript, replace the above with this:
+- If your project uses ES Modules or TypeScript, instead use this:
     ```ts
-    import * as scl from "svcorelib";
+    import * as scl from "@sv443-network/core";
     ```  
 
 The variable `scl` now contains all of SCL's functions, namespaces, classes and objects.
@@ -154,14 +156,14 @@ If you only want to import a select number of features and don't like always hav
   
 - "Vanilla" Node.js / CommonJS:  
     ```js
-    const { function1, namespace1, Class1 } = require("svcorelib");
+    const { function1, namespace1, Class1 } = require("@sv443-network/core");
     ```
 
 <br>
 
-- TypeScript:  
+- ES Modules / TypeScript:  
     ```ts
-    import { function1, namespace1, Class1 } from "svcorelib";
+    import { function1, namespace1, Class1 } from "@sv443-network/core";
     ```  
   
 **Note:** You need to replace the placeholder names above with the functions / namespaces / classes / objects you want to import.
@@ -238,7 +240,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let opts = {
 >     timestamp: true,
@@ -276,7 +278,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > scl.files.readdirRecursive("./").then(result => {
 >     console.log(result);
@@ -305,7 +307,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let paths = scl.files.readdirRecursive("./");
 > 
@@ -334,7 +336,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let opts = {
 >     fileName: "page.html",
@@ -395,7 +397,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > async function checkExists()
 > {
@@ -426,7 +428,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.files.existsSync("./index.js");
 > let bar = scl.files.existsSync("./path/that/doesn't/exist.txt");
@@ -452,7 +454,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { files } = require("svcorelib");
+> const { files } = require("@sv443-network/core");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -486,7 +488,7 @@ This namespace, accessed with `scl.files`, contains a few filesystem-related fun
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { files } = require("svcorelib");
+> const { files } = require("@sv443-network/core");
 > 
 > 
 > const dirs = [ "data/foo", "data/bar/baz" ];
@@ -529,7 +531,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let uuid = scl.uuid.alphanumerical("xxxx-yyyy", true);
 > 
@@ -553,7 +555,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.uuid.binary("xxxx-yyyy");
 > let bar = scl.uuid.binary("xxxx", true);
@@ -581,7 +583,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.uuid.custom("xxxx-yyyy", "abcd#+_!".split(""));
 > let bar = scl.uuid.custom("xxxx-yyyy", ["1", "2"]); // binary system using 1s and 2s maybe? 👀
@@ -607,7 +609,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let uuid = scl.uuid.decimal("xxxx-yyyy");
 > 
@@ -632,7 +634,7 @@ Example: a format of `x^x-y^y` might produce a result similar to this: `1x-cy`
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let uuid = scl.uuid.hexadecimal("xxxx-yyyy", true);
 > 
@@ -674,7 +676,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > 
 > ```js
 > const http = require("http");
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > http.createServer((req, res) => {
 >     if(req.method == "GET")
@@ -719,7 +721,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > 
 > ```js
 > const http = require("http");
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > const path = require("path");
 > 
 > http.createServer((req, res) => {
@@ -761,7 +763,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > 
 > ```js
 > const http = require("http");
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > http.createServer((req, res) => {
 >     if(req.method == "GET")
@@ -795,7 +797,7 @@ This namespace, accessed with `scl.http`, offers functions that make using Node'
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > scl.http.ping("https://example.org/", 5000)
 >     .then(res => {
@@ -844,7 +846,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let seed = scl.seededRNG.randomSeed(5);
 > 
@@ -872,7 +874,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let seed = scl.seededRNG.randomSeed(5); // 58157
 > 
@@ -915,7 +917,7 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = jsl.seededRNG.validateSeed(35091);
 > let bar = jsl.seededRNG.validateSeed("35091");
@@ -957,7 +959,7 @@ These functions depend on the package [`mysql`](https://www.npmjs.com/package/my
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { sql } = require("svcorelib");
+> const { sql } = require("@sv443-network/core");
 > const mysql = require("mysql");
 > 
 > 
@@ -1011,7 +1013,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { system } = require("svcorelib");
+> const { system } = require("@sv443-network/core");
 > 
 > console.log(`Used heap space: ${system.usedHeap().toFixed(2)}%`);
 > ```
@@ -1037,7 +1039,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Basic example code - click to show</b></summary>
 > 
 > ```js
-> const { system, MenuPrompt } = require("svcorelib");
+> const { system, MenuPrompt } = require("@sv443-network/core");
 > 
 > if(!system.inDebugger())
 > {
@@ -1052,7 +1054,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Example with custom CLI argument - click to show</b></summary>
 > 
 > ```js
-> const { system } = require("svcorelib");
+> const { system } = require("@sv443-network/core");
 > 
 > console.log(process.argv); // [ '.../node.exe', '.../this_file.js', '--debugger-enabled' ]
 > 
@@ -1112,7 +1114,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { system } = require("svcorelib");
+> const { system } = require("@sv443-network/core");
 > 
 > const promise = new Promise((res) => {
 >     console.log("Goodbye!");
@@ -1145,7 +1147,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { system } = require("svcorelib");
+> const { system } = require("@sv443-network/core");
 > const packageJson = require("./package.json"); // adjust this path if you're not in the project root dir
 > 
 > system.setWindowTitle(`${packageJson.name} v${packageJson.version}`);
@@ -1169,7 +1171,7 @@ This namespace, accessed with `scl.system`, offers functions that refer to the s
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > console.log("Hello, World!");
 > 
@@ -1204,7 +1206,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.allEqual([ 1, 1, 1, 1 ]);
 > let bar = scl.allEqual([ 1, 1, 2, 1 ]);
@@ -1237,7 +1239,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { allOfType } = require("svcorelib");
+> const { allOfType } = require("@sv443-network/core");
 > 
 > console.log(allOfType([ 1, 2, 3, NaN ], "number"));     // true
 > console.log(allOfType([ { foo: 1 }, null ], "object")); // true
@@ -1261,7 +1263,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { allInstanceOf } = require("svcorelib");
+> const { allInstanceOf } = require("@sv443-network/core");
 > 
 > class MyClass {}
 > abstract class AnotherClass {}
@@ -1305,7 +1307,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let str1 = "hello 👋";
 > let str2 = "𒈘"; // this character is U+12218
@@ -1341,7 +1343,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > const { resolve } = require("path");
 > 
 > scl.error("Couldn't establish a connection to the API", resolve("./errors/fatal.log"), true, 1);
@@ -1364,7 +1366,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.isArrayEmpty([ 1, 2, 3, 4, "", null, 5 ]);
 > let bar = scl.isArrayEmpty([ "", null, undefined ]);
@@ -1391,7 +1393,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > console.log(scl.isEmpty(""));        // true
 > console.log(scl.isEmpty([]));        // true
@@ -1421,7 +1423,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { isClass } = require("svcorelib");
+> const { isClass } = require("@sv443-network/core");
 > 
 > class MyClass {}
 > 
@@ -1451,7 +1453,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let foo = scl.mapRange(10, 0, 100, 0, 10);
 > let bar = scl.mapRange(3, 0, 10, 0, 50);
@@ -1475,7 +1477,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let array = [ 0, 1, null, 2, NaN, 3, { foo: "bar" }, 4, 5, 6 ];
 > 
@@ -1504,7 +1506,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { randomItemIndex } = require("svcorelib");
+> const { randomItemIndex } = require("@sv443-network/core");
 > 
 > const foo = [ "a", "b", "c", "d" ];
 > 
@@ -1533,7 +1535,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { takeRandomItem } = require("svcorelib");
+> const { takeRandomItem } = require("@sv443-network/core");
 > 
 > const foo = [ "a", "b", "c" ];
 > 
@@ -1565,7 +1567,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let array = [ 0, 1, 2, 3, 4, 5, 6 ];
 > 
@@ -1597,7 +1599,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { randRange } = require("svcorelib");
+> const { randRange } = require("@sv443-network/core");
 > 
 > let foo = randRange(50, 60);
 > let bar = randRange(10);
@@ -1623,7 +1625,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { clamp } = require("svcorelib");
+> const { clamp } = require("@sv443-network/core");
 > 
 > for(let i = 1; i <= 10; i++)
 >     console.log(clamp(i, 3, 6));
@@ -1650,7 +1652,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > console.log(scl.readableArray([ 1, 2, 3, 4 ])); // "1, 2, 3 and 4"
 > ```
@@ -1670,7 +1672,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let array = scl.removeDuplicates([ 1, 2, 4, 3, 3, 1, 3 ]);
 > 
@@ -1697,7 +1699,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > const halves = scl.halves([ 1, 2, 3, 4, 5, 6, 7 ]);
 > const [first, second] = halves;
@@ -1729,7 +1731,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > class Person {
 >     constructor(name, age)
@@ -1763,7 +1765,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > let text = scl.replaceAt("Hello, World!", 5, ", beautiful");
 > 
@@ -1789,7 +1791,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > // without reserialize:
 > {
@@ -1851,7 +1853,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { splitIntoParts } = require("svcorelib");
+> const { splitIntoParts } = require("@sv443-network/core");
 > 
 > // length: 22
 > const bugsnax = [
@@ -1885,7 +1887,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { splitIntoPartsOfLength } = require("svcorelib");
+> const { splitIntoPartsOfLength } = require("@sv443-network/core");
 > 
 > // length: 22
 > const bugsnax = [
@@ -1920,7 +1922,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > console.log(scl.parseDuration(61419000)); // { days: 0, hrs: 17, mins: 3, secs: 39, ms: 0 }
 > ```
@@ -1958,7 +1960,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > const dur = 234219005;
 > 
@@ -1986,7 +1988,7 @@ This namespace, accessed with just `scl`, offers many miscellaneous functions.
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const { unused } = require("svcorelib");
+> const { unused } = require("@sv443-network/core");
 > 
 > let my_unused_var = "Hello, World!"; // linter doesn't warn you about this line when using unused()
 > 
@@ -2096,7 +2098,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > 
 > > let dirPath = "./";          // supervises your entire project workspace
 > > let blacklist = [ "*.txt" ]; // ignores all files with the extension .txt
@@ -2298,7 +2300,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > 
 > > <br><details><summary><b>Example Localization - click to show</b></summary>
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > 
 > > /** @type {scl.MenuPromptOptions} */
 > > let opts = {
@@ -2426,7 +2428,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > 
 > > let pb = new scl.ProgressBar(15, "Doing some stuff (Iteration #0)");
 > > 
@@ -2587,7 +2589,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > 
 > > <br><details><summary><b>Example Localization - click to show</b></summary>
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > 
 > > let sm = new scl.SelectionMenu();
 > > 
@@ -2608,7 +2610,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > 
 > > let sm = new scl.SelectionMenu("Example SelectionMenu:", {
 > >     cancelable: true,
@@ -2725,7 +2727,7 @@ Classes need to be created with the `new` keyword unless a method explicitly sta
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const { StatePromise } = require("svcorelib");
+> > const { StatePromise } = require("@sv443-network/core");
 > > 
 > > // Promise to wrap around
 > > const prom = new Promise((res, rej) => {
@@ -2811,7 +2813,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const { Errors, colors } = require("svcorelib");
+> > const { Errors, colors } = require("@sv443-network/core");
 > > 
 > > try
 > > {
@@ -2854,7 +2856,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const { files, Errors } = require("svcorelib");
+> > const { files, Errors } = require("@sv443-network/core");
 > > const fs = require("fs");
 > > const { resolve } = require("path");
 > > 
@@ -2909,7 +2911,7 @@ The `SCLError` base class adds a property `date`, which is an instance of `Date`
 > > **<details><summary>Example Code - Click to view</summary>**
 > > 
 > > ```js
-> > const scl = require("svcorelib");
+> > const scl = require("@sv443-network/core");
 > > const fs = require("fs");
 > > const { resolve } = require("path");
 > > 
@@ -3059,7 +3061,7 @@ These are read-only, static and passive properties and will not invoke or change
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > const { fg, bg } = scl.colors;
 > 
@@ -3095,7 +3097,7 @@ These are read-only, static and passive properties and will not invoke or change
 > <br><details><summary><b>Example Code - click to show</b></summary>
 > 
 > ```js
-> const scl = require("svcorelib");
+> const scl = require("@sv443-network/core");
 > 
 > if(scl.info.intVersion[0] < 1 && scl.info.intVersion[1] < 12)
 >     console.error(`This code needs ${scl.info.name} v1.12.x or higher to run!\nHow to install the latest version: ${scl.info.documentation}#installation`);
@@ -3113,7 +3115,7 @@ This is where you can find all legal information about SCL and the Sv443 Network
 <br>
 
 ## License
-SvCoreLib is licensed under the MIT license. You can view the full license text by [clicking here.](https://sv443.net/LICENSE)  
+Sv443 Network CoreLib is licensed under the MIT license. You can view the full license text by [clicking here.](https://sv443.net/LICENSE)  
   
 Below is a short summary of the license (it is not legal advice though):  
 ### ✅ You can:
@@ -3133,7 +3135,7 @@ Below is a short summary of the license (it is not legal advice though):
 <br>
 
 ## Disclaimer
-I will hereby not claim any legal responsibility or liability for SvCoreLib. Whether it is used maliciously or breaks something, I can't be held accountable.  
+I will hereby not claim any legal responsibility or liability for Sv443 Network CoreLib. Whether it is used maliciously or breaks something, I can't be held accountable.  
 I am doing my best to ensure security and stability but there's only so much a single developer can do.  
 Security patches are created as soon as possible but I don't have any binding responsibility to make these patches.  
 Please create a backup before using this library if you want to be extra secure and report any issue that may arise to the [GitHub issue tracker](https://github.com/Sv443-Network/SvCoreLib/issues/new/choose) and I will try my best to fix it as soon as possible.
