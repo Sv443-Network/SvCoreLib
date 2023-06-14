@@ -1,3 +1,8 @@
+//#MARKER RNG
+
+import type { UUIDType } from "../types";
+import { randomItem } from "../functions/array";
+
 export function randRange(max: number): number;
 export function randRange(min: number, max: number): number;
 export function randRange(...args: number[]): number {
@@ -27,4 +32,36 @@ export function randRange(...args: number[]): number {
     throw new TypeError("Invalid parameters provided in scl.randRange() - make sure \"min\" is not bigger than \"max\"");
 
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//#MARKER UUID
+
+const numbers = "0123456789";
+
+const charsets: Record<Exclude<UUIDType, "custom">, string[]> = {
+  alphanumerical: `${numbers}abcdefghijklmnopqrstuvwxyz`.split(""),
+  binary:         "01".split(""),
+  decimal:        numbers.split(""),
+  hexadecimal:    `${numbers}abcdef`.split(""),
+};
+
+export function generateUUID(uuidFormat: string, type: "alphanumerical");
+export function generateUUID(uuidFormat: string, type: "binary");
+export function generateUUID(uuidFormat: string, type: "custom", charset: string[]);
+export function generateUUID(uuidFormat: string, type: "decimal");
+export function generateUUID(uuidFormat: string, type: "hexadecimal");
+export function generateUUID(uuidFormat: string, type: UUIDType, arg0: string[] | undefined) {
+  const injectChars = (str: string, charset: string[]): string => {
+    // TODO:
+    const matches = /[xy]/gm.exec(str);
+    if(matches)
+      matches.forEach((match: RegExpExecArray[0]) => str = str[match.index]);
+  };
+
+  switch(type) {
+  case "custom":
+    return injectChars(uuidFormat, arg0 ?? []);
+  default:
+    return injectChars(uuidFormat, charsets[type]);
+  }
 }

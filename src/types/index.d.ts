@@ -23,3 +23,6 @@ export type UnionToIntersection<U> = (U extends any ? (k: U)=>void : never) exte
 export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
 /** All type names usable in `typeof()` */
 export type JSPrimitiveTypeName = "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
+
+
+export type UUIDType = "alphanumerical" | "binary" | "custom" | "decimal" | "hexadecimal";

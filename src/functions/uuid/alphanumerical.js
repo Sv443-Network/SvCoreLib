@@ -2,9 +2,7 @@ const isEmpty = require("../isEmpty");
 const replaceAt = require("../replaceAt");
 const randRange = require("../randRange");
 
-function alphanumerical(uuidFormat, upperCase)
-{
-
+function alphanumerical(uuidFormat, upperCase) {
     uuidFormat = uuidFormat.replace(/\^x/gm, "ꮦ");
     uuidFormat = uuidFormat.replace(/\^y/gm, "ꮧ");
 
