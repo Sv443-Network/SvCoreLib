@@ -9,8 +9,13 @@
 
 <br><br>
 
-## 2.0.0
-- 
+## 2.0.0 - Bundler Update
+The library is finally compatible with ES Modules, instead of just CommonJS!
+- **BREAKING CHANGES**
+  - Removed function `files.downloadFile()` as it was outdated and inferior to purpose-built libraries like axios
+- Additions
+  - New functions in `files` namespace: `existsSync()`, `access()` and `accessSync()`
+  - `isDom()` to check if the code has access to a `window` object, i.e. runs in DOM context
 
 <br>
 

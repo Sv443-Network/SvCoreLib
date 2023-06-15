@@ -1,39 +1,14 @@
-# Logs
 logs
 *.log
 npm-debug.log*
-
-# nyc test coverage
 .nyc_output
-
-# Dependency directory
-node_modules/
-
-# TypeScript v1 declaration files
-typings/
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Optional npm cache directory
 .npm
-
-# Optional eslint cache
 .eslintcache
 
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
+node_modules/
+lib/
 .env
 
-# dev test files
 test.js
 test.ts
 test.d.ts

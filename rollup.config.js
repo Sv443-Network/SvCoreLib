@@ -1,12 +1,22 @@
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
-import { terser } from "@rollup/plugin-terser";
+import terser from "@rollup/plugin-terser";
 
 const extensions = [".js", ".ts" ];
+const external = [
+  "path",
+  "fs-extra",
+  "http",
+  "stream",
+  "https",
+  "inspector",
+  "v8",
+];
 
 /** @type {import("rollup").NormalizedInputOptions} */
 const config = {
   input: "src/index.ts",
+  external,
   output: [
     {
       file: "lib/bundles/bundle.esm.js",
@@ -22,13 +32,13 @@ const config = {
     {
       file: "lib/bundles/bundle.umd.js",
       format: "umd",
-      name: "myLibrary",
+      name: "SvCoreLib",
       sourcemap: true,
     },
     {
       file: "lib/bundles/bundle.umd.min.js",
       format: "umd",
-      name: "myLibrary",
+      name: "SvCoreLib",
       plugins: [terser()],
       sourcemap: true,
     }

@@ -1,7 +1,7 @@
-import { logger } from "./files";
+import { files } from "./files";
 import { mapRange } from "./math";
 import { isDom, unused } from "./misc";
-import type { Stringifiable } from "../types";
+import type { Stringifiable } from "./types";
 import { Errors } from "./Errors";
 
 // Node-only conditional imports
@@ -23,7 +23,7 @@ export function error(cause: string, logfilePath: string, shutdown = false, stat
     throw new Error(`Wrong arguments provided in "cause" for scl.error() - (expected: "String", got: "${typeof cause}")`);
 
   if(typeof logfilePath == "string")
-    logger(logfilePath, cause, { timestamp: true, append_bottom: true });
+    files.logger(logfilePath, cause, { timestamp: true, append_bottom: true });
   
   if(consoleMsg === true)
     console.log("\x1b[31m\x1b[1mAn error occurred:\n" + cause + "\x1b[0m\n");

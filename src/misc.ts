@@ -1,4 +1,4 @@
-import type { JSONCompatible } from "../types";
+import type { JSONCompatible } from "./types";
 
 export function reserialize<O extends JSONCompatible, I extends boolean>(obj: O, immutable?: I): I extends true ? Readonly<O> : O {
   if(typeof obj != "object")
@@ -20,6 +20,7 @@ export function unused(...variables: any[]): void {
 
 export function isDom() {
   try {
+    // @ts-ignore
     if(window)
       return true;
     return false;

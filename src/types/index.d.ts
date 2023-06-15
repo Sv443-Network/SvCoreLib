@@ -26,3 +26,5 @@ export type JSPrimitiveTypeName = "bigint" | "boolean" | "function" | "number" |
 
 
 export type UUIDType = "alphanumerical" | "binary" | "custom" | "decimal" | "hexadecimal";
+
+export type PromiseState = "initialized" | "pending" | "resolved" | "rejected";

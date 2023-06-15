@@ -1,17 +1,17 @@
-import { AnyClass } from "../types";
-import { randRange } from "./rng";
+import { AnyClass, Stringifiable } from "./types";
+import { randRange } from "./math";
 import { isEmpty, isClass } from "./typeGuard";
 
 //#MARKER type guards
 
-export function allEqual<T>(array: T[], loose = false): boolean {
+function allEqual<T>(array: T[], loose = false): boolean {
   if(!Array.isArray(array))
     throw new Error(`Wrong argument provided for scl.allEqual() - (expected: "Object", got: "${typeof array}")`);
 
   return array.every(v => loose === true ? v == array[0] : v === array[0]);
 }
 
-export function allInstanceOf<T>(arr: unknown[], Class: AnyClass<T>): arr is AnyClass<T>[] {
+function allInstanceOf<T>(arr: unknown[], Class: AnyClass<T>): arr is AnyClass<T>[] {
   if(!Array.isArray(arr) || !isClass(Class))
     throw new TypeError("Parameters in allInstanceOf() are invalid. Expected array of any and class reference.");
 
@@ -23,7 +23,7 @@ export function allInstanceOf<T>(arr: unknown[], Class: AnyClass<T>): arr is Any
 
 //#MARKER random
 
-export function randomizeArray<T>(array: T[]) {
+function randomizeArray<T>(array: T[]) {
   const retArray = new Array(...array); // has to be done so array and retArray don't point to the same memory address
 
   if(!Array.isArray(array))
@@ -41,7 +41,7 @@ export function randomizeArray<T>(array: T[]) {
   return retArray;
 }
 
-export function takeRandomItem<T>(arr: T[]) {
+function takeRandomItem<T>(arr: T[]) {
   if(!Array.isArray(arr))
     throw new Error("Parameter is not an array");
 
@@ -57,7 +57,7 @@ export function takeRandomItem<T>(arr: T[]) {
   return itm;
 }
 
-export function randomItemIndex<T>(array: T[]): [T, number] | [undefined, undefined] {
+function randomItemIndex<T>(array: T[]): [T, number] | [undefined, undefined] {
   if(!Array.isArray(array))
     throw new Error("Parameter is not an array");
   
@@ -75,10 +75,10 @@ export function randomItem<T>(array: T[]): T {
 
 //#MARKER stringify
 
-export function readableArray(array, separators, lastSeparator) {
+function readableArray<T extends Array<Stringifiable>>(array: T[], separators?: string, lastSeparator?: string) {
   if(isEmpty(array) || typeof array != "object" || (!isEmpty(separators) && typeof separators != "string" && typeof separators != "boolean") || (!isEmpty(lastSeparator) && typeof lastSeparator != "string" && typeof lastSeparator != "boolean"))
     throw new Error("Wrong or missing parameters in \"scl.readableArray()\"");
-  if(isEmptyWithoutString(lastSeparator) || lastSeparator === false)
+  if(isEmptyWithoutString(lastSeparator))
     lastSeparator = " and ";
   if(isEmptyWithoutString(separators))
     separators = ", ";
@@ -102,14 +102,14 @@ function isEmptyWithoutString(variable: any) {
 
 //#MARKER split
 
-export function halves<T>(array: T[]) {
+function halves<T>(array: T[]) {
   if(!Array.isArray(array))
     throw new TypeError("Invalid argument 'array' provided in halves()");
 
   return splitIntoParts(array, 2, true);
 }
 
-export function splitIntoParts<T>(array: T[], partsAmt: number, balanced = false) {
+function splitIntoParts<T>(array: T[], partsAmt: number, balanced = false) {
   if(!Array.isArray(array))
     throw new TypeError("Invalid argument 'array' provided in splitIntoParts()");
 
@@ -150,7 +150,7 @@ export function splitIntoParts<T>(array: T[], partsAmt: number, balanced = false
   return out;
 }
 
-export function splitIntoPartsOfLength<T>(array: T[], maxLength: number) {
+function splitIntoPartsOfLength<T>(array: T[], maxLength: number) {
   if(typeof maxLength !== "number" || isNaN(maxLength) || maxLength < 1)
     throw new TypeError("Invalid argument 'maxLength' provided in splitIntoPartsOfLength()");
   if(!Array.isArray(array))
@@ -170,6 +170,19 @@ export function splitIntoPartsOfLength<T>(array: T[], maxLength: number) {
 
 //#MARKER misc
 
-export function removeDuplicates<T>(array: T[]) {
+function removeDuplicates<T>(array: T[]) {
   return array.filter((a, b) => array.indexOf(a) === b);
 }
+
+export const array = {
+  allEqual,
+  allInstanceOf,
+  randomizeArray,
+  takeRandomItem,
+  randomItemIndex,
+  readableArray,
+  halves,
+  splitIntoParts,
+  splitIntoPartsOfLength,
+  removeDuplicates,
+};

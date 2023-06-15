@@ -2,11 +2,18 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "rootDir": ".",
     "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "outDir": "lib/types",
+    "lib": [
+      "ES2020"
+    ],
+    "target": "ES2017",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "typeRoots": [
       "src/index.d.ts",

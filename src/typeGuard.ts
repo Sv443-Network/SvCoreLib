@@ -1,4 +1,4 @@
-import { AnyClass, JSPrimitiveTypeName } from "../types";
+import type { AnyClass, JSPrimitiveTypeName } from "./types";
 
 export function isClass<T>(val: any): val is AnyClass<T> {
   try {

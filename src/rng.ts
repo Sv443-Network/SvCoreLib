@@ -1,38 +1,10 @@
 //#MARKER RNG
 
-import type { UUIDType } from "../types";
+import type { UUIDType } from "./types";
+import { randomItem } from "./array";
+import { replaceAt } from "./string";
 import { isEmpty } from "./typeGuard";
-
-export function randRange(max: number): number;
-export function randRange(min: number, max: number): number;
-export function randRange(...args: number[]): number {
-  let min: number, max: number;
-
-  if(typeof args[0] === "number" && typeof args[1] === "number")
-  {
-    // using randRange(min, max)
-    [ min, max ] = args;
-  }
-  else if(typeof args[0] === "number" && typeof args[1] !== "number")
-  {
-    // using randRange(max)
-    min = 0;
-    max = args[0];
-  }
-  else
-    throw new TypeError(`Wrong parameter provided in scl.randRange() - (expected: "number" and "number|undefined", got: "${typeof args[0]}" and "${typeof args[1]}")`);
-
-  min = Number(min);
-  max = Number(max);
-
-  if(isNaN(min) || isNaN(max))
-    throw new TypeError("Invalid parameters provided in scl.randRange() - \"min\" and \"max\" can't be NaN");
-
-  if(min > max)
-    throw new TypeError("Invalid parameters provided in scl.randRange() - make sure \"min\" is not bigger than \"max\"");
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+import { randRange } from "./math";
 
 //#MARKER UUID
 
@@ -46,25 +18,24 @@ const charsets: Record<Exclude<UUIDType, "custom">, string[]> = {
 };
 
 // TODO:
-export function generateUUID(uuidFormat: string, type: "alphanumerical");
-export function generateUUID(uuidFormat: string, type: "binary");
-export function generateUUID(uuidFormat: string, type: "custom", charset: string[]);
-export function generateUUID(uuidFormat: string, type: "decimal");
-export function generateUUID(uuidFormat: string, type: "hexadecimal");
-export function generateUUID(uuidFormat: string, type: UUIDType, arg0: string[] | undefined) {
+export function generateUUID(uuidFormat: string, type: "alphanumerical"): string;
+export function generateUUID(uuidFormat: string, type: "binary"): string;
+export function generateUUID(uuidFormat: string, type: "custom", charset: string[]): string;
+export function generateUUID(uuidFormat: string, type: "decimal"): string;
+export function generateUUID(uuidFormat: string, type: "hexadecimal"): string;
+export function generateUUID(uuidFormat: string, type: UUIDType, arg0?: string[]): string {
   const injectChars = (str: string, charset: string[]): string => {
-    const matches = /[xy]/gm.exec(str);
+    const matches = str.matchAll(/[xy]/gm);
     if(matches)
-      matches.forEach((match: RegExpExecArray[0]) => str = str[match.index]);
+      for(const match of matches)
+        str = replaceAt(str, match.index!, randomItem(charset));
     return str;
   };
 
-  switch(type) {
-  case "custom":
+  if(type === "custom")
     return injectChars(uuidFormat, arg0 ?? []);
-  default:
-    return injectChars(uuidFormat, charsets[type]);
-  }
+
+  return injectChars(uuidFormat, charsets[type]);
 }
 
 //#MARKER seeded RNG
@@ -94,9 +65,7 @@ export function validateSeed(seed: any): seed is number | string {
 
   const digitCount = seed.length;
 
-  const regex = new RegExp(`^[0-9]{${digitCount}}`, "gm");
-
-  if(!seed.match(regex) || seed.match(/\n/gm))
+  if(!seed.match(new RegExp(`^[0-9]{${digitCount}}$`)) || seed.match(/\n/m))
     return false;
 
   return true;
