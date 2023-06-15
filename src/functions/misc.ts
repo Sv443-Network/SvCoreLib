@@ -17,3 +17,14 @@ export function unused(...variables: any[]): void {
   void variables;
   return;
 }
+
+export function isDom() {
+  try {
+    if(window)
+      return true;
+    return false;
+  }
+  catch {
+    return false;
+  }
+}

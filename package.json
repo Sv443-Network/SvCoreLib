@@ -79,6 +79,7 @@
     "@rollup/plugin-commonjs": "25.0.1",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-terser": "^0.4.3",
+    "@types/fs-extra": "^11.0.1",
     "@types/mysql": "^2.15.17",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
