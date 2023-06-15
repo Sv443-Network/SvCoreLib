@@ -1,8 +1,9 @@
 import babel from "@rollup/plugin-babel";
-import resolve from "@rollup/plugin-node-resolve";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
 
-const extensions = [".js", ".ts" ];
+const extensions = [".js", ".ts", ".json"];
 const external = [
   "path",
   "fs-extra",
@@ -44,7 +45,8 @@ const config = {
     }
   ],
   plugins: [
-    resolve({ extensions }),
+    typescript(),
+    nodeResolve({ extensions }),
     babel({
       babelHelpers: "bundled",
       include: ["src/**/*"],
