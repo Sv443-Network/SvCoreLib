@@ -13,7 +13,6 @@
 
 import { EventEmitter } from "events";
 import { ServerResponse, IncomingMessage } from "http";
-import { Connection, QueryOptions } from "mysql";
 
 import { SelectionMenuSettings, SelectionMenuResult, SelectionMenuLocale, SelectionMenuOption } from "./types/SelectionMenu";
 
@@ -623,23 +622,6 @@ declare module "svcorelib" {
          * @version 1.9.2 Added the option of using the Promise API instead of a callback
          */
         function downloadFile(url: string, destPath?: string, options?: DownloadOptions): Promise<void | string>;
-    }
-
-    //#SECTION SQL
-
-    /**
-     * 🔸 Offers functions to interface with a SQL database 🔸
-     */
-    namespace sql {
-        /**
-         * 🔹 Sends a formatted (SQLI-protected) query 🔹
-         * @param connection An SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)
-         * @param query The SQL query with question marks where the inserted values should be
-         * @param options The options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options
-         * @param insertValues [Rest parameter] The values to be inserted into the question marks
-         * @since 1.12.0
-         */
-        function sendQuery(connection: Connection, query: string, options?: QueryOptions, ...insertValues: (null | string | number)[]): Promise<object>;
     }
 
     //#SECTION System

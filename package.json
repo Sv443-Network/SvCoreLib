@@ -66,9 +66,6 @@
     "keypress": "^0.2.1",
     "minimatch": "^9.0.1"
   },
-  "optionalDependencies": {
-    "mysql": "^2.18.1"
-  },
   "devDependencies": {
     "@babel/cli": "^7.22.5",
     "@babel/core": "7.22.5",
@@ -82,7 +79,6 @@
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-typescript": "^11.1.1",
     "@types/fs-extra": "^11.0.1",
-    "@types/mysql": "^2.15.17",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",

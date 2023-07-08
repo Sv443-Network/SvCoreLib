@@ -124,9 +124,8 @@ Otherwise, see the table of contents just below.
 # Installation
 To install Sv443 Network CoreLib (SCL), use the following command in a terminal inside your Node.js project:  
 ```
-npm i @sv443-network/core --no-optional
+npm i @sv443-network/core
 ```
-If you want to use the MySQL related functions, use `npm i @sv443-network/core` instead.  
   
 <sub>Troubleshooting: Make sure your workspace contains a `package.json` file. If not, use `npm init` to initialize your workspace with npm.</sub>
 
@@ -926,68 +925,6 @@ Seeds in SCL need to be of a certain format. Some other functions in this sectio
 > console.log(foo); // true
 > console.log(bar); // true
 > console.log(baz); // false
-> ```
-> 
-> </details>
-
-
-<br><br><br>
-
-
-<!-- #SECTION SQL -->
-## SQL
-This namespace, accessed with `scl.sql`, offers functions to interface with SQL databases.  
-These functions depend on the package [`mysql`](https://www.npmjs.com/package/mysql).  
-
-
-<br><br>
-
-
-> ### sql.sendQuery()
-> Sends a formatted (SQLI-protected) query.  
->   
-> The param `connection` needs to be passed an SQL connection instantiated with [`mysql.createConnection()`](https://www.npmjs.com/package/mysql#establishing-connections)  
-> The param `query` needs to be passed the SQL query with question marks where the inserted values should be.  
-> The param `options` needs to be passed an object of options of this query. [Here are the possible properties](https://www.npmjs.com/package/mysql#connection-options) - leave undefined to choose the default options.  
-> The rest parameter `insertValues` needs to be passed the values to be inserted into the question marks - use the primitive type `null` for an empty value.  
->   
-> The returned promise resolves to an object containing the response from the database or rejects to an error string.
-> ```ts
-> scl.sql.sendQuery(connection: mysql.Connection, query: string, options?: mysql.QueryOptions, ...insertValues: null | string | number): Promise<object>
-> ```
-> 
-> <br><details><summary><b>Example Code - click to show</b></summary>
-> 
-> ```js
-> const { sql } = require("@sv443-network/core");
-> const mysql = require("mysql");
-> 
-> 
-> const options = {
->     timeout: 2000 // after how many milliseconds the queries should time out if they didn't get a response
-> };
-> const database = "database_name"; // set the database name here
-> 
-> // create SQL connection
-> let sqlConnection = mysql.createConnection({
->     host: "127.0.0.1",                 // IP address of the SQL server (127.0.0.1 means the server runs locally)
->     user: process.env.DB_USER,         // requires setting these values in the environment variables - I recommend using the "dotenv" package for this
->     password: process.env.DB_PASSWORD, // see above ^
->     insecureAuth: true                 // this is required on newer version of MySQL (like 8.0) since they require some weird ass more secure auth
-> });
-> 
-> // try to connect with the above settings
-> sqlConnection.connect(err => {
->     if(err)
->         return console.error(`Error: ${err}`);
-> 
->     // send the actual query
->     sql.sendQuery(sqlConnection, "SELECT * FROM ??.tablename LIMIT 10", options, database).then(res => {
->         console.log(JSON.stringify(res, undefined, 4));
->     }).catch(err => {
->         console.error(`Error: ${err}`);
->     });
-> });
 > ```
 > 
 > </details>

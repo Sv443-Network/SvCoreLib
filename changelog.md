@@ -13,6 +13,7 @@
 The library is finally compatible with ES Modules, instead of just CommonJS!
 - **BREAKING CHANGES**
   - Removed function `files.downloadFile()` as it was outdated and inferior to purpose-built libraries like axios
+  - Removed function `sql.sendQuery()` as it was too specific and would probably be reimplemented anyways
 - Additions
   - New functions in `files` namespace: `existsSync()`, `access()` and `accessSync()`
   - `isDom()` to check if the code has access to a `window` object, i.e. runs in DOM context

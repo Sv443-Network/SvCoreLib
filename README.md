@@ -33,10 +33,8 @@ See a list of all features [here.](./docs.md#table-of-contents)
 ## Install:
 Use this command in a terminal window inside your Node.js project:
 ```
-npm i @sv443-network/core --no-optional
+npm i @sv443-network/core
 ```
-
-If you intend on using SQL functions, use `npm i @sv443-network/core`
 
 <br>
 
@@ -55,9 +53,6 @@ I made SvCoreLib so it needs as few dependencies as possible, but in order to en
 - [fs-extra](https://npmjs.com/package/fs-extra)
 - [keypress](https://npmjs.com/package/keypress)
 - [minimatch](https://npmjs.com/package/minimatch)
-- [mysql](https://npmjs.com/package/mysql) *
-
-<sup>\* optional, see [installation](#install)</sup>
 
 <br><br><br>
 
