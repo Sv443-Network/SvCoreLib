@@ -16,6 +16,7 @@ The library is finally compatible with ES Modules, instead of just CommonJS!
 - Additions
   - New functions in `files` namespace: `existsSync()`, `access()` and `accessSync()`
   - `isDom()` to check if the code has access to a `window` object, i.e. runs in DOM context
+  - StatePromise now supports a function that returns a Promise, useful in case the Promise would resolve/reject too quickly
 
 <br>
 

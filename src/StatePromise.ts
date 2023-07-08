@@ -1,23 +1,23 @@
-import { PromiseState } from "./types";
+type PromiseState = "initialized" | "pending" | "resolved" | "rejected";
 
 export class StatePromise<T = any> {
-  private intPromise: Promise<T>;
+  private intPromise: Promise<T> | (() => Promise<T>);
   public state: PromiseState;
 
-  constructor(promise: Promise<T>) {
+  constructor(promise: Promise<T> | (() => Promise<T>)) {
     if(!(promise instanceof Promise))
       throw new TypeError("Wrong type provided in constructor of StatePromise - expected instance of \"Promise\" class");
 
-    /** @type {Promise} */
     this.intPromise = promise;
     this.state = "initialized";
   }
 
-  exec() {
+  exec(): Promise<T> {
     this.state = "pending";
 
     return new Promise((res, rej) => {
-      this.intPromise.then((...args) => {
+      const prom = typeof this.intPromise === "function" ? this.intPromise() : this.intPromise;
+      prom.then((...args) => {
         this.state = "resolved";
         return res(...args);
       }).catch((...args) => {

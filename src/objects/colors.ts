@@ -1,4 +1,4 @@
-const colors = {
+const colorsObj = {
   rst:         "\x1b[0m",
   fat:         "\x1b[1m",
   blink:       "\x1b[5m",
@@ -30,16 +30,17 @@ const colors = {
   }
 };
 
-function fat(cols: Record<string, string>) {
+function fat(cols: Record<string, string>): typeof colorsObj.fg {
   const retObj = {};
-  Object.entries(cols).forEach(([k, v]) => {
-    retObj[k] = (k === "rst" ? colors.rst : `${v}${colors.fat}`);
-  });
-  return retObj;
+  Object.entries(cols)
+    .forEach(([k, v]) => {
+      retObj[k] = (k === "rst" ? colorsObj.rst : `${v}${colorsObj.fat}`);
+    });
+  return retObj as typeof colorsObj.fg;
 }
 
-module.exports = {
-  ...colors,
-  fgb: fat(colors.fg),
-  bgb: fat(colors.bg)
+export const colors = {
+  ...colorsObj,
+  fgb: fat(colorsObj.fg),
+  bgb: fat(colorsObj.bg),
 };
